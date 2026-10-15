@@ -1,0 +1,14 @@
+**/candidates/
+.venv/
+__pycache__/
+cache/
+logs/
+proxy/
+*.blend1
+*.autosave
+*.safetensors
+*.gguf
+*.ckpt
+*.pt
+*.pth
+*.bin
