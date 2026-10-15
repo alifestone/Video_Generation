@@ -12,3 +12,9 @@ proxy/
 *.pt
 *.pth
 *.bin
+
+# P0 experiment outputs (regenerable from results.json / crops.json)
+refs/crops/
+refs/experiment/A_sheet_only/
+refs/experiment/B_sheet_plus_crop/
+refs/experiment/compare.png

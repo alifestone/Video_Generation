@@ -1,0 +1,7 @@
+[
+ {"name":"full_front","box":[255,118,566,1075]},
+ {"name":"side","box":[845,145,1092,475]},
+ {"name":"action_point","box":[832,510,1092,780]},
+ {"name":"expr_happy","box":[1435,120,1650,405]},
+ {"name":"expr_angry","box":[1655,440,1890,710]}
+]
