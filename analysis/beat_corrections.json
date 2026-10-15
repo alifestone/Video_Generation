@@ -1,0 +1,67 @@
+{
+  "note": "Beat corrections applied by tools/build_timeline.py --beat-corrections (approved 2026-10-15). For each region, allin1 beats matching allin1_t (+-5ms) are removed and new_beats_t inserted (new_is_downbeat marks downbeats); beat_in_bar is recounted from each downbeat. Region bar38 makes bar 38 a 3-beat bar; region bar49_50 makes bar 49 a 5-beat bar. replace_allin1_beats_t / *_alternative_t / evidence are informational only.",
+  "corrections": [
+    {
+      "region": "bar38",
+      "replace_allin1_beats_t": [
+        86.41,
+        87.75
+      ],
+      "allin1_t": [
+        86.41,
+        86.85,
+        87.31,
+        87.75
+      ],
+      "new_beats_t": [
+        86.57,
+        87.15,
+        87.72
+      ],
+      "new_is_downbeat": [
+        true,
+        false,
+        false
+      ],
+      "dp_alternative_t": [
+        86.57,
+        87.2,
+        87.77
+      ],
+      "bar38_beats": 3,
+      "evidence": {
+        "score_allin1": 0.487,
+        "score_new": 0.977,
+        "score_dp": 1.244
+      }
+    },
+    {
+      "region": "bar49_50",
+      "replace_allin1_beats_t": [
+        112.72,
+        112.72
+      ],
+      "allin1_t": [
+        112.72
+      ],
+      "new_beats_t": [
+        112.51,
+        113.06
+      ],
+      "new_is_downbeat": [
+        false,
+        false
+      ],
+      "uniform_alternative_t": [
+        112.47,
+        113.0
+      ],
+      "bar49_beats": 5,
+      "evidence": {
+        "score_allin1": 0.185,
+        "score_new": 1.558,
+        "score_uniform": 0.233
+      }
+    }
+  ]
+}

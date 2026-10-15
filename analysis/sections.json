@@ -1,0 +1,18 @@
+{
+  "note": "Section override for build_timeline.py. Each section starts on the downbeat of `bar` (bar 0 = song start). Boundaries drafted from allin1 + lyrics + energy, verified against demucs stems with tools/verify_beats.py (2026-10-15). `hits` = accent points inside a section (e.g. the drop) for P5 cuts and P9 beat effects.",
+  "sections": [
+    {"label": "intro",        "bar": 0,  "basis": "vocals + rising bass/pad; drums enter 2.23s"},
+    {"label": "hook",         "bar": 5,  "basis": "energy 3->8 at bar 5; lyric 3 '321 LIVE AI'"},
+    {"label": "verse",        "bar": 9,  "basis": "allin1 20.89s; lyric 4"},
+    {"label": "prechorus",    "bar": 17, "basis": "bar 16 is a drum fill into bar 17; 8-bar verse; lyric 8 pickup at 38.44s (rejected alt: bar 16)"},
+    {"label": "chorus1",      "bar": 21, "basis": "lyric 12 'LIVE AI' at 48.38s after the bar-20 fill; bar 21 is a stripped bar (no kick/bass) (rejected alt: bar 22, see hits)"},
+    {"label": "bridge",       "bar": 34, "basis": "allin1 77.49s; English lyrics 19-20"},
+    {"label": "build",        "bar": 37, "basis": "drums and bass halve at bar 37; lyric 21 at 85.34s; bar 38 is a 3-beat stop-time bar (rejected alt: bar 38)"},
+    {"label": "final_chorus", "bar": 41, "basis": "allin1 92.79s; energy 6->9"},
+    {"label": "post_chorus",  "bar": 50, "basis": "allin1 113.54s; 'LIVE AI' chant lyrics 27-31"},
+    {"label": "outro",        "bar": 57, "basis": "bass drops at bar 57; lyric 32 at 129.82s; bar 58 is silence + final stinger (rejected alt: bar 58)"}
+  ],
+  "hits": [
+    {"bar": 22, "type": "drop", "basis": "kick, bass and pad all enter together after the stripped bar 21; highest novelty (1.84)"}
+  ]
+}

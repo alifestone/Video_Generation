@@ -1,0 +1,5 @@
+{"sections": [
+ {"label": "a", "bar": 0, "basis": "start"},
+ {"label": "b", "bar": 2, "basis": "test", "alt_bar": 3, "alt_basis": "alt"},
+ {"label": "c", "bar": 4}
+]}
