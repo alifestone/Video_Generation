@@ -1,0 +1,3 @@
+lunacsf, 1girl, solo, full body, standing, looking at viewer, white background, simple background, masterpiece, best quality --n lowres, bad anatomy, bad hands, text, watermark --w 832 --h 1216 --s 28 --l 6 --d 1
+lunacsf, 1girl, solo, upper body, from side, profile, night, city lights, rim lighting, masterpiece, best quality --n lowres, bad anatomy, bad hands, text, watermark --w 1024 --h 1024 --s 28 --l 6 --d 2
+lunacsf, 1girl, solo, full body, from behind, white background, simple background, masterpiece, best quality --n lowres, bad anatomy, bad hands, text, watermark --w 832 --h 1216 --s 28 --l 6 --d 3

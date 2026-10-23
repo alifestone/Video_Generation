@@ -1,0 +1,593 @@
+# Final Chorus～Outro（s053–s074）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-24）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+# 51 題都是精確度題，依授權由 Claude 決定；Q52 是 Claude 自查發現的 Bridge s038 幾何錯誤。
+round: late_r1
+issues:
+- id: Q01
+  where: shots.s053.first_frame
+  category: 4
+  severity: medium
+  quote: 和 s052 同一側、退後到腰以上的仰拍
+  question: s052 與 s053 的鏡頭在房間的哪個方位（以入口窗為 12 點鐘）、離主控台中心多遠、離地多高？是否沿用 s046 的 3 點鐘鏡位？
+  options:
+  - 沿用 s046：3 點鐘方向、離中心約 6 m、離地約 0.5 m
+  - s052 與 s053 在 3 點鐘方向但距離較近（約 3 m）
+  - 另定方位（請指定）
+  status: resolved
+  resolution: s052、s053 都在入口窗起算 3 點鐘方向（和 s046 同側）；s053 鏡頭離她約 2.5 m、與桌面同高（約 1 m）仰 20°。
+- id: Q02
+  where: shots.s053.subjects
+  category: 6
+  severity: medium
+  quote: 背景是灰色、沒有燈的控制室天花板與機櫃頂端。全畫面灰階。
+  question: s053 的首幀與末幀畫面內有沒有灰色的 @drone？有的話在畫面哪裡；沒有的話靠什麼構圖把它排除？
+  options:
+  - 在畫面內，右下角灰色、光帶不亮（與 s055 首幀一致）
+  - 不在畫面內（鏡位或構圖已排除）
+  status: resolved
+  resolution: s053 畫面內沒有 @drone（在畫面下緣之外），首幀已寫明。
+- id: Q03
+  where: shots.s053.notes
+  category: 8
+  severity: medium
+  quote: 模型畫彩色版的她與光柱；灰→彩的遮罩與灰色顆粒由後製。
+  question: 影片模型的輸入是哪一張圖、輸出的是灰色開頭的片段還是全彩片段？灰色開頭是由模型生成，還是後製把全彩片段的前段去色？
+  options:
+  - 模型輸入全彩的首幀，輸出全彩片段；後製用遮罩把 [41,1] 前後的區域去色，做出灰色開頭
+  - 模型輸入灰色首幀＋彩色末幀，輸出灰到彩的片段；後製只加灰色顆粒
+  - 分兩段：灰色靜止版由後製從彩色首幀去色，彩色擴散由後製遮罩推進
+  status: resolved
+  resolution: P6 出彩色版關鍵幀，模型生成全彩片段；開頭全灰與灰→彩擴散由後製去色再用遮罩還原。
+- id: Q04
+  where: shots.s053.motion.subject
+  category: 2
+  severity: low
+  quote: 同時光柱 5 段在 [41,1]–[41,2] 由下往上全部亮成青白色、頂端套環亮起
+  question: 下面 3 段（已亮、灰白）與上面 2 段（暗）在 [41,1]–[41,2] 內各自怎麼變？是否是同一道由下往上的掃描，每段約幾幀？
+  options:
+  - 同一道掃描：5 段每段約 2 幀，由下往上依序變成青白色（前 3 段是灰白變青白、後 2 段是暗變亮）
+  - 前 3 段與她的掌心色同時變色，後 2 段再由下往上點亮
+  status: resolved
+  resolution: '[41,1] 下面 3 段 2 幀內灰白→青白；[41,1.5] 第 4 段、[41,2] 第 5 段各 2 幀亮起，[41,2] 頂端套環亮。'
+- id: Q05
+  where: shots.s053.motion.subject
+  category: 5
+  severity: low
+  quote: '[41,3] 起她的手壓得更深、下巴抬高，眼神堅定。'
+  question: 「手壓得更深」要畫成什麼可見的動作？（如肘彎曲增加、身體前傾幾度、或乾脆刪掉這句，只留下巴抬高）
+  status: resolved
+  resolution: 刪掉「手壓得更深」，只留下巴抬高、眼神堅定。
+- id: Q06
+  where: shots.s054.first_frame
+  category: 4
+  severity: medium
+  quote: 觀景台的全景窗是暗的，只有一扇窗透出青白光（入口窗那一側看不到）
+  question: 亮的是哪一片窗（畫面中的位置、離入口窗幾片）？是只有一片，還是一整排都透出光？入口窗相對於這個鏡位在哪一側？
+  options:
+  - 只有一片，位在畫面中央正對鏡頭的那片窗
+  - 鏡頭正面所有可見的窗（約 6–8 片）都透出同樣的青白光
+  - 請指定窗的位置與片數
+  status: resolved
+  resolution: 朝鏡頭這一側的全景窗都透出淡淡的青白光（光柱在房間正中）；鏡頭面對入口窗的另一側（同 s042）。
+- id: Q07
+  where: shots.s054.subjects
+  category: 4
+  severity: medium
+  quote: 在畫面中直徑約畫面高 25%
+  question: '[43,1] 時球在畫面中的直徑到底是畫面高的多少？是球半徑要改，還是百分比要改，球頂端是否被畫面上緣切掉？'
+  options:
+  - 百分比改為約 50%，球的上半部被畫面上緣切掉
+  - 維持 25%，球半徑改為約 40 m
+  - 鏡頭拉遠，使球完整在畫面內（請指定塔高占畫面比例）
+  status: resolved
+  resolution: 球心在天線頂端（畫面高約 15%），[43,1] 下緣碰到觀景台頂面（約 38%），上半球超出畫面上緣；不再用直徑百分比。
+- id: Q08
+  where: shots.s054.motion.subject
+  category: 5
+  severity: low
+  quote: '[42,1]–[42,2] 光柱的光從觀景台頂部沿天線往上衝'
+  question: '[42,2] 光到達天線頂端之後，到 [42,3.06] 發出之前，畫面上的天線與頂端警示燈要保持什麼狀態？'
+  options:
+  - 天線細線全亮、保持不動，警示燈仍是灰白
+  - 天線頂端逐漸蓄光（亮度緩升），到 [42,3.06] 才閃白
+  - 請指定
+  status: resolved
+  resolution: '[42,2]–[42,3.06] 細線保持亮著，警示燈光暈慢慢放大到約 2 倍（蓄力）。'
+- id: Q09
+  where: entities.full_broadcast.look.speed
+  category: 4
+  severity: high
+  quote: '[43,1] 半徑約 80 m（往下碰到觀景台）；[44,1] 約 300 m'
+  question: speed 欄的半徑是以天線頂端為球心的 3D 球半徑，還是地面恢復圓的半徑？
+  options:
+  - 3D 球半徑（地面圓半徑 = sqrt(R^2 - 240^2)，R 小於 240 m 時地面尚未恢復）
+  - 地面圓半徑（球的實際大小另行換算，[43,1] 的 80 m 要改）
+  status: resolved
+  resolution: 半徑是以天線頂端為球心的 3D 球半徑 R，地面恢復圓 r＝√(R²−240²)；時程改寫成 R 與 r 並列（[43,4] 才碰到地面）。
+- id: Q10
+  where: shots.s056.first_frame
+  category: 4
+  severity: medium
+  quote: 以它為圓心、直徑約畫面寬 20% 的圓內已經是彩色
+  question: 首幀彩色圓的直徑是畫面寬的 20% 還是約 12%（地面圓）？光環等速擴大的起訖直徑是多少？
+  options:
+  - 20%（沿用目前數字，等於 glossary 的半徑指地面圓）
+  - 約 12%（照 3D 球半徑換算的地面圓）
+  status: resolved
+  resolution: s056 首幀地面圓直徑改為約畫面寬 12%（r 約 180 m）。
+- id: Q11
+  where: entities.full_broadcast.look.front
+  category: 3
+  severity: medium
+  quote: 但寬約 3 m
+  question: s056 與 s057 的光環在畫面上的最小可見寬度是多少？是否允許後製把 3 m 的物理寬度放大成固定的像素寬或畫面寬百分比？
+  options:
+  - s056 光環在畫面上固定寬約畫面寬 0.5%（後製放大），s057 照 3 m 的真實寬度透視
+  - 兩鏡都照真實 3 m 透視，s056 光環變成一條細線（接受）
+  - 請指定每鏡的畫面寬度
+  status: resolved
+  resolution: 遠景中光環至少畫成畫面寬 0.5% 粗並加光暈，不照物理寬度縮小（寫進 full_broadcast.front）。
+- id: Q12
+  where: shots.s055.subjects
+  category: 4
+  severity: medium
+  quote: 同 s046 的鏡位：主控台在畫面下 1/3，光柱在畫面 center_right
+  question: s055 的 @luna 與 @drone 比例要照 s046（30%／2%）還是照本鏡寫的（50%／2.5%）？如果是後者，鏡位要怎麼改（較近的位置）？
+  options:
+  - 照 s046：@luna 約畫面高 30%、@drone 約畫面寬 2%，本鏡數字要改
+  - 維持 50%，鏡頭在同一方位但推近（請指定距離）
+  status: resolved
+  resolution: s055 照 s046 的比例：她約畫面高 30%、@drone 約畫面寬 2%，景別改 LS。
+- id: Q13
+  where: shots.s055.motion.subject
+  category: 7
+  severity: medium
+  quote: 主控台、機櫃、窗外的 @city 光一起亮回來
+  question: s055 的 [43,1] 與 [44,1]，從窗看出去的 @city 各是什麼狀態？「窗外的 @city 光一起亮回來」是什麼意思？
+  options:
+  - '[43,1] 全灰、[44,1] 塔腳周圍約 180 m 內是彩色、其餘仍灰（照 full_broadcast 時程）'
+  - 整個窗外在波掃過房間的瞬間就全彩（跳過物理，需修改 full_broadcast.speed）
+  - 窗外維持灰色，直到 s056 才恢復，句中「窗外的 @city 光」刪除
+  status: resolved
+  resolution: s055 窗外遠處的 @city 仍是灰色（地面 [43,4] 才被掃到），刪掉「窗外城市光一起亮回來」。
+- id: Q14
+  where: shots.s055.motion.subject
+  category: 8
+  severity: low
+  quote: 廣播系統重新通電：主控台、機櫃、窗外的 @city 光一起亮回來
+  question: 波掃過後，interior_online 的哪些項目恢復？副控台、插座環、頂端套環、地面指示燈各是什麼狀態？
+  options:
+  - 全部 interior_online 項目（除 @window_feed）在波前掃過的 2 幀內同時亮起
+  - 只有主控台與機櫃亮，其餘保持暗
+  - 請逐項指定
+  status: resolved
+  resolution: 恢復清單：主控台、副控台、機櫃燈條、插座環、頂端套環；沿窗指示燈恢復白色；@window_feed 不再出現；光柱維持亮著。
+- id: Q15
+  where: shots.s055.motion.subject
+  category: 4
+  severity: low
+  quote: '[43,3] 起她和 @drone 一起轉向畫面右（窗的方向）'
+  question: 「窗的方向」指的是入口窗嗎？末幀她的面向是 profile_right 還是 three_quarter_right？
+  options:
+  - 入口窗；末幀 profile_right
+  - 入口窗；末幀仍是 three_quarter_right
+  - 另一片窗（請指定）
+  status: resolved
+  resolution: 「窗的方向」＝入口窗（鏡頭在 3 點鐘往 9 點鐘看，入口窗在畫面右）；末幀她正側面朝畫面右。
+- id: Q16
+  where: shots.s055.last_frame
+  category: 5
+  severity: low
+  quote: 身體轉向畫面右、笑著，@drone 在她左肩旁
+  question: 末幀 @luna 的 facing 是什麼，@drone 在畫面的哪一邊（含是否被她身體遮住一部分）？
+  status: resolved
+  resolution: 末幀 @drone 在她遠側、從頭部右後方露出一半。
+- id: Q17
+  where: shots.s057.notes
+  category: 8
+  severity: medium
+  quote: 模型畫恢復後會動的街（首幀為準的彩色版），灰色靜止版由後製從首幀做
+  question: 影片模型的輸入圖是灰色首幀還是整條街的彩色版？灰色版由誰產生、光環掃過時遮罩的來源是哪兩個素材？
+  options:
+  - 模型輸入整條街彩色版、輸出全彩片段；後製把片段前段去色為灰色版，用光環形狀的遮罩切換
+  - 模型輸入灰色首幀、輸出灰到彩的片段；後製只加光環
+  - 灰色版與彩色版各用一次 I2V（灰色版靜止）、後製遮罩切換
+  status: resolved
+  resolution: P6 出彩色恢復後的街景關鍵幀（不含光環）給模型；灰色靜止版由後製把首幀去色凍結；用推近的遮罩換成彩色片段。
+- id: Q18
+  where: shots.s057.first_frame
+  category: 9
+  severity: medium
+  quote: 街尾遠處、畫面正中，@full_broadcast 的光環已經出現
+  question: s057 的光環是在首幀畫進去（由模型動）還是全部由後製疊加（首幀不含光環，只含灰／彩分界）？
+  options:
+  - 光環全由後製：首幀只畫灰色街與遠處的彩色街區邊界
+  - 首幀畫出光環，由模型推進（需接受 style_bible 的例外）
+  status: resolved
+  resolution: 光環與灰／彩交界全由後製疊加，關鍵幀不畫光環。
+- id: Q19
+  where: entities.hovercar.look.motion
+  category: 4
+  severity: medium
+  quote: 全城恢復後（Final Chorus 起）沿車道緩緩前進，約每秒 5 m
+  question: 恢復後的 @hovercar：往哪個方向走（在 s057、s065 畫面中相對於鏡頭與塔）、低處的車是否也前進、每台是在光環掃過的那一刻才開始動嗎？
+  options:
+  - 所有車道上的車都往塔的方向走（s057 朝遠離鏡頭、s065 同向），低處的車也走；各台在光環掃過時才開始動
+  - 上下兩層車道方向相反
+  - 請指定
+  status: resolved
+  resolution: '@hovercar 從被波掃過的那一刻起沿車道方向前進；@street 上方車道往街尾（塔）方向；低處的車慢慢升回車道。'
+- id: Q20
+  where: shots.s071.motion.subject
+  category: 7
+  severity: medium
+  quote: 每台車在原地上下浮動約 5 cm（後製）。
+  question: s071 的車是原地浮動（為了保持和 s051 的構圖），還是照 glossary 沿車道前進？如果是原地浮動，glossary 要加什麼例外？
+  options:
+  - 原地浮動，glossary 的 motion 加「回顧鏡 s071 除外」
+  - 沿車道前進，構圖只要求起始位置與 s051 相同，推進 5 m 內的位移接受
+  status: resolved
+  resolution: s071 的 4 台沿車道往畫面右上緩緩前進約 5 m（後製分層平移），和 glossary 一致。
+- id: Q21
+  where: shots.s071.first_frame
+  category: 6
+  severity: medium
+  quote: 一列 @hovercar 珍珠白、深藍、銀灰、酒紅，車底燈帶亮著青與洋紅
+  question: s071 由左下到右上 4 台車的車殼顏色與燈帶顏色各是什麼？是否照 s017 的順序（白／酒紅／深藍／第 4 台銀灰）？
+  options:
+  - 左下到右上：珍珠白（青）、酒紅（洋紅）、深藍（青）、銀灰（請指定燈帶色）
+  - 維持 s071 現在的順序（白、藍、銀、紅），s017 與 s051 的顏色要一併改
+  status: resolved
+  resolution: s071 色序照 s017：珍珠白（青）、酒紅（洋紅）、深藍（青），第 4 台銀灰（洋紅）。
+- id: Q22
+  where: shots.s058.first_frame
+  category: 4
+  severity: medium
+  quote: 鏡頭在外環走道上、她的前方偏右，平視
+  question: 她前進的方向是徑向往外（朝矮牆）還是沿走道繞行？鏡頭位於走道上哪個位置、離她多遠、是否在矮牆外的半空？
+  options:
+  - 她徑向往外走到矮牆邊；鏡頭在矮牆外半空、距她約 3 m、平視，背景的入口窗在她身後
+  - 她沿走道側走；鏡頭在走道上她的側前方（寬 1.5 m 內）
+  - 請指定
+  status: resolved
+  resolution: s058 鏡頭沿走道離她約 3 m 拍走道橫切面；她首幀已在入口窗外一步，往外（徑向）走一步扶牆。
+- id: Q23
+  where: shots.s058.motion.subject
+  category: 5
+  severity: medium
+  quote: 她往前走兩步到矮牆邊，雙手扶上矮牆頂緣，看著 @city
+  question: 這些動作能在 1.1 s 內完成嗎？是否要改成首幀就已在走道上、只剩走一步＋扶牆，或者延長本鏡？
+  options:
+  - 首幀改為已走出窗、離矮牆約 1 m，動作只剩走一步加雙手扶牆
+  - 延長 s058 為 3 拍（其餘鏡頭相應縮短）
+  - 維持現狀，接受模型做不到時重生成
+  status: resolved
+  resolution: 動作減為「往前一步、雙手扶牆、看城市」，塞得進 1.1 s。
+- id: Q24
+  where: shots.s058.subjects
+  category: 4
+  severity: medium
+  quote: 在她 char_left 肩旁（畫面左、略在她身後）
+  question: s058 的 @drone 在畫面的哪一邊？是照 char_left 規則放在畫面右後方（被她的肩膀遮住一部分），還是放在畫面左（那就不是她的 char_left 肩旁）？
+  options:
+  - 畫面右後方、被她的肩膀遮住約 1/3（同 s010）
+  - 維持畫面左，在她的 char_right 肩旁（需修改全片固定位置規則的例外說明）
+  status: resolved
+  resolution: s058 她 profile_right，@drone 在遠側、從頭部右上方露出一半（照 char_left 規則）。
+- id: Q25
+  where: shots.s063.subjects
+  category: 4
+  severity: medium
+  quote: 在她 char_left 肩旁
+  question: s063 首幀與末幀 @drone 在畫面哪一邊？是否仍然被她的肩膀遮住一部分？
+  options:
+  - 畫面右後方、被肩膀遮住約 1/3（符合 char_left 規則）
+  - 畫面左（需允許該鏡 @drone 在 char_right 側）
+  status: resolved
+  resolution: s063 @drone 改 center_right、從她頭部右後方露出一半。
+- id: Q26
+  where: shots.s059.subjects
+  category: 4
+  severity: medium
+  quote: 接下來三鏡是她看到的看板。
+  question: s059–s061 是 @luna 的主觀視角（看到的是哪些看板、離她多遠、在她的上方還是下方），還是不含她的獨立空景鏡頭？
+  options:
+  - 獨立空景鏡頭：看板在 @city 各處的地面附近，不必對應她的視線
+  - 主觀視角：看板是比觀景台矮的大樓外牆，三鏡都改為俯角
+  - 請指定每面看板的位置
+  status: resolved
+  resolution: s059–s061 是穿插的城市空景，不是她的主觀鏡頭（寫進 s058 notes）。
+- id: Q27
+  where: entities.billboard_media.look.film
+  category: 10
+  severity: medium
+  quote: 電影：上下有黑邊的寬銀幕畫面
+  question: 三種影像的看板長寬比是多少、實際寬度約幾 m？黑邊是看板內影像的一部分嗎？半透明是透到什麼程度（透出外牆約幾 %）？
+  options:
+  - 三面看板都是 16:9、寬約 20 m；電影影像在看板內自帶上下黑邊；透明度約 20%，仍可看到外牆輪廓
+  - 電影看板 2.39:1、其他 16:9
+  - 請指定
+  status: resolved
+  resolution: 看板 16:9、寬約 20 m、約 30% 透明；電影的黑邊是看板內影像的一部分。
+- id: Q28
+  where: entities.billboard_media.definition
+  category: 1
+  severity: medium
+  quote: Final Chorus 起 @city 的全息看板恢復後播的影像，對應歌詞「讓電影、讓音樂、讓動畫重新醒來」
+  question: 除了 s059–s061 三面特寫看板，其他鏡頭（s057、s062、s064、s065）的看板要播什麼？是輪流這三種影像，還是繼續用抽象色塊？
+  options:
+  - 所有看板都只播這三種影像，輪流分配
+  - 只有特寫的三面播這三種，其餘仍是抽象色塊
+  - 遠景看板播這三種，街景近處的看板仍是抽象色塊
+  status: resolved
+  resolution: 其他鏡頭的看板輪流播這三種影像或抽象色塊，遠景不要求看得出內容（billboard_media.elsewhere）。
+- id: Q29
+  where: shots.s059.beat_events
+  category: 5
+  severity: low
+  quote: 看板影像在這一拍亮到最飽和
+  question: '[46,3.5] 的「亮到最飽和」是模型生成還是後製？首幀的看板飽和度是多少％，最飽和時是多少％？'
+  options:
+  - 後製：看板區域飽和度與亮度在 3 幀內提高約 20% 再回落
+  - 模型：由影片模型自行表現，不要求量化
+  status: resolved
+  resolution: '[46,3.5] 改為後製 glow_pulse 約 1.3 倍。'
+- id: Q30
+  where: shots.s062.first_frame
+  category: 4
+  severity: low
+  quote: 越過 @luna 的左肩往外拍
+  question: s062 的鏡頭離她多遠、離地多高（相對她的頭頂）？@drone 在她左肩旁時，鏡頭穿過哪裡越過她的左肩？
+  options:
+  - 鏡頭在她背後約 1.5 m、高於頭頂約 0.6 m，@drone 在畫面左緣前景
+  - 鏡頭在觀景台頂面上（約離地 166 m）往下俯拍，請指定位置
+  status: resolved
+  resolution: s062 鏡頭在她身後約 1 m、比頭頂高 0.5 m，越過她的右肩（@drone 在左肩，不擋鏡頭）。
+- id: Q31
+  where: shots.s063.last_frame
+  category: 4
+  severity: medium
+  quote: 她身後是夜空，腳下遠處是彩色的 @city
+  question: 末幀的仰角有多大？畫面下緣是否看得到矮牆外的 @city（要的話鏡頭只能微仰，畫面的下 1/4 是彩色的 @city）？
+  options:
+  - 微仰（約 10°）：畫面下 1/4 是遠處彩色的 @city、上方是夜空
+  - 明顯仰拍（約 30°）：畫面只有夜空與矮牆，@city 不在畫面內，末幀描述刪去「腳下遠處是彩色的 @city」
+  status: resolved
+  resolution: s063 仰角首幀 10°、末幀 25°；末幀只剩夜空與天邊的城市光暈，刪掉「腳下遠處的城市」。
+- id: Q32
+  where: shots.s063.beat_events
+  category: 5
+  severity: medium
+  quote: '[49,4.5] 人聲「LIVE AI」，她的 char_right 拳往天空高舉'
+  question: 舉拳的拍點要用 113.24 s（約 [49,5.4]）還是維持 [49,4.5]？
+  options:
+  - 改為 [49,5.4]，與人聲 113.24 s 對齊
+  - 維持 [49,4.5]，把 sync 標記的秒數改掉
+  status: resolved
+  resolution: 舉拳改到 [49,5.4]（人聲 113.24 s）。
+- id: Q33
+  where: shots.s067.beat_events
+  category: 5
+  severity: medium
+  quote: '[53,1.2] 人聲「LIVE AI」：全城的燈同時 glow_pulse 一次'
+  question: 閃白與全城 glow_pulse 要落在 120.92 s（約 [53,2.2]）還是 [53,1.2]（bar 53 第一拍後）？
+  options:
+  - 改為 [53,2.2]，與人聲 120.92 s 對齊（後面的較小 pulse 也相應改）
+  - 維持 [53,1.2]，當作拍點重音，並把 sync 的秒數改掉
+  status: resolved
+  resolution: 全城 glow_pulse＋閃白改到 [53,2.2]（人聲 120.92 s），第二次改到 [53,4]。
+- id: Q34
+  where: shots.s064.motion.subject
+  category: 1
+  severity: low
+  quote: 每一拍 @signal_tower 的全部燈帶同時 glow_pulse 一次
+  question: s064 的每拍脈動包含哪些發光物？只有洋紅分層燈帶（含觀景台上下兩圈），還是也包含肋線、斜樑線、天線細線、警示燈？
+  options:
+  - 只有洋紅分層燈帶（12 圈＋觀景台上下兩圈）
+  - 洋紅燈帶＋肋線＋斜樑線＋天線細線（警示燈除外）
+  - 全部發光物（含警示燈）
+  status: resolved
+  resolution: s064 只有洋紅分層燈帶（含觀景台上下兩圈）脈動；肋線、天線、警示燈不變。
+- id: Q35
+  where: shots.s067.motion.subject
+  category: 8
+  severity: low
+  quote: 全城的燈同時 glow_pulse 一次（塔的燈帶、所有看板、街燈；
+  question: 後製的 glow_pulse 的範圍與做法：用亮度閾值遮罩整張圖，還是只選看板、街燈、塔燈帶三類？大樓窗光與 @hovercar 燈帶是否包含？
+  options:
+  - 全畫面亮度閾值遮罩（高亮處全部脈動，包含窗光與車燈）
+  - 只脈動看板、街燈、塔燈帶，用人工遮罩
+  - 請指定
+  status: resolved
+  resolution: 用亮度閾值遮罩選出全城的燈（塔燈帶與線、看板、街燈、窗光、車底燈帶都算）。
+- id: Q36
+  where: shots.s066.first_frame
+  category: 4
+  severity: medium
+  quote: 從外環走道外側的半空平視：@luna 坐在矮牆頂上
+  question: s066 的鏡頭在矮牆的哪一側？她面向的是城市還是別的方向？她身後的失焦背景是 @city 還是塔身？
+  options:
+  - 鏡頭在走道（內側）側前方，她側坐面向畫面左，背景是外側的城市燈光
+  - 鏡頭在外側半空，她面向鏡頭方向（三分之四朝左），背景是塔身與入口窗（不是 @city）
+  - 請指定
+  status: resolved
+  resolution: s066 鏡頭在矮牆外側半空、面向她；她越過鏡頭看城市；她身後改為觀景台全景窗與控制室的燈光。
+- id: Q37
+  where: shots.s068.first_frame
+  category: 6
+  severity: low
+  quote: 和 s048 同一個構圖，現在是彩色：@launch_roof 的艙口周圍一圈青色燈環亮著
+  question: 's068 中艙口開著還是已關閉？開口裡平台頂面是否仍發白光（彩色版是 #e8f4ff 白光）？那一串比周圍低的雨滴是否保留？'
+  options:
+  - 艙口仍開著、平台頂面發白光；10 顆低雨滴不保留（雨正常落下）
+  - 艙口開著、平台頂面發白光，低雨滴的位置標示成正往下落的水珠
+  - 艙口已關閉成完整的鋼板（需說明何時關上）
+  status: resolved
+  resolution: s068 艙口開著、平台頂面發白光；那一串低雨滴已混進一般的雨裡落下。
+- id: Q38
+  where: shots.s070.notes
+  category: 6
+  severity: medium
+  quote: 回顧 3／4。@balloon_child 依 glossary 不再出現，只拍飛走的 @balloon。
+  question: s070 的 @balloon 位置與大小是否要和 s050 對齊（畫面寬 75%、高 15%、直徑 9%），鏡頭 shot_size 是否也改成 FS，只是少了小孩？
+  options:
+  - 對齊 s050：FS、仰拍，氣球在畫面寬 75%／高 15%、直徑 9%，小孩的位置是空的街道
+  - 維持 s070 現狀（INSERT，氣球 6%），接受構圖不完全相同
+  - 請指定
+  status: resolved
+  resolution: s070 與 s050 同鏡位；人不見了、@balloon 飄到畫面上緣（寬約 70%、高約 5%、直徑 6%）；景別 INSERT。
+- id: Q39
+  where: shots.s072.first_frame
+  category: 3
+  severity: low
+  quote: 畫面左側遠方的地平線透出一條細的暖金色光（黎明的第一道光）
+  question: 黎明光的位置、色值、佔畫面比例，以及本鏡結尾要亮到什麼程度（只是地平線一條光，還是整個天空開始變色）？
+  options:
+  - '只有地平線一條光，色約 #ffb24a，高約畫面高 3%，結尾增亮到約 2 倍；天空不變'
+  - 地平線光＋上方天空由深藍漸變成淡紫，請指定範圍
+  status: resolved
+  resolution: '黎明光：畫面左側地平線一條暖金 #ffc46b，高約畫面高 3%、寬約畫面左半，亮度由約 30% 升到約 60%（後製）；夜空淡約 10%。'
+- id: Q40
+  where: shots.s073.transition_in
+  category: 6
+  severity: low
+  quote: 'type: dissolve, beats: 1'
+  question: 溶接的 1 拍落在哪個區間？s073 的運動（鏡頭平移與轉頭）從 [57,1] 起算，還是溶接結束後才開始？
+  options:
+  - 溶接疊在 [57,1]–[57,2]，運動從 [57,2] 開始
+  - 溶接疊在 [56,4]–[57,1]（吃掉 s072 的最後一拍），運動從 [57,1] 開始
+  status: resolved
+  resolution: 溶接疊在 s073 的第一拍（[57,1]–[57,2]），s073 的運動從 [57,1] 起算。
+- id: Q41
+  where: shots.s073.first_frame
+  category: 7
+  severity: high
+  quote: 畫面最右邊那一欄的中層螢幕還是灰色的 @city 畫面。
+  question: s073 首幀那面螢幕裡，灰色與彩色各佔多少、分界在哪？剩下的一小塊彩色是哪個位置、約佔螢幕多少 %？
+  options:
+  - 首幀螢幕約 85% 已是灰色（從左下角往右上擴散），右上角剩約 15% 彩色
+  - 首幀螢幕仍是全彩，灰色在本鏡才從左下角開始出現
+  - 首幀螢幕已全灰（刪除「吞掉剩下的彩色」）
+  status: resolved
+  resolution: s073 首幀那面螢幕約 90% 灰、右上角約 10% 彩色。
+- id: Q42
+  where: shots.s073.motion.subject
+  category: 5
+  severity: medium
+  quote: 灰色從畫面一角往外擴散，吞掉螢幕裡剩下的一小塊彩色（後製）
+  question: 灰色擴散從哪個角落開始、起訖拍點各是什麼（例如 [57,2]–[57,4]）？擴散是在她轉頭看到之前就開始，還是她看向它之後？
+  options:
+  - 左下角開始，[57,2]–[57,4] 等速擴散到全螢幕；她 [57,2] 起轉頭，兩者同時
+  - 左下角開始，她轉頭到位（[57,3]）後才開始擴散，到 [58,1] 前完成
+  - 請指定
+  status: resolved
+  resolution: 灰色從左下往右上擴散，[57,2]–[57,4]；她在 [57,2.5] 察覺轉頭；加 beat_events。
+- id: Q43
+  where: shots.s073.first_frame
+  category: 1
+  severity: medium
+  quote: '@monitor_wall 的約 15 面螢幕全都是彩色的 @city 畫面'
+  question: Outro 時主螢幕（正中欄中間層）顯示什麼？s073 可見的 15 面裡有沒有主螢幕？
+  options:
+  - 主螢幕在 Outro 也顯示彩色城市畫面（@signal_wave 只在 Intro）
+  - 主螢幕仍顯示 @signal_wave，且 s073 的 15 面包含它
+  - 主螢幕不在 s073 畫面內
+  status: resolved
+  resolution: s073 可見的 15 面不含主螢幕；Outro 時主螢幕顯示平靜的 @signal_wave。
+- id: Q44
+  where: entities.monitor_wall.look.outro
+  category: 4
+  severity: low
+  quote: 只有最右邊一欄中層那面仍是灰色的城市畫面
+  question: 灰色螢幕是牆上的哪個固定位置（相對於 @pod、入口或鏡位）？s073 的鏡頭從哪裡拍，才能讓它是畫面最右欄？
+  options:
+  - 以 s073 鏡位為準：畫面右緣的最後一欄；牆上位置由鏡位決定，無其他限制
+  - 固定在牆上一個位置（請指定相對於入口方向）
+  status: resolved
+  resolution: 灰色螢幕固定在從主螢幕往右數第 6 欄的中層；s073 平移前它在畫面最右一欄。
+- id: Q45
+  where: shots.s073.subjects
+  category: 6
+  severity: low
+  quote: 畫面左緣是玻璃罩開著的 @pod
+  question: s073 的 @pod 狀態：平台是否在原位、底座頂面的白光亮不亮、玻璃罩兩半開多大？
+  options:
+  - 平台已升走，底座頂是空的暗洞，白光不亮，玻璃罩全開
+  - 平台回到原位，頂面白光仍亮
+  - 請指定
+  status: resolved
+  resolution: '@pod 玻璃罩全開、平台已回到底座頂端、頂面發白光。'
+- id: Q46
+  where: shots.s074.first_frame
+  category: 4
+  severity: medium
+  quote: 看著畫面外的那面灰色螢幕，眉頭微收；@drone 在她左肩旁。她身後是失焦的彩色螢幕光，畫面右側有一塊失焦的灰色。
+  question: s074 首幀那塊畫面右側的灰色是她正在看的灰色螢幕嗎？她看的灰色螢幕在畫面內還是畫面外？
+  options:
+  - 在畫面內：灰色螢幕在畫面右側（失焦），她看向它
+  - 在畫面外：畫面右側的灰色塊刪除，背景只剩彩色失焦
+  status: resolved
+  resolution: s074 灰色螢幕在畫面外右邊，背景只有彩色螢幕光（刪掉右側的灰色）。
+- id: Q47
+  where: shots.s074.drone
+  category: 4
+  severity: low
+  quote: 在她 char_left 肩旁（她面向鏡頭，所以是畫面右）
+  question: s074 首幀 @drone 在畫面的哪裡、是否被她遮住？轉向鏡頭的過程中 @drone 如何移動到畫面右？
+  options:
+  - 首幀 @drone 在她頭部後方被遮住約一半，轉頭時滑到畫面右
+  - 首幀 @drone 已在畫面右上（與末幀位置一致），不管是否違反 char_left 規則
+  status: resolved
+  resolution: s074 首幀 @drone 在遠側、被她的頭擋住大半；轉向鏡頭後在畫面右。
+- id: Q48
+  where: shots.s074.post
+  category: 9
+  severity: medium
+  quote: 最後約 1 秒淡出到黑
+  question: '淡出是否淡到純黑（最後一幀 #000000）？若是，decisions.final_frame 的「最後一格」指淡出開始前的畫面嗎？字標是否一起淡出？'
+  options:
+  - 淡到純黑；「最後一格」指淡出開始前的畫面，字標一起淡出
+  - 淡到約 10% 亮度停住，最後一幀仍可辨識她
+  - 不淡出，改為直接停在她直視鏡頭的畫面
+  status: resolved
+  resolution: 最後約 1 秒（133.3–134.3 s）畫面與字標一起淡到純黑；decisions.final_frame 指淡出前的最後一個完整畫面。
+- id: Q49
+  where: shots.s074.overlay
+  category: 8
+  severity: low
+  quote: CSFCCA／LIVE AI 字標，[58,1] 起疊在畫面下 1/3、不壓到她的臉（後製）
+  question: 字標的排版（一行還是兩行）、顏色、大小，以及是淡入還是從 [58,1] 直接出現？
+  options:
+  - 一行，白色，高約畫面高 6%，從 [58,1] 起淡入 0.5 s
+  - 兩行（CSFCCA 在上、LIVE AI 在下），白色，直接出現
+  - 沿用另行提供的字標檔（請指定檔案）
+  status: resolved
+  resolution: 字標兩行（CSFCCA 上、LIVE AI 下）置中於畫面下 1/4、白色加淡光暈，[58,1] 起 6 幀淡入，最後一起淡出；s074 她的臉放在畫面上半。
+- id: Q50
+  where: story.outro.story
+  category: 7
+  severity: low
+  quote: 只剩最邊緣的一面螢幕仍是灰色
+  question: story.outro 的「最邊緣的一面螢幕」是否就是 glossary 的「最右邊一欄中層那面」？
+  status: resolved
+  resolution: story 改為「只剩一面螢幕仍是灰色」，位置以 monitor_wall.outro 為準。
+- id: Q51
+  where: shots.s065.first_frame
+  category: 1
+  severity: low
+  quote: 路人撐著傘或拉起帽子走著
+  question: 路人是撐傘、拉帽，還是各一部分？大約各幾位？
+  options:
+  - 約一半撐傘、一半拉帽
+  - 全部撐傘（不拉帽）
+  - 由生成決定，不做限制
+  status: resolved
+  resolution: s065 約 6 位路人背對鏡頭：3 位撐傘、3 位拉起深色外套兜帽。
+- id: Q52
+  where: shots.s038.first_frame
+  category: 4
+  severity: medium
+  quote: 鏡頭在這排機櫃旁、她 char_left 那一側的走道上
+  question: （Claude 自查）鏡頭在她 char_left 那一側時，她不可能正側面朝畫面右；@drone 也不會在靠鏡頭那一側。
+  status: resolved
+  resolution: Bridge s038 修正：鏡頭改在她 char_right 那一側（入口窗走道），她正側面朝畫面右；@drone 在遠側、從頭部右後方露出一半。這是已確認鏡頭的幾何修正，構圖意圖不變。

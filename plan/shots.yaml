@@ -2066,17 +2066,17 @@ shots:
         facing: profile_right
         state: 站在一座內端副控台前（入口窗走道畫面左側那一排，從 s037 的鏡頭看），char_right 手握推桿，把它往前推到底；表情得意
       - ref: "@drone"
-        placement: {x: center_left, y: upper, depth: fg}
-        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁，也就是靠鏡頭這一側，在她頭部的畫面左上方、不擋住她的臉
+        placement: {x: center, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁，也就是遠側，從她頭部右後方露出約一半
         facing: profile_right
         state: 跟著她
       - ref: "@signal_tower"
         placement: {x: center_right, y: middle, depth: mg}
         size: 副控台的斜面桌板佔畫面下緣約 20%，推桿在畫面寬約 45%、畫面高約 85%；副控台背後那排機櫃從畫面中央往畫面右後方延伸，最近一台高出畫面上緣；畫面左後方是亮著的主控台一角
     first_frame: >
-      鏡頭在這排機櫃旁、她 char_left 那一側的走道上，胸口高度平視：@luna 站在這排機櫃靠房間中心那一端的副控台前，腰以上，身體正側面朝畫面右、低頭看著桌板；
+      鏡頭在這排機櫃旁、她 char_right 那一側的走道上（入口窗走道），胸口高度平視：@luna 站在這排機櫃靠房間中心那一端的副控台前，腰以上，身體正側面朝畫面右、低頭看著桌板；
       她的 char_right 手握著桌板中央直槽裡的推桿，推桿停在靠她的這一端。副控台背後是一整排高約 2.2 m 的深色機櫃，從畫面中央往畫面右後方延伸，機櫃都不亮。
-      畫面左後方是亮著的主控台一角，青光從畫面左側打在她的臉與肩膀上。@drone 在她左肩旁、靠鏡頭這一側，在她頭部的畫面左上方。
+      畫面左後方是亮著的主控台一角，青光從畫面左側打在她的臉與肩膀上。@drone 在她頭部右後方、被她的頭擋住一半。
     motion:
       camera: {move: static, speed: slow, realize: none}
       subject:
@@ -2087,7 +2087,7 @@ shots:
         realize: model+post
     last_frame: >
       同一構圖：推桿推到底，副控台桌板亮著青色方塊；背後整排機櫃亮著青色燈條與洋紅細線，右後方相鄰的那排也亮著，青光照亮她的側臉；
-      @luna 抬頭看著亮起的機櫃，正側面朝畫面右；@drone 在她頭部的畫面左上方。
+      @luna 抬頭看著亮起的機櫃，正側面朝畫面右；@drone 在她頭部右後方。
     beat_events:
       - at: [34, 3.35]
         sync: 人聲「Make」onset 78.82 s
@@ -2740,4 +2740,862 @@ shots:
     post: []
     overlay: null
     status: proposed
-    notes: 回到凍住的她（使用者選的閃回「最後回到她」）。人聲「來」在本鏡開頭、「讓你的世界」從 [40,2] 開始。下一鏡是 Final Chorus 的爆發（bar 41）。
+    notes: 回到凍住的她（使用者選的閃回「最後回到她」）。鏡頭在入口窗起算的 3 點鐘方向（和 s046 同一側），離她約 1 m。人聲「來」在本鏡開頭、「讓你的世界」從 [40,2] 開始。下一鏡是 Final Chorus 的爆發（bar 41）。
+
+  - id: s053
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [41, 1], to: [42, 1]}
+    lyrics: [22]
+    place: "@signal_tower"
+    shot_size: MS
+    angle: low
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 腰以上（站在主控台上），頭頂到腰約畫面高 70%
+        facing: three_quarter_right
+        state: 雙手仍按著光柱；顏色從掌心往全身回來，表面的灰色被頂開、吹散
+      - ref: "@signal_tower"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 光柱在畫面 center_right 從畫面下緣直到上緣外，寬約畫面寬 12%
+    first_frame: >
+      鏡頭和 s052 同在入口窗起算的 3 點鐘方向，退到離她約 2.5 m、與主控台桌面同高（離地約 1 m）往上仰約 20°：灰色定格的 @luna 腰以上站在主控台上，
+      雙手掌心貼在光柱上，抬頭看著光柱上段；光柱下面 3 段是灰白色的亮光、上面 2 段是暗的；背景是灰色、沒有燈的控制室天花板與機櫃頂端。
+      地板上灰色的無人機在畫面下緣之外。全畫面灰階。
+    motion:
+      camera: {move: push_in, speed: slow, realize: model, note: 推近約 8%}
+      subject:
+        text: >
+          [41,1] 她掌心貼著光柱的地方先亮回原本的膚色，顏色從兩手沿手臂往肩膀、胸口、全身與頭髮漫開，[41,3] 全身恢復；
+          顏色經過的地方，表面那層灰色被往外頂開，變成細小的灰色顆粒，在 8 幀內往外飄散、消失。
+          光柱：[41,1] 下面 3 段在 2 幀內從灰白變回青白；[41,1.5] 第 4 段、[41,2] 第 5 段各在 2 幀內亮起，[41,2] 頂端套環亮起。[41,3] 起她下巴抬高、眼神堅定。
+        realize: model+post
+    last_frame: >
+      同一構圖（推近約 8%）：@luna 全身恢復彩色，雙手按著亮成青白色的光柱，抬頭看著光柱頂端，眼神堅定；周圍的控制室仍是灰色，光柱的青白光照亮她的臉與白衣。
+    beat_events:
+      - at: [41, 1]
+        sync: bar 41 正拍（Final Chorus 進入）
+        event: 掌心先恢復顏色；下面 3 段光柱變回青白
+      - at: [41, 2]
+        event: 光柱 5 段全亮，頂端套環亮起
+      - at: [41, 3]
+        event: 她全身恢復彩色
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: >
+      顏色從體內衝破灰色（story）。和 Chorus 1 bar 22 的差異（Claude 代決）：bar 22 是張開雙臂、從胸口往外炸開一圈衝擊波；這裡她不放手、不張臂，
+      顏色從貼著光柱的掌心往全身回來，力量順著光柱往上送，廣播從塔頂發出（s054）。
+      做法：P6 出彩色版關鍵幀給影片模型，模型生成全彩片段；開頭的全灰與灰→彩的擴散由後製把片段去色後用遮罩逐步還原，灰色顆粒也由後製加。
+
+  - id: s054
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [42, 1], to: [43, 1]}
+    lyrics: [23]
+    place: "@signal_tower"
+    shot_size: ELS
+    angle: low
+    route: C
+    variation: small
+    subjects:
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全塔（0–240 m）直立在畫面正中，塔底在畫面高約 90%、天線頂端在約 15%（塔高約畫面高 75%）；鏡頭在塔外約 600 m、離地約 60 m 略仰，面對入口窗的另一側（同 s042 的方向）
+      - ref: "@full_broadcast"
+        placement: {x: center, y: top, depth: mg}
+        size: 球心在天線頂端（畫面高約 15%）；[43,1] 球半徑約 80 m，下緣碰到觀景台頂面（畫面高約 38%），上半球超出畫面上緣
+      - ref: "@city"
+        placement: {x: center, y: bottom, depth: bg}
+        size: 塔周圍與畫面下 1/4 是灰色的 @city
+    first_frame: >
+      夜空中整座灰色的 @signal_tower，從塔底廣場到天線頂端都在畫面裡，四周是灰色的 @city；塔身、燈帶、肋上的線都是灰色（燈帶仍亮著、沒有顏色）；
+      觀景台朝鏡頭這一側的全景窗都透出淡淡的青白光——那是她點亮的光柱從房間正中照出來。天線頂端的警示燈是灰白色。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject:
+        text: >
+          [42,1]–[42,2] 光柱的光從觀景台頂部沿天線往上衝，天線正面的細線由下往上亮成青色（不是灰色）；[42,2]–[42,3.06] 細線保持亮著，頂端警示燈的光暈慢慢變大到約 2 倍（蓄力）；
+          [42,3.06] 人聲「LIVE」，天線頂端射出 @full_broadcast：整個畫面閃白 2 幀，接著一顆以天線頂端為球心的球往外擴大，
+          球面經過的塔身由上往下恢復顏色（天線、細頸、觀景台上圈燈帶……），[43,1] 球的下緣碰到觀景台頂面。
+        realize: post
+    last_frame: null
+    beat_events:
+      - at: [42, 1]
+        event: 光沿天線往上衝
+      - at: [42, 3.06]
+        sync: 人聲「LIVE」96.20 s
+        event: "@full_broadcast 從天線頂端發出（flash_frames 2 幀）"
+    transition_in: {type: cut}
+    post:
+      - {effect: flash_frames, at: [42, 3.06], frames: 2}
+    overlay: null
+    status: proposed
+    notes: 全頻廣播發出（Claude 代決：從塔頂發出，不是從她胸口）。route C：用一張全灰的塔靜態圖，所有光、球與恢復都由後製。
+
+  - id: s055
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [43, 1], to: [44, 1]}
+    lyrics: [23]
+    place: "@signal_tower"
+    shot_size: LS
+    angle: low
+    route: A
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身（站在主控台上），頭頂到腳底約畫面高 30%（同 s046 的鏡位）
+        facing: three_quarter_right
+        state: 放開光柱，轉向飛上來的 @drone，笑；最後轉向入口窗
+      - ref: "@drone"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 直徑約畫面寬 2%
+        facing: to_camera
+        state: 首幀灰色停在主控台外的地板上；恢復後浮起，飛到她 char_left 肩旁
+      - ref: "@signal_tower"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 同 s046 的鏡位：主控台在畫面下 1/3，光柱在畫面 center_right、全高到頂端套環
+      - ref: "@full_broadcast"
+        placement: {x: center, y: top, depth: mg}
+        size: 波前從畫面上緣（天花板）往下掃過整個畫面
+    first_frame: >
+      和 s046 同一個鏡位（入口窗起算 3 點鐘方向、離中心約 6 m、低處仰拍）：控制室全是灰色，只有 @luna 和光柱是彩色——她站在主控台上，雙手按著亮成青白色的光柱，抬頭看著光柱頂端；
+      灰色的 @drone 停在主控台外側的地板上（畫面右下），光帶不亮。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [43,1] @full_broadcast 的波前從天花板往下掃過整個房間（4 幀），經過的地方恢復顏色、廣播系統重新通電：主控台、副控台、機櫃燈條、插座環、頂端套環亮回來，
+          沿窗的白色指示燈恢復白色；全景窗不再顯示窗上影像，透明地看得到外面。窗外遠處的 @city 這時仍是灰色（地面要到 [43,4] 才開始被波掃到）。
+          [43,1.2] 波前掃過 @drone，它恢復白色、光帶亮起，從地板浮起，[43,1.5]–[43,3] 沿弧線飛上來，停在她 char_left 肩旁。
+          [43,1.5] 她放開光柱，轉頭看著飛上來的 @drone，笑出來；[43,3] 起她轉身面向畫面右（入口窗的方向）。
+        realize: model+post
+    last_frame: >
+      同一個鏡位：整個控制室恢復彩色、燈都亮著；@luna 站在主控台上，正側面朝畫面右（入口窗的方向）、笑著；@drone 在她 char_left 肩旁，也就是她的遠側，
+      從她頭部後方露出一半（畫面上在她頭部右後方），青色光帶亮著。
+    beat_events:
+      - at: [43, 1]
+        event: 波前掃過房間
+      - at: [43, 1.2]
+        event: "@drone 恢復"
+      - at: [43, 3]
+        event: "@drone 回到她肩旁；她轉向入口窗"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: "@drone 在 Final Chorus 爆發時恢復、回到她肩旁（使用者選）。窗上不再出現 @window_feed（Claude 代決）。鏡頭在 3 點鐘方向往 9 點鐘看，入口窗（12 點鐘）在畫面右。"
+
+  - id: s056
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [44, 1], to: [45, 1]}
+    lyrics: [24]
+    place: "@city"
+    shot_size: ELS
+    angle: top
+    route: C
+    variation: small
+    subjects:
+      - ref: "@full_broadcast"
+        placement: {x: center, y: middle, depth: mg}
+        size: 以畫面正中的塔為圓心的地面恢復圓；首幀直徑約畫面寬 12%（地面半徑約 180 m），末幀直徑約畫面寬 100%（約 3 km）
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 正上方往下看，塔與觀景台圓盤在畫面正中，觀景台直徑約畫面寬 1.3%
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 佔滿畫面；鏡頭在塔頂上方約 2.5 km，畫面寬約 3 km
+    first_frame: >
+      從 @signal_tower 正上方高空垂直往下看夜間的 @city：塔在畫面正中，以它為圓心、直徑約畫面寬 12% 的圓內已經是彩色（霓虹、看板、街燈的顏色），圓外全是灰色；
+      圓的邊緣是 @full_broadcast 的光環。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: 地面上的恢復圓以塔為圓心往外擴大，[45,1] 直徑擴到約畫面寬 100%（碰到畫面左右兩緣）；光環掃過的地方由灰變成彩色，之後不再退回。
+        realize: post
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 全城恢復的俯瞰（呼應 s025 的一個街區，這次是整座城）。route C：全灰與全彩兩張同構圖靜態圖，用擴大的圓形遮罩過渡；光環在畫面上至少畫成畫面寬 0.5% 粗，加光暈（@full_broadcast.look.front 的可見寬度規則）。
+
+  - id: s057
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [45, 1], to: [46, 1]}
+    lyrics: [24]
+    place: "@street"
+    shot_size: LS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@full_broadcast"
+        placement: {x: center, y: middle, depth: bg}
+        size: 從街尾（畫面正中遠處）往鏡頭推過來的一道光環，橫跨整條街寬
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: mg}
+        size: 從街道正中往街尾看的單點透視，街寬約畫面寬 60%
+      - ref: "@hovercar"
+        placement: {x: center, y: upper, depth: bg}
+        size: 街道上方 6–10 m 車道上一列車，最近一台寬約畫面寬 8%
+    first_frame: >
+      @street 的單點透視：鏡頭在路面上方約 1.6 m、看向街尾，兩側店樓、看板、停在半空的 @hovercar、停住的雨與零散的定格路人全是灰色；
+      街尾遠處、畫面正中已經是彩色的街區，交界上是 @full_broadcast 的光環，@signal_tower 的剪影在街尾正上方、塔身亮著彩色。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          光環沿街道往鏡頭推過來，[45,4] 掃過鏡頭；經過的地方恢復顏色與動態：雨重新落下、路人繼續走、@hovercar 車底燈帶亮回顏色並往街尾方向緩緩前進、看板亮回彩色影像。
+        realize: model+post
+    last_frame: >
+      同一構圖：整條 @street 恢復彩色，雨在下、路人在走、@hovercar 在車道上往街尾緩緩前進，看板播著彩色影像；街尾是亮著的 @signal_tower。
+    beat_events:
+      - at: [45, 4]
+        event: 光環掃過鏡頭
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: >
+      回到她走過的 @street。做法：P6 出彩色、恢復後的街景關鍵幀（不含光環），影片模型生成會動的彩色片段；灰色靜止版由後製把首幀去色、凍結；
+      光環與灰／彩交界全由後製疊加，用推近的遮罩把灰色版換成彩色片段。
+
+  - id: s058
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [46, 1], to: [46, 3]}
+    lyrics: []
+    place: "@signal_tower"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 腰以上，頭頂到腰約畫面高 65%
+        facing: profile_right
+        state: 在外環走道上、入口窗外一步，往前一步雙手扶上矮牆，看著下面恢復的 @city
+      - ref: "@drone"
+        placement: {x: center_left, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁，也就是遠側，從她頭部後方露出約一半（畫面上在她頭部右上方）
+        facing: profile_right
+        state: 跟著她
+      - ref: "@signal_tower"
+        placement: {x: screen_left, y: middle, depth: bg}
+        size: 她背後（畫面左）是入口窗的開口與亮著的控制室；畫面右是走道外緣的矮牆
+      - ref: "@city"
+        placement: {x: center_right, y: middle, depth: bg}
+        size: 畫面右半、矮牆外是約 158 m 下彩色的夜間 @city
+    first_frame: >
+      鏡頭在外環走道上、沿走道離她約 3 m，平視：走道從畫面左往右延伸的方向就是窗牆與矮牆之間的 1.5 m 寬通道，鏡頭看的是走道的橫切面——畫面左是入口窗的開口與亮著的控制室，
+      畫面右是矮牆與牆外彩色的 @city。@luna 腰以上站在入口窗外一步、正側面朝畫面右（朝矮牆），風吹動馬尾；@drone 在她頭部右上方、被她的頭擋住一半。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: 她往前一步到矮牆邊，雙手扶上矮牆頂緣，看著下面的 @city 。
+        realize: model
+    last_frame: >
+      @luna 雙手扶著矮牆頂緣，正側面朝畫面右、看著下面彩色的 @city，嘴角上揚；@drone 在她頭部右上方。
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 她走出控制室看 @city （Claude 代決）。接下來 s059–s061 是穿插的 @city 空景（不是她的主觀鏡頭）：她看著的這座城，三面看板分別在播。
+
+  - id: s059
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [46, 3], to: [47, 1]}
+    lyrics: [25]
+    place: "@city"
+    shot_size: INSERT
+    angle: low
+    route: A
+    variation: small
+    subjects:
+      - ref: "@billboard_media"
+        placement: {x: center, y: middle, depth: mg}
+        size: 一面大樓外牆前的全息看板（約 20 m 寬、16:9），佔畫面寬約 80%；播的是「電影」
+    first_frame: >
+      從街上仰拍一棟高樓外牆前的大型全息看板，看板佔畫面大半：畫面內是 @billboard_media 的「電影」影像——看板內上下有黑邊的寬銀幕畫面，一個人影剪影朝地平線上的日出邁步，
+      逆光與鏡頭光暈；看板邊緣是發光的青色細框，看板約 30% 透明、隱約透出後面的外牆；周圍是夜空與其他大樓的燈。沒有任何文字。
+    motion:
+      camera: {move: push_in, speed: slow, realize: model}
+      subject:
+        text: 看板裡的影像在播：剪影慢慢往前走、日出的光變亮。
+        realize: model
+    last_frame: null
+    beat_events:
+      - at: [46, 3.5]
+        sync: 人聲「讓電影」約 105.46 s
+        event: 看板 glow_pulse（光暈約 1.3 倍，後製）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 「讓電影」（Claude 代決：三面看板各播一種，各半小節）。
+
+  - id: s060
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [47, 1], to: [47, 3]}
+    lyrics: [25]
+    place: "@city"
+    shot_size: INSERT
+    angle: eye
+    route: A
+    variation: small
+    subjects:
+      - ref: "@billboard_media"
+        placement: {x: center, y: middle, depth: mg}
+        size: 一面全息看板（約 20 m 寬、16:9）佔畫面寬約 80%；播的是「音樂」
+    first_frame: >
+      平視一面大型全息看板：畫面內是 @billboard_media 的「音樂」影像——一個抱著吉他的演奏者剪影，四周一圈圈往外擴的彩色同心環與高低起伏的音波色條（沒有數字或刻度）；
+      看板邊緣是發光的洋紅細框，約 30% 透明。沒有任何文字。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: 音波色條跟著拍子起伏，同心環往外擴。
+        realize: model
+    last_frame: null
+    beat_events:
+      - at: [47, 1.9]
+        sync: 人聲「讓音樂」約 106.82 s
+        event: 看板 glow_pulse（光暈約 1.3 倍，後製）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 「讓音樂」。
+
+  - id: s061
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [47, 3], to: [48, 1]}
+    lyrics: [25]
+    place: "@city"
+    shot_size: INSERT
+    angle: high
+    route: A
+    variation: small
+    subjects:
+      - ref: "@billboard_media"
+        placement: {x: center, y: middle, depth: mg}
+        size: 一面全息看板（約 20 m 寬、16:9）佔畫面寬約 80%；播的是「動畫」
+    first_frame: >
+      略俯拍一面大型全息看板：畫面內是 @billboard_media 的「動畫」影像——一隻手繪風格的圓滾滾狐狸形小生物在粉彩色的草地上彈跳，線條清楚、色塊平塗；
+      看板邊緣是發光的青色細框，約 30% 透明。沒有任何文字。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: 小生物在看板裡彈跳一下、落地時草地的花一起晃動。
+        realize: model
+    last_frame: null
+    beat_events:
+      - at: [47, 4]
+        sync: 人聲「讓動畫」約 107.98 s
+        event: 小生物彈到最高點
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 「讓動畫」。
+
+  - id: s062
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [48, 1], to: [48, 3]}
+    lyrics: [25]
+    place: "@signal_tower"
+    shot_size: LS
+    angle: high
+    route: A
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: screen_left, y: lower, depth: fg}
+        size: 腰以上的背影，佔畫面左下約 1/4
+        facing: away
+        state: 雙手扶著矮牆，看著 @city 
+      - ref: "@drone"
+        placement: {x: screen_left, y: middle, depth: fg}
+        size: 直徑約她頭部的 1.2 倍；在她 char_left 肩旁（她背對鏡頭，所以是畫面左）
+        facing: away
+        state: 跟著她
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 畫面其他部分是從 158 m 高往下看的彩色 @city，大樓外牆前的看板都在播影像
+      - ref: "@hovercar"
+        placement: {x: center, y: lower, depth: bg}
+        size: 遠處街道上的車，每台寬約畫面寬 1%，只看得到燈帶
+    first_frame: >
+      鏡頭在她身後約 1 m、比她頭頂高約 0.5 m，越過她的右肩往外俯拍：她背對鏡頭在畫面左下，雙手扶著外環走道的矮牆，@drone 在她左肩旁（畫面左）；
+      矮牆外是約 158 m 下的彩色 @city，高樓之間一面面全息看板都亮著、播著電影、音樂、動畫或抽象色塊，街上的燈與 @hovercar 的燈帶流動著；細雨在燈光裡閃。
+    motion:
+      camera: {move: push_in, speed: slow, realize: model}
+      subject:
+        text: "@city 的燈與看板影像在動，她的馬尾被風吹動。"
+        realize: model
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 「重新醒來」。
+
+  - id: s063
+    section: final_chorus
+    story_beat: final_chorus
+    span: {from: [48, 3], to: [50, 1]}
+    lyrics: [26, 27]
+    place: "@signal_tower"
+    shot_size: FS
+    angle: low
+    route: B
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀腰以上靠在矮牆邊；末幀全身站在矮牆頂上，身高約畫面高 60%
+        facing: three_quarter_right
+        state: 踏上矮牆頂站直，面向 @city ；「LIVE AI」時右拳往天空舉
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁，也就是遠側，從她頭部右後方露出約一半
+        facing: three_quarter_right
+        state: 跟著她升高
+      - ref: "@city"
+        placement: {x: center, y: lower, depth: bg}
+        size: 首幀矮牆外下方的彩色 @city；末幀只剩夜空與天邊的 @city 光暈
+    first_frame: >
+      鏡頭在外環走道上、她的右後方低處往上仰拍約 10°：@luna 雙手扶著矮牆頂緣，身體四分之三朝畫面右、看著 @city ；@drone 在她頭部右後方；矮牆外是夜空與下方彩色的 @city。
+    motion:
+      camera: {move: tilt_up, speed: medium, realize: model}
+      subject:
+        text: >
+          [48,3.8] 人聲「這不是」，她雙手一撐、踏上矮牆頂（寬約 20 cm 的金屬頂緣）站直，[49,2] 站穩，面向 @city ；@drone 跟著升到她左肩旁。鏡頭跟著往上仰到約 25°。
+          [49,5.4] 人聲「LIVE AI」，她的 char_right 拳往天空高舉，臉上是大大的笑。
+        realize: model
+    last_frame: >
+      仰拍約 25°：@luna 全身站在矮牆頂上，身體四分之三朝畫面右，char_right 拳舉向夜空、笑著；@drone 在她頭部右後方；她身後是夜空與天邊的 @city 光暈。
+    beat_events:
+      - at: [48, 3.8]
+        sync: 人聲「這不是」110.12 s
+        event: 她踏上矮牆
+      - at: [49, 5.4]
+        sync: 人聲「LIVE AI」113.24 s
+        event: 舉拳
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 「這不是等待未來」：她不等，主動站上去面對整座城（Claude 代決）。bar 49 是 5 拍小節；本鏡跨 bar 48 後半與 bar 49。
+
+  - id: s064
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [50, 1], to: [51, 1]}
+    lyrics: [27]
+    place: "@city"
+    shot_size: ELS
+    angle: high
+    route: C
+    variation: small
+    subjects:
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全塔在畫面正中，高約畫面高 45%，所有燈帶亮著
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 佔滿畫面的彩色夜間 @city，遠到地平線
+      - ref: "@hovercar"
+        placement: {x: center, y: lower, depth: bg}
+        size: 車道上流動的車底燈帶，小到只是光點
+    first_frame: >
+      高空斜俯拍整座恢復彩色的夜間 @city：@signal_tower 在畫面正中，洋紅燈帶一圈圈亮著、肋上的青色線亮著、天線頂端警示燈亮著；四周的街區霓虹與看板全亮，
+      @hovercar 的燈帶在車道上流動；遠方地平線一路是彩色的燈。
+    motion:
+      camera: {move: orbit_right, speed: slow, realize: post, note: 視差繞行約 3°}
+      subject:
+        text: 每一拍 @signal_tower 的洋紅分層燈帶（含觀景台上下兩圈）同時 glow_pulse 一次（光暈 1 幀內放大到約 1.5 倍、3 幀回落），像心跳一樣跟著音樂；肋線、天線與警示燈不變。
+        realize: post
+    last_frame: null
+    beat_events:
+      - {at: [50, 1], event: 燈帶 glow_pulse}
+      - {at: [50, 2], event: 燈帶 glow_pulse}
+      - {at: [50, 3], event: 燈帶 glow_pulse}
+      - {at: [50, 4], event: 燈帶 glow_pulse}
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: Post-chorus 開場：全城恢復。
+
+  - id: s065
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [51, 1], to: [52, 1]}
+    lyrics: [28]
+    place: "@street"
+    shot_size: LS
+    angle: eye
+    route: A
+    variation: small
+    subjects:
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: mg}
+        size: 單點透視的街道，街寬約畫面寬 60%
+      - ref: "@hovercar"
+        placement: {x: center, y: upper, depth: bg}
+        size: 上方車道的車，最近一台寬約畫面寬 10%
+    first_frame: >
+      恢復彩色的 @street：細雨在燈光裡落下，濕的石板路面映著霓虹與看板的彩光；約 6 位路人背對鏡頭走著，3 位撐傘、3 位拉起外套的兜帽（深色，不是黃色），看不到臉；
+      上方車道的 @hovercar 亮著燈帶往街尾緩緩前進；街尾是亮著的 @signal_tower。沒有任何文字招牌。
+    motion:
+      camera: {move: track, speed: slow, realize: model, note: 鏡頭沿街道緩慢往前}
+      subject:
+        text: 雨落下、路人走動、@hovercar 沿車道往街尾前進、看板影像在播。
+        realize: model
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 「讓想像成真」： @city 恢復日常動態。
+
+  - id: s066
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [52, 1], to: [53, 1]}
+    lyrics: [28]
+    place: "@signal_tower"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 腰以上，頭頂到腰約畫面高 65%
+        facing: three_quarter_left
+        state: 坐在矮牆頂上、雙腳垂在外側，笑著看 @city 
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁，也就是近側（她面向畫面左前方，所以在畫面右）
+        facing: three_quarter_left
+        state: 在她肩旁輕輕上下浮動
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: bg}
+        size: 她身後失焦的觀景台全景窗與控制室的燈光
+    first_frame: >
+      鏡頭在矮牆外側的半空、與她同高平視，面向她：@luna 坐在矮牆頂上、雙手撐在身體兩側，四分之三朝畫面左、越過鏡頭看著 @city ，笑著，風吹動馬尾；@drone 在她左肩旁（畫面右）。
+      她身後是失焦的觀景台全景窗與控制室亮著的青色燈光。
+    motion:
+      camera: {move: orbit_left, speed: slow, realize: model}
+      subject:
+        text: 她笑出聲、肩膀放鬆，轉頭看了 @drone 一眼；@drone 的光帶亮一下回應（glow_pulse）。
+        realize: model
+    last_frame: null
+    beat_events:
+      - {at: [52, 3], event: "@drone 光帶 glow_pulse"}
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 慶祝中的她與 @drone（Claude 代決）。s063 末幀她站著，本鏡已坐下（跳接）。
+
+  - id: s067
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [53, 1], to: [54, 1]}
+    lyrics: [29]
+    place: "@city"
+    shot_size: ELS
+    angle: high
+    route: C
+    variation: small
+    subjects:
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 同 s064 的鏡位，全塔高約畫面高 45%
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 佔滿畫面的彩色 @city
+    first_frame: 和 s064 同一個鏡位：高空斜俯拍整座彩色的夜間 @city，@signal_tower 在畫面正中亮著。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 5%}
+      subject:
+        text: >
+          [53,2.2] 人聲「LIVE AI」：全城的燈同時 glow_pulse 一次（光暈 1 幀內放大到約 2 倍、4 幀回落），同時整個畫面閃白 2 幀；[53,4] 再一次較小的 glow_pulse（約 1.5 倍）。
+          「全城的燈」用亮度閾值遮罩選出（塔的燈帶與線、看板、街燈、大樓窗光、車底燈帶都算）。
+        realize: post
+    last_frame: null
+    beat_events:
+      - at: [53, 2.2]
+        sync: 人聲「LIVE AI」120.92 s
+        event: 全城 glow_pulse＋flash_frames 2 幀
+      - at: [53, 4]
+        event: 全城較小的 glow_pulse
+    transition_in: {type: cut}
+    post:
+      - {effect: flash_frames, at: [53, 2.2], frames: 2}
+    overlay: null
+    status: proposed
+    notes: bar 53 是恢復的最高點（story，能量全片最高 10.0）。
+
+  - id: s068
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [54, 1], to: [54, 3]}
+    lyrics: [30]
+    place: "@launch_roof"
+    shot_size: INSERT
+    angle: eye
+    route: C
+    variation: small
+    subjects:
+      - ref: "@launch_roof"
+        placement: {x: center, y: middle, depth: mg}
+        size: 和 s048 同構圖：艙口與水泥地面佔畫面下半
+    first_frame: >
+      和 s048 同一個構圖，現在是彩色：@launch_roof 的艙口開著，周圍一圈青色燈環亮著，開口裡與地面齊平的平台頂面發著白光；雨滴是透明的水珠、映著 @city 的彩光一起往下落
+      （s048 那一串比較低的雨滴已經混在一般的雨裡）；濕的水泥地面有倒影，遠方是彩色的 @city。沒有人。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject: {text: 雨往下落（後製加雨層）。, realize: post}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 回顧 1／4：和 Build 的閃回同鏡位，這次是彩色（Claude 代決：回顧用和閃回一樣的四個地方與鏡位，一灰一彩對照）。
+
+  - id: s069
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [54, 3], to: [55, 1]}
+    lyrics: [30]
+    place: "@street"
+    shot_size: INSERT
+    angle: eye
+    route: C
+    variation: small
+    subjects:
+      - ref: "@street"
+        placement: {x: center, y: lower, depth: mg}
+        size: 和 s049 同構圖：水窪佔畫面下半
+    first_frame: 和 s049 同一個鏡位，現在是彩色：水窪映著霓虹與看板的彩光，雨點落在水面上打出一圈圈漣漪。沒有人。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject: {text: 水面的漣漪擴散（後製）。, realize: post}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 回顧 2／4。
+
+  - id: s070
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [55, 1], to: [55, 3]}
+    lyrics: [30]
+    place: "@street"
+    shot_size: INSERT
+    angle: low
+    route: C
+    variation: small
+    subjects:
+      - ref: "@balloon"
+        placement: {x: center_right, y: top, depth: mg}
+        size: 直徑約畫面寬 6%，中心在畫面寬約 70%、畫面高約 5%（比 s050 更高，正往畫面上緣外飄）
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 和 s050 同鏡位：背景是彩色的商店樓與看板的光，小孩原本站的地方空著
+    first_frame: >
+      和 s050 同一個鏡位（略仰拍），現在是彩色：原本小孩所在的路面空著，背景是亮著的商店樓與全息看板的彩光、落下的雨；紅色的 @balloon 已飄到畫面上緣附近，繩子在下面晃。畫面裡沒有人。
+    motion:
+      camera: {move: tilt_up, speed: slow, realize: post, note: 視差上仰約 3%}
+      subject: {text: 氣球緩緩往上飄、飄出畫面上緣（後製）。, realize: post}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 回顧 3／4。小孩依 glossary 不再出現，只拍飛走的 @balloon；鏡位和 s050 相同，構圖差別就是人不見了、氣球飛高了。
+
+  - id: s071
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [55, 3], to: [56, 1]}
+    lyrics: [30]
+    place: "@street"
+    shot_size: LS
+    angle: low
+    route: C
+    variation: small
+    subjects:
+      - ref: "@hovercar"
+        placement: {x: center, y: upper, depth: mg}
+        size: 和 s051 同構圖：4 台 @hovercar 由畫面左下往右上排開
+      - ref: "@street"
+        placement: {x: center, y: lower, depth: bg}
+        size: 下方是彩色的街道與店樓
+    first_frame: >
+      和 s051 同一個鏡位，現在是彩色：由畫面左下往右上 4 台 @hovercar——珍珠白（青色燈帶）、酒紅（洋紅燈帶）、深藍（青色燈帶）、銀灰（洋紅燈帶）（前三台照 s017 她踩的順序），
+      下方是彩色的街道與看板。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject: {text: 4 台車沿車道往畫面右上方緩緩前進約 5 m（後製以分層平移做出）。, realize: post}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 回顧 4／4。
+
+  - id: s072
+    section: post_chorus
+    story_beat: post_chorus
+    span: {from: [56, 1], to: [57, 1]}
+    lyrics: [31]
+    place: "@signal_tower"
+    shot_size: MCU
+    angle: eye
+    route: A
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 胸口以上，頭頂到胸口約畫面高 75%
+        facing: three_quarter_left
+        state: 坐在矮牆上，看著遠方地平線，安靜地微笑
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（近側，畫面右）
+        facing: three_quarter_left
+        state: 在她肩旁輕輕浮動
+    first_frame: >
+      @luna 胸口以上，四分之三朝畫面左、看著遠方，安靜地微笑，風吹動前額的碎髮；@drone 在她左肩旁（畫面右）。她身後是失焦的彩色 @city 燈光；
+      畫面左側遠方的地平線上有一條細的暖金色光（#ffc46b，高約畫面高 3%、寬約畫面左半），上方的夜空比前幾鏡淡約 10%。
+    motion:
+      camera: {move: push_in, speed: slow, realize: model}
+      subject:
+        text: 她輕輕吸一口氣、閉一下眼再睜開；地平線那條暖金色的亮度從約 30% 升到約 60%（後製調色）。
+        realize: model+post
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 「讓未來發生」：Post-chorus 收尾，地平線開始天亮（Claude 代決）。
+
+  - id: s073
+    section: outro
+    story_beat: outro
+    span: {from: [57, 1], to: [58, 1]}
+    lyrics: [32]
+    place: "@hq_control"
+    shot_size: LS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 全身背影，身高約畫面高 35%
+        facing: away
+        state: 站在 @monitor_wall 前看著螢幕
+      - ref: "@drone"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她背對鏡頭，所以是畫面左）
+        facing: away
+        state: 跟著她
+      - ref: "@monitor_wall"
+        placement: {x: center, y: middle, depth: bg}
+        size: 彎曲的螢幕牆佔畫面上 2/3，約 15 面可見（不含主螢幕）；首幀畫面最右邊一欄的中層那面就是 @monitor_wall.look.outro 的灰色螢幕
+      - ref: "@pod"
+        placement: {x: screen_left, y: middle, depth: mg}
+        size: "@pod 在畫面左緣，只露出一半：玻璃罩兩半向兩側全開，平台已回到底座頂端、頂面發白光"
+    first_frame: >
+      @hq_control 裡：@monitor_wall 可見的約 15 面螢幕都是彩色的 @city 畫面（恢復後的 @city），照亮整個房間；@luna 背對鏡頭站在螢幕牆前、畫面偏左，@drone 在她左肩旁；
+      畫面左緣是玻璃罩全開的 @pod。畫面最右邊那一欄的中層螢幕約 90% 是灰色的 @city 畫面，只剩右上角約 10% 還是彩色。
+    motion:
+      camera: {move: track, speed: slow, realize: model, note: 鏡頭往畫面右平移約 2 m，讓灰色螢幕移到畫面右三分之一處}
+      subject:
+        text: >
+          [57,2]–[57,4] 那面螢幕裡的灰色從左下往右上擴散，吞掉右上角剩下的彩色（後製）；[57,2.5] 她察覺，慢慢轉頭看向那面螢幕。其他螢幕維持彩色。
+        realize: model+post
+    last_frame: >
+      鏡頭平移後：灰色螢幕在畫面右三分之一，整面已經變灰；@luna 在畫面中央偏左，背對鏡頭、頭轉向那面灰色螢幕；@drone 在她左肩旁。
+    beat_events:
+      - {at: [57, 2], event: 灰色開始吞掉剩下的彩色}
+      - {at: [57, 2.5], event: 她轉頭看向灰色螢幕}
+      - {at: [57, 4], event: 那面螢幕全灰}
+    transition_in: {type: dissolve, beats: 1, note: "溶接疊在本鏡第一拍（[57,1]–[57,2]）：從塔上的黎明溶接回 @hq_control（時間與地點都跳過）"}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 伏筆（story）：@silence 沒有完全消失。回到 @hq_control 的過程不拍（Claude 代決）。
+
+  - id: s074
+    section: outro
+    story_beat: outro
+    span: {from: [58, 1], to: end}
+    lyrics: [32]
+    place: "@hq_control"
+    shot_size: MCU
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: upper, depth: mg}
+        size: 胸口以上，頭頂到胸口約畫面高 75%，臉在畫面上半
+        facing: to_camera
+        state: 首幀正側面看著畫面外右邊的灰色螢幕；回頭直視鏡頭
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；首幀在她遠側、被她的頭擋住大半；她轉向鏡頭後在畫面右（她的左肩旁）
+        facing: to_camera
+        state: 跟著她轉向鏡頭
+      - ref: "@monitor_wall"
+        placement: {x: center, y: middle, depth: bg}
+        size: 她身後失焦的彩色螢幕光（灰色螢幕在畫面外右邊，畫面內看不到）
+    first_frame: >
+      @luna 胸口以上，臉朝畫面右（正側面），看著畫面外右邊的那面灰色螢幕，眉頭微收；@drone 在她遠側、從她頭部後方露出一小部分。她身後是失焦的彩色螢幕光。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: "[58,1.5] 她轉頭回來，[58,2.5] 直視鏡頭，眼神堅定、嘴角微微上揚；@drone 跟著轉到她左肩旁（畫面右）、轉向鏡頭。之後她定住看著鏡頭，直到片尾。"
+        realize: model
+    last_frame: >
+      @luna 胸口以上直視鏡頭，眼神堅定、嘴角微微上揚；@drone 在她左肩旁（畫面右）；背景是失焦的彩色螢幕光。這是淡出開始前的最後一個完整畫面（decisions.final_frame）。
+    beat_events:
+      - at: [58, 2.5]
+        event: 她直視鏡頭（最後一格的姿勢）
+    transition_in: {type: cut}
+    post:
+      - {effect: fade_to_black, note: "最後約 1 秒（約 133.3–134.3 s）畫面與字標一起淡到純黑 #000000"}
+    overlay: {zone: "畫面下 1/4 置中（壓在她胸口的白衣上，不壓到臉）", content: "CSFCCA／LIVE AI 官方字標，兩行（CSFCCA 在上、LIVE AI 在下），白色加淡白光暈；[58,1] 起 6 幀淡入，最後和畫面一起淡出（後製）"}
+    status: proposed
+    notes: 最後一格回頭看鏡頭（decisions.final_frame 指淡出前的最後一個完整畫面）。字標只在後製疊。

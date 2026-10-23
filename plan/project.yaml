@@ -93,3 +93,15 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   build_freeze: shrinking_color_sphere   # 她的顏色撐住一個球形彩色圈（@luna_hold），每數一聲縮小，「1」時縮到她身上
   build_after_freeze: flashback_restored_things   # 凍住後閃回她恢復過的東西，全是灰的，最後回到她
   build_structure: claude_decides        # 鏡頭數交給 Claude：10 鏡（bar 37 快切 4 鏡、bar 38 定格 1 鏡、bar 39 閃回 4 鏡、bar 40 回到她 1 鏡）
+  # 2026-10-24 Final Chorus～Outro（Claude 代決：使用者授權「自行完成所有任務直到 P3 結束」，以下皆可改）
+  final_burst: palms_through_column      # 顏色從貼著光柱的掌心回到全身，灰色被頂開吹散；力量順光柱上天線（和 bar 22 的胸口衝擊波做出差異）
+  full_broadcast_origin: antenna_top     # 全頻廣播從天線頂端發出（@full_broadcast），不是從她身上
+  final_chorus_echo: restored_by_wave    # 波掃過控制室時 ECHO 恢復、飛回她肩旁
+  city_restore_shown_by: aerial_then_street   # 先俯瞰整座城被波掃過，再回到 @street 的街面
+  media_lyrics: three_billboards         # 「讓電影、讓音樂、讓動畫」＝三面看板各播一種（@billboard_media），各半小節
+  final_chorus_end: stand_on_parapet_fist   # 「這不是等待未來」：她站上外環走道矮牆，「LIVE AI」時舉拳
+  post_chorus_recap: same_four_as_flashback # 回顧用 Build 閃回的同四個構圖，一灰一彩對照；@balloon_child 不再出現，只拍飛走的 @balloon
+  post_chorus_peak: citywide_light_pulse # bar 53 全城的燈同時亮一下＋閃白 2 幀
+  dawn: post_chorus_end                  # Post-chorus 最後地平線開始天亮
+  outro_transition: dissolve_time_skip   # 從塔上溶接回 CSFCCA 控制室，不拍回去的過程
+  late_structure: 22_shots               # Final Chorus 11 鏡、Post-chorus 9 鏡、Outro 2 鏡

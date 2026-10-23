@@ -102,8 +102,9 @@ beats:
     bars: [41, 49]
     places: ["@signal_tower", "@city"]
     story: >
-      顏色從 @luna 體內衝破灰色，全頻廣播發出。整座 @city 從 frozen 變成 restored：
-      巨幕重新播放電影、音樂、動畫；@drone 也恢復。
+      顏色從 @luna 體內衝破灰色：從貼著光柱的掌心擴散到她整個身體，表面的灰色被頂開、吹散；她不放手，力量順著光柱上到天線，
+      @full_broadcast 從塔頂發出。波掃過控制室，@drone 恢復、飛回她肩旁；波一路擴大，整座 @city 從 frozen 變成 restored，
+      回到她走過的 @street，雨與路人重新動起來；看板重新播放電影、音樂、動畫（@billboard_media）。她走出控制室，站上外環走道的矮牆，面對整座城舉起拳頭。
     emotion: 自信、開闊、勝利
     lyric_link: 「讓你的世界被所有人看見…讓電影、讓音樂、讓動畫重新醒來」
     status: proposed
@@ -113,7 +114,8 @@ beats:
     bars: [50, 56]
     places: ["@city"]
     story: >
-      全城恢復，雨與人群重新移動；bar 53 是恢復的最高點。之後快速回顧她走過的每個地方，現在都是彩色。
+      全城恢復，雨與人群重新移動，塔的燈帶跟著音樂一下下亮；@luna 坐在矮牆上和 @drone 一起笑。bar 53 是恢復的最高點：全城的燈同時亮一下。
+      之後快速回顧她走過的地方——和 Build 閃回同樣的四個地方，現在都是彩色。最後地平線開始天亮。
     emotion: 狂喜、慶祝
     lyric_link: 「LIVE AI／讓想像成真／讓未來發生」
     status: proposed
@@ -123,7 +125,7 @@ beats:
     bars: [57, 58]
     places: ["@hq_control"]
     story: >
-      回到 @hq_control，@monitor_wall 全部恢復彩色，只剩最邊緣的一面螢幕仍是灰色，
+      回到 @hq_control，@monitor_wall 全部恢復彩色，只剩一面螢幕仍是灰色，
       而且灰色正在那面螢幕裡慢慢擴散——伏筆。@luna 看著它，最後回頭直視觀眾。片尾疊 CSFCCA／LIVE AI 字標。
     emotion: 滿足→警覺
     lyric_link: 「CSFCCA LIVE AI」＝CSFCCA 是這個故事裡的組織

@@ -21,3 +21,10 @@ refs/experiment/compare.png
 
 # P1 listening-check audio (regenerable via tools/make_click_check.py)
 analysis/check/
+
+# P3 LoRA：候選圖、整理後的資料集、訓練輸出與快取（可由 results.json／selection 檔重建）
+lora/dataset_raw/
+lora/v*/dataset/
+lora/v*/output/
+lora/v*/logs/
+lora/v*/samples/
