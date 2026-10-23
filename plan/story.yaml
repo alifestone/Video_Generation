@@ -1,0 +1,118 @@
+# 敘事層：每段落發生什麼。只寫劇情與情緒，不寫景別、構圖、顏色等畫面細節（那些寫在 shots.yaml）。
+# 角色、場景、物件一律用 @id（定義在 glossary.yaml）。
+
+logline: >
+  一股 @silence 正把世界的顏色、聲音與動態抹成灰色定格；CSFCCA 喚醒 AI 救援程式 @luna，
+  她和 @drone 必須在倒數歸零前，從 @signal_tower 把整座 @city 重新「播」回來。
+theme: 創作讓世界重新動起來；@silence 不會徹底消失，所以創作必須一直繼續。
+tone: 冷酷未來感，帶懸疑，最後解決。
+ending: 勝利，但留下伏筆（@silence 沒有完全消失）。
+status: proposed
+
+beats:
+  - id: intro
+    section: intro
+    bars: [0, 4]
+    places: ["@hq_control"]
+    story: >
+      @hq_control 收到 @city 正被 @silence 吞沒的訊號。@monitor_wall 亮起，畫面一格格變灰。
+      @drone 啟動倒數，@pod 裡的 @luna 睜開眼睛。
+    emotion: 冷靜、緊繃、蓄勢
+    lyric_link: 「訊號亮起、畫面開啟、倒數開始、世界重啟、321」＝控制室收到訊號、出擊倒數
+    status: proposed
+
+  - id: hook
+    section: hook
+    bars: [5, 8]
+    places: ["@launch_tunnel", "@city"]
+    story: >
+      倒數歸零，@luna 從 @pod 被送進 @launch_tunnel，衝出地面，第一次看見 frozen 的 @city 全貌。
+    emotion: 爆發、果斷
+    lyric_link: 「LIVE AI」＝出擊
+    status: proposed
+
+  - id: verse
+    section: verse
+    bars: [9, 16]
+    places: ["@city"]
+    story: >
+      @luna 走進 frozen 的 @city。她碰到的東西會短暫恢復顏色與動態，但很快又被 @silence 蓋回灰色。
+      @drone 帶路，指向遠方的 @signal_tower。
+    emotion: 好奇→發現自己的能力→意識到不夠
+    lyric_link: 「一張空白的畫面…沒有攝影棚、沒有既定劇本…把不可能的畫面變成眼前」＝她在 frozen 的 @city 裡第一次讓東西動起來
+    status: proposed
+
+  - id: prechorus
+    section: prechorus
+    bars: [17, 20]
+    places: ["@city"]
+    story: >
+      @silence 開始加速擴散。@drone 再次投影倒數，@luna 與 @drone 奔向 @signal_tower，
+      她每一次觸碰都生成一小塊恢復的世界，卻一塊塊被吞回去。
+    emotion: 時間壓力、加速
+    lyric_link: 「每一次生成都是新的宇宙／時間正在倒數」
+    status: proposed
+
+  - id: chorus1
+    section: chorus1
+    bars: [21, 33]
+    places: ["@city", "@signal_tower"]
+    story: >
+      bar 21：@silence 追上並吞沒 @luna。bar 22：她在灰色中啟動第一次廣播，一圈彩色衝擊波從她身上擴散，
+      一整個街區恢復——光、聲音、巨幕上的故事一起醒來。她和 @drone 趁勢登上 @signal_tower。
+    emotion: 窒息→爆發→主動出擊
+    lyric_link: 「LIVE AI 現在就創造未來…讓光影、讓聲音、讓故事全部醒來」
+    status: proposed
+
+  - id: bridge
+    section: bridge
+    bars: [34, 36]
+    places: ["@signal_tower"]
+    story: >
+      @signal_tower 內部。@luna 一處處接回塔的系統，每一個英文動詞是一個動作。
+    emotion: 俏皮、亢奮
+    lyric_link: 「Create it, Make it, Show me your world, Dream it, Build it, Let the future unfold」＝重建廣播系統
+    status: proposed
+
+  - id: build
+    section: build
+    bars: [37, 40]
+    places: ["@signal_tower"]
+    story: >
+      @silence 反撲，@signal_tower 全部熄燈，@drone 被凍成灰色掉落。
+      @luna 獨自倒數全頻廣播「3、2、1」；在「1」的瞬間，她自己也被凍結（bar 38 三拍定格）。
+    emotion: 冷靜→孤立→決斷
+    lyric_link: 「321 LIVE AI 現在就創造未來」＝最後一次廣播的倒數
+    status: proposed
+
+  - id: final_chorus
+    section: final_chorus
+    bars: [41, 49]
+    places: ["@signal_tower", "@city"]
+    story: >
+      顏色從 @luna 體內衝破灰色，全頻廣播發出。整座 @city 從 frozen 變成 restored：
+      巨幕重新播放電影、音樂、動畫；@drone 也恢復。
+    emotion: 自信、開闊、勝利
+    lyric_link: 「讓你的世界被所有人看見…讓電影、讓音樂、讓動畫重新醒來」
+    status: proposed
+
+  - id: post_chorus
+    section: post_chorus
+    bars: [50, 56]
+    places: ["@city"]
+    story: >
+      全城恢復，雨與人群重新移動；bar 53 是恢復的最高點。之後快速回顧她走過的每個地方，現在都是彩色。
+    emotion: 狂喜、慶祝
+    lyric_link: 「LIVE AI／讓想像成真／讓未來發生」
+    status: proposed
+
+  - id: outro
+    section: outro
+    bars: [57, 58]
+    places: ["@hq_control"]
+    story: >
+      回到 @hq_control，@monitor_wall 全部恢復彩色，只剩最邊緣的一面螢幕仍是灰色，
+      而且灰色正在那面螢幕裡慢慢擴散——伏筆。@luna 看著它，最後回頭直視觀眾。片尾疊 CSFCCA／LIVE AI 字標。
+    emotion: 滿足→警覺
+    lyric_link: 「CSFCCA LIVE AI」＝CSFCCA 是這個故事裡的組織
+    status: proposed

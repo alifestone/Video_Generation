@@ -1,0 +1,294 @@
+# Intro（s001–s005）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-23）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+round: intro_r1
+issues:
+  - id: Q01
+    where: shots.s001.motion.subject.text
+    quote: 持續小幅起伏
+    question: 尖峰出現後波形怎麼走？起伏的振幅上限、頻率、是否隨時間增減？
+    options: ["尖峰後約 4 幀內回到近乎直線，之後只有畫面高 3% 以內的微幅抖動", "尖峰後維持畫面高 10% 的起伏直到本鏡結束", "尖峰後回到平線，每拍再出現一次較小的尖峰"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：尖峰後約 4 幀回到近乎平線，之後只有不超過畫面高 3% 的微幅抖動。"
+  - id: Q02
+    where: shots.s001.beat_events[0].event
+    quote: 高約螢幕 1/3 的尖峰
+    question: 尖峰的形狀是單一向上的窄尖、上下對稱，還是只往上？（高度已改寫成畫面高的 1/3）
+    options: ["單一向上窄尖峰", "上下對稱的尖峰"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：單一向上的窄尖峰（glossary 與 s001 同步）。"
+  - id: Q03
+    where: shots.s001.beat_events[0].event
+    quote: 亮度抬升約 1 倍，4 幀內回落
+    question: glow_pulse 的峰值怎麼量？抬升與回落各用幾幀？
+    options: ["抬升 1 幀、回落 3 幀，共 4 幀", "瞬間抬升，回落 4 幀", "抬升 2 幀、回落 2 幀"]
+    severity: low
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：亮度 1 幀內抬升到約 2 倍，3 幀回落，共 4 幀。"
+  - id: Q04
+    where: shots.s001.first_frame
+    quote: 此時幾乎是一條平的直線，微微發光
+    question: first_frame 是淡入前還是淡入後的畫面？
+    severity: low
+    status: resolved
+    resolution: README 定義 first_frame＝本鏡第一個完整畫面、不含轉場效果；波形與畫面一起淡入。
+  - id: Q05
+    where: glossary.signal_wave.look.size
+    quote: 線寬約畫面高的 0.5%（在 ECU 中）
+    question: INSERT 裡線寬怎麼算？
+    severity: low
+    status: resolved
+    resolution: glossary 改成以「螢幕高」為單位；s001 註明主螢幕佔滿畫面，所以螢幕高＝畫面高。
+  - id: Q06
+    where: shots.s002.transition_in.note
+    quote: 位置對齊
+    question: s001→s002 的 match_cut 要對齊什麼？兩鏡波形大小差約 10 倍。
+    options: ["只對齊波形中心點在畫面正中，接受大小差異", "s002 主螢幕放大到波形橫跨畫面寬約 20%，縮小差距", "改用 cut"]
+    severity: high
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：只對齊波形中心（畫面水平正中、畫面高約 45%），接受約 7 倍的大小差，當作揭示式 match cut。s001 的波形也改在畫面高約 45%。"
+  - id: Q07
+    where: shots.s002.subjects[0].placement
+    quote: 牆面佔畫面寬 100%、畫面高的上 2/3
+    question: s002 主螢幕波形在畫面哪裡？@pod 與 @luna 會不會擋住它？
+    options: ["波形在畫面中心略偏上，@pod 頂端低於波形，不遮擋", "調整構圖讓波形落在畫面正中", "波形被 @pod 遮一部分，接受"]
+    severity: high
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：主螢幕波形中心在畫面高約 45%，@pod 頂端在約 70%，不遮擋；牆面範圍改為畫面高約 12%–78%。"
+  - id: Q08
+    where: shots.s002.first_frame
+    quote: 顯示 @signal_wave
+    question: s002 第一幀與整鏡內，主螢幕的波形是什麼狀態？
+    options: ["延續 s001 結尾的小幅起伏，整個 s002 持續起伏", "回到平線", "凍結成 s001 結尾那一幀"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：整個 s002 延續 s001 結尾的微幅抖動，不變灰。"
+  - id: Q09
+    where: shots.s002.shot_size
+    quote: "shot_size: ELS"
+    question: 景別標錯：@pod 高約畫面 1/4，依定義是 LS 而不是 ELS。
+    severity: medium
+    status: resolved
+    resolution: 構圖不變，改標 LS。
+  - id: Q10
+    where: shots.s002.first_frame
+    quote: 從 @hq_control 入口方向平視整個房間
+    question: 入口在哪、長什麼樣、畫面裡看不看得到？鏡頭距 @pod 幾公尺、離地多高？
+    options: ["入口在鏡頭背後、畫面中看不到；鏡頭距 @pod 約 6 m、離地 1.6 m", "入口是牆上的門洞，出現在畫面角落"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：入口在鏡頭背後、不入鏡；鏡頭距 @pod 約 6 m、離地 1.6 m。"
+  - id: Q11
+    where: shots.s002.motion.subject.text
+    quote: 每拍亮起約 10 面，到 [1,4] 全部亮完
+    question: 每拍實際亮幾面？（與 beat_events 的數字對不上）
+    options: ["[1,1] 2 面、[1,2] 12 面、[1,3] 12 面、[1,4] 其餘全部", "每拍固定 10 面"]
+    severity: high
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。依 Q14 改成以畫面內 21 面計算：[1,1] 正中欄上下 2 面、[1,2]／[1,3]／[1,4] 左右各一欄，每拍 6 面。"
+  - id: Q12
+    where: shots.s002.motion.subject.text
+    quote: 往左右兩側一面接一面亮起
+    question: 每一批在拍內是同時亮，還是由內往外逐面錯開？三層螢幕的亮起順序？
+    options: ["每批在拍點同一幀同時亮起，三層同時", "每批在該拍內由內往外逐面錯開，每面間隔 1–2 幀", "先中間層橫向擴散，再往上下層"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：每批在拍點同一幀同時亮，三層同時；由正中欄往外一欄一欄擴散。"
+  - id: Q13
+    where: shots.s002.beat_events[3]
+    quote: 剩下的螢幕全部亮起
+    question: 單面螢幕從黑到亮是瞬間還是淡入、用幾幀？
+    options: ["瞬間點亮（1 幀）", "淡入 4 幀"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：瞬間點亮（1 幀）。"
+  - id: Q14
+    where: shots.s002.subjects[0].size
+    quote: 牆面佔畫面寬 100%
+    question: 圓形房間只看得到對面半圈。面數是用畫面內看得到的（約 20 面），還是整圈 40 面？
+    options: ["以畫面內看得到的為準", "整圈 40 面，看不到的不管"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：以畫面內看得到的為準，7 欄 × 3 層＝21 面。"
+  - id: Q15
+    where: story.intro.story
+    quote: 畫面一格格變灰
+    question: 螢幕要先顯示彩色的城市再變灰，還是一亮起就是灰色？
+    options: ["亮起時是彩色，約 1 拍後變灰", "亮起就是灰階，story 改寫", "只有最後一批是從彩色變灰"]
+    severity: high
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a 的變體：亮起時是彩色，維持 3 幀，再用 6 幀由左往右掃成灰階，下一拍之前全部變灰；story 不必改。"
+  - id: Q16
+    where: shots.s002.last_frame
+    quote: 都是灰階的 @city 畫面
+    question: 靜止的灰階畫面看起來像黑白電視。要靠什麼讓觀眾認出是被 @silence 吞沒？
+    options: ["畫面內有懸在半空的雨滴等定格特徵", "部分螢幕顯示正在推進的灰色邊界", "不特別處理，由後面的鏡頭交代"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。改用「灰色邊界帶掃過螢幕」來交代 @silence（Q15 的掃過動作），不另外加特徵。"
+  - id: Q17
+    where: shots.s002.motion.subject.text
+    quote: 每面螢幕亮起時顯示 @city 的一個角落
+    question: 螢幕內容要生成幾張不同的城市畫面？可以重複使用嗎？
+    options: ["生成 6–8 張輪流使用", "生成 40 張各不相同", "同一張貼滿"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：生成 7 張不同的城市畫面輪流使用，每張有彩色與 frozen 兩版。"
+  - id: Q18
+    where: shots.s002.first_frame
+    quote: "@luna 在玻璃罩裡只是一個暗色剪影"
+    question: 螢幕全亮後，@luna 仍是剪影嗎？@pod 白光是否維持很暗？
+    options: ["仍是剪影，@pod 白光維持很暗", "螢幕光讓 @luna 的輪廓與白衣隱約可見，@pod 白光仍暗"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。b：螢幕光讓 @luna 的輪廓與白衣隱約可見，@pod 白光仍暗。"
+  - id: Q19
+    where: shots.s002.last_frame
+    quote: 房間被螢幕的灰白光照亮
+    question: 螢幕灰白光的色值與亮度？地面青色引導燈條是否仍看得清楚？
+    options: ["中性灰白約 #b0b4ba，比 @pod 白光暗，引導燈條仍清楚", "偏冷灰白，引導燈條被部分蓋過"]
+    severity: low
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：中性灰白約 #b0b4ba，比 @pod 白光暗，引導燈條仍清楚。"
+  - id: Q20
+    where: shots.*.variation
+    quote: "variation: medium"
+    question: variation 沒有定義。
+    severity: low
+    status: resolved
+    resolution: 在 vocab.variation 定義 small／medium／large，lint 檢查值。
+  - id: Q21
+    where: shots.s003.first_frame
+    quote: 被底座白光由下往上照亮
+    question: s002 的 @pod 白光很暗、s003 卻照亮了臉。亮度在切點直接跳，還是 s002 尾段先漸亮？
+    options: ["接受切點直接跳", "s002 最後 1 拍白光漸亮", "s003 也偏暗，臉只微亮"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：接受切點直接跳；寫進 s002 notes。"
+  - id: Q22
+    where: shots.s003.subjects[2].size
+    quote: 直徑約畫面高的 1/8
+    question: "@drone 在前景（比 @pod 近）卻只有畫面高 1/8，大小與深度矛盾。保留哪一個？"
+    options: ["保留前景，直徑改為畫面高 1/4 以上", "保留 1/8，深度改成在 @pod 旁或後方"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：保留前景，直徑改為畫面高 1/4；停穩位置約畫面寬 78%、高 22%。"
+  - id: Q23
+    where: shots.s003.subjects[2].state
+    quote: 在本鏡中途進入畫面
+    question: "@drone 何時開始滑入、何時停穩？路徑是直線還是弧線？"
+    options: ["[2,1] 開始滑入、[2,2] 停穩、[2,3] 投影", "[2,2] 開始滑入、[2,3] 停穩同時投影"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。b：[2,2] 開始沿水平直線滑入並減速，[2,3] 停穩同時投影。"
+  - id: Q24
+    where: glossary.drone.look.motion
+    quote: 輕微上下浮動
+    question: 浮動幅度與週期？
+    options: ["幅度畫面高 1%、週期約 1 拍", "幅度畫面高 3%、週期約 2 拍"]
+    severity: low
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。幅度約 2 cm（實體單位，不隨景別變）、週期約 2 拍。"
+  - id: Q25
+    where: shots.s003.motion.subject.text
+    quote: 在 @pod 正前方投影出 @countdown_ring
+    question: 投影時看不看得到從 @drone 到光環的光束？@drone 會不會擋住右上那段弧？
+    options: ["不畫光束，光環直接出現", "畫一道極淡的青色光錐", "光環不被 @drone 遮擋，@drone 位置要避開"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a＋c：不畫光束、光環直接出現；@drone 的位置避開光環。"
+  - id: Q26
+    where: glossary.countdown_ring.look.shape
+    quote: 垂直立在 @pod 正前方約 50 cm
+    question: 50 cm 從玻璃外表面算還是從中心軸算？光環圓心多高？
+    options: ["離玻璃外表面 50 cm，圓心與 @luna 眼睛同高", "貼著玻璃外側，圓心與 @luna 眼睛同高"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：離玻璃外表面 50 cm，圓心與 @luna 雙眼同高。"
+  - id: Q27
+    where: glossary.countdown_ring.look.count_rule
+    quote: 順序從畫面右上那段開始，逆時針
+    question: 3 段弧各自的位置？（以畫面正右為 0°、觀眾視角）
+    options: ["第 1 段中心 60°（右上）、第 2 段 180°（左）、第 3 段 300°（右下）", "第 1 段中心 90°（正上）、第 2 段 210°、第 3 段 330°"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：3 段弧中心在 60°（右上）、180°（左）、300°（右下），依序熄滅（逆時針）。"
+  - id: Q28
+    where: shots.s003.beat_events[0].event
+    quote: "@countdown_ring 出現，3 段弧同時亮起"
+    question: 光環要由影片模型畫，還是全部由後製合成？
+    options: ["全部由後製合成（s003、s005 一致）", "s003 由模型生成，s005 由後製遮罩熄滅"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：光環全部由後製合成（s003、s004 倒影、s005 一致）；@drone 光帶的 glow_pulse 也由後製做。"
+  - id: Q29
+    where: shots.s003.subjects
+    quote: "@pod 正前方立著發光的 @countdown_ring"
+    question: s003 的 @countdown_ring 在畫面中多大？（subjects 沒有列）
+    options: ["外徑約畫面高的 1/2", "外徑約畫面高的 2/3，圍住 @luna 的頭肩"]
+    severity: low
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：外徑約畫面高的 1/2，圓心在 @luna 雙眼；s003 的 @luna 頭頂改在畫面上緣下方約 1/5，讓光環不出框。"
+  - id: Q30
+    where: glossary.pod.look.opening
+    quote: 玻璃罩分成左右兩半，向兩側滑開
+    question: 兩半玻璃的接縫在正面會穿過 @luna 的臉。接縫放在哪裡？
+    options: ["接縫在艙的兩側，正面看不到", "正面有一條極細的垂直接縫"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：接縫在艙的左右兩側，正面看不到。"
+  - id: Q31
+    where: shots.s004.beat_events[0]
+    quote: 人聲「重啟」的「啟」
+    question: 睜眼要對齊哪個時間點？
+    severity: medium
+    status: resolved
+    resolution: 用人聲分軌＋faster-whisper medium 量得「啟」約 8.30 s，介於 [3,2] 與 [3,3]；at 改為 [3, 2.75]。
+  - id: Q32
+    where: shots.s005.beat_events
+    quote: 人聲「3」
+    question: 「3、2、1」的實際時間？
+    severity: high
+    status: resolved
+    resolution: 量得「3」9.50 s、「2」10.04 s、「1」10.54 s、「LIVE」11.22 s、「AI」11.76 s，分別落在 [4,1]～[4,4] 與 [5,1]；beat_events 維持 [4,1]～[4,3]，並在 [4,4] 註明人聲「LIVE」。
+  - id: Q33
+    where: shots.s005.beat_events[0].event
+    quote: 同時 @luna 臉上的青光減弱 1/3
+    question: 每熄一段弧，臉上的青光各減多少？全熄時是否為 0？
+    options: ["每段各減 1/3，全熄歸零", "只有第 1 段減 1/3，最後再降到 0"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：每段各減 1/3，全熄歸零。"
+  - id: Q34
+    where: shots.s005.beat_events
+    quote: 熄滅
+    question: 弧是瞬間熄滅還是淡出？熄滅後的深灰弧留在畫面上嗎？
+    options: ["2 幀內淡出，深灰弧可見", "瞬間熄滅，深灰弧可見", "熄滅後完全消失"]
+    severity: low
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：2 幀內淡成深灰，深灰弧留在畫面上。"
+  - id: Q35
+    where: shots.s005.motion.subject.text
+    quote: "[4,4] 時 @pod 底座白光迅速增強"
+    question: 白光增強用幾幀、什麼曲線？末幀白衣要亮到什麼程度？
+    options: ["線性 13 幀，末幀白衣接近 #ffffff 但保留皺褶", "前 3 幀緩、之後急升", "維持到 [5,1] 才一次爆白"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。b：[4,4] 起前 3 幀緩、之後急升，末幀白衣接近純白但保留皺褶；最後 2 幀閃白屬於下一鏡的轉場。"
+  - id: Q36
+    where: shots.s005.first_frame
+    quote: 透過光環的中央看 @pod 裡的 @luna
+    question: s005 畫面裡有沒有 @drone？有的話在哪？
+    options: ["不入鏡", "在右上前景，部分遮住右上弧的邊緣", "在 @luna 背後"]
+    severity: medium
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。a：不入鏡（寫在 s005 notes）。"
+  - id: Q37
+    where: shots.s005.subjects[0].size
+    quote: 外徑約畫面高的 90%，圓心與畫面中心重合
+    question: 光環佔畫面 90% 和 MCU（胸口以上）無法同時成立。以哪個為準？
+    options: ["以光環 90% 為準，@luna 取景可略大於 MCU", "以 MCU 為準，光環只露出一部分", "光環縮小到外徑約 0.6 m"]
+    severity: low
+    status: resolved
+    resolution: "使用者授權 Claude 決定（2026-10-23）。c：光環實體外徑改成約 0.6 m，在 MCU 下自然約佔畫面高 90%，兩者同時成立。"

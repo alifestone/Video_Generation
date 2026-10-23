@@ -1,0 +1,36 @@
+# 每支影片開頭由使用者決定的參數。lint 依這些值檢查 story 與 shots。
+schema_version: 1
+title: LUNA MV
+timeline: analysis/timeline.json
+lyrics: audio/lyrics.srt
+character_refs: refs/
+style_bible: docs/style_bible.md
+
+params:
+  narrative_type: story          # story | performance | mixed | abstract
+  lyric_mapping: section         # section（段落層對應）| line（每句都有畫面）| literal（字面照畫）
+  dance_shots: 0                 # 舞蹈英雄鏡頭數；0 = 不跳舞
+  lip_sync: false                # LUNA 不唱歌、不對嘴
+  second_characters:             # 允許的第二角色種類
+    allowed: [non_human, designed_human]
+    extras_count_as_character: false   # 路人不算第二角色
+  props_in_hand: allowed         # allowed | brief_only | forbidden
+  scene_limit: null              # null = 不設限
+  max_shot_bars: 2               # 一般鏡頭長度上限（小節）
+  brand_text: post_only          # 畫面內不出現任何文字；字標與字卡只在後製疊
+  brand_appears_if: story_relevant   # CSFCCA 只在劇情相關時出現
+
+decisions:                       # 使用者已確認的方向（2026-10-23）
+  concept: A 靜默協議
+  silence_form: area_only        # 靜默只是一片擴散的灰色區域，沒有核心或形體
+  drone: plot_role               # 無人機夥伴要負責劇情功能
+  ending: victory_with_hook      # 勝利後留伏筆
+  banned_motifs: [光鯨]
+  # 2026-10-23 回答 A01–A12（未留言的題目＝接受目前設定）
+  drone_name: ECHO               # A01：只是設定名稱，外殼上不出現文字
+  hq_control_staff: none         # A03：控制室沒有人員，只有 ECHO
+  city_style: near_future        # A04：懸浮車、全息看板（無文字）
+  frozen_passersby: gray_statue  # A05：frozen 城市的路人是定格的灰色人形
+  countdown_numbers: deferred    # A07：「3、2、1」數字字卡先不疊，完整影片產出後再決定
+  final_frame: look_back_to_camera   # A10：outro 最後一格 LUNA 回頭看鏡頭
+  hook_transition_in: {type: flash_white, frames: 2}   # A12：Hook 第一鏡的進場轉場

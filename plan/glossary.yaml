@@ -1,0 +1,214 @@
+# 名詞表：story.yaml 與 shots.yaml 只能用這裡的 id（實體寫 @id，詞彙直接寫值）。
+# vocab 是跨影片共用的詞彙；entities 是這支影片的角色、場景、物件、特效、狀態。
+
+vocab:
+  shot_size:
+    ECU: 大特寫，只拍眼睛或臉的一部分
+    CU: 特寫，整張臉，下緣到下巴
+    MCU: 近景，胸口以上
+    MS: 中景，腰以上
+    MLS: 中遠景，膝以上
+    FS: 全身，頭頂到腳底都在畫面內
+    LS: 遠景，人物高度不到畫面高的 1/2
+    ELS: 大遠景，人物高度不到畫面高的 1/8，或畫面中沒有人物的環境全景
+    INSERT: 物件或特效的特寫插入鏡，畫面中沒有角色的臉
+
+  angle:
+    eye: 平視，鏡頭與主體眼睛同高
+    low: 仰角，鏡頭低於主體往上拍
+    high: 俯角，鏡頭高於主體往下拍
+    top: 正上方垂直往下
+    dutch: 鏡頭沿光軸傾斜 10–20°
+
+  camera_move:
+    static: 鏡頭完全不動
+    push_in: 鏡頭往前推近
+    pull_out: 鏡頭往後拉遠
+    pan_left: 鏡頭原地向畫面左轉
+    pan_right: 鏡頭原地向畫面右轉
+    tilt_up: 鏡頭原地往上仰
+    tilt_down: 鏡頭原地往下俯
+    track: 鏡頭平移跟著主體
+    crane_up: 鏡頭垂直升高
+    crane_down: 鏡頭垂直下降
+    orbit_left: 鏡頭繞主體往畫面左繞
+    orbit_right: 鏡頭繞主體往畫面右繞
+
+  camera_speed:
+    slow: 整鏡內畫面變化不超過 10%（推拉：主體大小變化 ≤10%）
+    medium: 整鏡內畫面變化 10–30%
+    fast: 整鏡內畫面變化超過 30%
+
+  variation:        # 首幀到末幀的變化量；決定影片生成要不要用末幀（借自 ViMax）
+    small: 首尾幀幾乎相同（只有呼吸、眨眼、輕微浮動）；只用首幀生成，不寫末幀也可以
+    medium: 主體狀態或位置明顯改變，但構圖不變；必須寫 last_frame，用首尾幀生成
+    large: 構圖、景別或主體大幅改變；必須寫 last_frame，考慮拆成兩鏡
+
+  transition:       # 寫在下一鏡的 transition_in
+    cut: 直切。在 span.from 的拍點直接換成新畫面，沒有任何效果
+    cut_on_action: 直切，前一鏡結尾與這一鏡開頭是同一個動作的前後兩段
+    match_cut: 直切，前一鏡結尾與這一鏡開頭有同一個形狀在畫面同一位置
+    flash_white: "前一鏡最後 N 幀變成純白 #ffffff（參數 frames），新畫面從純白後的第一幀直接出現，不淡入"
+    whiteout: 前一鏡亮度在 in_beats 拍內逐漸升到純白，新畫面再從純白在 out_beats 拍內淡出
+    fade_from_black: "從純黑 #000000 在 N 拍（或 frames 幀）內淡入成畫面"
+    fade_to_black: 畫面在 N 拍內淡出成純黑，下一鏡從純黑開始
+    dissolve: 前後兩個畫面交疊 N 拍，前一鏡淡出的同時新畫面淡入
+
+  post_effect:      # 寫在 post 或 beat_events；不換鏡頭
+    flash_frames: 畫面整個變純白 N 幀後回到原畫面（不換鏡）
+    glow_pulse: 指定的發光物亮度短暫抬升再回落，畫面其他部分不變；不是全白
+    shake: 整個畫面震動 N 幀，位移不超過畫面寬 1%
+    chromatic: RGB 色差分離 N 幀
+    speed_ramp: 影片速度變化（參數 from/to 倍速）
+    freeze: 畫面停在某一幀不動
+
+  screen_x: [screen_left, center_left, center, center_right, screen_right]   # 觀眾看到的左右，五等分
+  screen_y: [top, upper, middle, lower, bottom]
+  depth: [fg, mg, bg]          # 前景、中景、背景
+  facing: [to_camera, three_quarter_left, three_quarter_right, profile_left, profile_right, away]
+    # three_quarter_left = 臉朝向畫面左前方；profile_left = 正側面、鼻尖指向畫面左；away = 背對鏡頭
+
+entities:
+  # ── 角色 ─────────────────────────────────────────────
+  luna:
+    kind: character
+    name: LUNA
+    status: confirmed
+    definition: 主角。外觀以 docs/style_bible.md「外觀五項」與 refs/01–06 為準，全片只有這一套服裝。
+    refs: [refs/01_full_front.png, refs/02_side.png, refs/03_back.png]
+    role: CSFCCA 開發的 AI 救援程式，擁有實體身體  # 方向 A
+    notes: 腿環在 char_right 大腿；禁止左右翻轉畫面。
+
+  drone:
+    kind: character
+    name: ECHO
+    status: proposed
+    definition: CSFCCA 派給 @luna 的球形無人機夥伴，名叫 ECHO（只是設定名稱，外殼上不出現文字），負責投影、帶路、開門等劇情功能。
+    look:
+      shape: 正球體，表面有銀灰色細分割線，分成上下兩半
+      size: 直徑約 25 cm，約 @luna 頭部的 1.2 倍
+      color: "白色外殼 #f4f4f6，分割線 #a8a8b0"
+      light: "正面一條橫向的青色光帶 #29d3f5（當作「眼睛」），底部一圈淡青色光暈"
+      motion: 懸浮，沒有螺旋槳；移動時平滑滑行；停下時輕微上下浮動，幅度約 2 cm、週期約 2 拍
+    not_this:
+      - 不是有螺旋槳的四軸無人機
+      - 沒有手臂、沒有臉部五官、不說話、外殼上沒有文字或 logo
+    plot_functions:      # A02 已接受
+      - 投影 @countdown_ring 做倒數
+      - 在凍結城市裡帶路
+      - 用光束打開門或通道
+
+  # ── 場景 ─────────────────────────────────────────────
+  hq_control:
+    kind: place
+    name: CSFCCA 控制室
+    status: proposed
+    definition: CSFCCA 位於地下的圓形控制室，@luna 在這裡被啟動。
+    look:
+      layout: 圓形房間，直徑約 12 m，天花板高約 5 m；牆面整圈是 @monitor_wall；正中央立著 @pod
+      floor: "黑色金屬格柵 #0b0d12，地面有一圈圈細的青色引導燈條 #29d3f5，從牆邊往 @pod 匯聚"
+      light: 沒有頂燈；光只來自 @monitor_wall 的螢幕、@pod 內部的白光、地面引導燈條
+      palette: "冷藍黑，底色 #07080c"
+    not_this:
+      - 不是有窗戶的辦公室，看不到外面
+      - 沒有操作員或其他人
+      - 牆上沒有 CSFCCA 字樣或 logo（字標只在後製疊）
+
+  city:
+    kind: place
+    name: 城市
+    status: proposed
+    definition: "@silence 正在吞沒的夜間大都市；全片的主要舞台。"
+    variants:
+      frozen: 被 @silence 吞沒的版本：完全灰階、所有動態停住（見 @silence）
+      restored: 恢復的版本：霓虹與巨幕重新亮起、顏色飽和、雨與人群恢復移動
+    look:
+      style: 近未來：街上有懸浮車，廣告巨幕是全息看板（同樣無文字）
+      layout: 高樓林立的夜間街區，街道兩側有大型廣告巨幕（只放抽象色塊或影像，無文字）
+      weather: 下著細雨，地面積水有倒影
+    extras: 有路人。路人不算第二角色；不畫清楚的正臉，以背影、側影、遠景為主；frozen 版本的路人是定格的灰色人形（像雕像），不是半透明
+
+  launch_tunnel:
+    kind: place
+    name: 發射通道
+    status: proposed
+    definition: 從 @hq_control 通往地面的垂直通道，@luna 由此出擊。外觀在寫 Hook 鏡頭時定義。
+
+  signal_tower:
+    kind: place
+    name: 訊號塔
+    status: proposed
+    definition: "@city 中央最高的廣播塔，全頻廣播從這裡發出。外觀在寫 Chorus 1 鏡頭時定義。"
+
+  # ── 物件 ─────────────────────────────────────────────
+  pod:
+    kind: object
+    name: 啟動艙
+    status: proposed
+    definition: 立在 @hq_control 正中央、@luna 啟動前站在裡面的直立艙。
+    look:
+      shape: 直立的膠囊形；下段是白色金屬底座，上段是透明弧形玻璃罩
+      size: 高約 2.2 m、直徑約 1 m；@luna 站在裡面時頭頂離罩頂約 30 cm
+      color: "底座白 #f4f4f6；玻璃無色透明，邊緣有淡青色反光"
+      light: "底座頂面整片發出柔和白光 #e8f4ff，由下往上照亮 @luna"
+      opening: 玻璃罩分成左右兩半，接縫在艙的左右兩側（正面看不到接縫）；開啟時向兩側滑開（不是往上掀）
+    not_this:
+      - 不是躺著的冷凍艙
+      - 玻璃罩內沒有液體或霧氣
+
+  monitor_wall:
+    kind: object
+    name: 監視牆
+    status: proposed
+    definition: 環繞 @hq_control 一整圈的螢幕牆，顯示 @city 各處的即時畫面。
+    look:
+      shape: 約 40 面 16:9 螢幕，排成 3 層，沿圓形牆面彎曲
+      size: 每面螢幕寬約 1.6 m
+      content: 每面螢幕顯示 @city 的一個角落；@silence 擴散到哪裡，那面螢幕的畫面就變成 frozen 版本。正中欄中間層是主螢幕，只顯示 @signal_wave。城市畫面約 7 張輪流使用，每張有彩色與 frozen 兩版
+      off_state: 關機時是純黑的玻璃面，有淡淡反光
+    not_this:
+      - 螢幕上沒有文字、數字、UI、地圖標記
+
+  # ── 特效 ─────────────────────────────────────────────
+  signal_wave:
+    kind: vfx
+    name: 訊號波形
+    status: proposed
+    definition: "@monitor_wall 正中央那面主螢幕上出現的一條橫向波形，代表 CSFCCA 收到求救訊號。"
+    look:
+      shape: 一條水平橫貫螢幕的細波形線；平時是幾乎平的直線，訊號進來時出現單一向上的窄尖峰
+      size: 線寬約為所在螢幕高的 0.5%；波峰高度最多到螢幕高的 1/3
+      color: "青色 #29d3f5，線本身發光，周圍有約 3 倍線寬的柔和光暈"
+    not_this:
+      - 不是一般的「光線」或照明
+      - 沒有座標軸、刻度或數字
+
+  countdown_ring:
+    kind: vfx
+    name: 倒數光環
+    status: proposed
+    definition: "@drone 投影在 @pod 玻璃罩外的一個圓形光環，用來表示出擊倒數。"
+    look:
+      shape: 一個平面圓環，垂直立在 @pod 玻璃罩外表面正前方 50 cm，環面朝向鏡頭，圓心與 @luna 雙眼同高
+      size: 外徑約 0.6 m，環寬約 4 cm（各鏡在畫面中的大小以該鏡 subjects 的 size 為準）
+      segments: 環分成 3 段等長的弧，弧與弧之間有約 10° 的空隙；以觀眾看到的畫面正右為 0°、逆時針為正，3 段弧的中心分別在 60°（右上）、180°（左）、300°（右下）
+      color: "青色 #29d3f5，發光；熄滅的弧變成深灰 #2a2f38、不發光"
+      count_rule: 每數一個數字熄滅一段弧，順序 60° → 180° → 300°（逆時針）；熄滅＝2 幀內淡成深灰，深灰弧留在畫面上
+      realize: 全部由後製合成，影片模型不畫光環
+    not_this:
+      - 光環上沒有數字；後製也先不疊數字字卡（project.yaml decisions.countdown_numbers）
+      - "@drone 與光環之間沒有可見的投影光束"
+
+  silence:
+    kind: state
+    name: 靜默
+    status: proposed
+    definition: 吞沒世界的現象。被吞沒的區域顏色、聲音、動態全部停止，變成灰階的定格畫面。沒有形體或核心。
+    look:
+      color: 飽和度降到 0（純灰階），亮度不變
+      motion: 區域內的一切停在半空：雨滴、水花、煙、旗子、行人都靜止
+      boundary: 被吞沒與未被吞沒的區域之間，是一條約 1 m 寬的漸層帶；顏色在帶內由飽和逐漸變灰；帶內有細小、靜止的灰色顆粒
+      spread: 邊界緩慢向外推進，速度約每秒 1 m；推進時沒有光、沒有聲音特效
+    not_this:
+      - 不是黑霧、黑洞、漩渦或怪物
+      - 不是冰凍：沒有冰晶與白霜

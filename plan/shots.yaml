@@ -1,0 +1,261 @@
+# 鏡頭層：每一鏡的時間、主體、首幀、運動、末幀、轉場、拍點事件、後製。
+# 欄位說明見 plan/README.md；詞彙值見 glossary.yaml 的 vocab。
+# span.from / span.to 是 [小節, 拍]；to 不含在本鏡內。
+# motion.*.realize：model＝由影片模型生成；post＝後製合成；model+post＝兩者都有；none＝不動。
+
+shots:
+  - id: s001
+    section: intro
+    story_beat: intro
+    span: {from: [0, 0], to: [1, 1]}
+    lyrics: [1]
+    place: "@hq_control"
+    shot_size: INSERT
+    angle: eye
+    route: C
+    variation: small
+    subjects:
+      - ref: "@signal_wave"
+        placement: {x: center, y: middle, depth: mg}
+        size: 波形線橫跨畫面寬的 80%，中心在畫面高約 45%（略高於正中，與 s002 主螢幕波形的位置對齊）；本鏡主螢幕佔滿畫面，所以螢幕高＝畫面高
+      - ref: "@monitor_wall"
+        placement: {x: center, y: middle, depth: bg}
+        size: 只拍到主螢幕的黑色玻璃面，佔滿整個畫面，看不到邊框
+    first_frame: >
+      純黑的畫面，是 @monitor_wall 主螢幕的一部分：螢幕的黑色玻璃面佔滿整個畫面，看不到螢幕邊框。
+      畫面水平正中、畫面高約 45% 處有一條青色的 @signal_wave，此時幾乎是一條平的直線，微微發光。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @signal_wave 在 [0,4] 出現一個單一向上的窄尖峰，約 4 幀內回到近乎平線；
+          之後到本鏡結束只有不超過畫面高 3% 的微幅抖動。
+        realize: post
+    last_frame: null
+    beat_events:
+      - at: [0, 4]
+        sync: 鼓進入（2.22 s）
+        event: "@signal_wave 跳出一個單一向上的窄尖峰（高約畫面高 1/3），同時對 @signal_wave 做 glow_pulse：亮度 1 幀內抬升到約 2 倍，再用 3 幀回落"
+    transition_in: {type: fade_from_black, frames: 16, note: 從歌曲開頭到人聲「訊號」進來（0.68 s）淡入完成}
+    post: []
+    overlay: null
+    status: proposed
+
+  - id: s002
+    section: intro
+    story_beat: intro
+    span: {from: [1, 1], to: [2, 1]}
+    lyrics: [1]
+    place: "@hq_control"
+    shot_size: LS
+    angle: eye
+    route: C
+    variation: medium
+    subjects:
+      - ref: "@monitor_wall"
+        placement: {x: center, y: middle, depth: bg}
+        size: 畫面內看得到圓形牆面對面的半圈，7 欄 × 3 層＝21 面螢幕；牆面佔畫面寬 100%，從畫面高約 12% 到 78%
+      - ref: "@signal_wave"
+        placement: {x: center, y: middle, depth: bg}
+        size: 只在主螢幕（正中欄、中間層）內，橫跨主螢幕寬的 80%（約畫面寬 11%），中心在畫面高約 45%
+      - ref: "@pod"
+        placement: {x: center, y: lower, depth: mg}
+        size: 高約畫面高的 1/4，頂端在畫面高約 70%，低於主螢幕、不擋住波形；擋住下層螢幕的一小部分
+      - ref: "@luna"
+        placement: {x: center, y: lower, depth: mg}
+        size: 在 @pod 內；首幀只看得到暗色剪影，螢幕全亮後輪廓與白衣隱約可見
+        facing: to_camera
+        state: 站立、雙手垂在身側、閉眼
+    first_frame: >
+      鏡頭在 @hq_control 的邊緣，距 @pod 約 6 m、離地約 1.6 m，平視整個房間；入口在鏡頭背後，畫面中看不到。
+      後方 @monitor_wall 看得到 7 欄 × 3 層共 21 面螢幕：只有正中欄中間層的主螢幕亮著（黑底上的 @signal_wave，中心在畫面高約 45%），
+      其他 20 面都是關機的黑色玻璃面。房間中央是 @pod，頂端低於主螢幕；底座的白光很暗，@luna 在玻璃罩裡只是一個暗色剪影。
+      地面的青色引導燈條全部亮著，從畫面下緣往 @pod 匯聚。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post}
+      subject:
+        text: >
+          @monitor_wall 的螢幕依 beat_events 由正中欄往左右兩側一欄一欄亮起；每一批在拍點的同一幀瞬間點亮（1 幀），上中下三層同時。
+          每面螢幕亮起時先顯示彩色的 @city 角落，維持 3 幀，接著用 6 幀由畫面左往右掃成灰階（@silence 的邊界帶掃過螢幕），在下一拍之前全部變灰。
+          主螢幕的 @signal_wave 整鏡延續 s001 結尾的微幅抖動（不超過主螢幕高 3%），不變灰。
+        realize: post
+    last_frame: >
+      與 first_frame 相同的房間與構圖（畫面略微推近約 5%）：21 面螢幕全部亮著，主螢幕仍是黑底青色的 @signal_wave，其餘 20 面都是灰階的 @city 畫面。
+      房間被螢幕的中性灰白光照亮（色值見 notes），亮度低於 @pod 的白光，地面青色引導燈條仍清楚；
+      @luna 的輪廓與白衣被螢幕光照得隱約可見，@pod 底座白光仍暗。
+    beat_events:
+      - at: [1, 1]
+        event: 正中欄的上層與下層 2 面亮起（正中欄 3 面全亮）
+      - at: [1, 2]
+        event: 左右各第 1 欄亮起，共 6 面
+      - at: [1, 3]
+        event: 左右各第 2 欄亮起，共 6 面
+      - at: [1, 4]
+        event: 左右各第 3 欄（最外側）亮起，共 6 面；本拍內變灰後，21 面全部是灰階
+    transition_in:
+      type: match_cut
+      note: >
+        s001 與 s002 的 @signal_wave 是同一條波形，中心都在畫面水平正中、畫面高約 45%；
+        兩鏡波形大小相差約 7 倍，接受（揭示式 match cut：從螢幕特寫直接切到整個房間）
+    post: []
+    overlay: null
+    status: proposed
+    notes: >
+      螢幕灰白光約 #b0b4ba（中性）。螢幕內容用 7 張不同的 @city 畫面輪流使用，每張有彩色與 frozen 兩版。
+      @pod 底座白光在 s003 直接變亮（切點跳變，不在本鏡漸亮）。
+
+  - id: s003
+    section: intro
+    story_beat: intro
+    span: {from: [2, 1], to: [3, 1]}
+    lyrics: [2]
+    place: "@hq_control"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@pod"
+        placement: {x: center, y: middle, depth: mg}
+        size: 玻璃罩上半段佔滿畫面高
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面上緣下方約 1/5，雙眼在畫面高約 30%
+        facing: to_camera
+        state: 在 @pod 內站立、閉眼、表情平靜；被底座白光從下往上柔和照亮
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: fg}
+        size: 直徑約畫面高的 1/4；停穩後中心約在畫面寬 78%、畫面高 22%，不和 @countdown_ring 重疊
+        facing: to_camera
+        state: "[2,2] 從畫面右緣外滑入，[2,3] 停穩"
+      - ref: "@countdown_ring"
+        placement: {x: center, y: upper, depth: fg}
+        size: 外徑約畫面高的 1/2，圓心在 @luna 雙眼（畫面高約 30%）；[2,3] 才出現
+      - ref: "@monitor_wall"
+        placement: {x: center, y: middle, depth: bg}
+        size: 佔滿 @pod 後方的整個背景，失焦
+    first_frame: >
+      @pod 的正面，@luna 在透明玻璃罩裡閉眼站立，臉部被底座白光由下往上柔和照亮，背後是滿牆灰階的 @monitor_wall（失焦）。
+      畫面裡還沒有 @drone 與 @countdown_ring。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @drone 在 [2,2] 從畫面右緣外沿水平直線滑入、逐漸減速，[2,3] 停在畫面寬約 78%、畫面高約 22% 的前景，之後依 glossary 輕微上下浮動。
+          [2,3] 時 @drone 的青色光帶 glow_pulse，@pod 正前方出現 @countdown_ring（3 段弧全亮），沒有可見的投影光束。@luna 保持閉眼不動。
+        realize: model+post
+    last_frame: >
+      同樣構圖：@luna 仍閉眼；@drone 停在畫面右上的前景；@pod 正前方立著發光的 @countdown_ring，3 段弧都亮，
+      圓心正好在 @luna 雙眼的位置。
+    beat_events:
+      - at: [2, 2]
+        event: "@drone 從畫面右緣外開始滑入"
+      - at: [2, 3]
+        sync: 人聲「倒數開始」唱完
+        event: "@drone 停穩，光帶 glow_pulse；@countdown_ring 出現，3 段弧同時在 4 幀內從無到全亮"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 分工：@drone 的滑入與浮動由影片模型生成；@drone 光帶的 glow_pulse 與 @countdown_ring 全部由後製合成。
+
+  - id: s004
+    section: intro
+    story_beat: intro
+    span: {from: [3, 1], to: [4, 1]}
+    lyrics: [2, 3]
+    place: "@hq_control"
+    shot_size: ECU
+    angle: eye
+    route: A
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 畫面只容納雙眼與眉毛，雙眼水平置中
+        facing: to_camera
+        state: 閉眼 → 睜眼
+      - ref: "@pod"
+        placement: {x: center, y: middle, depth: fg}
+        size: 只有玻璃罩的一小塊，佔滿畫面、透明，位於鏡頭與 @luna 之間
+      - ref: "@countdown_ring"
+        placement: {x: center, y: middle, depth: fg}
+        size: 不直接入鏡；只以倒影出現：玻璃上一道淡青色弧形反光（first_frame），以及瞳孔裡的青色小圓環（last_frame）
+    first_frame: >
+      @luna 雙眼的大特寫，閉著眼，睫毛清楚；臉被下方的白光照亮，畫面上半部稍暗。
+      隔著 @pod 的玻璃罩拍攝，玻璃上有一道淡淡的青色反光（@countdown_ring 的倒影）。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @luna 在 [3,2.75]（人聲「啟」）開始睜眼，約 6 幀內完全睜開，之後眼神直視鏡頭不動。
+          玻璃上的反光與瞳孔裡的 @countdown_ring 倒影由後製疊。
+        realize: model+post
+    last_frame: >
+      同一構圖，@luna 雙眼睜開直視鏡頭，深紫灰瞳孔裡映出 @countdown_ring 的青色圓環。
+    beat_events:
+      - at: [3, 2.75]
+        sync: 人聲「啟」約 8.30 s（人聲分軌＋faster-whisper 量得；P5 以 onset 定幀）
+        event: "@luna 開始睜眼"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+
+  - id: s005
+    section: intro
+    story_beat: intro
+    span: {from: [4, 1], to: [5, 1]}
+    lyrics: [3]
+    place: "@hq_control"
+    shot_size: MCU
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@countdown_ring"
+        placement: {x: center, y: middle, depth: fg}
+        size: 外徑約畫面高的 90%，圓心與畫面中心重合（實體外徑約 0.6 m，在 MCU 下約佔畫面高 90%）
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 胸口以上，臉位於 @countdown_ring 圓心
+        facing: to_camera
+        state: 睜眼、眼神堅定、嘴巴閉著
+      - ref: "@pod"
+        placement: {x: center, y: middle, depth: mg}
+        size: 只看得到玻璃罩，佔滿 @luna 周圍的畫面；底座在畫面下緣外
+    first_frame: >
+      鏡頭在 @countdown_ring 正前方，透過光環的中央看 @pod 裡的 @luna：她睜眼直視鏡頭、嘴巴閉著，
+      3 段青色弧都亮著並圍住她的臉，臉上帶著光環的青光。光環在前景，對焦在 @luna 的臉上，光環邊緣略微失焦。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @countdown_ring 的 3 段弧依 beat_events 逐一熄滅：每段在 2 幀內淡成深灰，熄滅的深灰弧留在畫面上；
+          每熄一段，@luna 臉上的青光減弱 1/3，全熄時歸零。@luna 只有呼吸與極輕微的眨眼，不說話、不轉頭。
+          [4,4] 起 @pod 底座白光增強：前 3 幀緩慢、之後急升，到本鏡最後一個完整畫面時 @luna 的白衣接近純白、仍保留皺褶。
+        realize: model+post
+    last_frame: >
+      同一構圖，@countdown_ring 3 段弧全部熄滅成深灰（仍可見）；@luna 臉上已沒有青光；
+      @pod 底座白光增強到 @luna 的白衣接近純白、仍保留皺褶，臉仍看得清楚。
+    beat_events:
+      - at: [4, 1]
+        sync: 人聲「3」約 9.50 s
+        event: "@countdown_ring 第 1 段弧（中心 60°，畫面右上）2 幀內淡成深灰；@luna 臉上的青光減弱 1/3"
+      - at: [4, 2]
+        sync: 人聲「2」約 10.04 s
+        event: "@countdown_ring 第 2 段弧（中心 180°，畫面左）2 幀內淡成深灰；青光再減 1/3"
+      - at: [4, 3]
+        sync: 人聲「1」約 10.54 s
+        event: "@countdown_ring 第 3 段弧（中心 300°，畫面右下）2 幀內淡成深灰；青光歸零"
+      - at: [4, 4]
+        sync: 人聲「LIVE」約 11.22 s（「AI」約 11.76 s 落在 bar 5 正拍）
+        event: "@pod 底座白光開始增強（前 3 幀緩、之後急升），為進入 Hook 蓄力"
+    transition_in: {type: cut}
+    post: []
+    overlay: null    # 數字字卡先不疊（decisions.countdown_numbers: deferred）
+    status: proposed
+    notes: >
+      @drone 不入鏡。光環熄滅與臉上青光由後製做；@luna 的呼吸、眨眼與白光照亮由影片模型生成，白光強度後製再補。
+      下一鏡（Hook 第一鏡，@launch_tunnel）的 transition_in 已定為 flash_white 2 幀（decisions.hook_transition_in），
+      這 2 幀閃白不算本鏡的 last_frame。
