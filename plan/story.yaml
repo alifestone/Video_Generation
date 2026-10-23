@@ -61,13 +61,15 @@ beats:
   - id: chorus1
     section: chorus1
     bars: [21, 33]
-    places: ["@city", "@signal_tower"]
+    places: ["@street", "@signal_tower"]
     story: >
-      bar 21：@silence 追上並吞沒 @luna。bar 22：她在灰色中啟動第一次廣播，一圈彩色衝擊波從她身上擴散，
-      一整個街區恢復——光、聲音、巨幕上的故事一起醒來。她和 @drone 趁勢登上 @signal_tower。
+      bar 21：@silence 的 surge 與她身上的 @luna_fade 會合，@luna 和 @drone 一起被凍在半空。bar 22：她在灰色中張開雙臂，
+      第一次廣播從胸口炸開，@broadcast_wave 恢復了一整個街區——光、全息看板上的影像、雨和路人一起醒來。幾秒後邊界又開始往內吞回；
+      跳接到 @signal_tower 塔底，灰色正沿塔身往上爬。她沿外牆的結構肋與維修平台一路蹬跳上去，甩開灰色，
+      @drone 用 @echo_beam 打開觀景台的一扇全景窗，她翻進控制室。
     emotion: 窒息→爆發→主動出擊
     lyric_link: 「LIVE AI 現在就創造未來…讓光影、讓聲音、讓故事全部醒來」
-    status: proposed
+    status: confirmed
 
   - id: bridge
     section: bridge

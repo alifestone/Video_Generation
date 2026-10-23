@@ -62,3 +62,16 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   prechorus_structure: 6_shots_half_bar_cuts   # bar 17、18 各一鏡，bar 19–20 半小節快切
   silence_speed_prechorus: 100_m_per_s   # Prechorus（bar 17–20）加速到每秒約 100 m
   swallow_handoff: fade_and_surge        # bar 21 吞沒：她身上的褪色往內擴散＋下方湧上的邊界帶，在她身上會合
+  # 2026-10-23 Chorus 1
+  tower_material: dark_metal_light_lines # 訊號塔：深色金屬塔身＋發光線條
+  tower_lights: layered_bands            # 塔身一圈圈分層燈帶
+  tower_interior: deck_control_room      # 內部＝圓盤觀景台裡的圓形廣播控制室（Bridge 在此）
+  tower_climb: exterior_parkour          # 沿外牆跑跳登塔
+  echo_at_swallow: frozen_with_luna      # bar 21 ECHO 和她一起被凍住，bar 22 衝擊波一起救回
+  first_broadcast: arms_open_chest_burst # 張開雙臂，顏色從胸口炸開（Final Chorus 要另外做出差異）
+  shockwave_reach: one_block_then_jump_cut   # 只恢復約一個街區，接著跳接到塔下
+  restored_block_after: reswallowed_after_seconds   # 幾秒後邊界又開始往內推，登塔時持續有時間壓力
+  tower_footholds: ribs_and_platforms    # 外牆有垂直結構肋＋維修平台，她在肋與平台間蹬跳
+  tower_chase: gray_climbs_tower         # 灰色從塔底沿塔身往上爬追她
+  chorus1_end: echo_opens_window         # bar 33：ECHO 用光束開一扇全景窗，她翻進控制室
+  chorus1_structure: 14_shots_half_bar_end   # 使用者交給 Claude 決定：bar 21–31 每鏡 1 小節（bar 28–29 一鏡 2 小節），bar 32–33 半小節快切

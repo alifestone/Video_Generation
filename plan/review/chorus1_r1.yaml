@@ -1,0 +1,113 @@
+# Chorus 1（s023–s036）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-23）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+# 36 題都是精確度題，依授權由 Claude 決定（ask-dont-guess）。審稿原始檔的 options 因暫存資料夾被清掉，這裡只保留問題與處理方式。
+round: chorus1_r1
+issues:
+- {id: Q01, where: shots.s023.subjects.silence, category: 6, severity: medium, status: resolved,
+   question: "s022 末幀到 s023 首幀之間，surge 離她的距離是否允許跳變？",
+   resolution: "s023 首幀 surge 上緣改在畫面高約 92%、離她身體下緣約 1 m，接近 s022 末幀的相對距離；換鏡位造成的少量差異接受。"}
+- {id: Q02, where: shots.s023.motion.subject, category: 5, severity: medium, status: resolved,
+   question: "[21,1]、[21,1.5]、[21,2] 她身體的灰色範圍各是什麼？兩邊怎麼『會合』？",
+   resolution: "surge 在 [21,1.5]–[21,1.75] 掃過軀幹與雙腿；@luna_fade 從手腕沿手臂往肩膀、從馬尾往頭推進；[21,2] 在雙肩與脖子會合。新增 [21,1.5] beat_event。"}
+- {id: Q03, where: shots.s023.motion.camera, category: 5, severity: low, status: resolved,
+   question: "push_in 8% 是整鏡累計還是只在 [21,2]–[22,1]？",
+   resolution: "只在 [21,2]–[22,1] 推 8%，之前鏡頭靜止。"}
+- {id: Q04, where: shots.s023.notes, category: 8, severity: low, status: resolved,
+   question: "s023 要幾張靜態圖？首幀的局部灰畫在圖上還是後製做？",
+   resolution: "兩張（全彩版、全灰版）；首幀局部灰、surge、褪色推進都由後製遮罩在兩張之間過渡。"}
+- {id: Q05, where: shots.s024.motion.subject, category: 5, severity: medium, status: resolved,
+   question: "0.4 倍慢動作下，各時間點是輸出時間還是模型片段時間？",
+   resolution: "全部是輸出時間；模型以 1 倍速產生約 1 秒的動作，後製放慢後落在這些時間點（寫進 motion）。"}
+- {id: Q06, where: shots.s024.last_frame, category: 6, severity: medium, status: resolved,
+   question: "s024 末幀她離地幾公尺？下墜時間合不合理？",
+   resolution: "她從 [22,1] 起接著 s022 的下墜往下掉（不是等到張臂後），扣掉慢動作約 1 秒實際時間，8.5 m 掉到約 2 m；s024 末幀寫明離地約 2 m，s025 首幀改 2 m、落地改 [23,1.3]；鏡頭往下搖改約 35°，末幀背景改成一樓櫥窗與二樓看板。"}
+- {id: Q07, where: glossary.broadcast_wave.look.front, category: 10, severity: medium, status: resolved,
+   question: "『4 幀後消失』指熱浪折射還是整道光環？",
+   resolution: "光環一路維持到停住才淡掉；只有熱浪折射維持 4 幀。"}
+- {id: Q08, where: shots.s025.subjects.broadcast_wave, category: 4, severity: high, status: resolved,
+   question: "光環的『半徑』與『占畫面寬 %』混用，末幀要不要碰到畫面邊緣？",
+   resolution: "畫面寬 600 m 不變；百分比改寫成直徑（33%→50%），末幀圓的左右兩側各離畫面邊緣約 25%。"}
+- {id: Q09, where: shots.s025.subjects.luna, category: 4, severity: medium, status: resolved,
+   question: "她在 600 m 寬的俯拍裡要畫多大？",
+   resolution: "照真實比例約畫面高 0.5%，靠彩色圓的圓心與 @drone 白點辨認。"}
+- {id: Q10, where: shots.s026.notes, category: 8, severity: medium, status: resolved,
+   question: "繞行鏡頭下，後製光帶怎麼保持透視？",
+   resolution: "先對模型片段做相機追蹤（camera solve），再把光帶擺在 3D 位置。"}
+- {id: Q11, where: shots.s028.transition_in, category: 6, severity: medium, status: resolved,
+   question: "跳接省略的是 1.5 km 還是 3 km？",
+   resolution: "改為約 1.5 km（s027 的街尾）；3 km 是 @launch_roof 到塔的距離。"}
+- {id: Q12, where: shots.s028.subjects.luna, category: 4, severity: high, status: resolved,
+   question: "她離鏡頭、離塔各多遠？『跑進來』與首幀已在畫面內如何對齊？",
+   resolution: "鏡頭離塔身約 10 m，塔身占畫面寬約 70%；她離鏡頭約 4 m、在塔身前約 6 m 停下；首幀她已在畫面內奔跑中，跑完最後兩步停下。末幀觀景台寬改約畫面寬 25%。"}
+- {id: Q13, where: shots.s029.motion.subject, category: 5, severity: high, status: resolved,
+   question: "s029 灰彩交界末值是 28 m 還是 20 m？",
+   resolution: "改為 16 → 約 28 m（每秒約 5 m，符合標頭）。"}
+- {id: Q14, where: shots.s029.last_frame, category: 6, severity: high, status: resolved,
+   question: "她何時越過灰色？",
+   resolution: "統一為 [28,1.72]（s030 內第一次蹬跳中）；s029 末幀她在交界下方（交界在她頭頂上方約 2 m）；刪掉 [27,4] 的『越過』。s030 加 [28,1.72] beat_event。"}
+- {id: Q15, where: shots.s029.motion.subject, category: 5, severity: low, status: resolved,
+   question: "哪幾次蹬跳要畫恢復區塊？",
+   resolution: "只有落點在灰色範圍內的才畫（寫進標頭）；s029 三次都在灰色內，s030 起落在彩色區不畫。"}
+- {id: Q16, where: shots.s030.subjects.luna, category: 6, severity: medium, status: resolved,
+   question: "s030 起點是 24 m 還是 30 m？",
+   resolution: "起點 24 m，8 拍 × 8 m 到 88 m。"}
+- {id: Q17, where: shots.s030.motion.camera, category: 5, severity: medium, status: resolved,
+   question: "鏡頭升高 30 m 與末幀百分比哪個為準？",
+   resolution: "重算：鏡頭升高約 20 m，首幀涵蓋離地 15–135 m、末幀 35–155 m；她 92%→56%、灰色 89%→87%。"}
+- {id: Q18, where: shots.s024.last_frame, category: 4, severity: medium, status: resolved,
+   question: "『畫面高約 N%』從上緣還是下緣量？",
+   resolution: "一律從畫面上緣往下量，寫進 plan/README.md 的「方向」與 Chorus 1 標頭；與 Prechorus 以前的寫法一致。"}
+- {id: Q19, where: shots.s030.first_frame, category: 4, severity: medium, status: resolved,
+   question: "首幀她離灰色的畫面距離要多少？",
+   resolution: "她在約 92%、灰色在約 89%，她剛好在交界下方約 4 m（與 Q14 一致）。"}
+- {id: Q20, where: shots.s030.subjects.city, category: 4, severity: medium, status: resolved,
+   question: "s030 鏡頭在塔的哪一側？",
+   resolution: "鏡頭在塔的側面（與 @street 方向垂直），@street 往畫面左後方延伸，恢復街區在左下遠方約 1.5 km。"}
+- {id: Q21, where: shots.s030.subjects.silence, category: 5, severity: medium, status: resolved,
+   question: "恢復街區被吞回的速度與 s030 對不上。",
+   resolution: "吞回速度改為每秒約 15 m（約 10 秒吞完，[30,1] 消失）；glossary silence.spread、s027（末幀推進到約 125 m）、s030 同步。"}
+- {id: Q22, where: shots.s032.route, category: 8, severity: medium, status: resolved,
+   question: "s030、s032 的蹬跳要不要走 B？",
+   resolution: "s032 改 B（三次對拍蹬跳）；s030 她太小，維持 A。"}
+- {id: Q23, where: shots.s031.notes, category: 6, severity: high, status: resolved,
+   question: "s031 起點、終點、蹬跳次數怎麼對齊？",
+   resolution: "s031 改成 4 次蹬跳（88 → 96 → 104 → 112 → 120 m），鏡頭改在離地約 123.5 m、她上方約 35 m；首幀她身高約畫面高 5%；beat_events 補 [30,2.85]。"}
+- {id: Q24, where: shots.s032.first_frame, category: 4, severity: medium, status: resolved,
+   question: "平台左右的規則是什麼？120 m 在哪一側？",
+   resolution: "從塔外面向那條肋看：8 m 左、16 m 右，之後輪流（8 的奇數倍在左）；寫進 glossary platforms。s032 首幀改左側，s031、s032 的落點都標側別。"}
+- {id: Q25, where: shots.s032.notes, category: 2, severity: low, status: resolved,
+   question: "標頭的『斜樑頂端』應改成『肋頂端（斜樑根部）』嗎？",
+   resolution: "標頭改為『144（肋頂端＝斜樑根部）』，另補 [32,3] 154 m（斜樑末端）。"}
+- {id: Q26, where: shots.s033.subjects.signal_tower, category: 10, severity: medium, status: resolved,
+   question: "斜樑的截面與發光線？",
+   resolution: "glossary 補斜樑截面寬約 0.6 m、高約 0.8 m，頂面中央嵌青色線；s033 改為側面厚約畫面高 20%。"}
+- {id: Q27, where: glossary.signal_tower.look.deck, category: 10, severity: medium, status: resolved,
+   question: "窗牆位置與走道凸出量？",
+   resolution: "窗牆就是圓盤外牆（158–162 m），以下 154–158 m 是實心金屬；走道寬 1.5 m 從窗牆往外懸挑（凸出圓盤外緣 1.5 m）；刪掉『30 cm』。"}
+- {id: Q28, where: shots.s034.notes, category: 6, severity: low, status: resolved,
+   question: "她抓的是走道邊緣還是矮牆頂緣？",
+   resolution: "抓矮牆頂緣（約 159 m），從斜樑末端往外上方跳約 5 m、往外約 1.5 m，繞過走道地板下緣。"}
+- {id: Q29, where: shots.s035.subjects.luna, category: 6, severity: medium, status: resolved,
+   question: "s034 末幀蹲姿到 s035 站姿如何銜接？",
+   resolution: "s035 首幀改為蹲姿接 s034 末幀，[33,1]–[33,1.5] 站起。"}
+- {id: Q30, where: shots.s035.first_frame, category: 4, severity: medium, status: resolved,
+   question: "鏡頭相對窗牆的方向？她離窗多遠？",
+   resolution: "鏡頭背靠矮牆斜 45° 對窗牆拍，窗牆從畫面左後方到右前方；她離窗約 1 m、四分之三朝畫面右面向那片窗（facing 改 three_quarter_right）。"}
+- {id: Q31, where: shots.s035.motion.subject, category: 5, severity: low, status: resolved,
+   question: "ECHO 0.1 秒飛到窗前太快？",
+   resolution: "@echo_beam 移到 [33,1.5]，ECHO 在 [33,1]–[33,1.5] 飛約 0.7 m；sync 改寫成『CSFCCA』期間。"}
+- {id: Q32, where: shots.s035.motion.subject, category: 10, severity: medium, status: resolved,
+   question: "鎖點長什麼樣？",
+   resolution: "窗框右側中段直徑約 10 cm 的深色圓形感應面，和窗框同材質、不發光（glossary window_open）；s035 首幀寫出看得到它。"}
+- {id: Q33, where: shots.s036.beat_events, category: 5, severity: medium, status: resolved,
+   question: "[33,3]–[33,3.65] 她在做什麼？",
+   resolution: "首幀 [33,3] 她已離地、魚躍穿過窗口；[33,3.65] 雙手著地開始前滾翻；[33,4.55] 蹲低落地。"}
+- {id: Q34, where: shots.s036.first_frame, category: 4, severity: medium, status: resolved,
+   question: "窗口下緣與室內地板的高度？鏡頭仰角？",
+   resolution: "控制室地板與走道同高（約 158 m）、窗下緣即地板（glossary interior）；鏡頭 0.5 m 平視略仰約 5°，窗外是夜空與地平線上的城市。"}
+- {id: Q35, where: shots.s026.last_frame, category: 5, severity: low, status: resolved,
+   question: "繞行 60° 到不了四分之三朝右。",
+   resolution: "繞行改約 90°。"}
+- {id: Q36, where: glossary.signal_tower.look.state_chorus1, category: 6, severity: low, status: resolved,
+   question: "塔底彩色街區何時被吞沒？",
+   resolution: "glossary 改為『[21,1] 前後被吞沒（不拍）』；以每秒約 100 m 計，s022 首幀那塊約 132 m 的街區在 bar 21 開頭前後消失。"}

@@ -1210,3 +1210,783 @@ shots:
     overlay: null
     status: confirmed
     notes: 半小節快切。起跳是指定動作，走 B 路線。慢動作把她留在半空；交給 Chorus 1 第一鏡（bar 21，預計 cut_on_action）兩個要素：她身上往內擴散的 @luna_fade，與下方往上湧的 surge，兩者在她身上會合（decisions.swallow_handoff）。
+
+  # ── Chorus 1（bar 21–33）──────────────────────────────
+  # 人聲（faster-whisper＋onset）：「LIVE」[21,2.21]、「AI」[21,4.07]、drop [22,1]、「現在」[22,2.89]、「未來」[22,4.91]、「讓想像」[23,2.82]、
+  # 「畫面」[24,2.39]、「之外」[24,4.79]、「LIVE」[25,2.56]、「AI」[25,4.05]、「讓世界」[26,2.37]、「打開」[26,4.98]、「沒有」[27,2.05]、「你」[28,1.89]、
+  # 「創造」[28,4.89]、「讓光影」[29,3.95]、「讓聲音」[30,1.82]、「讓故事」[30,3.89]、「醒來」[31,1.84]、「把不可能」[31,4.56]、「現在」[32,3.95]、
+  # 「CS」[33,1.19]、「A」[33,2.96]、「LIVE AI」約 [33,3.65]。bar 21 是抽空小節（只剩人聲），bar 22 kick、bass、pad 一起進來。
+  # 方向：@street 上的側拍畫面右＝街尾（@signal_tower）。bar 21–25 在 @street，bar 26 起跳接到 @signal_tower。
+  # 塔上的高度（她／灰色邊界，離地；灰色每秒約 5 m，見 @silence.spread）：bar 26 開頭 0／5 m；bar 27 開頭 0／16 m；bar 28 開頭 24／28 m（[28,1.72] 她越過灰色）；
+  # bar 30 開頭 88／50 m；bar 31 開頭 120／62 m；bar 32 開頭 144（肋頂端＝斜樑根部）／73 m；[32,3] 154 m（斜樑末端）；bar 34 開頭她在控制室（158 m）、灰色約 95 m。
+  # 她每拍蹬跳一次、每次上升約 8 m，落在 8 的倍數高度的平台上（8 m 左、16 m 右……，左右見 @signal_tower.look.platforms）。只有落點在灰色範圍內的蹬跳才踩出恢復區塊。
+  # 畫面高的百分比一律從畫面上緣往下量（見 plan/README.md）。
+
+  - id: s023
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [21, 1], to: [22, 1]}
+    lyrics: [12]
+    place: "@street"
+    shot_size: MS
+    angle: eye
+    route: C
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身側面，身體幾乎水平地往前撲，從指尖到腳尖約畫面寬 55%
+        facing: profile_right
+        state: 在離地約 8.5 m 的半空，身體前傾、雙手往前伸、雙腿往後伸直（接 s022 末幀的姿勢）；[21,2] 起全身灰色、定住
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left（遠側）肩旁，從她肩膀後方露出約一半
+        facing: profile_right
+        state: 和她同高，[21,1.8] 被 surge 掃過後變灰、定在半空
+      - ref: "@luna_fade"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀馬尾下 1/3（約 18 cm）與雙手到手腕是灰色
+      - ref: "@silence"
+        placement: {x: center, y: bottom, depth: mg}
+        size: 首幀 surge 是畫面下緣一道橫貫畫面寬、約畫面高 8% 厚的灰色顆粒帶，上緣在畫面高約 92%，離她身體下緣約 1 m（約畫面高 30%）
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 背景是街道對面灰色、定格的商店二到四樓與灰色全息看板，停在半空的雨
+    first_frame: >
+      鏡頭在街道一側的半空，與 @luna 同高（離地約 8.5 m），平視、與街道垂直。@luna 側身在畫面正中，身體幾乎水平地朝畫面右撲出：雙手往前伸、雙腿往後伸直，
+      馬尾往後飄；她的馬尾下 1/3 與雙手到手腕是灰色，其餘仍是原色。@drone 從她肩膀後方露出一半，仍是白色、光帶亮著。
+      畫面下緣是一道橫貫畫面的灰色顆粒帶（@silence 的 surge），上緣離她身體下緣約 1 m。背景是灰色定格的商店樓面與停在半空的雨。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post}
+      subject:
+        text: >
+          [21,1]–[21,2]：鏡頭靜止；她的圖層由後製做往畫面右的緩慢位移（接 s022 的 0.4 倍慢動作），在 [21,2] 減速到停住。
+          surge 由下往上升：[21,1.5] 碰到她身體下緣，[21,1.5]–[21,1.75] 掃過她的軀幹與雙腿（身體幾乎水平，所以整段軀幹與腿同時被蓋過、變灰）；
+          同時 @luna_fade 從手腕沿手臂往肩膀、從馬尾往頭部推進；[21,2] 手臂與頭部全灰，和軀幹的灰在雙肩與脖子會合，全身灰色、定住。
+          surge 在 [21,1.8] 掃過 @drone，它變灰、停在半空；surge 掃過她們之後繼續往上，在畫面上緣外消失。
+          [21,2]–[22,1]：畫面裡沒有任何東西在動，只有鏡頭由後製緩慢推近約 8%（只在這 3 拍內推）。
+        realize: post
+    last_frame: null
+    beat_events:
+      - at: [21, 1.5]
+        event: surge 碰到她身體下緣
+      - at: [21, 1.8]
+        event: surge 掃過 @drone，它變灰定住
+      - at: [21, 2]
+        event: 灰色在雙肩與脖子會合，全身定住；鏡頭開始推近
+      - at: [21, 2.21]
+        sync: 人聲「LIVE」48.75 s
+        event: 全畫面靜止
+    transition_in: {type: cut_on_action, note: s022 末幀她從背後看在半空往前撲，本鏡從側面接同一個姿勢（換成側拍，她朝畫面右＝街尾）}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 抽空小節，畫面跟著音樂一起「停掉」。走 C 路線：同一構圖畫兩張靜態圖（全彩版、全灰版）；首幀手與馬尾的局部灰、surge 掃過軀幹與腿、@luna_fade 往肩膀與頭推進，都由後製用遮罩在兩張之間過渡；surge 顆粒帶由後製合成。被凍住的東西停在半空（@silence.motion），她和 @drone 都不往下掉。
+
+  - id: s024
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [22, 1], to: [23, 1]}
+    lyrics: [12]
+    place: "@street"
+    shot_size: MS
+    angle: low
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: upper, depth: mg}
+        size: 膝蓋以上，頭頂到膝蓋約畫面高 75%；末幀她往下掉到離地約 2 m，鏡頭往下搖跟著她，頭頂在畫面高約 30%
+        facing: to_camera
+        state: 首幀全身灰色定在離地約 8.5 m 的半空、正面朝鏡頭撲來；[22,1] 胸口炸出顏色，雙臂往兩側張開、胸口往前挺、抬頭，同時接著 s022 的下墜往下掉
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她面向鏡頭，所以是畫面右）
+        facing: to_camera
+        state: 首幀灰色定住；[22,1] 起被 @broadcast_wave 掃過後 2 幀內恢復白色、光帶亮起，跟著她往下
+      - ref: "@broadcast_wave"
+        placement: {x: center, y: upper, depth: mg}
+        size: 以她胸口為圓心，4 幀內擴到畫面外；之後在背景看得到一道往遠處推的光環
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 低角度往上看，首幀背景是她身後的街道上空（兩側商店樓的上半部、全息看板、停在半空的雨），全灰；末幀鏡頭往下搖，背景變成商店一樓櫥窗與二樓看板
+    first_frame: >
+      鏡頭在她前方約 6 m（街尾那一側）、離地約 3 m 往上仰拍約 40°：@luna 全身灰色，正面朝鏡頭定在半空，身體前傾、雙手往前伸，眼睛睜著；@drone 在她左肩旁（畫面右），同樣是灰色。
+      背景是她身後灰色的商店樓上半部、灰色的全息看板與停在半空的雨，天空是陰暗的夜色。畫面中沒有任何顏色。
+    motion:
+      camera: {move: tilt_down, speed: slow, realize: model}
+      subject:
+        text: >
+          [22,1] drop：顏色從她胸口正中炸開，4 幀內由胸口往外恢復全身（包括原本褪色的馬尾下 1/3 與雙手，見 @luna_fade.end）；
+          同時 @broadcast_wave 從她胸口發出，2 幀後掃過 @drone、4 幀後掃過鏡頭，之後在背景往遠處推：被掃過的樓面、看板與雨依序恢復顏色，雨開始往下落。
+          [22,1]–[22,2] 她把雙臂從前伸用力往兩側張開、胸口往前挺、抬頭，表情堅定、嘴巴閉著。她從 [22,1] 起接著 s022 的下墜往下掉（恢復後動作從停住的地方接著進行），
+          鏡頭往下搖約 35° 跟著她；[22,4] 起她把雙腿收到身體下方準備落地，本鏡結束時離地約 2 m。
+          以上時間點都是輸出時間：模型以 1 倍速產生約 1 秒的動作（張臂約 0.2 秒），後製套 speed_ramp 放慢後落在這些時間點。
+        realize: model+post
+    last_frame: >
+      同一個鏡頭位置、往下搖約 35°（接近平視）：@luna 全身原色，雙臂仍往兩側張開，雙腿收在身體下方，離地約 2 m（頭頂在畫面高約 30%）；@drone 白色、光帶亮著，在她左肩旁。
+      背景是她身後的商店一樓櫥窗與二樓全息看板，全部恢復彩色（洋紅、青、琥珀色），雨往下落。
+    beat_events:
+      - at: [22, 1]
+        sync: drop 50.33 s
+        event: 顏色從胸口炸開，@broadcast_wave 發出
+      - at: [22, 2.89]
+        sync: 人聲「現在」51.40 s
+        event: 雙臂已完全張開，下墜中
+    transition_in: {type: cut}
+    post:
+      - {effect: flash_frames, at: [22, 1], frames: 2, color: "#f4f8ff", opacity: 0.6}
+      - {effect: speed_ramp, from: 0.4, to: 1.0, at: [22, 4.5], ramp_frames: 6, curve: linear}
+      - {effect: shake, at: [22, 1], frames: 8, amplitude: 畫面寬 1%, decay: linear}
+    overlay: null
+    status: confirmed
+    notes: drop。本鏡從 0.4 倍慢動作開始，[22,4.5] 起 6 幀內回到 1 倍（波前與顏色恢復以輸出時間計，不受慢動作影響）。模型畫彩色版的張臂與下墜；首幀的全灰與 4 幀內由胸口往外的恢復、@broadcast_wave、背景的恢復都由後製用遮罩做。Final Chorus 也有「顏色從她體內衝破灰色」，到時要和這裡做出差異（例如這裡只有她一人的廣播、範圍一個街區）。
+
+  - id: s025
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [23, 1], to: [24, 1]}
+    lyrics: [13]
+    place: "@street"
+    shot_size: ELS
+    angle: top
+    route: C
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 照真實比例，身高約畫面高 0.5%，幾乎只是一個點，靠她在彩色圓的圓心與旁邊的 @drone 白點辨認
+        facing: away
+        state: "[23,1.3] 雙腳落在街道正中，深蹲著地，之後站起"
+      - ref: "@drone"
+        placement: {x: center, y: middle, depth: mg}
+        size: 一個白色小點，在她旁邊
+        facing: away
+        state: 跟著她落下，停在她左肩旁
+      - ref: "@broadcast_wave"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀是半徑約 100 m 的光環（直徑約畫面寬 33%），[23,3] 擴到半徑約 150 m（直徑約畫面寬 50%）停住
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 從正上方往下看，@street 從畫面左到右橫貫畫面（畫面右＝街尾），寬約畫面高 5%；畫面寬約對應 600 m
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: "@street 兩側的街區屋頂，填滿畫面其餘部分"
+      - ref: "@hovercar"
+        placement: {x: center, y: middle, depth: mg}
+        size: 街道上空零星停著的 @hovercar，每台約畫面寬 0.8%
+    first_frame: >
+      從 @street 正上方約 150 m 往下俯拍：@street 從畫面左到右橫貫畫面，兩側是密集的屋頂。以畫面正中為圓心、直徑約畫面寬 33% 的圓內是彩色的
+      （霓虹、全息看板、@hovercar 的燈帶），圓周是一道白芯的薄光環；圓外的屋頂與街道全是灰色。@luna 是街道正中的一個小點，離地約 2 m、雙腿收在身下，@drone 是她旁邊的白點。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @broadcast_wave 的光環繼續往外擴、越來越慢，[23,3] 停在半徑約 150 m，波前在 6 幀內淡掉，留下和 @silence 一樣的 1 m 漸層邊界；被掃過的屋頂與看板依序變回彩色。
+          [23,1.3] 她雙腳落在街道正中、深蹲著地，[23,3] 站起。@drone 停到她左肩旁。圓內 @hovercar 的燈帶亮起、車身輕微上下浮動。
+        realize: post
+    last_frame: >
+      同一構圖：以畫面正中為圓心、直徑約畫面寬 50% 的圓內全部是彩色（圓的左右兩側各離畫面邊緣約畫面寬 25%），圓外是灰色；圓周是一條柔和的灰彩漸層，沒有光環。
+      @luna 站在街道正中，@drone 在她旁邊。
+    beat_events:
+      - at: [23, 1.3]
+        event: 她落地
+      - at: [23, 2.82]
+        sync: 人聲「讓想像」53.62 s
+        event: 光環接近停止
+      - at: [23, 3]
+        event: 光環停在半徑約 150 m，6 幀內淡掉
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 走 C 路線：同一個俯拍畫彩色版與 frozen 版，後製用以她為圓心擴大的圓形遮罩推進，光環由後製合成；她照真實比例只是一個點，落地由後製用她的小圖層位移做。這一鏡交代「一個街區」的範圍（decisions.shockwave_reach）。
+
+  - id: s026
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [24, 1], to: [25, 1]}
+    lyrics: [13]
+    place: "@street"
+    shot_size: LS
+    angle: low
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: lower, depth: mg}
+        size: 全身，身高約畫面高 35%
+        facing: three_quarter_left
+        state: 站在街道正中，抬頭環顧醒過來的街道，嘴角微揚
+      - ref: "@drone"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁
+        facing: three_quarter_left
+        state: 跟著她，輕微上下浮動
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 低角度往上看，兩側四到六層的商店樓與二到四樓外牆的全息看板佔畫面上半
+      - ref: "@hovercar"
+        placement: {x: center_left, y: upper, depth: bg}
+        size: 街道上空約 6–10 m 處 3 台，每台約畫面寬 10%，車底燈帶亮著
+    first_frame: >
+      低角度、離地約 1 m 往上看：@luna 站在濕的石板街道正中（畫面下半），抬頭往畫面左上看；@drone 在她左肩旁。
+      兩側商店樓全部是彩色：櫥窗亮著，二到四樓外牆的全息看板播著抽象的洋紅、青、琥珀色塊；街道上空 3 台 @hovercar 的車底燈帶亮著，雨往下落，路面的水窪映著霓虹。
+      街上有零星的路人，都背對或側對鏡頭。
+    motion:
+      camera: {move: orbit_left, speed: slow, realize: model}
+      subject:
+        text: >
+          鏡頭繞著她往左轉約 90°。雨持續落下、路人照原本的方向走、@hovercar 輕微上下浮動。
+          [24,2.39] 起，兩側全息看板上的色塊與光帶從看板邊框裡流出來，在街道上空約 8–15 m 處流動、交錯，像光做的絲帶與色塊（沒有文字或可辨認的圖形）。
+          她抬頭看著頭頂流動的光，嘴角微揚。
+        realize: model+post
+    last_frame: >
+      鏡頭繞到她右前方：@luna 身體四分之三朝畫面右、抬頭往上看，@drone 在她左肩旁；街道上空交錯著從看板流出的洋紅、青、琥珀色光帶，雨在光帶間落下。
+    beat_events:
+      - at: [24, 2.39]
+        sync: 人聲「畫面」55.64 s（「穿越畫面之外」）
+        event: 看板的影像流出邊框
+      - at: [24, 4.79]
+        sync: 人聲「之外」57.00 s
+        event: 光帶佈滿街道上空
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 對應「讓想像穿越畫面之外」：看板上的影像流出邊框。流出的光帶由後製合成：先對模型片段做相機追蹤（camera solve），再把光帶擺在街道上空的 3D 位置，跟著繞行的鏡頭保持透視；模型只畫恢復後的街道與她。
+
+  - id: s027
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [25, 1], to: [26, 1]}
+    lyrics: [14]
+    place: "@street"
+    shot_size: LS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: lower, depth: fg}
+        size: 從背後看，膝蓋以上，頭頂到膝蓋約畫面高 50%
+        facing: away
+        state: 背對鏡頭看向街尾；[25,4.05] 起往街尾起跑
+      - ref: "@drone"
+        placement: {x: center_left, y: middle, depth: fg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她背對鏡頭，所以是畫面左）
+        facing: away
+        state: 跟著她
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 從她背後沿街道往街尾看，兩側商店樓往畫面中央收；街尾約 1.5 km
+      - ref: "@silence"
+        placement: {x: center, y: middle, depth: bg}
+        size: 前方約 150 m 處一條橫跨街道的灰彩交界（約在畫面高 55%），交界以外的街道是灰色；[25,3] 起以每秒約 15 m 往鏡頭推進，末幀推進到約 125 m
+      - ref: "@signal_tower"
+        placement: {x: center, y: upper, depth: bg}
+        size: 街尾正上方的剪影，觀景台寬約畫面寬 2.5%；塔身仍是彩色（青色線與洋紅燈帶亮著），塔底四周是灰色的街區
+    first_frame: >
+      從 @luna 背後、肩膀高度沿 @street 往街尾看：她在畫面下半正中，@drone 在她左肩旁。近處約 150 m 內的街道是彩色的（霓虹、看板、落下的雨、零星路人），
+      再往前是一條橫跨街道的灰彩交界，交界以外的街道、樓群與雨都是灰色定格的。街尾正上方是 @signal_tower 的剪影，塔身的青色線與洋紅燈帶還亮著，塔底四周是灰色。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [25,1]–[25,3] 她靜靜看著街尾的塔。[25,3] 起前方的灰彩交界以每秒約 15 m 往鏡頭推進：被掃過的店面變灰、雨停在半空、路人定住（@silence 的邊界帶）。
+          [25,4.05] 她身體前傾，往街尾（迎著灰色）起跑，@drone 跟上。
+        realize: model+post
+    last_frame: >
+      同一構圖：@luna 從背後看已跨出兩步、身體前傾在奔跑，比首幀小約 1/5（離鏡頭約 3 m）；@drone 在她左肩旁。前方灰彩交界推進到約 125 m 處，@signal_tower 仍在街尾正上方。
+    beat_events:
+      - at: [25, 2.56]
+        sync: 人聲「LIVE」58.00 s
+        event: 她看著塔
+      - at: [25, 3]
+        event: 灰彩交界開始往鏡頭推進
+      - at: [25, 4.05]
+        sync: 人聲「AI」58.85 s
+        event: 起跑
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 恢復區開始被吞回（decisions.restored_block_after）。灰彩交界的推進由後製用彩色版／frozen 版遮罩做。她迎著灰色跑，下一鏡直接跳接到塔底。
+
+  - id: s028
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [26, 1], to: [27, 1]}
+    lyrics: [14]
+    place: "@signal_tower"
+    shot_size: LS
+    angle: low
+    route: A
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: bottom, depth: fg}
+        size: 首幀全身，身高約畫面高 40%（離鏡頭約 4 m、離塔身約 6 m）；鏡頭往上搖之後她出畫（只剩頭頂在畫面下緣）
+        facing: away
+        state: 跑完最後兩步，在塔身前約 6 m 停下、抬頭看塔
+      - ref: "@drone"
+        placement: {x: center_left, y: lower, depth: fg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（畫面左）
+        facing: away
+        state: 跟著她停下
+      - ref: "@restore_touch"
+        placement: {x: center, y: bottom, depth: fg}
+        size: 她每一步落地在灰色廣場上踩出半徑約 3 m 的彩色區塊（footstep_patch）
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: bg}
+        size: 鏡頭離塔身約 10 m，首幀塔身寬約畫面寬 70%，從畫面下半往上延伸出畫；末幀往上搖到幾乎垂直，觀景台底面（約 154 m 高）寬約畫面寬 25%、在畫面上半
+      - ref: "@silence"
+        placement: {x: center, y: lower, depth: bg}
+        size: 廣場全灰；塔身離地約 5 m 處有一道環繞塔身的灰彩交界（1 m 漸層帶），以每秒約 5 m 往上爬，本鏡結束時約離地 16 m
+    first_frame: >
+      @signal_tower 塔底的圓形廣場，鏡頭在離塔身約 10 m、離地約 1 m 往塔身仰拍：黑色霧面的塔身佔畫面寬約 70%，6 條結構肋中的 3 條看得到，肋的外緣嵌著青色發光線，
+      塔身一圈圈洋紅色燈帶往上排列，肋的兩側交替掛著鐵格維修平台。塔身離地約 5 m 以下是灰色（燈帶與青色線仍亮但沒有顏色），以上是彩色；廣場的石板地面、水窪與停在半空的雨全是灰色。
+      @luna 背對鏡頭在畫面下緣正中、離鏡頭約 4 m，奔跑中身體前傾、單腳著地，@drone 在她左肩旁。
+    motion:
+      camera: {move: tilt_up, speed: medium, realize: model}
+      subject:
+        text: >
+          [26,1]–[26,2.37] 她再跑兩步、在塔身前約 6 m 雙腳併攏停下，每一步都在灰色廣場上踩出半徑約 3 m 的彩色區塊（28 幀後退回）。[26,2.37] 她抬頭看塔。
+          [26,3] 起鏡頭沿塔身往上搖到觀景台：一層層洋紅燈帶、肋上的青色線與維修平台往下滑出畫面，最後停在巨大的圓盤觀景台底面與 6 根往外斜伸的支撐斜樑。
+          整鏡塔身上的灰彩交界以每秒約 5 m 往上爬（從約 5 m 到約 16 m），被掃過的燈帶與青色線變灰但仍亮著。
+        realize: model+post
+    last_frame: >
+      鏡頭往上仰到幾乎垂直：畫面上半是 @signal_tower 觀景台的底面（寬約畫面寬 25%），6 根支撐斜樑從塔身往外斜伸接到圓盤外緣，觀景台外緣上下兩圈洋紅燈帶亮著，圓盤上方露出細長天線與頂端的白色警示燈；
+      畫面下半是往下延伸的塔身與肋上的青色線，全是彩色。@luna 只剩頭頂在畫面下緣。
+    beat_events:
+      - at: [26, 2.37]
+        sync: 人聲「讓世界」60.16 s
+        event: 她停下、抬頭
+      - at: [26, 3]
+        event: 鏡頭開始往上搖
+      - at: [26, 4.98]
+        sync: 人聲「打開」61.64 s
+        event: 鏡頭停在觀景台
+    transition_in: {type: cut, note: 跳接：從街上直接切到塔底，省略中間約 1.5 km 的路程（s027 的街尾）（decisions.shockwave_reach）}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 第一次近看 @signal_tower，用往上搖交代高度（全高約 240 m、觀景台底面約 154 m）。塔身灰彩交界的上爬由後製做；廣場的腳步區塊由後製做。
+
+  - id: s029
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [27, 1], to: [28, 1]}
+    lyrics: [15]
+    place: "@signal_tower"
+    shot_size: FS
+    angle: low
+    route: B
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身，身高約畫面高 25%；鏡頭跟著她升高，她在畫面中的高度大致不變
+        facing: away
+        state: 衝向一條結構肋，[27,2.05] 起在肋兩側的維修平台之間左右蹬跳往上
+      - ref: "@drone"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（畫面左）
+        facing: away
+        state: 跟著她往上飛
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 正對一條結構肋拍，肋寬約畫面寬 12%，從畫面下緣直通上緣；兩側的塔身填滿畫面寬約 80%
+      - ref: "@restore_touch"
+        placement: {x: center, y: middle, depth: mg}
+        size: 她每次蹬到肋或落到平台，落腳點周圍半徑約 3 m 恢復（footstep_patch）：平台整片恢復，肋與塔身只恢復圓內
+      - ref: "@silence"
+        placement: {x: center, y: upper, depth: mg}
+        size: 首幀灰彩交界在離地約 16 m（畫面高約 20% 處），末幀約 28 m；她整鏡都在灰色範圍內
+    first_frame: >
+      鏡頭在塔底、正對一條結構肋，離地約 1.5 m 微仰：肋從畫面下緣直通上緣，外緣的青色發光線是灰白色的（灰色範圍內）；肋的左右兩側交替掛著鐵格維修平台，每隔約 8 m 一個。
+      @luna 背對鏡頭在肋前方約 3 m 的廣場上，身體前傾、雙臂後擺；@drone 在她左肩旁。畫面上方約 20% 處有一道環繞塔身的灰彩交界，交界以上的肋與燈帶是彩色的。
+    motion:
+      camera: {move: crane_up, speed: fast, realize: model}
+      subject:
+        text: >
+          [27,1]–[27,2] 她衝到肋前。[27,2.05] 起跳，char_right 腳蹬在肋的右側面，往左上躍到離地約 8 m 的左側平台；[27,3] 從左側平台蹬肋往右上，落到約 16 m 的右側平台；
+          [27,4] 再往左上，落到約 24 m 的左側平台。三個落點都在灰色範圍內，每次蹬到肋或落到平台都踩出半徑約 3 m 的恢復區塊（28 幀後退回）。鏡頭跟著她往上升約 24 m。
+          灰彩交界整鏡以每秒約 5 m 往上爬（從約 16 m 到約 28 m）；她在 [27,3] 落到 16 m 時與交界幾乎同高，之後交界又爬到她上方，本鏡結束時交界在她腳下平台上方約 4 m。
+        realize: model+post
+    last_frame: >
+      鏡頭升到離地約 25 m：@luna 剛落在肋左側離地約 24 m 的平台上，蹲低準備下一次蹬跳，腳下平台是恢復的彩色區塊；@drone 在她左肩旁。她頭頂上方約 2 m（離地約 28 m）是環繞塔身的灰彩交界，
+      交界以上的肋、青色發光線與洋紅燈帶是彩色；交界以下是灰色。
+    beat_events:
+      - at: [27, 2.05]
+        sync: 人聲「沒有」62.24 s
+        event: 第一次蹬跳
+      - at: [27, 3]
+        event: 第二次蹬跳
+      - at: [27, 4]
+        event: 第三次蹬跳（仍在灰色範圍內）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 蹬跳是指定動作，走 B 路線（OpenPose 給三次左右交替的蹬跳）。她每一次蹬跳上升約 8 m，是她的能力，不是寫實的人類跳躍。標頭的高度表是整段的對照。
+
+  - id: s030
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [28, 1], to: [30, 1]}
+    lyrics: [15, 16]
+    place: "@signal_tower"
+    shot_size: ELS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: lower, depth: mg}
+        size: 很小，身高約畫面高 1.5%；從畫面高約 92% 爬到約 56%
+        facing: away
+        state: 沿肋左右蹬跳往上，每拍一次、每次約 8 m，從約 24 m 爬到約 88 m
+      - ref: "@drone"
+        placement: {x: center, y: lower, depth: mg}
+        size: 一個白色小點，在她旁邊
+        facing: away
+        state: 跟著她
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 塔身寬約畫面寬 6%，從畫面下緣直通上緣；畫面高約對應 120 m，首幀涵蓋離地約 15–135 m，末幀約 35–155 m
+      - ref: "@silence"
+        placement: {x: center, y: bottom, depth: mg}
+        size: 塔身上的灰彩交界首幀在畫面高約 89%（約 28 m），末幀在約 87%（約 50 m）
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 塔後方遠處的 @city，全是灰色；@street 從塔底往畫面左後方延伸，左下遠方約 1.5 km 外是 @broadcast_wave 恢復、正在被吞回的那塊彩色街區，首幀寬約畫面寬 6%，[30,1] 縮到沒有
+    first_frame: >
+      鏡頭在塔的側面（與 @street 的方向垂直）、離塔約 150 m、離地約 75 m 的半空平視：@signal_tower 的塔身從畫面下緣直通上緣，肋上的青色線與一圈圈洋紅燈帶在畫面高約 89% 以上都是彩色，以下是灰色。
+      @luna 是肋上一個小人影，在畫面高約 92% 處，剛好在灰彩交界下方；@drone 是她旁邊的白點。塔後方是一大片灰色定格的 @city，@street 往畫面左後方延伸，左下遠方有一小塊彩色街區。
+    motion:
+      camera: {move: crane_up, speed: slow, realize: model}
+      subject:
+        text: >
+          鏡頭緩慢升高約 20 m。@luna 沿肋左右蹬跳往上，每拍一次、每次約 8 m，從約 24 m 爬到約 88 m；[28,1.72] 她在第一次蹬跳中越過灰彩交界，之後兩者距離越拉越大
+          （落在灰色以上的平台不再有恢復區塊）。塔身的灰彩交界以每秒約 5 m 往上爬（從約 28 m 到約 50 m），被掃過的洋紅燈帶一圈圈變灰。
+          遠方左下那塊彩色街區被邊界以每秒約 15 m 從外往內吞回，越縮越小，[30,1] 消失。
+        realize: model+post
+    last_frame: >
+      同一個方向、鏡頭升高約 20 m：@luna 在畫面高約 56% 處的肋上，灰彩交界落在她下方很遠（畫面高約 87%）；交界以上的塔身全是彩色。遠方左下的彩色街區已經消失，整片 @city 是灰色。
+    beat_events:
+      - at: [28, 1.72]
+        event: 她越過灰彩交界
+      - at: [28, 1.89]
+        sync: 人聲「你」64.42 s
+        event: 她與灰彩交界的距離拉開
+      - at: [28, 4.89]
+        sync: 人聲「創造」66.12 s
+        event: 遠方彩色街區縮到約畫面寬 3%（直徑約 70 m）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 2 小節的遠景，交代垂直的追逐與 @city 的局勢。她太小，蹬跳細節不重要，走 A 路線；灰彩交界上爬與遠方街區縮小由後製做。
+
+  - id: s031
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [30, 1], to: [31, 1]}
+    lyrics: [16]
+    place: "@signal_tower"
+    shot_size: MS
+    angle: high
+    route: B
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: lower, depth: mg}
+        size: 首幀全身、身高約畫面高 5%（在鏡頭下方約 35 m 的平台上）；末幀腰部以上、約畫面高 60%（離鏡頭約 2 m）
+        facing: to_camera
+        state: 抬頭往鏡頭方向（往上）四次蹬跳，從約 88 m 爬到約 120 m
+      - ref: "@drone"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她面向鏡頭，所以是畫面右）
+        facing: to_camera
+        state: 跟著她往上
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 從上往下沿肋看，肋從畫面上緣往下收向畫面中央的消失點；兩側的塔身與一圈圈洋紅燈帶往下縮小
+      - ref: "@silence"
+        placement: {x: center, y: middle, depth: bg}
+        size: 她下方約 38 m（離地約 50–62 m）環繞塔身的灰彩交界，在畫面中央是一圈小環
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 塔身兩側往下看到的灰色的 @city，在畫面四角
+    first_frame: >
+      鏡頭貼著一條結構肋、離地約 123.5 m（在 @luna 上方約 35 m）往下俯拍：肋與塔身往下收向畫面中央，一圈圈洋紅燈帶與肋上的青色線越往下越小；她下方約 38 m 是環繞塔身的灰彩交界，再往下是灰色的塔身與 @city。
+      @luna 在約 88 m 高、肋左側（從塔外面向塔看）的維修平台上蹲低、抬頭看著鏡頭，@drone 在她左肩旁（畫面右）。
+    motion:
+      camera: {move: static, speed: slow, realize: model}
+      subject:
+        text: >
+          她每拍蹬跳一次、左右交替往上：[30,1] 起跳落到 96 m（右側），[30,1.82] 落到 104 m（左側），[30,2.85] 落到 112 m（右側），[30,3.89] 落到 120 m（左側）、正好在鏡頭前約 2 m，抓住平台邊緣停住，抬頭看向上方。
+          她在畫面中越來越大。@drone 跟著往上。下方的灰彩交界持續往上爬，但在畫面中仍很遠。
+        realize: model+post
+    last_frame: >
+      同一個俯拍構圖：@luna 在鏡頭前約 2 m 的平台上，腰部以上佔畫面下半，抬頭看向鏡頭上方、表情專注；@drone 在她左肩旁（畫面右）。下方深處是縮小的塔身、灰彩交界的小環與灰色的 @city。
+    beat_events:
+      - at: [30, 1.82]
+        sync: 人聲「讓聲音」68.90 s
+        event: 落到 104 m
+      - at: [30, 2.85]
+        event: 落到 112 m
+      - at: [30, 3.89]
+        sync: 人聲「讓故事」70.08 s
+        event: 落到 120 m，衝到鏡頭前
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 俯拍強調高度。四次蹬跳是指定動作，走 B 路線。她在本鏡從約 88 m 爬到約 120 m。
+
+  - id: s032
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [31, 1], to: [32, 1]}
+    lyrics: [16, 17]
+    place: "@signal_tower"
+    shot_size: LS
+    angle: low
+    route: B
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身，身高約畫面高 15%
+        facing: away
+        state: 連續蹬跳到肋的頂端，站在斜樑根部抬頭看觀景台
+      - ref: "@drone"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（畫面左）
+        facing: away
+        state: 跟著她
+      - ref: "@signal_tower"
+        placement: {x: center, y: upper, depth: mg}
+        size: 畫面上半是觀景台的底面，佔畫面寬 100%；6 根支撐斜樑中的 3 根從塔身往外斜伸到畫面上緣外
+    first_frame: >
+      鏡頭在 @luna 下方約 10 m、離塔身約 5 m 往上仰拍：畫面上半是巨大的觀景台底面與往外斜伸的支撐斜樑，觀景台外緣下方那圈洋紅燈帶亮著；
+      畫面下半是塔身、一條結構肋與肋上的青色線。@luna 背對鏡頭蹲在肋左側（從塔外面向塔看）的維修平台上（離地約 120 m），@drone 在她左肩旁。
+    motion:
+      camera: {move: tilt_up, speed: slow, realize: model}
+      subject:
+        text: >
+          她沿肋再蹬跳 3 次（[31,1.5] 落到 128 m 右側、[31,2.5] 落到 136 m 左側、[31,3.5] 站上肋的頂端，也就是支撐斜樑的根部，約 144 m）。鏡頭跟著往上仰。
+          [31,4] 她抬頭看著頭頂往外斜伸的斜樑與觀景台外緣。
+        realize: model
+    last_frame: >
+      鏡頭仰到觀景台底面：@luna 站在一根支撐斜樑的根部，背對鏡頭、抬頭看著斜樑往外上方延伸到觀景台外緣；@drone 在她左肩旁。觀景台底面佔畫面上半，外緣的洋紅燈帶亮著。
+    beat_events:
+      - at: [31, 1.84]
+        sync: 人聲「醒來」71.18 s
+        event: 她蹬跳中
+      - at: [31, 4]
+        event: 站上斜樑根部、抬頭
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 爬到觀景台底下。三次對拍的蹬跳是指定動作，走 B 路線。之後兩小節半小節快切。
+
+  - id: s033
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [32, 1], to: [32, 3]}
+    lyrics: [17]
+    place: "@signal_tower"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 全身側面，身高約畫面高 45%
+        facing: profile_right
+        state: 沿支撐斜樑往畫面右上衝
+      - ref: "@drone"
+        placement: {x: center_left, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left（遠側）肩旁，從她頭部後方露出約一半
+        facing: profile_right
+        state: 跟著她
+      - ref: "@signal_tower"
+        placement: {x: center, y: upper, depth: mg}
+        size: 支撐斜樑從畫面左下斜到右上（約 34°），側面厚約畫面高 20%（約 0.8 m）；畫面上緣是觀景台的底面
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 斜樑下方與後方是約 140 m 下的灰色的 @city
+    first_frame: >
+      鏡頭在斜樑側面同高平視：一根黑色支撐斜樑從畫面左下斜到右上，頂面中央嵌著青色發光線；畫面上緣是觀景台的黑色底面。
+      @luna 側身在斜樑左段，身體前傾、char_left 腳在前，往右上衝刺中；@drone 從她頭部後方露出一半。斜樑下方遠處是灰色的 @city。
+    motion:
+      camera: {move: track, speed: fast, realize: model}
+      subject:
+        text: >
+          她沿斜樑往右上衝，鏡頭同速跟拍，她在畫面中的位置不變。[32,2.5] 她衝到斜樑末端，前方就是觀景台底面外緣，她蹲低、雙臂後擺準備往上跳。
+        realize: model
+    last_frame: >
+      @luna 在斜樑末端蹲低、雙臂後擺，頭頂上方就是觀景台底面的外緣與那圈洋紅燈帶；@drone 在她頭部後方。下方遠處是灰色的 @city。
+    beat_events:
+      - at: [32, 2.5]
+        event: 衝到斜樑末端、蹲低
+    transition_in: {type: cut_on_action, note: s032 末幀她站在斜樑根部，本鏡從她沿斜樑衝出的第一步開始（換成側拍）}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 半小節快切。斜樑水平約 15 m、升高約 10 m。
+
+  - id: s034
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [32, 3], to: [33, 1]}
+    lyrics: [17]
+    place: "@signal_tower"
+    shot_size: MS
+    angle: high
+    route: B
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: lower, depth: mg}
+        size: 首幀只露出雙手與頭（抓著矮牆頂緣）；末幀全身蹲在走道上、身高約畫面高 40%
+        facing: to_camera
+        state: 雙手抓著矮牆頂緣，翻過矮牆落到走道上
+      - ref: "@drone"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（畫面右）
+        facing: to_camera
+        state: 從矮牆外飛上來
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: fg}
+        size: 鏡頭在外環走道上往外俯拍：畫面上半是走道地板與高約 1 m 的金屬矮牆，矮牆外是夜空與下方的 @city
+      - ref: "@city"
+        placement: {x: center, y: bottom, depth: bg}
+        size: 矮牆外下方約 158 m 的灰色的 @city
+    first_frame: >
+      鏡頭在觀景台的外環走道上、背對全景窗往外俯拍：近處是走道的金屬地板，前方是高約 1 m 的金屬矮牆，矮牆外下方是約 158 m 下的灰色的 @city。
+      @luna 的雙手抓著矮牆頂緣，頭剛冒出矮牆、抬頭看著鏡頭；@drone 在矮牆外、她頭部右側（她的左肩旁）。
+    motion:
+      camera: {move: static, speed: slow, realize: model}
+      subject:
+        text: >
+          她雙手一撐，身體翻過矮牆，[32,3.95] 雙腳落在走道上、蹲低著地；@drone 跟著飛上來，停在她左肩旁。
+        realize: model
+    last_frame: >
+      @luna 蹲在走道上、單手撐地，抬頭往鏡頭後方（全景窗）看；@drone 在她左肩旁（畫面右）。背景是矮牆與矮牆外的夜空、灰色的 @city。
+    beat_events:
+      - at: [32, 3.95]
+        sync: 人聲「現在」74.64 s（「把不可能變成現在」）
+        event: 翻上走道落地
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 半小節快切。翻牆是指定動作，走 B 路線。她從斜樑末端（約 154 m）往外上方跳，抓住矮牆頂緣（約 159 m，比斜樑末端高約 5 m、往外約 1.5 m，繞過走道地板的下緣），這一跳在剪接中省略。
+
+  - id: s035
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [33, 1], to: [33, 3]}
+    lyrics: [18]
+    place: "@signal_tower"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 膝蓋以上，站起後頭頂到膝蓋約畫面高 70%
+        facing: three_quarter_right
+        state: 首幀接 s034 末幀蹲著、單手撐地；[33,1]–[33,1.5] 站起來面向全景窗
+      - ref: "@drone"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍
+        facing: three_quarter_right
+        state: 從她 char_left 肩旁往前飛約 0.7 m 到窗前，用 @echo_beam 照窗框的鎖點，之後回到她肩旁
+      - ref: "@echo_beam"
+        placement: {x: screen_right, y: middle, depth: mg}
+        size: 從 @drone 光帶射到窗框右側的鎖點，長約畫面寬 10%
+      - ref: "@signal_tower"
+        placement: {x: screen_right, y: middle, depth: mg}
+        size: 窗牆從畫面左後方延伸到右前方；正對她的那片全景窗（深色玻璃、金屬窗框）佔畫面右半約 40%
+    first_frame: >
+      鏡頭在外環走道上、背靠矮牆，斜 45° 對著窗牆拍：窗牆從畫面左後方延伸到右前方。@luna 在畫面左半、離窗約 1 m，蹲著、單手撐地，身體四分之三朝畫面右、面向正對她的那片窗；
+      @drone 在她左肩旁（遠側），從她頭部後方露出一半。畫面右半是那片高約 4 m 的深色玻璃全景窗，窗內是暗的控制室，玻璃上映著 @city 的光；窗框右側中段有一個小圓形的鎖點。
+    motion:
+      camera: {move: static, speed: slow, realize: model}
+      subject:
+        text: >
+          [33,1]–[33,1.5] 她站起來；同時 @drone 從她肩旁往前飛約 0.7 m 到窗前，[33,1.5] 從光帶射出 @echo_beam 照在窗框右側的鎖點上（6 幀）。
+          那片窗在 6 幀內往畫面右滑進相鄰那片窗的後面，留出寬約 3 m 的開口。@drone 回到她左肩旁；[33,2.5] 她身體前傾、往開口衝出第一步。
+        realize: model+post
+    last_frame: >
+      同一構圖：畫面右側的窗已經打開，開口裡是暗的控制室；@luna 身體前傾往開口衝，@drone 在她左肩旁。
+    beat_events:
+      - at: [33, 1.5]
+        sync: 人聲「CSFCCA」75.34–76.34 s 之間
+        event: "@echo_beam 照到鎖點，窗開始滑開"
+      - at: [33, 2.5]
+        event: 她往開口衝
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 半小節快切。@drone 暫時離開 char_left 執行開窗（劇情功能），做完回到原位。光束由後製合成，窗滑開由模型畫。s034 末幀的蹲姿直接接本鏡首幀。唱到「CSFCCA」時由 CSFCCA 派來的 @drone 開門。
+
+  - id: s036
+    section: chorus1
+    story_beat: chorus1
+    span: {from: [33, 3], to: [34, 1]}
+    lyrics: [18]
+    place: "@signal_tower"
+    shot_size: LS
+    angle: low
+    route: B
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀在窗口剪影裡、從指尖到腳尖約畫面寬 30%；末幀蹲在近處地板、身高約畫面高 30%（蹲姿）
+        facing: to_camera
+        state: 已經魚躍離地、從窗口撲進來，雙手著地、前滾翻、蹲低落地
+      - ref: "@drone"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她面向鏡頭，所以是畫面右）
+        facing: to_camera
+        state: 跟著飛進來
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: bg}
+        size: 控制室內往窗外看：打開的窗口在畫面正中，寬約畫面寬 30%；兩側是暗的全景窗與地面沿窗的一圈白色低亮度指示燈；近處是暗的副控台輪廓
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 窗口外的夜空與遠方灰色的 @city
+    first_frame: >
+      鏡頭在暗的控制室裡、離地約 0.5 m 平視略仰（約 5°）對著窗口：控制室地板與外環走道同高、窗口下緣就是地板；正中是打開的全景窗口，窗外是夜空與地平線上遠方灰色的 @city；兩側其他窗是深色玻璃，地面沿窗一圈白色低亮度指示燈。
+      近處左右是不亮的副控台輪廓。@luna 在窗口的剪影裡，身體已經離地、幾乎水平地往鏡頭撲來，雙手往前伸；@drone 在她左肩旁（畫面右）。
+    motion:
+      camera: {move: static, speed: slow, realize: model}
+      subject:
+        text: >
+          她從窗口撲進來，[33,3.65] 雙手先著地、前滾翻一圈，[33,4.55] 蹲低落在鏡頭前約 3 m 的地板上，單手撐地、抬頭看向控制室深處（鏡頭後方）。@drone 跟著飛進來，停在她左肩旁。
+        realize: model
+    last_frame: >
+      暗的控制室：@luna 蹲在畫面正中近處、單手撐地，抬頭看向鏡頭後方，臉被窗外 @city 的光從背後勾出輪廓；@drone 在她左肩旁（畫面右），青色光帶是房間裡最亮的光。背後是打開的窗口與夜空。
+    beat_events:
+      - at: [33, 3.65]
+        sync: 人聲「LIVE AI」約 76.73 s
+        event: 雙手著地、開始前滾翻
+      - at: [33, 4.55]
+        sync: 人聲 onset 77.24 s
+        event: 落地
+    transition_in: {type: cut_on_action, note: s035 末幀她往開口衝，本鏡從室內反打她穿過窗口}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 半小節快切，Chorus 1 結束。魚躍與前滾翻是指定動作，走 B 路線。控制室這時廣播系統離線（@signal_tower.look.interior），Bridge 從這裡開始一處處接回。

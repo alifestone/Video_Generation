@@ -24,7 +24,10 @@ FIELD_ZH = {"style": "風格", "role": "角色設定", "notes": "備註", "refs"
             "travel": "移動方式", "timing": "時間", "position": "位置",
             "storefront": "店面", "ground": "路面", "air": "空中", "body": "體型", "outfit": "服裝",
             "pose_frozen": "定格姿勢", "face": "臉", "position_frozen": "定格位置",
-            "footstep_patch": "腳步區塊", "surge": "湧升", "start": "開始", "progress": "進度"}
+            "footstep_patch": "腳步區塊", "surge": "湧升", "start": "開始", "progress": "進度",
+            "material": "材質", "ribs": "結構肋", "platforms": "維修平台", "bands": "分層燈帶", "deck": "觀景台",
+            "window_open": "開窗", "antenna": "天線", "base": "塔底", "interior": "內部", "state_chorus1": "Chorus 1 時的狀態",
+            "origin": "發出點", "front": "波前", "speed": "速度", "stop": "停住", "end": "結束"}
 REALIZE_ZH = {"model": "影片模型生成", "post": "後製", "model+post": "影片模型＋後製", "none": "不動"}
 
 
