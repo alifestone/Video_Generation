@@ -2343,3 +2343,401 @@ shots:
     notes: >
       Let the future unfold。使用者選：最後出塔外、系統只到「就緒」，還沒發出廣播（Build 的倒數才是發射）。route C：一張靜態圖＋視差，所有變化由後製。
       末幀只比首幀多了天線細線亮著與交界上升約 2%，不另出末幀。人聲「unfold」的尾音拖到 [37,2]，Build 第一鏡要接住。
+
+  - id: s043
+    section: build
+    story_beat: build
+    span: {from: [37, 1], to: [37, 2]}
+    lyrics: [20]
+    place: "@signal_tower"
+    shot_size: MCU
+    angle: low
+    route: A
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 胸口以上，頭頂到胸口約畫面高 80%
+        facing: three_quarter_left
+        state: 站在主控台遠側桌緣前，仰頭看著光柱頂端，露出勝利的笑
+      - ref: "@signal_tower"
+        placement: {x: screen_left, y: middle, depth: fg}
+        size: 亮著的光柱在畫面左緣、離鏡頭約 1 m，失焦，寬約畫面寬 25%，從畫面下緣直到上緣；背景是失焦的彩色窗光
+    first_frame: >
+      鏡頭在主控台桌面上方、她與光柱之間偏一側（離她約 1.6 m、離光柱約 1 m），略低於她的下巴往上仰約 10°：@luna 胸口以上在畫面右半，臉四分之三朝畫面左上方，仰頭看著光柱頂端，嘴角上揚、眼睛發亮；
+      畫面左緣是失焦的亮著的光柱，青白光照亮她臉的左側（畫面左）；她背後是失焦的一片片彩色窗光（窗上影像，由模型畫成失焦色塊）。
+    motion:
+      camera: {move: push_in, speed: slow, realize: model, note: 推近約 5%}
+      subject:
+        text: 她的笑容慢慢變大；視線一直看著光柱頂端（無人機停在那裡，本鏡看不到）。
+        realize: model
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut, note: "s042 末幀是塔外天線剛亮；本鏡回到室內，人聲「unfold」的尾音（到 [37,2]）在本鏡內唱完"}
+    post: []
+    overlay: null
+    status: proposed
+    notes: Build 第一鏡（使用者選：回到室內她的勝利表情）。本鏡最後一刻一切都還亮著；反撲從下一鏡 [37,2] 開始，切點就是轉折。房間方位以入口窗為 12 點鐘：她站在主控台 12 點鐘側的桌緣前（Bridge s039 退回的位置），鏡頭在她與光柱之間偏 1 點鐘側。
+
+  - id: s044
+    section: build
+    story_beat: build
+    span: {from: [37, 2], to: [37, 2.5]}
+    lyrics: []
+    place: "@signal_tower"
+    shot_size: ELS
+    angle: eye
+    route: C
+    variation: small
+    subjects:
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 同 s042 的鏡位：塔的上半段（離地約 115–240 m）在畫面正中直立、佔滿畫面高；觀景台寬約畫面寬 17%
+      - ref: "@silence"
+        placement: {x: center, y: bottom, depth: mg}
+        size: 首幀灰色只在畫面下緣約 13%（交界約離地 132 m、畫面高約 87%）；末幀整座塔都是灰色
+      - ref: "@city"
+        placement: {x: center, y: lower, depth: bg}
+        size: 地平線在畫面高約 50%，以下是灰色的夜間 @city，以上是夜空
+    first_frame: >
+      和 s042 末幀同一個鏡位與構圖（用 s042 推近約 3% 後的裁切，與 s042 末幀無縫接上）：夜空中的 @signal_tower 上半段，天線正面的青色細線亮著、頂端警示燈亮著；觀景台上下兩圈洋紅燈帶亮著、全景窗透出彩色光；
+      144 m 那圈燈帶仍是洋紅，132 m 那圈正落在灰色與彩色的交界上（畫面高約 87%），交界以下是灰色的塔身。地平線以下是灰色的 @city。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [37,2] 起灰色以一道往上湧的顆粒霧帶沿塔身暴衝（@silence.spread 的 Build 段）：經過的燈帶與肋上的青色線一圈圈變灰（仍亮著，只是沒有顏色）。
+          [37,2.1] 霧帶碰到觀景台底面，從那一幀起全景窗的彩色光與天線青色細線在 2 幀內線性淡到全暗（廣播系統斷電，@signal_tower.look.state_build）；塔外燈帶是另外的電源，只變灰、不熄；
+          霧帶繼續往上吞過觀景台、細頸與天線，[37,2.45] 到達天線頂端，警示燈變成灰白色、仍亮著。
+        realize: post
+    last_frame: null
+    beat_events:
+      - at: [37, 2]
+        event: 灰色開始暴衝
+      - at: [37, 2.1]
+        event: 霧帶碰到觀景台，全景窗與天線細線熄滅
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 反撲（使用者選：灰色暴衝上塔）。半拍快切。route C：用 s042 的同一張靜態圖，暴衝、變灰與熄滅全由後製做。
+
+  - id: s045
+    section: build
+    story_beat: build
+    span: {from: [37, 2.5], to: [37, 3]}
+    lyrics: []
+    place: "@signal_tower"
+    shot_size: LS
+    angle: high
+    route: B
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身，身高約畫面高 18%
+        facing: to_camera
+        state: 從主控台遠側的地板跳上主控台桌面，雙手伸向光柱
+      - ref: "@drone"
+        placement: {x: center, y: upper, depth: mg}
+        size: 直徑約畫面寬 1.5%；在光柱上段的管內
+        facing: to_camera
+        state: 斷電後在管內往下掉
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 畫面中央是主控台與光柱（光柱寬約畫面寬 3%，從主控台直到畫面上緣外）；四周是機櫃排，外圈與窗在畫面邊緣
+      - ref: "@silence"
+        placement: {x: center, y: middle, depth: mg}
+        size: 從畫面四邊往中央淹進來的灰色；首幀灰色已經吞到離中心約 13 m，末幀停在地板上離中心約 3.3 m（@luna_hold 的邊界）
+    first_frame: >
+      鏡頭在入口窗對面、接近天花板（離地約 5.5 m）、離房間中心約 10 m，往下約 35° 俯看主控台：控制室全暗，主控台、機櫃、光柱都不亮，窗上的影像也熄了；
+      房間外圈到畫面四邊已經是灰色，灰色與彩色的交界是一圈約 1 m 寬、帶著靜止灰色顆粒的漸層帶，離房間中心約 13 m。畫面中央的主控台與附近的機櫃還是原本的顏色，但沒有燈。
+      @luna 站在主控台遠側的地板上，屈膝、雙臂後擺準備起跳，臉朝光柱；光柱上段的管內，斷電的 @drone 是一顆白色小球（光帶不亮）。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [37,2.55] 她起跳，[37,2.9] 雙腳落在主控台桌面上、光柱旁，雙手往光柱伸去。同時灰色從四邊往中央淹進來，[37,3] 停在地板上離中心約 3.3 m 處（@luna_hold 的邊界，球半徑約 4 m）。
+          @drone 在管內往下掉（本鏡內約 1 m）。
+        realize: model+post
+    last_frame: >
+      同一構圖：除了以她為中心、地板上半徑約 3.3 m 的一圈以外，整個控制室都是灰色；@luna 站在主控台桌面上、光柱旁，雙手伸向光柱；@drone 在光柱上段的管內往下落。
+    beat_events:
+      - at: [37, 2.55]
+        event: 她起跳
+      - at: [37, 2.9]
+        event: 她落在主控台桌面上
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 半拍快切。跳上主控台是指定動作，走 B 路線：模型生成約 1 秒的起跳片段，後製以 speed_ramp 壓進 7 幀。模型畫全暗的彩色控制室與她起跳；灰色淹進來與 @luna_hold 的邊界由後製合成。她跳上主控台是因為光柱在桌面正中，站在桌緣搆不到。鏡頭在 6 點鐘方向高處，她在 12 點鐘側。
+
+  - id: s046
+    section: build
+    story_beat: build
+    span: {from: [37, 3], to: [38, 1]}
+    lyrics: [21]
+    place: "@signal_tower"
+    shot_size: LS
+    angle: low
+    route: B
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身（站在高約 1 m 的主控台上），頭頂到腳底約畫面高 30%
+        facing: three_quarter_right
+        state: 雙手五指張開貼平按住熄滅的光柱，倒數三聲；「1」時被凍住
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約畫面寬 2%
+        facing: to_camera
+        state: 在管內往下掉，撞到插座彈出，落在主控台外的地板上被凍
+      - ref: "@signal_tower"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 主控台在畫面下 1/3、寬約畫面寬 45%；光柱在畫面 center_right 從桌面一路到畫面上緣的天花板頂端套環，寬約畫面寬 4%
+      - ref: "@luna_hold"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀是以她胸口為球心、半徑約 4 m 的球（地板上的交界圈半徑約 3.3 m，落在主控台外側的地板上）；每數一聲縮小，末幀為 0
+    first_frame: >
+      鏡頭在主控台外的地板上、入口窗起算的 3 點鐘方向、離房間中心約 6 m、離地約 0.5 m 往上仰約 25°，光柱全高（到天花板的頂端套環）都在畫面內：
+      畫面下 1/3 是主控台的側面與桌緣，桌面上 @luna 全身站在光柱旁，身體四分之三朝畫面右，雙手五指張開、掌心貼平在光柱上（離地約 2.1 m，在她胸口稍下，兩手相距約 20 cm），
+      抬頭看著光柱上段；光柱在畫面 center_right、不亮，上段管內有一顆往下落的白色小球（@drone，光帶不亮，離地約 4.9 m）。
+      以她胸口為球心半徑約 4 m 內是彩色（沒有燈的暗色控制室），之外全是灰色；交界是一圈帶靜止灰色顆粒的漸層帶，在地板上離中心約 3.3 m，畫面中落在主控台前方的地板與畫面左右兩側。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [37,3.05]「3」：她雙掌一壓，一道約 2 幀的紫與洋紅色光從掌心流進光柱第 1 段（她手下方那段，離地 1.3–2.3 m），那一段接著在 2 幀內亮成青白色；@luna_hold 在 3 幀內縮到半徑約 3 m。
+          [37,3.85]「2」：同樣的色光流進第 2 段，第 2 段亮起；@luna_hold 縮到半徑約 2.2 m（地板上的交界退到主控台腳邊）。
+          [37,3.9] @drone 從管內落下、撞到她腳邊的插座，往畫面右下彈出，[37,4.4] 落在主控台外側的地板上，落地那一刻越過 @luna_hold 的邊界，2 幀內變灰、定住。
+          [37,4.6]「1」：色光流進第 3 段，第 3 段亮起；@luna_hold 在 3 幀內縮到她身上，她全身由外往內變灰，[37,4.85] 完全定住（雙手仍按著光柱、抬頭看著光柱上段、嘴唇閉著）；已亮的 3 段光柱變成灰白色、仍亮著。
+        realize: model+post
+    last_frame: >
+      同一構圖：全畫面灰色；@luna 灰色定格，站在主控台上、雙手按著光柱、抬頭看著上方；光柱下面 3 段是灰白色的亮光，上面 2 段是暗的，頂端套環是暗的；
+      灰色的 @drone 停在主控台外側的地板上（畫面右下），光帶不亮。
+    beat_events:
+      - at: [37, 3.05]
+        sync: 人聲「3」約 85.40 s
+        event: 第 1 段光柱亮起；@luna_hold 縮到 3 m
+      - at: [37, 3.85]
+        sync: 人聲「2」約 85.88 s
+        event: 第 2 段亮起；@luna_hold 縮到 2.2 m
+      - at: [37, 3.9]
+        event: "@drone 撞到插座彈出"
+      - at: [37, 4.4]
+        event: "@drone 落地、被凍"
+      - at: [37, 4.6]
+        sync: 人聲「1」約 86.32 s
+        event: 第 3 段亮起；@luna_hold 縮到她身上
+      - at: [37, 4.85]
+        event: 她完全定住
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: >
+      倒數（使用者選：用身體當訊號源；@luna_hold 每數一聲縮小）。按柱與定格是指定動作，走 B 路線，手形用姿勢圖固定（五指張開貼平）。模型畫她按住光柱、仰頭、@drone 掉落彈出的彩色暗室版本；
+      光柱分段亮起、掌心流出的色光、@luna_hold 的邊界與縮小、她與 @drone 變灰都由後製。她不唱、不對嘴：嘴唇閉著。
+
+  - id: s047
+    section: build
+    story_beat: build
+    span: {from: [38, 1], to: [39, 1]}
+    lyrics: [21]
+    place: "@signal_tower"
+    shot_size: ELS
+    angle: high
+    route: C
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身，身高約畫面高 12%
+        facing: three_quarter_right
+        state: 灰色定格：站在主控台上、雙手按著光柱、抬頭
+      - ref: "@drone"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 直徑約畫面寬 1%
+        facing: to_camera
+        state: 灰色定格，停在主控台外側的地板上
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: mg}
+        size: 俯看整個控制室：主控台在畫面中央，放射狀機櫃排向四周，外圈與窗在畫面邊緣；光柱寬約畫面寬 2%，下面 3 段是灰白色亮光
+      - ref: "@city"
+        placement: {x: center, y: upper, depth: bg}
+        size: 畫面上緣那一圈窗外遠方灰色的夜景
+    first_frame: >
+      鏡頭在入口窗正對面、接近天花板（離地約 5.5 m）往下約 30° 俯看整個控制室，全畫面灰色：主控台在畫面中央，@luna 灰色定格站在桌面上、雙手按著光柱、抬頭；
+      光柱下面 3 段是灰白色的亮光、上面 2 段是暗的，是畫面裡最亮的東西；灰色的 @drone 停在主控台外側的地板上。機櫃排、副控台都是灰色、沒有燈；
+      畫面上緣那一圈窗是暗的，窗外是遠方灰色的 @city，入口窗開著；沿窗一圈白色指示燈仍亮著（灰白色）。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: 整整 3 拍完全靜止（bar 38 是 3 拍小節），畫面裡沒有任何東西在動。
+        realize: none
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post:
+      - {effect: freeze, note: 整鏡就是一張靜止圖，不加視差}
+    overlay: null
+    status: proposed
+    notes: bar 38 三拍定格（story）。人聲「LIVE AI」在這一鏡唱。route C、不加視差：用一張靜態圖撐 3 拍，刻意的完全靜止。
+
+  - id: s048
+    section: build
+    story_beat: build
+    span: {from: [39, 1], to: [39, 2]}
+    lyrics: [21]
+    place: "@launch_roof"
+    shot_size: INSERT
+    angle: eye
+    route: C
+    variation: small
+    subjects:
+      - ref: "@launch_roof"
+        placement: {x: center, y: middle, depth: mg}
+        size: 樓頂水泥地與開著的艙口（灰色燈環）佔畫面下半；艙口直徑約畫面寬 35%
+    first_frame: >
+      鏡頭在 @launch_roof 的艙口後方約 1.5 m、離地約 0.3 m，朝 @city 的方向看（和 s008 同一個朝向）：畫面下半是艙口——兩片半圓鋼板滑開的圓形開口、周圍一圈淺灰白色的燈環，
+      開口裡是與地面齊平的平台頂面，發著灰白色的光；艙口前上方延伸出一串約 10 顆雨滴（她躍出時穿過的那一串），比周圍的雨滴低約 20 cm——它們恢復時往下落了約 20 cm 才停住；
+      其他雨滴整片停在半空。遠方是灰色的 @city。全畫面灰階，沒有人、也沒有無人機。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject: {text: 畫面裡沒有東西在動（雨滴停在半空）。, realize: none}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 閃回 1／4（使用者選：閃回她恢復過的東西，全是灰的）。依時間順序：Hook 的雨滴是她第一次恢復東西的地方。這是那些地方「現在」的樣子，不是回憶畫面的重播，所以沒有她。
+
+  - id: s049
+    section: build
+    story_beat: build
+    span: {from: [39, 2], to: [39, 3]}
+    lyrics: [21]
+    place: "@street"
+    shot_size: INSERT
+    angle: eye
+    route: C
+    variation: small
+    subjects:
+      - ref: "@street"
+        placement: {x: center, y: lower, depth: mg}
+        size: 一個直徑約 1.5 m 的水窪佔畫面下半，水窪上方停著一圈灰色的定格水花
+    first_frame: >
+      鏡頭離地約 0.4 m、在水窪後方約 1.5 m，沿 @street 朝街尾（塔的方向）看：她在 Verse 踩過的那個水窪，水面上方停著一圈灰色的定格水花，水面的漣漪也停住；背景是失焦的灰色商店櫥窗。全畫面灰階，沒有人。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject: {text: 畫面裡沒有東西在動。, realize: none}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 閃回 2／4。水花的形狀照 s010 末幀。
+
+  - id: s050
+    section: build
+    story_beat: build
+    span: {from: [39, 3], to: [39, 4]}
+    lyrics: [21]
+    place: "@street"
+    shot_size: FS
+    angle: low
+    route: C
+    variation: small
+    subjects:
+      - ref: "@balloon_child"
+        placement: {x: center_left, y: lower, depth: mg}
+        size: 全身側影，身高約畫面高 45%
+        facing: profile_right
+        state: 灰色定格：往前奔跑、手往上伸
+      - ref: "@balloon"
+        placement: {x: center_right, y: top, depth: mg}
+        size: 直徑約畫面寬 9%，中心在畫面寬約 75%、畫面高約 15%（在小孩伸出的手的右上方）
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 背景是失焦的灰色商店樓與停在半空的雨
+    first_frame: >
+      略仰拍 @street 上的 @balloon_child 側影：小孩往畫面右奔跑、char_left 腳離地、手往右上方伸，帽子遮住臉；他手的右上方（畫面寬約 75%、高約 15%）停著 @balloon，繩子垂著；
+      兩者都是灰色、定格，背景是失焦的灰色商店樓與停在半空的雨滴。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject: {text: 畫面裡沒有東西在動。, realize: none}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 閃回 3／4。位置照 Verse 被蓋回灰色時的樣子（小孩追了兩三步、氣球已往上飄，s013）。
+
+  - id: s051
+    section: build
+    story_beat: build
+    span: {from: [39, 4], to: [40, 1]}
+    lyrics: [21]
+    place: "@street"
+    shot_size: LS
+    angle: low
+    route: C
+    variation: small
+    subjects:
+      - ref: "@hovercar"
+        placement: {x: center, y: upper, depth: mg}
+        size: 4 台停在半空的 @hovercar，由畫面左下往右上排成一列，最近一台寬約畫面寬 25%
+      - ref: "@street"
+        placement: {x: center, y: lower, depth: bg}
+        size: 下方是灰色的街道路面與兩側店樓
+    first_frame: >
+      從 @street 路面往上仰拍：一列灰色的 @hovercar 停在半空，從畫面左下往右上排成一條她在 Prechorus 一台台踩過的路線，車底燈帶亮著但沒有顏色；
+      下方與兩側是灰色的商店樓與全息看板，雨滴停在半空。沒有人。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 3%}
+      subject: {text: 畫面裡沒有東西在動。, realize: none}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 閃回 4／4。人聲「造」約在本鏡開頭。4 台車＝ s017 她踩的 3 台台階車加上車道上的下一台，現在全是灰色。
+
+  - id: s052
+    section: build
+    story_beat: build
+    span: {from: [40, 1], to: [41, 1]}
+    lyrics: [21, 22]
+    place: "@signal_tower"
+    shot_size: MCU
+    angle: low
+    route: C
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 胸口以上，頭頂到胸口約畫面高 75%
+        facing: three_quarter_right
+        state: 灰色定格：抬頭看著光柱上段，雙手按著光柱（手在畫面右下角露出）
+      - ref: "@signal_tower"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 光柱在畫面右側，下段是灰白色的亮光，寬約畫面寬 20%
+    first_frame: >
+      略低於她的下巴往上仰拍：灰色定格的 @luna 胸口以上，臉四分之三朝畫面右上方，抬頭看著光柱上段，嘴唇閉著、眉頭微收；畫面右側是灰白色發亮的光柱，
+      她的雙手掌心貼在光柱上，在畫面右下角露出；背景是暗的灰色天花板。全畫面灰階。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 視差推近約 8%，整鏡等速}
+      subject: {text: 她定格不動。, realize: none}
+    last_frame: null
+    beat_events: []
+    transition_in: {type: cut, note: 閃回結束，回到她}
+    post: []
+    overlay: null
+    status: proposed
+    notes: 回到凍住的她（使用者選的閃回「最後回到她」）。人聲「來」在本鏡開頭、「讓你的世界」從 [40,2] 開始。下一鏡是 Final Chorus 的爆發（bar 41）。

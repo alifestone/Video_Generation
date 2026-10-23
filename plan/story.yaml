@@ -89,8 +89,10 @@ beats:
     bars: [37, 40]
     places: ["@signal_tower"]
     story: >
-      @silence 反撲，@signal_tower 全部熄燈，@drone 被凍成灰色掉落。
-      @luna 獨自倒數全頻廣播「3、2、1」；在「1」的瞬間，她自己也被凍結（bar 38 三拍定格）。
+      系統就緒，@luna 抬頭看著光柱頂端的 @drone 笑了。下一拍 @silence 反撲：灰色暴衝上 @signal_tower，切斷廣播系統，控制室全暗；
+      斷電的 @drone 從光柱頂端掉下來，撞到插座彈到地上，落地那一刻被凍成灰色。灰色從窗湧進控制室，只剩她自己的顏色撐住的 @luna_hold。
+      她跳上主控台、雙手按住熄滅的光柱，用自己的身體當訊號源倒數「3、2、1」：每數一聲，她的顏色灌進光柱亮起一段，@luna_hold 也縮小一次；
+      在「1」的瞬間，@luna_hold 縮到她身上，她也被凍結（bar 38 三拍定格）。接著閃回她一路恢復過的東西——雨滴、水窪、@balloon 與 @balloon_child、@hovercar——全都是灰的；最後回到凍住的她。
     emotion: 冷靜→孤立→決斷
     lyric_link: 「321 LIVE AI 現在就創造未來」＝最後一次廣播的倒數
     status: proposed

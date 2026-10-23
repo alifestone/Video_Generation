@@ -84,3 +84,12 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   bridge_lighting: interior_then_exterior    # 室內為主，最後一鏡出塔外：燈帶由下往上一圈接一圈亮、天線亮起
   bridge_end_state: ready_not_broadcast  # Bridge 結束時系統只到就緒，廣播在 Build 倒數才發
   bridge_structure: 6_shots_per_verb     # 每個動詞一鏡，切點跟人聲
+  # 2026-10-24 Build（bridge session）
+  build_echo_fall: freeze_on_landing     # 斷電掉落，落地那一刻才被凍（不違反 @silence.motion）
+  build_counterattack: tower_surge       # 灰色暴衝上塔、切斷廣播系統，控制室全暗
+  build_first_shot: interior_victory_face   # 第一鏡回到室內她的勝利表情，接住「unfold」尾音
+  echo_return: final_chorus_burst        # Final Chorus 爆發時 ECHO 恢復、回到她肩旁
+  build_countdown: body_as_source        # 雙手按住熄滅的光柱，每數一聲她的顏色灌進去亮一段
+  build_freeze: shrinking_color_sphere   # 她的顏色撐住一個球形彩色圈（@luna_hold），每數一聲縮小，「1」時縮到她身上
+  build_after_freeze: flashback_restored_things   # 凍住後閃回她恢復過的東西，全是灰的，最後回到她
+  build_structure: claude_decides        # 鏡頭數交給 Claude：10 鏡（bar 37 快切 4 鏡、bar 38 定格 1 鏡、bar 39 閃回 4 鏡、bar 40 回到她 1 鏡）

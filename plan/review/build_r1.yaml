@@ -1,0 +1,337 @@
+# Build（s043–s052）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-24）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+# 28 題都是精確度題，依授權由 Claude 決定（ask-dont-guess）。
+round: build_r1
+issues:
+- id: Q01
+  where: shots.s043.first_frame
+  category: 4
+  severity: high
+  quote: 鏡頭在主控台遠側、離她約 1.2 m、略低於她的下巴往上仰約 10°
+  question: 鏡頭相對於 @luna 與光柱的位置到底是哪一種？光柱離鏡頭大約幾公尺？「fg」是指光柱比她更靠近鏡頭嗎？
+  options:
+  - 鏡頭在她與光柱之間偏一側（約 1.2 m），光柱在斜後方、失焦當前景邊緣
+  - 鏡頭在她背後（主控台外），光柱在她前方更遠處，改成 mg／bg
+  - 鏡頭在主控台桌面上方的側面，光柱在畫面左緣離鏡頭約 1 m
+  status: resolved
+  resolution: 鏡頭改在主控台桌面上方、她與光柱之間偏一側（離她約 1.6 m、離光柱約 1 m）；光柱在畫面左緣、失焦，寬改為約畫面寬 25%。
+- id: Q02
+  where: shots.s046.first_frame
+  category: 6
+  severity: medium
+  quote: 鏡頭在主控台外的地板上、離房間中心約 4.5 m、離地約 0.5 m 往上仰約 15°
+  question: 請給房間的絕對方位：@luna 在 s043／s045 站的「遠側」是靠近入口窗還是背對入口窗？s046 鏡頭在入口窗的哪個方向？@drone 落地點（離中心 2.3 m）在哪個方位？
+  options:
+  - 以入口窗為 12 點鐘：@luna 站 6 點鐘、s046 鏡頭在 3 點鐘、@drone 落在 3 點鐘側
+  - 以 s045 鏡頭（入口窗對面）為基準：@luna 站在靠近 s045 鏡頭的一側
+  - 各鏡獨立處理，不要求方位一致（需聲明）
+  status: resolved
+  resolution: 加入絕對方位（以入口窗為 12 點鐘）：她站在主控台 12 點鐘側；s043 鏡頭在她與光柱之間偏 1 點鐘；s045、s047 鏡頭在 6 點鐘高處；s046 鏡頭在 3 點鐘、離中心約 6 m；@drone 落在 3 點鐘側。寫進各鏡與 glossary。
+- id: Q03
+  where: shots.s046.first_frame
+  category: 4
+  severity: medium
+  quote: 光柱在畫面 center_right、不亮，上段管內有一顆往下落的白色小球（@drone，光帶不亮）
+  question: 這一鏡畫面上緣大約拍到離地多高？@drone 什麼時候進入畫面？第 3 段光柱亮起要不要拍得到？
+  options:
+  - 把鏡頭改為更廣／更仰，讓光柱全高（到天花板）都在畫面內
+  - 維持現在的構圖：首幀沒有 @drone，到 [37,3.4] 左右才從畫面上緣掉進來，第 3 段亮光只拍到下緣
+  - 改寫首幀與末幀的描述，不再提畫面外的東西
+  status: resolved
+  resolution: s046 改成離中心約 6 m、仰 25° 的 LS，光柱全高到天花板都在畫面內，她約畫面高 30%，首幀就看得到管內的 @drone。
+- id: Q04
+  where: shots.s046.subjects
+  category: 4
+  severity: low
+  quote: 'size: 直徑約畫面寬 2.5%'
+  question: '@drone 在 s046 畫面中的大小以哪個為準：2.5% 還是照主控台比例推出來的約 4%？'
+  options:
+  - 以 2.5% 為準（調整其他尺寸）
+  - 以主控台比例為準，改成約 4%
+  status: resolved
+  resolution: 依新構圖重算，@drone 約畫面寬 2%。
+- id: Q05
+  where: entities.luna_hold.look.radius
+  category: 2
+  severity: medium
+  quote: '[37,3.05]「3」約 3 m；[37,3.85]「2」約 1.5 m；[37,4.6]「1」縮到 0'
+  question: 「3」那一聲 @luna_hold 要不要縮小？如果要，s045 結尾的初始半徑是多少？
+  options:
+  - 「3」不縮小，三聲只有「2」「1」縮小（story 的「每數一聲」改文字）
+  - s045 結尾半徑約 4.5 m，「3」縮到 3 m、「2」縮到 1.5 m、「1」縮到 0
+  - 「3」縮到 3 m，「2」縮到 1.5 m，「1」縮到 0，s045 結尾的初始值改為更大的圈
+  status: resolved
+  resolution: 每數一聲都縮：灰色在 [37,3] 停在球半徑約 4 m，「3」縮到 3 m、「2」縮到 2.2 m、「1」縮到 0。
+- id: Q06
+  where: shots.s046.subjects
+  category: 4
+  severity: medium
+  quote: 首幀是以她胸口為中心、半徑約 3 m 的球（畫面中邊界碰到主控台外側的地板與畫面左右兩側約 15% 處）
+  question: 「半徑約 3 m」指 3D 球半徑，還是地板上看到的圈半徑？首幀邊界落在哪裡（主控台側面、地板上離中心幾 m）？
+  options:
+  - 3D 球半徑 3 m；地板上的圈約 1.9 m，邊界落在主控台側面（修正 s045／s046 的描述）
+  - 地板上的圈半徑 3 m；球半徑依此放大到約 3.8 m
+  - 3D 球半徑 3 m，但球心下移到桌面高度，讓地板圈約 3 m
+  status: resolved
+  resolution: 半徑是以胸口為球心的 3D 球半徑；寫明 4 m 時地板交界圈約 3.3 m，s045 改成地板上約 3.3 m。
+- id: Q07
+  where: entities.luna_hold.look.boundary
+  category: 10
+  severity: low
+  quote: 和 @silence 的邊界一樣：約 1 m 寬的漸層帶，帶內有細小、靜止的灰色顆粒；邊界本身不發光
+  question: luna_hold 的「半徑」量到漸層帶的哪一個位置？帶寬在半徑縮小時是固定 1 m，還是跟著縮小？
+  options:
+  - 半徑量到帶的外緣，帶寬固定 1 m（半徑 1.5 m 時彩色核心只有 0.5 m）
+  - 半徑量到帶的中線，帶寬固定 1 m
+  - 帶寬隨半徑等比縮小（半徑 3 m 時 1 m、1.5 m 時 0.5 m）
+  status: resolved
+  resolution: 半徑量到漸層帶中線；帶寬在半徑 2 m 以上約 1 m，小於 2 m 時為半徑的一半。
+- id: Q08
+  where: entities.luna_hold.look.inside
+  category: 7
+  severity: high
+  quote: 落進球內的 @drone 也保持彩色，彈出球外就變灰
+  question: '@drone 彈出球外後、落地前的這段，要不要變灰？這句 inside 的描述要不要改成與 build_fall 一致？'
+  options:
+  - 彈出球外不變灰，落地那一刻才變灰（刪掉 inside 的「彈出球外就變灰」）
+  - 彈出球外就變灰，但動作照常到落地（顏色與動作脫鉤）
+  - 彈出球外就變灰並立刻定住，落在彈出點附近（需改 build_fall 的落地位置）
+  status: resolved
+  resolution: 刪掉「彈出球外就變灰」；「2」的半徑改為 2.2 m，讓 @drone 剛好在落地那一刻越過邊界才被凍，和使用者選的「落地後才被凍」一致。
+- id: Q09
+  where: entities.drone.look.build_fall
+  category: 4
+  severity: medium
+  quote: 從光柱頂端在管內自由落下約 5 m
+  question: 掉落前段 @drone 在球外卻能動，要怎麼交代？是否有規則（例如正在下落的物體在落地前不受 @silence 定住）？
+  options:
+  - 規則：@silence 不定住正在自由下落的物體，落地後才生效（寫進 @silence 或 @drone）
+  - 把 luna_hold 的範圍畫成包含整根光柱（球改成上下拉長的形狀）
+  - 接受觀眾看不出來，不另外交代（只在管內，外殼本來就是白色）
+  status: resolved
+  resolution: 新增 luna_hold.column：她按著光柱期間，光柱管內也算在範圍裡（她的顏色沿光柱傳上去），所以管內下落的 @drone 保持彩色、繼續動。不改 @silence 規則（Chorus 1 半空被凍仍成立）。
+- id: Q10
+  where: entities.drone.look.build_fall
+  category: 3
+  severity: medium
+  quote: 落地那一幀在 @luna_hold 範圍外，2 幀內變灰、定住（使用者選：落地後才被凍）
+  question: '@drone 被凍的畫面辨識要靠什麼？外殼要不要有可見的灰階變化（例如壓到某個灰度）？'
+  options:
+  - '外殼壓成中灰（約 #b0b0b4）作為被凍的標記'
+  - 不變色，只靠它停住不動（落地後靜止）與 s047 的灰階環境辨識
+  - 落地時外殼多一層與 @silence 邊界一樣的灰色顆粒
+  status: resolved
+  resolution: 不額外調色：外殼本來就白，被凍靠停住不動、光帶不亮與周圍全灰辨識（寫進 build_fall）。
+- id: Q11
+  where: shots.s046.first_frame
+  category: 3
+  severity: medium
+  quote: 以她胸口為中心半徑約 3 m 內是彩色（沒有燈的暗色控制室）
+  question: 球內在光柱亮起之前（s045 結尾到 [37,3.05]）靠什麼光顯出彩色？球內外的亮度與飽和度差距要多大才算看得出？
+  options:
+  - '@luna 自己的顏色微微發光照亮球內約 0.3 倍亮度'
+  - 球內多一層低亮度的環境光（約等於光柱亮起時的 1/4），不算發光物
+  - 不補光，球內彩色靠 @luna 的紫髮與白衣本色辨識
+  status: resolved
+  resolution: 不補光（彩色圈不發光）：球內彩色靠她的紫髮、白衣與亮起的光柱段落辨識，邊界靠漸層帶的靜止顆粒看出來（寫進 luna_hold.boundary）。
+- id: Q12
+  where: shots.s045.subjects
+  category: 5
+  severity: low
+  quote: '[37,3] 前停在離她約 3 m 處（@luna_hold 的邊界）'
+  question: s045 末幀灰色的位置以哪個為準：離中心 3 m（灰色得更快），還是約 4.5 m（s046 首幀接手再停到 3 m）？
+  options:
+  - s045 末幀約 4.5 m，s046 首幀（[37,3]）起 0.05 拍內停在 3 m
+  - 灰色速度在這一段調快到約 60 m/s，讓 [37,3] 剛好到 3 m
+  - 首幀灰色起點改為離中心約 8 m
+  status: resolved
+  resolution: 灰色在 [37,3] 停在邊界（地板上約 3.3 m），s045 末幀與 s046 首幀一致；glossary 改成 [37,3]。
+- id: Q13
+  where: shots.s045.motion.subject
+  category: 5
+  severity: medium
+  quote: '[37,2.55] 她起跳，[37,2.9] 雙腳落在主控台桌面上、光柱旁'
+  question: s045 要由模型一次生成 7 幀的片段，還是生成較長的片段後剪短／變速？起跳到落地的 0.2 s 是否允許用 speed_ramp 或拉長鏡頭？
+  options:
+  - 模型生成約 1 s 的片段，取其中 7 幀（起跳到落地壓縮）
+  - 拿掉起跳，改成她直接站在桌面上（s045 首幀改為已在桌面）
+  - 把 s045 拉長到 1 拍（改動其他鏡的切點）
+  status: resolved
+  resolution: 模型生成約 1 秒的起跳片段，後製以 speed_ramp 壓進 7 幀（寫進 s045 notes）。
+- id: Q14
+  where: shots.s044.first_frame
+  category: 6
+  severity: low
+  quote: 和 s042 末幀同一個鏡位與構圖
+  question: s044 用 s042 原圖未推近的構圖，還是推近 3% 後的構圖？
+  options:
+  - 原圖（未推近），切點有 3% 跳動
+  - 推近 3% 後的裁切，與 s042 末幀無縫接上
+  status: resolved
+  resolution: 用 s042 推近約 3% 後的裁切，與 s042 末幀無縫接上。
+- id: Q15
+  where: shots.s044.motion.subject
+  category: 1
+  severity: low
+  quote: '[37,2.1] 霧帶碰到觀景台底面，同一幀全景窗的彩色光與天線青色細線在 2 幀內熄滅'
+  question: 熄滅是 [37,2.1] 那一幀瞬間全滅，還是從該幀起花 2 幀淡出？
+  options:
+  - 瞬間全滅（1 幀）
+  - 從 [37,2.1] 起 2 幀線性淡出到全暗
+  status: resolved
+  resolution: 從 [37,2.1] 起 2 幀線性淡到全暗。
+- id: Q16
+  where: entities.signal_tower.look.state_build
+  category: 7
+  severity: low
+  quote: 所有由廣播系統供電的燈（主控台、副控台、機櫃、光柱、插座環、頂端套環、@window_feed、天線細線）在 2 幀內熄滅
+  question: 塔外 12 圈燈帶與結構肋上的青色線在斷電後是繼續亮著（灰色）還是熄滅？
+  options:
+  - 繼續亮著（與沿窗指示燈同為另一組電源），只變灰
+  - 隨廣播系統熄滅，被灰色吞過後也是暗的（改 s044）
+  - 燈帶繼續亮，肋上青線熄滅
+  status: resolved
+  resolution: 塔外燈帶、肋上青線與沿窗指示燈、警示燈同屬另一組電源，不熄、只變灰（state_build 與 s044 都改）。
+- id: Q17
+  where: story.beats.build.story
+  category: 7
+  severity: medium
+  quote: 每數一聲，她的顏色灌進光柱亮起一段
+  question: 「她的顏色灌進光柱」在畫面上要看到什麼？光柱亮起的顏色是青白（沿用 Bridge），還是帶她的紫／洋紅？
+  options:
+  - 只有光柱逐段亮成青白色，劇情用語保留但畫面不加流動
+  - 亮起前從手掌到該段有一道約 2 幀的紫／洋紅色光流，再變成青白色
+  - 光柱亮起的顏色改成帶她的紫髮色調
+  status: resolved
+  resolution: 每數一聲，先有一道約 2 幀的紫與洋紅色光從掌心流進那一段，再亮成青白色——這就是畫面上的「她的顏色灌進光柱」。
+- id: Q18
+  where: shots.s046.motion.subject
+  category: 4
+  severity: low
+  quote: 掌心貼著的那段光柱（第 1 段）
+  question: 她的雙手掌心貼在光柱離地多高（相對分段環）？第 1 段是手下面的那段，還是手正貼著的那段？
+  options:
+  - 手貼在第 1 段正中（離地約 1.8 m），手在胸口下方
+  - 手貼在第 1、2 段之間的分段環上（離地約 2.3 m），第 1 段在手下面
+  - 手貼在第 2 段，第 1 段在她腰部以下
+  status: resolved
+  resolution: 手貼在第 1 段上部（離地約 2.1 m，胸口稍下）；「3」亮第 1 段、「2」第 2 段、「1」第 3 段。
+- id: Q19
+  where: shots.s046.first_frame
+  category: 9
+  severity: low
+  quote: 雙手掌心貼在光柱上（約她胸口高）
+  question: 手掌貼光柱的手勢要怎麼指定（五指張開貼平、拇指位置、兩手相距）？要不要走姿勢圖（B 路線）固定手形？
+  options:
+  - 五指自然張開貼平，兩手相距約 20 cm，用姿勢圖固定
+  - 手只露出掌背輪廓、手指被光暈遮住一部分
+  - 不指定，驗收時逐格檢查手指數
+  status: resolved
+  resolution: 五指張開貼平、兩手相距約 20 cm，用姿勢圖固定（B 路線）。
+- id: Q20
+  where: shots.s047.subjects
+  category: 10
+  severity: low
+  quote: 'size: 全身，身高約畫面高 12%'
+  question: s047 的 shot_size 要標 LS 還是 ELS（或把 @luna 放大到 13% 以上）？
+  options:
+  - 改標 ELS
+  - 把身高改成約 14%，維持 LS
+  status: resolved
+  resolution: s047 改標 ELS。
+- id: Q21
+  where: shots.s050.subjects
+  category: 10
+  severity: low
+  quote: 'size: 全身側影，身高約畫面高 55%'
+  question: s050 要標 MS 並只拍小孩腰以上，還是改標 FS／MLS 拍全身（照 s013 小孩奔跑的姿勢）？
+  options:
+  - 改標 FS，拍全身側影
+  - 維持 MS，只拍腰以上，小孩身高放大到約畫面高 110%
+  - 改標 MLS（膝以上）
+  status: resolved
+  resolution: s050 改標 FS（全身側影，約畫面高 45%）。
+- id: Q22
+  where: shots.s048.first_frame
+  category: 6
+  severity: medium
+  quote: 兩片半圓鋼板滑開的圓形開口與周圍一圈淺灰白色的燈環
+  question: s048 的圓形開口裡看到什麼？平台是否還在與地面齊平的位置？是否有白光？
+  options:
+  - 平台仍與地面齊平，頂面發白光（灰階，與 s008 末幀一致）
+  - 平台已降下，開口是空豎井，往下是暗的
+  - 平台頂面齊平但不發光（灰色）
+  status: resolved
+  resolution: 平台仍與地面齊平，頂面發灰白色的光，與 s008 末幀一致。
+- id: Q23
+  where: shots.s048.first_frame
+  category: 7
+  severity: medium
+  quote: 艙口上方的空氣裡停著一顆顆灰色的雨滴，
+  question: s048 的重點是艙口還是被她碰過的雨滴？要不要畫出她碰過的雨滴形成的軌跡（位置、數量）？
+  options:
+  - 重點是雨滴：畫面中央一串約 10 顆停在艙口前方 2.5 m 範圍內的灰色雨滴，艙口退到背景
+  - 重點是艙口，雨滴只是整片背景的靜止細雨，不特別標示
+  - 兩者並重：艙口在畫面下半，雨滴軌跡從艙口往前上方延伸
+  status: resolved
+  resolution: 兩者並重：艙口在畫面下半；艙口前上方一串約 10 顆她穿過的雨滴，比周圍低約 20 cm（恢復時落下一段才停）。
+- id: Q24
+  where: shots.s048.subjects
+  category: 4
+  severity: medium
+  quote: 樓頂水泥地與開著的艙口（灰色燈環）佔畫面下半；艙口直徑約畫面寬 35%
+  question: s048（以及 s049）的鏡頭離地多高、朝哪個方向看？艙口接縫在畫面中的方向？
+  options:
+  - 鏡頭離地約 0.3 m、在艙口後方約 1.5 m 朝 @city 方向，接縫朝遠方（同 s008 的朝向）
+  - 鏡頭離地約 1.2 m，從艙口正前方朝背離 @city 的方向看
+  - 鏡頭在艙口側面約 2 m、離地 0.3 m，接縫橫向
+  status: resolved
+  resolution: s048 鏡頭在艙口後方約 1.5 m、離地 0.3 m，朝 @city 看（同 s008 朝向）；s049 鏡頭離地 0.4 m、在水窪後方 1.5 m，沿街朝塔的方向看。
+- id: Q25
+  where: shots.s050.subjects
+  category: 4
+  severity: medium
+  quote: 'size: 直徑約畫面寬 6%，在小孩伸出的手前上方約 1.5 m'
+  question: 氣球在 s050 畫面中的位置與大小：中心在畫面寬／高的百分之幾、直徑佔多少？氣球要入鏡嗎？
+  options:
+  - 氣球入鏡：中心在畫面寬約 75%、高約 10%，直徑約畫面寬 9%（放大小孩的構圖留出空間）
+  - 氣球只露出下半部和繩子在畫面上緣
+  - 鏡頭拉遠到 FS，使氣球與小孩同框，數字重算
+  status: resolved
+  resolution: '@balloon 入鏡：中心在畫面寬約 75%、高約 15%，直徑約畫面寬 9%。'
+- id: Q26
+  where: shots.s051.subjects
+  category: 2
+  severity: low
+  quote: 4 台停在半空的 @hovercar，由畫面左下往右上排成一列
+  question: s051 的 4 台車各是哪一台（顏色、離地高度、車間距）？是 s017 的 3 台台階加車道上的第 1 台嗎？
+  options:
+  - s017 的 3 台（珍珠白、酒紅、深藍，離地 2／4.5／7 m）加車道上的第 4 台
+  - 改成 3 台，與 s017 完全一樣
+  - 不要求對應特定車，只要求 4 台灰色車由左下往右上排成階梯
+  status: resolved
+  resolution: 4 台＝ s017 她踩的 3 台台階車加車道上的下一台（寫進 notes）。
+- id: Q27
+  where: entities.luna_hold.look.realize
+  category: 8
+  severity: low
+  quote: 由後製合成（以她胸口為中心的球形遮罩，做 3D 投影對齊地板與主控台）
+  question: 球形遮罩的後製流程是什麼？深度和 @luna 胸口的追蹤從哪裡來（3D 場景重建、深度估計、手動關鍵幀）？可以接受近似的 2D 圓形遮罩嗎？
+  options:
+  - 用深度估計加手動關鍵幀追蹤胸口，在合成軟體做球形遮罩
+  - 接受 2D 橢圓遮罩，邊界漸層帶寬度跟著縮放，不要求與地板精確對齊
+  - 先用 3D 重建房間（尺寸已在 interior_layout），再貼合成
+  status: resolved
+  resolution: 接受 2D 橢圓遮罩＋手動關鍵幀追蹤胸口，不要求與地板精確對齊。
+- id: Q28
+  where: shots.s043.motion.subject
+  category: 5
+  severity: low
+  quote: 她笑得更開，輕輕吐一口氣、肩膀放鬆；視線一直看著光柱頂端
+  question: 這一鏡最必要的動作是哪一個？其餘兩個可以刪嗎？
+  options:
+  - 只留「笑得更開」，其餘刪除
+  - 笑與吐氣同時做，肩膀放鬆省略
+  - 三個都留，由模型生成較長片段後取 0.57 s
+  status: resolved
+  resolution: 只留「笑容慢慢變大」，其餘刪除。
