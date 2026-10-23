@@ -414,6 +414,9 @@ shots:
       - ref: "@silence"
         placement: {x: center, y: middle, depth: bg}
         size: 從樓頂到約 1.5 km 外全在 @silence 內；灰與彩色的交界在畫面高約 36%（末幀），距離太遠，畫成銳利的分界、不畫漸層帶
+      - ref: "@hovercar"
+        placement: {x: center, y: middle, depth: bg}
+        size: 矮牆以外的 @city 上空散布數十台，停在半空、灰階；每台約畫面寬 0.5–2%
       - ref: "@signal_tower"
         placement: {x: center, y: upper, depth: bg}
         size: 地平線正中的黑色剪影，末幀天線尖端在畫面高約 15%，觀景台寬約畫面寬 3%、塔身寬不到 1%；位在彩色區內
@@ -423,7 +426,7 @@ shots:
     first_frame: >
       @launch_roof 的樓頂，整片灰階、frozen：細雨停在半空，每一滴都是灰色的小點。鏡頭在艙口後方約 8 m、離地約 1.2 m，朝 @city 的方向平視；
       空調箱都在鏡頭背後，畫面中看不到。艙口在畫面水平正中、畫面下方，兩片半圓鋼板關著，接縫是一條朝向遠方的短直線；
-      地面上圍著艙口的燈環是淺灰白色的發光環。艙口後方是樓頂矮牆，矮牆以外是 @city 的灰色高樓、停在半空的灰色懸浮車與灰色的全息看板（看板仍亮，但沒有顏色）。
+      地面上圍著艙口的燈環是淺灰白色的發光環。艙口後方是樓頂矮牆，矮牆以外是 @city 的灰色高樓、停在半空的灰色 @hovercar 與灰色的全息看板（看板仍亮，但沒有顏色）。
       地平線附近有一條橫向的彩色光帶（遠方仍未被吞沒的街區），正中有一座細長的黑色塔形剪影（@signal_tower）。畫面裡沒有 @luna 與 @drone。
     motion:
       camera: {move: crane_up, speed: medium, realize: model}
@@ -439,7 +442,7 @@ shots:
     last_frame: >
       鏡頭在 @luna 後上方約 6 m 高、她身後約 5 m，往前下方俯看越過她看向 @city。@luna 背對鏡頭站在艙口前方（腳在畫面高約 92%，身高約畫面高 22%），
       @drone 懸在她左肩旁（畫面左）；她身後的艙口開著，平台頂面與地面齊平、發白光。矮牆以外的 @city 往遠方鋪開：近處到約 1.5 km 外全是 frozen 的灰階高樓、
-      看板與停在半空的懸浮車，雨滴全停在半空；畫面高約 36% 處是銳利的灰彩分界，分界以外到地平線（畫面高約 32%）是彩色街區，
+      看板與停在半空的 @hovercar，雨滴全停在半空；畫面高約 36% 處是銳利的灰彩分界，分界以外到地平線（畫面高約 32%）是彩色街區，
       高過地平線的遠處高樓頂部也是彩色的：洋紅、青、琥珀色霓虹與全息看板亮著。
       地平線正中是 @signal_tower 的純黑剪影，觀景台與天線輪廓清楚，邊緣被背後映著霓虹的低雲勾出細亮邊。
     beat_events:
@@ -503,12 +506,15 @@ shots:
       - ref: "@street"
         placement: {x: center, y: middle, depth: bg}
         size: 佔滿畫面；街道兩側商店樓往街尾收斂，消失點在畫面水平正中、畫面高約 45%
+      - ref: "@hovercar"
+        placement: {x: center, y: upper, depth: bg}
+        size: 街道上方車道停著一排排灰色的車，近處每台約畫面寬 8%，往街尾越來越小；最低的在畫面高約 30%
       - ref: "@signal_tower"
         placement: {x: center, y: upper, depth: bg}
         size: 街尾正上方的黑色剪影，天線尖端在畫面高約 25%，觀景台寬約畫面寬 1%（本鏡用較廣的焦距，約 24 mm，所以比 s008 小）
     first_frame: >
       @street 的街心，鏡頭離地約 1.4 m，背對 @launch_roof 那棟大樓、朝街尾平視。整條街灰階、frozen：兩側商店的櫥窗與二到四樓的全息看板仍亮但沒有顏色，
-      懸浮車停在街道上方，細雨停在半空，濕石板路上有水窪，零散的灰色路人像雕像一樣停在路上。
+      @hovercar 停在街道上方，細雨停在半空，濕石板路上有水窪，零散的灰色路人像雕像一樣停在路上。
       @luna 在畫面正中、距鏡頭約 4 m，背對鏡頭；街尾彩色區以外，只有她與 @drone 有顏色。街尾很遠處是一小片彩色霓虹，正上方是 @signal_tower 的黑色剪影。
     motion:
       camera: {move: static, speed: slow, realize: none}
@@ -872,3 +878,335 @@ shots:
     overlay: null
     status: confirmed
     notes: 首尾呼應 s009 的構圖。起跑的動作接 Prechorus 第一鏡（預計用 cut_on_action）。
+
+  # ── Prechorus（bar 17–20）───────────────────────────────
+  # 人聲（faster-whisper）：「Prompt」[17,2.16]、「鏡頭」[17,3.91]、「宇宙」[18,4.26]、「時間」[19,1.11]、「停留」[19,4.02]、
+  # 「這一刻」[20,1]、「決定」[20,3.09]、「所有」[20,4.11]。bar 21 是 Chorus 1 的抽空小節。
+  # 方向沿用 Verse：側拍畫面右＝街尾（@signal_tower）。腳步區塊半徑依 @restore_touch.footstep_patch：bar 17–18 約 3 m、bar 19 約 2 m、bar 20 約 1 m；每一步落地都產生，從落地起 28 幀（輸出時間）。
+  # 褪色進度依 @luna_fade.progress（等速推進）。
+
+  - id: s017
+    section: prechorus
+    story_beat: prechorus
+    span: {from: [17, 1], to: [18, 1]}
+    lyrics: [8]
+    place: "@street"
+    shot_size: LS
+    angle: eye
+    route: B
+    variation: large
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 全身，身高約畫面高 30%；鏡頭跟著她升高，她在畫面中的高度大致不變
+        facing: profile_right
+        state: 往畫面右（街尾）全力奔跑，[17,1.5]、[17,2.5]、[17,3.5] 三次起跳，分別落在 3 台一台比一台高的 @hovercar 車頂；第 3 台就是上方車道（約 7 m）的第一台
+      - ref: "@drone"
+        placement: {x: center_left, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left（遠側）肩旁偏上，從她頭部後方露出約一半
+        facing: profile_right
+        state: 跟著她同速飛
+      - ref: "@hovercar"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 3 台，車頂離地分別約 2 m、4.5 m、7 m，像台階一樣往畫面右上排；第 1 台車尾離起跳點約 3 m，台與台之間水平空隙約 1.5 m；每台長約畫面寬 25%。顏色：第 1 台珍珠白（青色燈帶）、第 2 台酒紅（洋紅燈帶）、第 3 台深藍（青色燈帶）
+      - ref: "@restore_touch"
+        placement: {x: center, y: middle, depth: mg}
+        size: 每一步落地在落腳點周圍半徑約 3 m（footstep_patch）；地面只恢復圓內，碰到的車整台恢復
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 背景是街道對面的灰色商店門面，與街道平行
+    first_frame: >
+      鏡頭在街道一側、離地約 1.5 m，與街道垂直平視。@luna 側身朝畫面右奔跑中（char_left 腳在前），在畫面左半；@drone 從她頭部後方露出一半。
+      她前方（畫面右）有 3 台灰色、定格在半空的 @hovercar，車頂離地約 2 m、4.5 m、7 m，像台階一樣往右上排列，最高的一台在上方車道。背景是對面灰色的商店門面與停在半空的雨。
+    motion:
+      camera: {move: track, speed: fast, realize: model}
+      subject:
+        text: >
+          鏡頭跟著她往畫面右平移，同時升高約 7 m（跟著她一路上到第 3 台車、也就是車道的高度）。[17,1] 起她在地面上的每一步也踩出半徑 3 m 的區塊（只恢復圓內的路面與雨）。@luna 在 [17,1.5] 起跳、[17,2] 落在第 1 台車頂，
+          [17,2.5] 起跳、[17,3] 落在第 2 台，[17,3.5] 起跳、[17,4] 落在第 3 台，之後在第 3 台車頂上繼續跑。
+          每次落在車頂，依 @restore_touch.footstep_patch 那台車整台變回原色（依序珍珠白、酒紅、深藍）、車底燈帶亮起、車身被踩得一沉再浮回，半徑 3 m 內的雨落下；
+          從落地起 28 幀後退回灰色、停住。@drone 同速跟飛。
+        realize: model+post
+    last_frame: >
+      鏡頭升到離地約 8.5 m：@luna 在第 3 台 @hovercar（車道上的第一台，車頂約 7 m）上往畫面右跑，腳下那台車仍是恢復的深藍色、車底燈帶亮著；
+      畫面左下是第 1 台（已全灰）與第 2 台（酒紅色已淡到約 1/10）；背景是對面商店的二、三樓與灰色的全息看板；@drone 在她頭部後方。
+    beat_events:
+      - at: [17, 2]
+        sync: 人聲「Prompt」[17,2.16]
+        event: 落在第 1 台車頂，半徑 3 m 區塊恢復
+      - at: [17, 3]
+        event: 落在第 2 台車頂，半徑 3 m 區塊恢復
+      - at: [17, 4]
+        sync: 人聲「鏡頭」[17,3.91]
+        event: 落在第 3 台車頂，半徑 3 m 區塊恢復
+    transition_in: {type: cut_on_action, note: s016 結尾她跨出第一步，本鏡從同一個奔跑動作的下一步開始（從背後切到側面）}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: >
+      variation large（鏡頭升高約 7 m），用首尾幀生成；跳車是指定動作，走 B 路線（姿勢：起跳、落地各 3 組）。
+      車與區塊的恢復、退回由後製調色；車被踩得一沉再浮回由影片模型生成。若無法一次生成，從 [17,3] 拆成兩鏡。
+
+  - id: s018
+    section: prechorus
+    story_beat: prechorus
+    span: {from: [18, 1], to: [19, 1]}
+    lyrics: [9]
+    place: "@street"
+    shot_size: LS
+    angle: eye
+    route: B
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 全身，身高約畫面高 40%，腳在畫面高約 70%；鏡頭與她同速，位置大致不變（景別標 LS：身高不到畫面高 1/2）
+        facing: profile_right
+        state: 在一排停在半空的 @hovercar 車頂上往畫面右全力奔跑，車與車之間的空隙一步跨過或跳過
+      - ref: "@drone"
+        placement: {x: center_left, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left（遠側）肩旁偏上，露出約一半
+        facing: profile_right
+        state: 同速跟飛
+      - ref: "@hovercar"
+        placement: {x: center, y: lower, depth: mg}
+        size: 一排車頂離地約 7 m 的車，車與車的空隙大多約 1.5 m（一步跨過），[18,2]、[18,3] 與 [18,3.5] 處約 3 m（跳過）；每台長約畫面寬 30%，車頂在畫面高約 70%。第一台是 s017 的深藍車
+      - ref: "@restore_touch"
+        placement: {x: center_left, y: lower, depth: mg}
+        size: 她每一步落腳處半徑約 3 m；被選中的車整台恢復，畫面中同時約有 3–4 台恢復中的車，越左邊（越早）的越接近退回
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 背景是對面商店的二到四樓與全息看板，畫面下方約 1/4 看得到遠處的灰色路面
+    first_frame: >
+      鏡頭在離地約 8.5 m（她的眼睛高度）的空中、與車道平行，平視拍 @luna 側身在一排灰色 @hovercar 的車頂上往畫面右奔跑；她腳下那台深藍車與身後左邊一台整台是彩色的，
+      更左邊一台的顏色已淡掉一半（處在 6 幀退回的中間）。@drone 從她頭部後方露出一半。背景是對面商店樓的灰色全息看板，下方遠處是灰色路面與停住的雨。
+    motion:
+      camera: {move: track, speed: fast, realize: model}
+      subject:
+        text: >
+          鏡頭與她同速往畫面右平移。@luna 每半拍落地一步（本鏡約 8 步），[18,2] 與 [18,3] 跳過約 3 m 的車間空隙，[18,3.5] 大步起跳、[18,4.26] 落在一台酒紅色車頂上（不是 s017 那台）。
+          每一步依 @restore_touch.footstep_patch 恢復半徑約 3 m：圓內的車整台變回原色、車底燈帶亮起、車身一沉再浮回、雨落下；從落地起 28 幀後退回。
+          所以她身後一路拖著 3–4 台恢復中的車，最舊的一台一台變回灰色。[18,4] 起她的髮尾與指尖依 @luna_fade 開始變灰（本鏡的景別下還看不出來）。
+        realize: model+post
+    last_frame: null
+    beat_events:
+      - at: [18, 2]
+        event: 跳過一個車間空隙
+      - at: [18, 3]
+        event: 跳過一個車間空隙
+      - at: [18, 4]
+        event: "@luna_fade 開始（髮尾與指尖，本鏡看不出）"
+      - at: [18, 4.26]
+        sync: 人聲「宇宙」43.12 s（「每一次生成都是新的宇宙」）
+        event: 大步落在酒紅色車頂，那台車整台恢復、被踩得一沉再浮回，半徑 3 m 內一起恢復
+    transition_in: {type: cut_on_action, note: s017 末幀她在深藍車頂上奔跑，本鏡接同一台車上的下一步（同一高度、同一側拍方向）}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: >
+      variation small：鏡頭與她同速，構圖不變，只用首幀生成。奔跑與跳躍走 B 路線（姿勢：跨步、跳躍各一組，循環）。區塊恢復與退回由後製調色。
+
+  - id: s019
+    section: prechorus
+    story_beat: prechorus
+    span: {from: [19, 1], to: [19, 3]}
+    lyrics: [10]
+    place: "@street"
+    shot_size: INSERT
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 只拍 char_right 手（靠鏡頭那隻）與前臂，手佔畫面高約 40%；看不到臉
+        facing: profile_right
+        state: 奔跑中手臂前後擺動；指尖依 @luna_fade 變灰
+      - ref: "@luna_fade"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀五指最末一節是灰色；末幀灰色到最末兩節（從指尖往下數，邊界停在關節橫紋）
+      - ref: "@hovercar"
+        placement: {x: center, y: bottom, depth: bg}
+        size: 畫面下緣失焦的車頂一角：是她腳下那台車，在她的 2 m 區塊內，所以是彩色的
+    first_frame: >
+      跟著奔跑的 @luna 平移拍她 char_right 手的特寫：手半握、往前擺到畫面正中；五根手指最末一節已經是灰色，和其他部位的膚色之間有約 2 cm 的柔和漸層。
+      背景是失焦的灰色街景，下緣是她腳下那台恢復中的彩色車頂一角。
+    motion:
+      camera: {move: track, speed: fast, realize: model}
+      subject:
+        text: >
+          手臂隨奔跑前後完整擺動 2 次（2 拍＝2 個步幅循環），手大致保持在畫面中央。灰色依 @luna_fade 在 2 拍內等速從最末一節退到最末兩節。
+        realize: model+post
+    last_frame: >
+      同一構圖、與首幀同相位：手再次往前擺到畫面正中，灰色已到最末兩節。
+    beat_events:
+      - at: [19, 1.11]
+        sync: 人聲「時間」43.60 s（「時間正在倒數」）
+        event: 只是歌詞對點，灰色照等速推進（不另加動作）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 半小節快切。變灰由後製用追蹤遮罩調色；手的擺動由影片模型生成。
+
+  - id: s020
+    section: prechorus
+    story_beat: prechorus
+    span: {from: [19, 3], to: [20, 1]}
+    lyrics: [10]
+    place: "@street"
+    shot_size: MLS
+    angle: eye
+    route: A
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 膝以上，頭頂在畫面高約 12%
+        facing: to_camera
+        state: 朝鏡頭全力奔跑，表情吃力但堅定；馬尾在身後甩動，從 char_right 肩外側（畫面左）甩出來時看得到髮尾約 8–10 cm 是灰色；手指最末兩節灰色
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她面向鏡頭，所以是畫面右）
+        facing: to_camera
+        state: 同速跟飛
+      - ref: "@hovercar"
+        placement: {x: center, y: lower, depth: mg}
+        size: 她身後一路往後排的車；最近一台的車頂在畫面高約 85%，往畫面深處越來越小；她腳下的車頂在畫面下緣外
+      - ref: "@restore_touch"
+        placement: {x: center, y: lower, depth: bg}
+        size: 她身後 3 台恢復中的彩色車，由遠到近排列；鏡頭高於車頂約 1.5 m，車頂上的圓形路面區塊會壓成扁橢圓
+      - ref: "@luna_fade"
+        placement: {x: center, y: middle, depth: mg}
+        size: 髮尾約 8–10 cm、雙手最末兩節是灰色
+    first_frame: >
+      鏡頭在 @luna 前方、與她胸口同高，往大樓方向拍她迎面跑來（膝以上）；她身後一路往後排著停在半空的 @hovercar，其中 3 台是恢復中的彩色車，由遠到近排列。
+      她的馬尾從 char_right 肩外側（畫面左）甩出，髮尾一截已是灰色；@drone 在她 char_left 肩旁（畫面右上）。背景遠處是 @launch_roof 那棟大樓與灰色街景。
+    motion:
+      camera: {move: track, speed: fast, realize: model}
+      subject:
+        text: >
+          鏡頭與她同速往後退，她在畫面中的大小不變。她身後的 3 台車依 beat_events 由遠到近一台一台在原地 6 幀內退回灰色（footstep_patch 的計時退回，沒有邊界帶）；
+          她每一步仍踩出新的區塊，但半徑只剩約 2 m。@luna 咬緊牙關，視線越過鏡頭看向前方（@signal_tower 的方向）。
+        realize: model+post
+    last_frame: null
+    beat_events:
+      - at: [19, 3]
+        event: 最遠的一台在 6 幀內退回灰色
+      - at: [19, 3.5]
+        event: 中間的一台退回灰色
+      - at: [19, 4.02]
+        sync: 人聲「停留」45.24 s（「沒有人可以停留」）
+        event: 最近的一台退回灰色
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 半小節快切。variation small：鏡頭與她同速、構圖不變。區塊退回與髮尾指尖變灰由後製做。這裡的「退回」就是 footstep_patch 正常的計時退回（落地後 28 幀），時間排成由遠到近。
+
+  - id: s021
+    section: prechorus
+    story_beat: prechorus
+    span: {from: [20, 1], to: [20, 3]}
+    lyrics: [11]
+    place: "@city"
+    shot_size: ELS
+    angle: eye
+    route: C
+    variation: medium
+    subjects:
+      - ref: "@signal_tower"
+        placement: {x: center, y: middle, depth: bg}
+        size: 長焦看塔所在的街區：塔在畫面水平正中，天線尖端在畫面高約 10%，觀景台寬約畫面寬 6%
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 畫面寬約對應 600 m；首幀彩色街區從畫面寬約 20% 到 80%，左右兩側是灰色
+      - ref: "@silence"
+        placement: {x: center, y: middle, depth: bg}
+        size: 左右兩條灰彩交界，各自往畫面中央推進約畫面寬 19%（約 113 m，每秒約 100 m）；彩色區在畫面中是一條由近到遠的直帶，近側與遠側的邊界不在畫面內
+    first_frame: >
+      長焦遠景，從車道高度（約 7 m）往 @city 中心看：@signal_tower 在畫面正中，周圍一片彩色街區（洋紅、青、琥珀色霓虹、全息看板、落下的雨）
+      從畫面寬約 20% 延伸到 80%；兩側以外的樓群是灰色、定格的，左右各有一條銳利的灰彩交界。畫面裡沒有人物。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          左右兩條交界同時往塔推進，本鏡 2 拍內各推進約畫面寬 19%：被掃過的樓群顏色退成灰、霓虹停住、雨停在半空。@signal_tower 仍在彩色區內。
+        realize: post
+    last_frame: >
+      同一構圖：彩色區只剩畫面寬約 39% 到 61%，緊緊圍著 @signal_tower；兩側大片灰色。
+    beat_events:
+      - at: [20, 1]
+        sync: 人聲「這一刻」45.80 s
+        event: 兩條交界開始快速推進
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 半小節快切。走 C 路線：同一個遠景畫彩色版與 frozen 版，後製用兩條往中間移動的遮罩推進（同 s014 做法）。
+
+  - id: s022
+    section: prechorus
+    story_beat: prechorus
+    span: {from: [20, 3], to: [21, 1]}
+    lyrics: [11]
+    place: "@street"
+    shot_size: LS
+    angle: low
+    route: B
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: upper, depth: mg}
+        size: 首幀站在車頭邊緣、身高約畫面高 45%（在畫面下半）；末幀在半空遠離鏡頭，身高約畫面高 25%，在畫面正中偏上
+        facing: away
+        state: 站在車頭邊緣，[20,3.09] 起跳，往 @signal_tower 的方向縱身一躍；身體前傾、雙手往前伸
+      - ref: "@drone"
+        placement: {x: center_left, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她背對鏡頭，所以是畫面左）
+        facing: away
+        state: 跟她一起飛出去
+      - ref: "@hovercar"
+        placement: {x: center, y: bottom, depth: fg}
+        size: 鏡頭所在的車頂佔畫面下緣約 15%，車頭邊緣在畫面高約 85%
+      - ref: "@signal_tower"
+        placement: {x: center, y: upper, depth: bg}
+        size: 遠方正中的塔，觀景台寬約畫面寬 2%；塔底一小片彩色街區寬約畫面寬 8%、高約畫面高 6%（約 132 m，沿用 s021 末幀），邊界看起來是銳利的線
+      - ref: "@luna_fade"
+        placement: {x: center, y: upper, depth: mg}
+        size: 首幀髮尾約 14 cm、整根手指到指根是灰色；末幀髮尾約 18 cm（馬尾下 1/3）、整隻手到手腕（手環前緣）
+      - ref: "@restore_touch"
+        placement: {x: center, y: bottom, depth: fg}
+        size: 起跳腳下半徑只剩約 1 m 的小區塊
+      - ref: "@silence"
+        placement: {x: center, y: lower, depth: mg}
+        size: 末幀在她下方、畫面高約 75% 處出現一道往上湧的邊界帶（surge），寬滿整個畫面、約畫面高 5% 厚的灰色顆粒霧
+    first_frame: >
+      鏡頭貼在一台灰色 @hovercar 的車頂上、靠近車頭，低角度往前上方拍：車頂佔畫面下緣，前方是空中與遠處的 @city，@signal_tower 在遠方正中、被一小片彩色街區圍著。
+      @luna 背對鏡頭、char_right 腳剛踏上車頭邊緣，身體前傾準備起跳（身高約畫面高 45%）；@drone 在她左肩旁。她的馬尾髮尾約 14 cm、雙手整根手指已是灰色。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [20,3.09] 她踩著車頭邊緣起跳（腳下只恢復半徑約 1 m 的小區塊），往前上方縱身飛出，遠離鏡頭；@drone 跟著飛。
+          [20,4] 起後製做 speed_ramp：6 幀內線性從 1 倍降到 0.4 倍，之後維持 0.4 倍到本鏡結束；beat_events 與區塊計時都以輸出時間計。她在 [20,4.11] 前後過最高點。
+          她身上的灰色依 @luna_fade 在本鏡內擴到馬尾下 1/3、雙手到手腕。[20,4] 起，下方街道升起一道 @silence 的邊界帶（surge），往上朝她湧來，末幀在她下方畫面高約 75%。
+        realize: model+post
+    last_frame: >
+      同一構圖：@luna 在半空、背對鏡頭，剛過最高點、開始下降，身體前傾、雙手往前伸、雙腿往後伸直，身高約畫面高 25%，在畫面正中偏上，剛好疊在遠方 @signal_tower 的下方；
+      馬尾下 1/3 與雙手到手腕是灰色；@drone 在她左肩旁、與她同高。她下方畫面高約 75% 處是一道往上湧的灰色顆粒霧（@silence 的 surge）。下方車頭邊緣的小區塊正在退回、只剩淡淡顏色。
+    beat_events:
+      - at: [20, 3.09]
+        sync: 人聲「決定」46.98 s
+        event: 起跳
+      - at: [20, 4]
+        event: 開始 speed_ramp（6 幀內 1 倍 → 0.4 倍）；下方升起 @silence 的 surge
+      - at: [20, 4.11]
+        sync: 人聲「所有」47.56 s
+        event: 她在半空最高點附近
+    transition_in: {type: cut}
+    post:
+      - {effect: speed_ramp, from: 1.0, to: 0.4, at: [20, 4], ramp_frames: 6, curve: linear, hold_until: [21, 1]}
+    overlay: null
+    status: confirmed
+    notes: 半小節快切。起跳是指定動作，走 B 路線。慢動作把她留在半空；交給 Chorus 1 第一鏡（bar 21，預計 cut_on_action）兩個要素：她身上往內擴散的 @luna_fade，與下方往上湧的 surge，兩者在她身上會合（decisions.swallow_handoff）。

@@ -1,0 +1,384 @@
+# Prechorus（s017–s022）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-23）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+round: prechorus_r1
+issues:
+- id: Q01
+  where: shots.s017.motion.subject.text
+  category: 1
+  quote: 那台車變回原色（珍珠白、深藍、酒紅）
+  problem: '@restore_touch.footstep_patch 是「落腳點半徑內的東西」（圓形區塊），但 s017 寫整台車變回原色，s018 first_frame 又寫車頂上有「彩色的圓形區塊」（車頂上一塊彩色、其餘仍灰）；車長 4.5 m 而半徑 3 m，車只有一部分在圓內時，是整台恢復還是只有圓內恢復，兩處寫法互相矛盾。'
+  question: 踩在車頂上時，恢復的是（a）整台車（半徑內只要碰到車就整台恢復，圓外的車身也變色）還是（b）只有圓內的那一塊車頂？半徑內碰到的鄰車（s017 的台階車相距不到 3 m 時）也會恢復嗎？
+  options:
+  - 整台車恢復（與 restore 整個物體的既有規則一致），圓形只決定「哪些物體被選中」，被選中的物體整個恢復
+  - 只有圓內的表面恢復，車身上出現圓形彩色區塊，邊緣用 @silence 邊界的約 1 m 漸層帶
+  - 車與地面不同規則：地面、雨用圓形區塊，車整台恢復
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。圓形決定「哪些東西被選中」：個別物體（車、雨滴、路人）整個恢復，連續表面（路面、牆面）只恢復圓內；寫進 glossary footstep_patch，s017/s018 改寫成整台車恢復。
+- id: Q02
+  where: shots.s017.subjects.hovercar / shots.s017.last_frame
+  category: 7
+  quote: 腳下那台車仍是恢復的深藍色
+  problem: motion 的顏色清單依序寫「珍珠白、深藍、酒紅」，而第 1、2、3 台各是什麼顏色從未對應；last_frame 說第 3 台是深藍色，與清單順序（第 3 台＝酒紅）矛盾。
+  question: 第 1、2、3 台 @hovercar 的車殼顏色各是什麼？車底燈帶各是青還是洋紅？
+  options:
+  - 第 1 台珍珠白、第 2 台酒紅、第 3 台深藍（符合 last_frame），燈帶依序青、洋紅、青
+  - 依清單順序：珍珠白、深藍、酒紅；last_frame 改成酒紅
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。第 1 台珍珠白（青燈帶）、第 2 台酒紅（洋紅燈帶）、第 3 台深藍（青燈帶），與 last_frame 一致。
+- id: Q03
+  where: shots.s018.first_frame / shots.s017.last_frame
+  category: 6
+  quote: 一排頭尾相接、車頂離地約 7 m 的車
+  problem: s017 末幀她站在離地約 5 m 的第 3 台車頂（鏡頭 5.5 m），s018 首幀（同一個 [18,1] 拍點）她在離地約 7 m 的車道車頂、鏡頭 7 m，兩者高度差 2 m，transition_in 又只是 cut；s017 末幀腳下那台深藍車仍在恢復中，s018 首幀卻沒說明她腳下是不是同一台車。
+  question: s017 到 s018 之間，她是怎麼從 5 m 的車頂到 7 m 的車道？第 3 台車是否就是 s018 車道上的第一台（即第 3 台車頂應改為約 7 m），或兩鏡之間要補一個爬升動作？transition_in 要不要改成 cut_on_action？
+  options:
+  - 把 s017 第 3 台車頂改成約 7 m（在車道高度），s018 接同一台車，transition_in 改 cut_on_action
+  - 維持 5 m，s018 首幀時她剛從第 3 台再跳上一台 7 m 的車，s017 末幀不變
+  - s018 車道高度改為約 5 m
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。第 3 台車頂改為約 7 m（就是車道上的第一台），三台高度 2 m、4.5 m、7 m；s018 接同一台深藍車，transition_in 改 cut_on_action。
+- id: Q04
+  where: glossary.hovercar.look.motion
+  category: 4
+  quote: 恢復時沿原本方向以約每秒 5 m 滑行
+  problem: 恢復的車以每秒 5 m 滑行，恢復約 22–28 幀（約 1 s）會滑 4–5 m，但 s018 車與車的間隔只有 1.5–3 m，會撞上或穿過前車；「原本方向」也沒說是車頭方向還是畫面右、車頭朝哪；她站在車上時是否被帶著走、鏡頭與她的相對位置也沒寫。
+  question: 車滑行的方向（車頭朝畫面哪邊）、總距離、退回灰色後停在滑行後的位置嗎？前方有車時（s018 間隔 1.5–3 m）怎麼處理？她在車上時，她的位置是否相對車頂改變（車載著她前進）？
+  options:
+  - 車頭一律朝畫面右（街尾）；滑行距離限制在不超過前車間隔（約 1 m 內），不會碰到前車
+  - 車滑行但前車也被圓形區塊恢復、一起滑，整排車同步前進
+  - 只在落腳的那台車滑，滑行距離寫死（例如 2 m），退回後停在新位置
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。恢復的車不前進：車底燈帶亮起、原地浮動約 5 cm，被踩到時一沉約 15 cm 再浮回；glossary hovercar.motion 改寫，避免撞上前車。
+- id: Q05
+  where: shots.s017.motion.subject.text
+  category: 2
+  quote: 之後在第 3 台車頂上繼續跑
+  problem: glossary 寫「她每一步落地」都踩出區塊，但 s017 只在 3 次落車頂（[17,2]、[17,3]、[17,4]）寫了區塊；起跑後 [17,1]–[17,1.5] 在地面的步、落車後到下一次起跳之間的步、第 3 台車頂上的步，是否也各自產生半徑 3 m 的區塊，沒有寫。
+  question: s017 裡是只有 3 次落車頂會產生區塊，還是每一步（包括地面上的步與車頂上的步）都產生？如果每一步都產生，首幀（全灰）與 [17,1]–[17,1.5] 地面上的區塊要不要畫？
+  options:
+  - 每一步都產生，與 s018 一致；s017 beat_events 補上地面與車頂上的步，首幀仍全灰（第一步在首幀之後）
+  - s017 只有 3 次落車頂產生，並在 glossary footstep_patch 註明「踩上車頂／高處落點才產生」
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。每一步落地都產生區塊（含地面上的步），s017 首幀仍全灰（第一步在首幀之後）。
+- id: Q06
+  where: shots.s017.last_frame
+  category: 5
+  quote: 畫面左下是前兩台已退回灰色的車
+  problem: 每個區塊是 4 幀擴張＋約 18 幀維持＋6 幀退回，共約 28 幀（約 2.1 拍）。第 2 台車 [17,3] 落地，到本鏡結束 [18,1] 只有約 26.4 幀，還在最後退回的途中，不是「已退回灰色」；且「約 18 幀後」是從落地還是從擴張完成起算也不明。
+  question: 「約 18 幀後在 6 幀內退回」的 18 幀是從落地那幀起算，還是從擴張完成（落地後第 4 幀）起算？在這個定義下，末幀第 2 台車是已全灰還是退回到一半？
+  options:
+  - 18 幀從落地起算（含 4 幀擴張），總共 24 幀後全灰；末幀第 2 台已全灰
+  - 18 幀是擴張完成後的維持時間（glossary 原意），總共 28 幀；末幀第 2 台還剩約 1 幀的最後一點顏色，改寫 last_frame
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。從落地那一幀起算：4 幀擴張＋18 幀維持＋6 幀退回＝28 幀；s017 末幀第 1 台全灰、第 2 台酒紅淡到約 1/10。
+- id: Q07
+  where: shots.s017.subjects.hovercar
+  category: 4
+  quote: 像台階一樣往畫面右上排；每台長約畫面寬 25%
+  problem: 只給車頂高度與車長，沒有水平間距：第 1 台離起跳點多遠、台與台之間的水平距離（空隙）、有沒有前後重疊，都沒寫，而每次騰空只有半拍（約 6–7 幀）；她助跑落在高 1.2 m、3 m、5 m 的車頂需要的水平距離不同，畫面也畫不出來。
+  question: 3 台車的水平間隔（車尾到下一台車頭的距離）各是多少？車頂階差 1.2→3→5 m 的情況下，起跳點到第 1 台車頭的水平距離是多少？
+  options:
+  - 每台間隔約 2 m（車尾到車頭），第 1 台車頭離起跳點約 3 m
+  - 車首尾相接重疊（像階梯），不留空隙，她直接踏上去
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。第 1 台車尾離起跳點約 3 m，台與台之間水平空隙約 1.5 m。
+- id: Q08
+  where: shots.s018.motion.subject.text
+  category: 1
+  quote: 落在一台較大的酒紅色車頂上
+  problem: glossary 的 @hovercar 只有一種尺寸（長約 4.5 m），沒有「較大」的車；「較大」是比旁邊的車大多少、s018 每台長約畫面寬 30% 與它的關係都沒寫，酒紅色也和 s017 的酒紅車重複，不確定是否同一台。
+  question: 「較大的」是多大（長度、高度）？還是只是畫面上離鏡頭較近、看起來大？是不是 glossary 要加一種大型車款？
+  options:
+  - 不是更大的車，改成「離鏡頭較近的一台酒紅色車」
+  - 大型車款，長約 6 m，glossary hovercar 補第二種尺寸
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。刪掉「較大」，改成「一台酒紅色車（不是 s017 那台）」。
+- id: Q09
+  where: shots.s018.subjects.hovercar
+  category: 2
+  quote: 一排頭尾相接
+  problem: 「頭尾相接」是沒有空隙，但同一句後面寫間隔約 1.5–3 m，s018 又需要「車與車之間的空隙」讓她跳過，兩者互相矛盾；「大致 1.5–3 m」對一步（約 2 m）能不能跨過也有出入。
+  question: 車與車之間是否有空隙？空隙幾 m？哪幾處是「一步跨過」（空隙小）、哪幾處是「跳過」（空隙大）？
+  options:
+  - 刪掉「頭尾相接」，只留間隔約 1.5–3 m；[18,2]、[18,3] 兩處空隙約 3 m（跳），其餘約 1.5 m（一步跨）
+  - 所有車首尾相接（沒有空隙），把「跳過空隙」改成「跳過車身高度差」
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。刪掉「頭尾相接」；空隙大多 1.5 m（一步跨過），[18,2]、[18,3]、[18,3.5] 處約 3 m（跳過）。
+- id: Q10
+  where: shots.s018.subjects.hovercar
+  category: 4
+  quote: 車頂在畫面高約 70%
+  problem: 鏡頭離地約 7 m、車頂離地也約 7 m，平視時車頂線應落在地平線（畫面高約 50%）附近，但這裡寫車頂在畫面高約 70%，表示鏡頭比車頂高很多（約 1 m 以上）；與「鏡頭在離地約 7 m」不一致，也不清楚是否為俯角（angle 標 eye）。
+  question: 鏡頭高度到底是多少？是與她的眼睛同高（約 8.5 m，車頂在畫面高約 70% 才成立）還是與車頂同高？
+  options:
+  - 鏡頭離地約 8.5 m（她眼睛高度），首幀改寫為「約 8.5 m」
+  - 維持鏡頭 7 m，車頂線改為畫面高約 50%，angle 仍為 eye
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。鏡頭離地約 8.5 m（她的眼睛高度），車頂在畫面高約 70% 成立。
+- id: Q11
+  where: shots.s018.shot_size
+  category: 10
+  quote: 'shot_size: FS'
+  problem: s018 的 @luna 身高約畫面高 40%，依 glossary 的定義人物高度不到畫面高 1/2 是 LS，FS 是「頭頂到腳底都在畫面內」，兩個詞彙都成立，景別標示有歧義（s017 身高 30% 標 LS）。
+  question: s018 的景別標 FS 還是 LS？如果要保持 40% 身高，是否把 glossary 的 FS 與 LS 邊界寫清楚？
+  options:
+  - 改標 LS
+  - 維持 FS，glossary 註明 FS 與 LS 重疊時以「人物是否完整入鏡」為準
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s018 改標 LS。
+- id: Q12
+  where: shots.s018.beat_events
+  category: 5
+  quote: 那台車整台恢復並往前滑約 3 m
+  problem: 車以每秒 5 m 滑行，滑 3 m 要約 0.6 s（約 14 幀），但落地在 [18,4.26]，到本鏡結束 [19,1] 只有約 10 幀，滑到一半鏡頭就結束；「滑約 3 m」在本鏡內畫不完。
+  question: 「往前滑約 3 m」是本鏡結束時的位移，還是之後（s019）才完成？本鏡結束時滑行距離是多少？
+  options:
+  - 改成「開始往前滑」，不寫距離
+  - 改成「滑約 2 m（本鏡結束時）」，s019 車頂一角的位置依此
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。刪掉滑行，改成車身被踩得一沉再浮回。
+- id: Q13
+  where: glossary.luna_fade.look.progress
+  category: 3
+  quote: 指尖到第一指節
+  problem: 手指有三節，「第一指節」「第二指節」可以從指尖數、也可以從指根數；拇指只有兩節；灰色是停在關節處還是指節中間也沒說，s019 要畫「第一指節→第二指節」的差別時，沒有人知道哪一段是灰的。
+  question: 第一指節是從指尖數起的第一節（指尖那一節）還是第一個關節（指尖往下第一條橫紋）？拇指怎麼算？灰色邊界停在關節橫紋，還是節的中間？
+  options:
+  - 從指尖數：第一指節＝最末一節，第二指節＝最末兩節；邊界停在關節橫紋；拇指把兩節算成第一、第二節的 1/2 與全部
+  - 改寫成長度（指尖往上 1.5 cm、3 cm），不用指節
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。從指尖往下數，邊界停在關節橫紋，拇指只有兩節；progress 改寫成「最末一節／最末兩節／整根手指／到手腕」。
+- id: Q14
+  where: glossary.luna_fade.look.start
+  category: 1
+  quote: 從紫色編髮的髮尾與雙手指尖同時往上退
+  problem: style_bible 寫的是「深紫高馬尾，頭頂到後腦有編髮，銀色細鏈編進髮束並垂到背後」：編髮只在頭頂到後腦，垂下來的是馬尾，沒有一條垂到肩前的辮子；「編髮的髮尾」「編髮下 1/3」「編髮下段」到底指馬尾、還是馬尾裡的髮束，髮尾約 5/10 cm 與「下 1/3」又是以多長的髮束算（馬尾長度未定），銀鏈編在髮束裡會不會跟著變灰也沒寫。
+  question: 變灰的是馬尾的下端嗎？馬尾（或髮束）總長多少 cm，「下 1/3」等於幾 cm，與「髮尾約 10 cm」是否一致？編進髮束的銀鏈在灰色範圍內算不算變灰？
+  options:
+  - 變灰的是馬尾下端；馬尾總長約 30 cm，下 1/3＝約 10 cm；銀鏈不變灰（照 not_this）
+  - 變灰的是馬尾下端，銀鏈在該範圍內也變成灰階（只是看起來更暗）
+  - 把「編髮」全部改稱「馬尾」，並在 look 補長度
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。依 style_bible：變灰的是馬尾下端（馬尾從綁起處垂下約 55 cm，以 refs/03_back 為準）；[19,1] 4 cm、[19,3] 8 cm、[20,3] 14 cm、[21,1] 18 cm（約下 1/3）；銀鏈不變灰。shots 的「編髮」全部改成馬尾。
+- id: Q15
+  where: shots.s019.motion.subject.text
+  category: 5
+  quote: 手臂隨奔跑前後擺動一次半
+  problem: 本鏡 2 拍，而 s018 的步頻是每半拍一步（一個手臂完整擺動＝2 步＝1 拍），2 拍應是 2 個完整擺動；寫「一次半」與步頻不符。而且首幀手在「往前擺到畫面正中」，擺一次半之後手會在往後擺的位置，不是「再次擺到正中」前進方向；手是往前還是往後經過畫面中央，末幀沒寫。
+  question: 本鏡手臂完整擺動幾次？末幀手是「往前擺到畫面正中」（與首幀相同相位）還是往後經過畫面中央？
+  options:
+  - 擺動 2 次（2 拍＝2 個步幅循環），末幀與首幀相同相位，手在前擺最高點
+  - 擺動一次半，末幀手在往後擺的瞬間經過畫面中央
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。2 拍＝完整擺動 2 次，末幀與首幀同相位。
+- id: Q16
+  where: shots.s019.first_frame
+  category: 3
+  quote: 背景是失焦的灰色街景與車頂一角
+  problem: bar 19 的 footstep_patch 半徑約 2 m，她腳下與身邊 2 m 內都應是彩色，而本鏡鏡頭貼著她的手（離腳約 1 m），背景的「車頂一角」在腳邊 2 m 內，應該有彩色區塊；但這裡寫的是灰色街景與車頂，沒說車頂一角是灰還是彩色。
+  question: s019 的背景車頂一角是彩色（在 2 m 區塊內）還是灰色？背景裡有沒有恢復中的彩色區塊（霓虹光、落下的雨）？
+  options:
+  - 車頂一角在她腳下區塊內，是彩色；遠處街景仍灰
+  - 鏡頭拍的是她上方高度，車頂一角在半徑外，維持灰色
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。車頂一角是她腳下那台車，在 2 m 區塊內，是彩色的。
+- id: Q17
+  where: shots.s019.beat_events
+  category: 5
+  quote: 灰色開始明顯往上退
+  problem: luna_fade.progress 把變灰寫成「[19,1] 第一指節 → [19,3] 第二指節」的連續過程，本鏡 motion 也寫「2 拍內」，但 beat_events 說 [19,1.11] 才「開始明顯」，「明顯」沒有量；中間是否線性、有沒有停頓，執行的人要自己猜。
+  question: 灰色邊界從第一指節退到第二指節，是在 [19,1] 到 [19,3] 之間等速上移，還是在 [19,1.11] 起快速移動、之後停住？
+  options:
+  - 2 拍等速上移，[19,1.11] 這筆 beat_event 只是歌詞對點，不另有動作
+  - '[19,1.11] 開始，約 1 拍內快速退到第二指節，之後維持'
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。2 拍等速推進；[19,1.11] 只是歌詞對點。
+- id: Q18
+  where: shots.s020.subjects.luna
+  category: 4
+  quote: 她的編髮甩到右肩前
+  problem: 全片規則是寫 char_right／char_left，這裡的「右肩」「左肩」沒有 char_ 前綴；她面向鏡頭，char_right 在畫面左，「右肩」可被讀成畫面右肩（也就是 char_left），與後面「@drone 在她左肩旁（畫面右上）」相同的詞。
+  question: 編髮是在 char_right 肩前（畫面左）還是畫面右肩（char_left，與 @drone 同側）？
+  options:
+  - char_right 肩前（畫面左），把「右肩」改成「char_right 肩」
+  - 畫面右肩（char_left），與 @drone 同側，改寫
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。馬尾從 char_right 肩外側（畫面左）甩出；@drone 寫明在 char_left 肩旁。
+- id: Q19
+  where: shots.s020.subjects.hovercar
+  category: 4
+  quote: 車頂在畫面高約 85%
+  problem: 她是 MLS（膝以上），頭頂在畫面高約 12%，膝蓋約在畫面底緣；她腳踩的車頂應在畫面底緣以下，不會在畫面高約 85%。「85%」是她身後較遠的車頂還是她腳下的車頂不明；從與她同高、近乎平視的鏡位看車頂，上面 2 m 半徑的圓形區塊會被壓成很扁的橢圓，也不清楚看不看得出來。
+  question: 畫面高約 85% 是哪一台的車頂？她腳下的車頂在畫面外嗎？鏡頭離車頂多高、車頂上的圓形區塊以什麼透視畫出來？
+  options:
+  - 85% 是她身後最近一台車頂的位置，她腳下車頂在畫面外；鏡頭高於車頂約 1.5 m，區塊是扁橢圓
+  - 改成鏡頭略高、俯角約 20°，讓車頂佔畫面下 1/3，區塊可讀
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。85% 是她身後最近一台的車頂，她腳下車頂在畫面外；鏡頭高於車頂約 1.5 m，區塊壓成扁橢圓。
+- id: Q20
+  where: shots.s020.motion.subject.text
+  category: 7
+  quote: 依 beat_events 由遠到近一個一個退回灰色（被吞回去）
+  problem: 括號寫「被吞回去」（story 的說法：被 @silence 吞回），notes 卻寫這是 footstep_patch 正常的 18 幀後退回；兩種原因畫面上差很多：被 @silence 吞回，應看得到灰彩交界帶往區塊推進；計時退回則只是區塊顏色在原地 6 幀內變灰。
+  question: 區塊退回灰色時是原地 6 幀內變灰（計時退回），還是有 @silence 邊界帶（約 1 m 漸層帶）從外往內掃過區塊？
+  options:
+  - 原地 6 幀退灰，沒有邊界帶；把「被吞回去」刪掉
+  - 有邊界帶從外圍往內掃，區塊同時被吞（每個區塊的 6 幀＝邊界掃過）
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。原地 6 幀退灰（footstep_patch 的計時退回），沒有邊界帶；刪掉「被吞回去」。
+- id: Q21
+  where: shots.s021.motion.subject.text
+  category: 4
+  quote: 左右兩條交界同時往塔推進
+  problem: 只有左右兩條交界，但鏡頭在近處（灰色區）往彩色區看，彩色區近側（鏡頭這一側）與遠側的邊界是否也在縮小、畫面中看不看得到，沒有寫；上一個遠景鏡 s014 只有一條界線從左往右，這裡改成兩條對推，彩色區是一條直帶還是一個橢圓區域也不清楚。
+  question: 彩色區在畫面中是一條由近到遠的直帶（只有左右邊界）還是一個封閉區域？近側與遠側的邊界在畫面中是否可見、是否也推進？
+  options:
+  - 彩色區是由近到遠的直帶，近側與遠側邊界不在畫面內，只有左右邊界推進
+  - 彩色區是橢圓，近側邊界也在畫面下緣往上推進（約畫面高 10%）
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。彩色區在畫面中是一條由近到遠的直帶，近側與遠側邊界不在畫面內。
+- id: Q22
+  where: project.decisions.silence_speed
+  category: 9
+  quote: 靜默邊界每秒約 30 m（全片）
+  problem: 'decisions 這一行說 30 m/s 是「全片」，但同檔另有 silence_speed_prechorus: 100_m_per_s，glossary silence.spread 則寫 Prechorus（bar 17）起 100 m/s；「全片」與加速互相矛盾，Chorus 1 之後（s021 之外）回到 30 還是維持 100 沒有規則。'
+  question: bar 17 之後 @silence 速度是維持 100 m/s 到片尾，還是只在 Prechorus 加速、Chorus 1 之後回到 30 m/s？
+  options:
+  - 只有 Prechorus（bar 17–20）100 m/s；bar 21 吞沒 @luna 之後依各鏡指定
+  - bar 17 起全片 100 m/s，project 的「全片」字樣刪掉
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。100 m/s 只在 Prechorus（bar 17–20），Chorus 1 起依各鏡指定；project.yaml 的「全片」改成「平常」。
+- id: Q23
+  where: shots.s022.first_frame
+  category: 5
+  quote: '@luna 剛從鏡頭左後方衝進畫面下方，背對鏡頭、正要踩上車頭邊緣'
+  problem: 本鏡 [20,3] 開始，起跳在 [20,3.09]，只差約 1.4 幀（人聲「決定」46.98 s），但首幀要求她「剛衝進畫面下方、還沒踩上車頭邊緣」，也就是首幀到起跳之間她要從畫面外走到車頭邊緣，約 1–2 幀做不到；首幀是靜止畫面，她是已經在車頭邊緣、還是還在畫面外也不清楚。
+  question: 首幀她在哪裡？是在鏡頭下方、離車頭邊緣還有多遠？起跳的 [20,3.09] 要不要往後挪到她真正踩上車頭邊緣的那一拍（例如 [20,3.5]），還是把首幀改成她已站在車頭邊緣？
+  options:
+  - 首幀她已經站在車頭邊緣、腳剛踏上（身高約畫面高 50%），[20,3.09] 起跳不變
+  - 起跳往後挪到 [20,3.5]，「決定」那句對在她衝進畫面的瞬間，其餘 beat_events 順延
+  - 首幀往前提早半拍：把本鏡起點改到 [20,2.5]
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。首幀改成她已站在車頭邊緣、腳剛踏上（身高約畫面高 45%），[20,3.09] 起跳不變。
+- id: Q24
+  where: shots.s022.post
+  category: 8
+  quote: '[20,4] 起後製做 speed_ramp，速度從 1 倍降到 0.4 倍，讓她在半空中被拉長，接 Chorus 1 的抽空小節'
+  problem: speed_ramp 只寫了起點與兩端倍速，沒寫降速過程要多久、曲線形狀，也沒寫降到 0.4 倍之後是否維持到本鏡結束 [21,1]；影片模型要生成多長的來源素材（本鏡 1.07 s，但經變速後素材只有約 0.75 s 對應原速）、[20,4.11] 的「最高點」是變速前還是變速後的時間，都需要作者決定。
+  question: 速度從 1 倍降到 0.4 倍花多久（例如 3 幀、半拍）、曲線是線性還是緩出？降到 0.4 倍後維持到 [21,1]？beat_events 的 [20,4.11] 是以輸出時間還是素材時間計？
+  options:
+  - 6 幀（約 [20,4]–[20,4.45]）線性降到 0.4 倍，之後維持 0.4 倍到 [21,1]；beat_events 以輸出時間計
+  - '[20,4] 瞬間（1 幀）切到 0.4 倍，維持到 [21,1]'
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。6 幀內線性從 1 倍降到 0.4 倍，維持到 [21,1]；beat_events 以輸出時間計；post 欄補 ramp_frames、curve、hold_until。
+- id: Q25
+  where: shots.s022.last_frame
+  category: 6
+  quote: 下方車頭邊緣的小區塊已退回灰色
+  problem: 區塊約 28 幀（4＋18＋6）才全灰；起跳到本鏡結束 [21,1] 只有約 24 幀（又含 [20,4] 後的慢動作），所以以正常計時末幀區塊還在退回的途中；若區塊的 18/6 幀跟著 speed_ramp 一起被拉長（0.4 倍），退回則完全沒完成。末幀是否已灰取決於區塊計時是依輸出時間還是素材時間。
+  question: 區塊的 18 幀維持與 6 幀退回，在 s022 的 speed_ramp 裡是以輸出時間（不被拉長）還是跟著慢動作被拉長？末幀這個區塊是完全灰、還是退回到一半？
+  options:
+  - 區塊計時以輸出時間為準（後製在變速後才調色），末幀已全灰
+  - 區塊跟著慢動作被拉長，末幀區塊還剩淡淡的彩色（改寫 last_frame）
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。區塊計時以輸出時間為準；末幀區塊正在退回、只剩淡淡顏色。
+- id: Q26
+  where: shots.s022.first_frame
+  category: 7
+  quote: 她的編髮下段與雙手已明顯變灰
+  problem: luna_fade.progress 只給 [19,3]（第二指節、髮尾約 10 cm）與 [21,1]（手腕、編髮下 1/3）兩個點，s022 首幀是 [20,3]，「明顯變灰」沒有量；s020（[19,3]–[20,1]）沒有 last_frame，s020 結尾到 s022 首幀（中間隔 s021 沒有她）之間進度要不要往前推也沒寫。
+  question: '[20,3]（s022 首幀）時，髮尾與雙手各灰到哪裡？是否線性插值（髮尾約 10→1/3 的中間，手指到第二指節→手腕的中間）？'
+  options:
+  - 線性插值：[20,3] 時髮尾約 14 cm、灰到手掌根（過了第三指節、尚未到手腕）
+  - '[20,3] 仍停在 [19,3] 的進度（第二指節、10 cm），要到 [21,1] 才跳到手腕'
+  - glossary 補 [20,1]、[20,3] 兩個進度點
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。glossary 補 [20,3] 進度點（整根手指到指根、髮尾約 14 cm），各點之間等速推進。
+- id: Q27
+  where: glossary.luna_fade.look.progress
+  category: 10
+  quote: '[21,1] 雙手到手腕、編髮下 1/3'
+  problem: style_bible 寫她雙手腕有多圈銀鍊手環；灰色「到手腕」時，手環位在手腕處，是否變灰、灰色邊界停在手環前還是穿過手環沒寫；luna_fade.not_this 只說「銀鏈與腿環不會先變灰」，沒有講手環，也沒講手環在灰色範圍內時的規則。
+  question: 灰色到手腕時，手環（銀鍊，多圈）在灰色邊界的哪一側？手環本身會變灰嗎？
+  options:
+  - 灰色停在手環前緣（手腕靠手掌那一側），手環不變灰
+  - 手環在灰色範圍內，一起變灰（銀色本來就接近灰，仍以邊界漸層處理）
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。灰色停在手環前緣，手環不變灰；寫進 luna_fade.not_this。
+- id: Q28
+  where: shots.s022.subjects.signal_tower
+  category: 4
+  quote: 仍被一小片彩色街區圍著
+  problem: s021 末幀彩色區是畫面寬 39%–61%（長焦、畫面寬約 600 m，彩色帶約 132 m 寬），而 s022 是廣角低角度、塔的觀景台寬只有畫面寬 2%；「一小片」在這個畫面裡有多大、佔畫面寬多少、離塔多遠、塔下方的彩色區與 s021 的 132 m 是否相同，沒有寫。Chorus 1 的彩色衝擊波之前，這片彩色區是整個畫面唯一的彩色參考。
+  question: s022 中圍著塔的彩色區在畫面中佔多大（寬、高，位置）？對應多少實際寬度（沿用 s021 末幀的約 132 m）？它的邊界是銳利線還是約 1 m 漸層帶？
+  options:
+  - 彩色區寬約畫面寬 8%、高約畫面高 6%，貼在塔底，約對應 132 m，邊界是約 1 m 漸層帶（遠景下看起來是一條銳利的線）
+  - 彩色區只剩塔身下半段周圍，約畫面寬 4%
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。塔底彩色區寬約畫面寬 8%、高約 6%（約 132 m，沿用 s021 末幀），邊界看起來是銳利的線。
+- id: Q29
+  where: shots.s022.notes
+  category: 6
+  quote: Chorus 1 第一鏡（bar 21）接她被 @silence 吞沒
+  problem: bar 21 要接她被 @silence 吞沒，但 s022 全鏡沒有畫出 @silence 的邊界帶：她在半空中身邊、下方都是灰色街區，不知道她被吞沒前，灰彩邊界或「她身上還有顏色」的哪個要素要在 s022 末幀可見；@silence 沒有形體，「吞沒」要從 s022 的哪個狀態接過去（她的身體往灰色推進？邊界帶從哪個方向追上？）也沒寫。
+  question: s022 末幀要交給 bar 21 什麼資訊？@silence 的邊界帶（約 1 m 漸層帶）在 s022 末幀可見嗎，在她的哪個方向（下方／前方／後方）、離她多遠？bar 21 第一鏡的首幀是 s022 末幀的延續（同一個半空姿勢）嗎？
+  options:
+  - s022 末幀在她下方畫面高約 70% 有一條灰彩邊界帶（朝她往上推進），bar 21 首幀接同一個半空姿勢（cut_on_action）
+  - s022 完全不畫邊界；bar 21 首幀從她身上的顏色開始被抽乾（灰色從雙手與髮尾往身體擴散），延續 luna_fade
+  - s022 末幀塔附近的彩色區被吞掉，吞沒她留到 bar 21，另行定義
+  severity: high
+  status: resolved
+  resolution: 使用者決定（2026-10-23）。兩者一起：s022 末幀她身上的 @luna_fade 往內擴散，同時她下方畫面高約 75% 有一道往上湧的 @silence 邊界帶（glossary 新增 silence.surge），兩者在 bar 21 於她身上會合（decisions.swallow_handoff）。
+- id: Q30
+  where: shots.s022.last_frame
+  category: 5
+  quote: 同一構圖：@luna 在半空、背對鏡頭，身體前傾、雙手往前伸，身高約畫面高 25%
+  problem: 起跳 [20,3.09]、最高點 [20,4.11]，末幀在 [21,1]（約 0.9 拍之後），她此時是還在上升、剛過最高點、還是已經在下降，沒有寫；而「身體前傾、雙手往前伸」在上升和下降時的姿勢（頭、腿、drone 位置）不同，也決定 bar 21 首幀要從哪個姿勢接。
+  question: 末幀她是在上升、最高點還是下降？高度上，她離車頭邊緣約多高（身高約畫面高 25% 對應的距離）？
+  options:
+  - 剛過最高點、開始下降，雙腿向後伸直，drone 與她同高
+  - 仍在上升的後段（尚未到最高點），[20,4.11] 的最高點事件延後到 [21,1] 之後
+  - 整鏡的慢動作把她停在最高點，[20,4.11] 到 [21,1] 她幾乎不動
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。末幀剛過最高點、開始下降，雙腿往後伸直，@drone 與她同高。
+- id: Q31
+  where: shots.s022.shot_size
+  category: 10
+  quote: 首幀從畫面下方入鏡、身高約畫面高 50%
+  problem: 'glossary 的 LS 定義是人物高度不到畫面高的 1/2，首幀 50% 剛好在邊界；而同一 subjects 項的 placement 寫 y: upper，首幀她卻是從畫面下方入鏡，placement 只對末幀成立，首尾兩個位置沒有分開。'
+  question: '景別標 LS 要以末幀（25%）還是首幀（50%）為準？placement 的 y: upper 是指末幀嗎，是否要拆成首幀、末幀兩個位置？'
+  options:
+  - 景別改標 MLS（首幀 50%），placement 補 first／last 兩個位置
+  - 維持 LS，首幀身高改為約畫面高 45%
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。維持 LS，首幀身高改為約畫面高 45%，size 分寫首幀與末幀。

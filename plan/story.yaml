@@ -49,13 +49,14 @@ beats:
   - id: prechorus
     section: prechorus
     bars: [17, 20]
-    places: ["@city"]
+    places: ["@street"]
     story: >
-      @silence 開始加速擴散。@drone 再次投影倒數，@luna 與 @drone 奔向 @signal_tower，
-      她每一次觸碰都生成一小塊恢復的世界，卻一塊塊被吞回去。
+      @silence 開始加速擴散。@luna 跳上定格的 @hovercar，一台接一台往 @signal_tower 跑；她每一步都踩出一小塊恢復的世界，
+      卻一塊塊被吞回去。用了太多能力，她自己的顏色也開始從髮尾與指尖退掉（@luna_fade）。遠方的彩色街區被快速吞食，
+      她從最後一台車往塔縱身一躍。
     emotion: 時間壓力、加速
     lyric_link: 「每一次生成都是新的宇宙／時間正在倒數」
-    status: proposed
+    status: confirmed
 
   - id: chorus1
     section: chorus1

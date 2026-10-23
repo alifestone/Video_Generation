@@ -53,4 +53,12 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   not_enough_shown_by: revert_and_distant_advance   # 恢復的東西變回灰＋遠方彩色區被吞
   drone_points_by: tower_hologram        # ECHO 投影小全息塔指路
   verse_structure: 8_shots_1_bar         # 8 鏡各 1 小節
-  silence_speed: 30_m_per_s              # 靜默邊界每秒約 30 m（全片）
+  silence_speed: 30_m_per_s              # 靜默邊界平常每秒約 30 m（Prechorus 例外，見下）
+  # 2026-10-23 Prechorus
+  prechorus_countdown: none              # ECHO 不再投影倒數；壓迫感靠灰色與剪接
+  power_growth: footstep_patch           # 能力變強：每一步踩出半徑約 3 m 的恢復區塊（越弱越小）
+  prechorus_travel: hovercar_parkour     # 踩定格懸浮車跑酷
+  swallowed_because: overuse_fade        # 用太多能力而衰弱；髮尾與指尖先變灰
+  prechorus_structure: 6_shots_half_bar_cuts   # bar 17、18 各一鏡，bar 19–20 半小節快切
+  silence_speed_prechorus: 100_m_per_s   # Prechorus（bar 17–20）加速到每秒約 100 m
+  swallow_handoff: fade_and_surge        # bar 21 吞沒：她身上的褪色往內擴散＋下方湧上的邊界帶，在她身上會合

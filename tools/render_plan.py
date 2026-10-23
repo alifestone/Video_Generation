@@ -23,7 +23,8 @@ FIELD_ZH = {"style": "風格", "role": "角色設定", "notes": "備註", "refs"
             "restore": "恢復", "duration": "持續時間", "return": "退回", "rain_drop": "雨滴",
             "travel": "移動方式", "timing": "時間", "position": "位置",
             "storefront": "店面", "ground": "路面", "air": "空中", "body": "體型", "outfit": "服裝",
-            "pose_frozen": "定格姿勢", "face": "臉", "position_frozen": "定格位置"}
+            "pose_frozen": "定格姿勢", "face": "臉", "position_frozen": "定格位置",
+            "footstep_patch": "腳步區塊", "surge": "湧升", "start": "開始", "progress": "進度"}
 REALIZE_ZH = {"model": "影片模型生成", "post": "後製", "model+post": "影片模型＋後製", "none": "不動"}
 
 
@@ -174,7 +175,18 @@ class Renderer:
             if sh.get("notes"):
                 self.w(f"| 備註 | {self.r(sh['notes'])} |")
             if sh.get("post"):
-                self.w(f"| 後製 | {self.r('；'.join(map(str, sh['post'])))} |")
+                items = []
+                for p in sh["post"]:
+                    if isinstance(p, dict):
+                        p = dict(p)
+                        name = p.pop("effect", "")
+                        if "at" in p:
+                            p["at"] = self.pos(p["at"])
+                        if "hold_until" in p:
+                            p["hold_until"] = self.pos(p["hold_until"])
+                        p = f"`{name}` " + "，".join(f"{k}={v}" for k, v in p.items())
+                    items.append(str(p))
+                self.w(f"| 後製 | {self.r('；'.join(items))} |")
             if sh.get("overlay"):
                 ov = sh["overlay"]
                 self.w(f"| 字卡 | 位置：{self.r(ov.get('zone'))}；內容：{self.r(ov.get('content'))} |")
