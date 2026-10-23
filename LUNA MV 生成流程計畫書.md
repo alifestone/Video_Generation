@@ -4,6 +4,18 @@ Oct 14, 2026 · @周聖詠
 
 先用 8 秒端到端試作決定模型與參數，通過後再依段落量產。本版整合硬體環境、工具查證、流程設計、git 與文件一致性 4 份評估，取代前一版計畫書。
 
+## 2026-10-23 更新
+
+P2 重做之後，流程有以下調整；通用的做法寫在 `video_generation_pipeline.md`。
+
+| 項目 | 原本 | 現在 |
+| --- | --- | --- |
+| P2 劇本 | 直接寫 `docs/mv_plan.md`，到段落與英雄鏡頭 | `plan/*.yaml` 是正本，寫到鏡頭層；lint＋歧義審稿；`docs/mv_plan.md` 由腳本產生。概念 A「靜默協議」，Intro（s001–s005）已定稿 |
+| 舞蹈 | Wan-Dancer-14B，備案 Wan2.2-Animate | 本片不跳舞（`dance_shots: 0`）；兩個舞蹈模型不下載、不試作。通用模板保留舞蹈分支，給之後的影片用 |
+| P3 | 只做 LUNA 的資產 | 另外替 ECHO、啟動艙、監視牆做固定參考圖（不訓練 LoRA） |
+| P4 試作鏡頭 | 舞蹈、特寫、視差、一般 I2V 各 1 鏡 | Intro 的 s002（路線 C）、s003（路線 A，ECHO 入鏡＋後製光環）、s004（ECU 睜眼） |
+| style bible | P2 一起寫 | 全片鏡頭寫完後，依概念 A 重寫場景、色票與每段色調 |
+
 ## 和前一版的主要差異
 
 最大的改變是「先試作、再依段落量產」，並且只用一個主影片模型。
@@ -99,7 +111,7 @@ ComfyUI 0.34.0（commit e80c1570，2026-09-03），venv 為 Python 3.12、torch 
 | 沿用 | ControlNet promax、BiRefNet | 構圖控制、去背 |
 | 移到外接碟 | `Wan2.2-S2V-14B-Q4_K_M`（12.9G）、`wav2vec2_large`（0.6G） | 對嘴用，本計畫用不到 |
 | 移到外接碟 | `wan2.2_ti2v_5B_fp16`（9.3G）、`Wan2.2-TI2V-5B-Q8_0`（5.0G） | 5B 畫質不如 14B |
-| 要下載（Q8 為主） | Qwen-Image-Edit-2511 Q8、Wan2.2 I2V A14B、lightx2v 加速 LoRA、Wan-Dancer-14B、Wan2.2-Animate-14B、Wan 2.2 Fun Control、Wan2.2-VACE-Fun-A14B、Index-AniSora V3.2、Depth Anything V2 或 3、RIFE、Real-ESRGAN anime | 總量需實測；Q8 比 Q6 大，磁碟會更緊 |
+| 要下載（Q8 為主） | Qwen-Image-Edit-2511 Q8、Wan2.2 I2V A14B、lightx2v 加速 LoRA、Wan 2.2 Fun Control、Wan2.2-VACE-Fun-A14B、Index-AniSora V3.2、Depth Anything V2 或 3、RIFE、Real-ESRGAN anime | 總量需實測；Q8 比 Q6 大，磁碟會更緊 |
 
 ## 前置條件
 
@@ -169,15 +181,16 @@ P6 到 P8 依段落重複：第一個段落建議用 Chorus 1，做完、審過�
 
 ### P2 概念與劇本
 
-**輸入**：`analysis/timeline.json`、`audio/lyrics.srt`、`refs/` 參考圖。
+**輸入**：`analysis/timeline.json`、`audio/lyrics.srt`、`refs/` 參考圖、`plan/project.yaml`（本片參數）。
 
-**輸出**：`docs/mv_plan.md`（視覺概念、段落劇本、剪輯密度、英雄鏡頭）、`docs/style_bible.md`（外觀五項、色票、光影、場景、禁止事項、每段色調）。
+**輸出**：`plan/*.yaml`（正本：參數、名詞表、故事、鏡頭、審稿紀錄）、`docs/mv_plan.md`（由 `tools/render_plan.py` 產生）、線上 doc；全片鏡頭寫完後重寫 `docs/style_bible.md`。
 
-由 Claude Opus 5.5 加 agency-agents Visual Storyteller 撰寫。
+步驟見 `video_generation_pipeline.md` 的 P2 與 `plan/README.md`。本片的決定：
 
-- `docs/mv_plan.md`：視覺概念、每段的情緒與敘事；每段的剪輯密度（例如 Intro 每 2 小節一刀、Chorus 每小節一刀）；3–6 個英雄鏡頭（建議）。
-- `docs/style_bible.md`：LUNA 外觀檢查清單（五項）、色票、光影、場景、禁止事項、每段的色調方向。
-- 驗收：每句歌詞都有對應的畫面概念；由我確認段落規劃。
+- 敘事以劇情為主，歌詞只要段落層對應；不跳舞、不對嘴；不設場景數上限；光鯨不再使用。
+- 概念 A「靜默協議」：「靜默」把城市抹成灰色定格，LUNA 與夥伴無人機 ECHO 從訊號塔把城市「播」回來；結局勝利但留伏筆。
+- CSFCCA 只在劇情相關時出現（本片是派出 LUNA 的組織）；字標只在後製疊。
+- 進度：Intro（s001–s005）已定稿，Hook 之後由 storyboard session 逐段撰寫。
 
 ### P3 角色資產與 LoRA
 
@@ -190,18 +203,19 @@ P6 到 P8 依段落重複：第一個段落建議用 Chorus 1，做完、審過�
 3. 用 kohya sd-scripts 訓練 Illustrious LoRA v1。
 4. 用 v1 出 30 張，挑最好的 20–30 張加回資料集，訓練 v2。
 5. 用正式管線（Illustrious 加 LoRA）出 6–10 張風格樣張，每個主要段落 1–2 張。
-6. **G0 審查**：風格樣張中 LUNA 的臉、髮型、服裝細節一致，且色調、光影符合 style bible；由我確認。
-7. 確認後將其他圖片刪除。
+6. **物件與場景參考圖**：替 ECHO、啟動艙、監視牆各出一組固定參考圖（Qwen-Image／Qwen-Image-Edit，依 `plan/glossary.yaml` 的 `look`），存到 `refs/entities/<id>/` 並寫回 glossary 的 `refs`；只出圖、不訓練 LoRA，由我確認。之後寫到其他反覆出現的物件或場景時照同樣方式補。
+7. **G0 審查**：風格樣張中 LUNA 的臉、髮型、服裝細節一致，且色調、光影符合 style bible；由我確認。
+8. 確認後將其他圖片刪除。
 
 H3 生成的任何畫面都不能放進 LoRA 資料集：H3 授權禁止用它的輸出改進其他 AI 模型（查證）。
 
 ### P4 8 秒端到端試作
 
-**輸入**：LUNA LoRA 與風格樣張（P3）、`docs/mv_plan.md` 的 Hook 段規劃、`analysis/timeline.json`（0:12–0:20）、`audio/song.wav`（舞蹈鏡頭用）、三個候選影片模型。
+**輸入**：LUNA LoRA、風格樣張與物件參考圖（P3）、`plan/shots.yaml` 的 s002–s004、`analysis/timeline.json`（0:02.8–0:09.6）、三個候選影片模型。
 
-**輸出**：`pilot/<模型>/shotNN.mp4`、後製完成的 Hook 段試作片、`docs/pilot_report.md`（主模型、Q8 可否、路線、是否訓練 Wan LoRA、實測時間與 RAM 峰值）。
+**輸出**：`pilot/<模型>/shotNN.mp4`、後製完成的 Intro 試作片（s002–s004）、`docs/pilot_report.md`（主模型、Q8 可否、路線、是否訓練 Wan LoRA、實測時間與 RAM 峰值）。
 
-試作片段不先預設。到 P4 時先看 docs/mv\_plan.md 和 timeline.json，找出哪裡有舞蹈、哪裡需要特寫、哪裡會用到視差字卡，各選一個代表性的點，再加一鏡一般 I2V，共 3–4 鏡，從關鍵幀一路做到後製完成。視差字卡：把字標或歌詞拆成前景、中景、背景等幾層，再用不同速度移動，做出有深度的文字畫面。
+試作鏡頭用 Intro 的 s002（路線 C：靜態圖＋視差，螢幕逐拍亮起與變灰由後製做）、s003（路線 A：ECHO 從畫面右側滑入，光環與光帶由後製合成）、s004（路線 A：ECU 睜眼），從關鍵幀一路做到後製完成。本片不跳舞，不試舞蹈鏡頭。
 
 三個候選模型用同一批輸入、各跑一條測試 pipeline，結果才能直接比較：
 
@@ -216,7 +230,6 @@ H3 生成的任何畫面都不能放進 LoRA 資料集：H3 授權禁止用它�
 | 主 I2V 模型用哪個？ | Wan2.2 I2V A14B、Index-AniSora V3.2（動漫專用）、MiniMax H3 FL2VA |
 | Q8 跑得動嗎？ | 每個模型的 RAM 峰值與生成時間；放不下或 RAM 不夠才降到 Q6 |
 | 加速 LoRA 能不能當正式設定？ | Wan 加 lightx2v 4-step、H3 加 turbo 8-step，和完整步數比較 |
-| 舞蹈鏡頭怎麼做？ | Wan-Dancer-14B vs Wan2.2-Animate（驅動影片用 Wan T2V 生的替身） |
 | 手動關鍵姿勢可行嗎？ | 手擺骨架加姿勢插值，經 Fun Control 生成 |
 | 需不需要 Wan LoRA？ | 看 5 秒內角色有沒有漂移 |
 | 補幀與放大會不會出問題？ | RIFE 16→48→24fps 的鬼影；Real-ESRGAN 逐幀放大的閃爍 |
@@ -228,11 +241,11 @@ H3 生成的任何畫面都不能放進 LoRA 資料集：H3 授權禁止用它�
 
 ### P5 鏡頭清單與 animatic
 
-**輸入**：`docs/mv_plan.md`、`analysis/timeline.json`、`docs/pilot_report.md`（路線與模型決定）、風格樣張、`audio/song.wav`。
+**輸入**：`plan/shots.yaml`、`analysis/timeline.json`、`docs/pilot_report.md`（路線與模型決定）、風格樣張、`audio/song.wav`。
 
 **輸出**：`shotlist.json`（每鏡的起訖幀、景別、運鏡、route、prompt、等級）、`edit/animatic.mp4` 與 Kdenlive 專案。
 
-- Claude Opus5.5 依 `mv_plan.md` 與 `timeline.json` 產出 `shotlist.json`，prompt 依 Illustrious（Danbooru tag）與影片模型的格式撰寫。
+- Claude Opus 5.5 讀 `plan/shots.yaml` 與 `timeline.json` 產出 `shotlist.json`：鏡頭內容在 P2 已定，這裡只補絕對起訖幀、prompt（Illustrious 用 Danbooru tag，影片模型用其格式）與等級，並依 `realize` 拆出後製工作清單。
 - 切點一律用 timeline 的絕對幀號，不用「各鏡時長累加」。
 - animatic：每鏡先放一張草圖或風格樣張，用 Kdenlive 照時間軸配原曲排好，輸出 `edit/animatic.mp4`。
 - **G1 審查**：節奏和剪輯密度由 Claude Sonnet 5.5 審查（切點是否落在拍點、各段密度是否符合 mv\_plan.md）；段落起伏與其他意見由你審查。
@@ -251,7 +264,7 @@ H3 生成的任何畫面都不能放進 LoRA 資料集：H3 授權禁止用它�
 
 ### P7 影片生成（依段落）
 
-**輸入**：`shots/sNNN/keyframe.png`（與尾幀）、`shotlist.json` 的 route、prompt、幀數；路線 B 另加 `audio/song.wav` 片段（Wan-Dancer）、替身驅動影片（Animate）或手動骨架（Fun Control）。
+**輸入**：`shots/sNNN/keyframe.png`（與尾幀）、`shotlist.json` 的 route、prompt、幀數；路線 B 另加手動骨架（Fun Control）。
 
 **輸出**：`shots/sNNN/video.mp4`、路線 B 的 `shots/sNNN/pose.mp4`、`candidates/` 候選影片（不進 git）、更新後的粗剪。
 
@@ -292,10 +305,10 @@ H3 生成的任何畫面都不能放進 LoRA 資料集：H3 授權禁止用它�
 | 路線 | 適用 | 工具 | 備註 |
 | --- | --- | --- | --- |
 | A 一般 I2V（多數鏡頭） | 上半身律動、甩髮、轉頭、推拉搖移、特寫的眨眼與呼吸 | 主模型＋首幀（必要時加尾幀）＋文字 prompt | Wan 系列：16fps、81 幀（約 5 秒）、幀數 4n+1。H3：24fps、最長 15 秒、短邊 768px（查證） |
-| B 指定動作 | 副歌舞蹈英雄鏡頭（3–6 鏡）；比 V、指向鏡頭、轉身等短的精確姿勢 | 舞蹈：首選 Wan-Dancer-14B（音樂加角色參考圖，查證），備案 Wan2.2-Animate-14B 加替身驅動影片。精確姿勢：ComfyUI OpenPose 編輯器擺關鍵姿勢、姿勢插值補中間幀，經 Wan 2.2 Fun Control 生成 | Dancer 一次採樣 149 幀、很吃 VRAM、沒測過動漫角色（需實測）。手動骨架直接照 LUNA 比例擺，鏡頭角度要和關鍵幀一致；插值效果需實測 |
+| B 指定動作 | 比 V、指向鏡頭、轉身等短的精確姿勢（本片不跳舞） | ComfyUI OpenPose 編輯器擺關鍵姿勢、姿勢插值補中間幀，經 Wan 2.2 Fun Control 生成 | 手動骨架直接照 LUNA 比例擺，鏡頭角度要和關鍵幀一致；插值效果需實測 |
 | C 靜態插畫 | 歌詞字卡、背景、插入鏡頭、≤ 1 小節的快切鏡頭 | 關鍵幀＋Depthflow（本機已裝）＋Depth Anything V2 或 3 | 快切段內和路線 A 交錯，避免整段太靜；位移要小，動漫髮絲在深度邊緣容易被拉扯。特寫不走視差 |
 
-Bailando 與 HY-Motion 只在 B 路線的選項都不行時才啟用。HY-Motion 官方最低 VRAM 24–26GB，要用 GGUF 版文字編碼器才放得進 16GB（查證）。
+本片不使用舞蹈模型（Wan-Dancer、Animate、Bailando、HY-Motion）；之後的影片若 `dance_shots` > 0，照 `video_generation_pipeline.md` 的路線 B 舞蹈分支。
 
 ## 時間與幀數規則
 
@@ -507,7 +520,7 @@ allin1 用舊版 NATTEN API，0.20 以後被移除；0.17.5 沒有 cu128 版本�
 | 磁碟不足 | 現在只剩 75G，Q8 權重較大 | 清快取、搬冷檔到外接碟；量產前從 Windows 切空間 |
 | 參考圖生成失敗 | 整張角色表輸入時細節流失或角色走樣 | 加入裁切單格當第二張參考；仍不行退回裁切加去字 |
 | 角色一致性 | 影片後半段漂移；模型間風格跳動 | 鏡頭 ≤ 2 小節；給尾幀；單一主模型；統一調色；必要時才訓練 Wan LoRA |
-| 舞蹈與姿勢變形 | 動漫比例和真人動作資料不合 | Wan-Dancer 或 Animate 由模型內部處理體型；手動骨架照 LUNA 比例擺；舞蹈只做 3–6 個 hero 鏡頭 |
+| 姿勢變形 | 動漫比例和真人動作資料不合 | 本片不跳舞；路線 B 的手動骨架照 LUNA 比例擺 |
 | 細節崩壞 | 手指、銀鏈、腿環容易糊或變形 | 構圖時避開；VACE 修補 |
 | 補幀與放大 | 動漫線稿補幀有鬼影；逐幀放大會閃爍 | 試作時就測；必要時改用簡單放大加銳化 |
 | allin1 安裝 | NATTEN 版本衝突 | CPU 舊版環境；PR #39 |

@@ -2,13 +2,15 @@
 
 從角色表、歌曲與歌詞到 1920×1080、24fps 的完成片。整個流程分成 P0–P9 十個階段，中間有 G0–G4 五道審查。原則是先用 8 秒端到端試作（P4）決定模型與參數，通過後才依段落量產。
 
-本檔只留流程本身。現況盤點、前置條件、環境建置、工時、風險、授權與參考資料見《LUNA MV 生成流程計畫書.md》。文中的「我」指專案負責人，也就是審查者。
+本檔是通用模板，只留流程本身；每支影片的選擇（敘事類型、要不要跳舞、歌詞對應方式等）寫在 `plan/project.yaml`，流程中標「（`dance_shots` > 0 時）」的步驟只在該參數成立時執行。LUNA MV 的現況盤點、前置條件、環境建置、工時、風險、授權與參考資料見《LUNA MV 生成流程計畫書.md》。文中的「我」指專案負責人，也就是審查者。
 
 ## 原則
 
 - 不做對嘴；品質優先，不以時間為限制。量化預設用 Q8 GGUF，放不下或 RAM 不夠時才降級。
 - 一次只常駐一個大模型，依段落批次處理。
-- 一個主 I2V 模型（由試作決定），加上少數舞蹈英雄鏡頭與視差鏡頭，不混用多個模型。
+- 一個主 I2V 模型（由試作決定），加上視差鏡頭；`dance_shots` > 0 時再加少數舞蹈英雄鏡頭。不混用多個模型。
+- 劇本的正本是 `plan/*.yaml`，`docs/mv_plan.md` 由腳本產生、不手改。
+- 鏡頭裡的效果先分工：`realize` 標 model 的由影片模型生成，標 post 的留給後製。
 - 切點一律用 timeline 的絕對幀號，不用「各鏡時長累加」。
 - 字標與歌詞不讓模型畫，後製時再疊加。
 - 候選結果不進 git，只 commit 選定的版本。
@@ -20,10 +22,10 @@
 | --- | --- | --- | --- | --- |
 | P0 | 素材整理 | 角色表、`歌曲.mp3`、`歌詞.srt` | `refs/` 參考圖、`audio/song.wav` | 外觀五項驗收 |
 | P1 | 音樂分析 | `audio/song.wav`、`audio/lyrics.srt` | `analysis/timeline.json` | 自動檢查＋聽感確認 |
-| P2 | 概念與劇本 | timeline、歌詞、參考圖 | `docs/mv_plan.md`、`docs/style_bible.md` | 我確認段落規劃 |
-| P3 | 角色資產與 LoRA | 參考圖、style bible、mv_plan | `luna_illustrious.safetensors`、風格樣張 | **G0：樣張與 LoRA** |
-| P4 | 8 秒端到端試作 | LoRA、樣張、timeline、三個候選模型 | 3–4 鏡試作片、`docs/pilot_report.md` | 決定主模型、路線、是否訓練 Wan LoRA |
-| P5 | 鏡頭清單與 animatic | mv_plan、timeline、pilot_report | `shotlist.json`、`edit/animatic.mp4` | **G1：animatic** |
+| P2 | 概念與劇本 | timeline、歌詞、參考圖、`plan/project.yaml` | `plan/*.yaml`（正本）→ `docs/mv_plan.md`；全片鏡頭寫完後重寫 `docs/style_bible.md` | lint＋歧義審稿；我逐段確認 |
+| P3 | 角色資產與 LoRA | 參考圖、style bible、`plan/glossary.yaml` | `luna_illustrious.safetensors`、物件與場景參考圖、風格樣張 | **G0：樣張與 LoRA** |
+| P4 | 8 秒端到端試作 | LoRA、樣張、`plan/shots.yaml`、三個候選模型 | 3–4 鏡試作片、`docs/pilot_report.md` | 決定主模型、路線、是否訓練 Wan LoRA |
+| P5 | 鏡頭清單與 animatic | `plan/shots.yaml`、timeline、pilot_report | `shotlist.json`、`edit/animatic.mp4` | **G1：animatic** |
 | P6 | 關鍵幀（依段落） | shotlist、LoRA、style bible | `shots/sNNN/keyframe.png` | **G2：關鍵幀換進 animatic** |
 | P7 | 影片生成（依段落） | 關鍵幀（與尾幀）、shotlist | `shots/sNNN/video.mp4` | **G3：粗剪** |
 | P8 | 局部修補 | 有瑕疵的影片、SAM 遮罩 | 修補後的 `video.mp4` | 併入 G3 或 G4 |
@@ -50,11 +52,20 @@ P6 到 P8 依段落重複，建議從 Chorus 1 開始：一段做完、審過再
 
 ### P2 概念與劇本
 
-由 Claude Opus 5.5 加 agency-agents Visual Storyteller 撰寫。
+劇本寫到鏡頭層，正本是 `plan/` 的 YAML，格式見 `plan/README.md`。撰寫用 Claude Opus 5.5，歧義審稿用 Claude Sonnet 5.5。
 
-- `docs/mv_plan.md`：視覺概念、每段的情緒與敘事、每段的剪輯密度（例如 Intro 每 2 小節一刀、Chorus 每小節一刀），以及 3–6 個英雄鏡頭。
-- `docs/style_bible.md`：外觀五項檢查清單、色票、光影、場景、禁止事項、每段的色調方向。
-- 驗收：每句歌詞都有對應的畫面概念；由我確認段落規劃。
+1. **參數**：我在 `plan/project.yaml` 選敘事類型、歌詞對應方式、舞蹈鏡頭數、第二角色、道具、場景數上限等。
+2. **概念**：Claude 提 3 個方向，我選一個或混合。
+3. **名詞與故事**：`glossary.yaml`（詞彙＋角色、場景、物件、特效的外觀與「不是什麼」）、`story.yaml`（每段發生什麼）。劇情與設定上的不確定一律問我。
+4. **鏡頭**：一次寫一段到 `shots.yaml`，每鏡有時間位置、主體位置與大小、首幀、運動（鏡頭／主體，各標 `realize`）、末幀、`variation`、進場轉場、拍點事件、後製。
+5. **lint**：`python3 tools/lint_plan.py`，FAIL 必須是 0。
+6. **歧義審稿**：另一個 Claude 依 `tools/prompts/plan_critic.md` 審，結果存 `plan/review/<段落>_rN.yaml`。分流：
+   - 劇情、設定、角色、結局、轉場類型 → 問我。
+   - 尺寸、幀數、位置、時間、後製與模型分工 → Claude 直接決定，理由寫在 review 檔的 `resolution`。
+7. **產生文件**：`python3 tools/render_plan.py` 產生 `docs/mv_plan.md`，同步到線上 doc；我確認該段後寫下一段（回到第 4 步）。
+8. **style bible**：全片鏡頭寫完後，依概念重寫 `docs/style_bible.md` 的場景、色票與每段色調。
+
+驗收：lint 沒有 FAIL、審稿問題全部處理、每段都經我確認。歌詞對應的程度依 `lyric_mapping`（例如 section＝段落層對應即可）。
 
 ### P3 角色資產與 LoRA
 
@@ -63,13 +74,14 @@ P6 到 P8 依段落重複，建議從 Chorus 1 開始：一段做完、審過再
 3. 用 kohya sd-scripts 訓練 Illustrious LoRA v1。
 4. 用 v1 出 30 張，挑最好的 20–30 張加回資料集，訓練 v2。
 5. 用正式管線（Illustrious 加 LoRA）出 6–10 張風格樣張，每個主要段落 1–2 張。
-6. **G0**：樣張中的臉、髮型、服裝一致，色調與光影符合 style bible；確認後刪除其他圖片。
+6. **物件與場景參考圖**：`glossary.yaml` 裡反覆出現的非角色實體（例如夥伴機器人、道具、主要場景），依其 `look` 用 Qwen-Image／Qwen-Image-Edit 各出一組固定參考圖，存到 `refs/entities/<id>/`，並寫回該實體的 `refs`。只出圖，不訓練 LoRA；由我確認。
+7. **G0**：樣張中的臉、髮型、服裝一致，色調與光影符合 style bible；確認後刪除其他圖片。
 
 H3 產生的任何畫面都不能放進 LoRA 資料集，因為授權禁止用它的輸出訓練其他模型。
 
 ### P4 8 秒端到端試作
 
-1. 依 mv_plan 與 timeline 選出代表性的點：舞蹈、特寫、視差字卡各 1 鏡，再加 1 鏡一般 I2V，共 3–4 鏡，從關鍵幀一路做到後製完成。
+1. 從 `plan/shots.yaml` 已確認的鏡頭選 3–4 鏡，涵蓋：路線 C（視差）、路線 A 的特寫、路線 A 有非角色主體動作並含後製效果的鏡頭；（`dance_shots` > 0 時）再加 1 鏡舞蹈。從關鍵幀一路做到後製完成。
 2. 用正式管線出關鍵幀（需要首尾幀的模型另出尾幀）。三個候選模型用相同的關鍵幀、動作描述與 seed，輸出放 `pilot/<模型>/shotNN.mp4`：
    - **Wan2.2 I2V A14B**：Q8 GGUF 的 high-noise 與 low-noise 兩個 expert，lightx2v 4-step 和完整步數各測一次。
    - **Index-AniSora V3.2**：動漫專用的 I2V，重點看線條與色塊在動作中會不會糊掉。
@@ -79,7 +91,7 @@ H3 產生的任何畫面都不能放進 LoRA 資料集，因為授權禁止用�
    - 主 I2V 模型用哪一個？
    - Q8 跑得動嗎？
    - 加速 LoRA 能不能當正式設定？
-   - 舞蹈鏡頭用 Wan-Dancer 還是 Animate？
+   - （`dance_shots` > 0 時）舞蹈鏡頭用 Wan-Dancer 還是 Animate？
    - 手動關鍵姿勢加 Fun Control 是否可行？
    - 需不需要訓練 Wan LoRA？
    - RIFE 補幀與 Real-ESRGAN 放大會不會出現鬼影或閃爍？
@@ -87,19 +99,19 @@ H3 產生的任何畫面都不能放進 LoRA 資料集，因為授權禁止用�
 
 ### P5 鏡頭清單與 animatic
 
-1. Claude Opus 5.5 依 mv_plan 與 timeline 產出 `shotlist.json`，內容包含每鏡的起訖幀、景別、運鏡、route、prompt 與等級（hero 或 normal）。prompt 依 Illustrious 的 Danbooru tag 與影片模型的格式撰寫。
+1. Claude Opus 5.5 讀 `plan/shots.yaml` 與 timeline 產出 `shotlist.json`。鏡頭內容在 P2 已定，P5 只補：絕對起訖幀、關鍵幀與影片的 prompt（Illustrious 用 Danbooru tag，影片模型用其格式）、等級（hero 或 normal），並依 `realize` 拆成「影片模型生成」與「後製」兩份工作清單。
 2. animatic：每鏡先放一張草圖或風格樣張，在 Kdenlive 依時間軸配原曲排好，輸出 `edit/animatic.mp4`。
 3. **G1**：Claude Sonnet 5.5 審查節奏與剪輯密度（切點是否落在拍點、密度是否符合 mv_plan）；段落起伏與其他意見由我審查。
 
 ### P6 關鍵幀（依段落）
 
-1. 用 Illustrious 加 LUNA LoRA 出圖；Qwen-Image-Edit 只做局部修改、合成與換背景。運鏡幅度大的鏡頭同時出尾幀。
+1. 依 `first_frame` 出首幀；`variation` 為 medium 或 large 的鏡頭依 `last_frame` 另出末幀。角色用 Illustrious 加 LUNA LoRA，物件與場景對照 P3 的參考圖；Qwen-Image-Edit 做局部修改、合成、換背景與瑕疵修正。
 2. 每鏡出 4–8 張候選放在 `shots/sNNN/candidates/`，用 `ffmpeg xstack` 拼成對照圖，由我挑一張複製成 `keyframe.png`。
 3. **G2**：把關鍵幀換進 animatic 一起看。
 
 ### P7 影片生成（依段落）
 
-1. 依「影片路線」生成，每鏡頭尾各多生約 0.3–0.5 秒，剪輯時再裁掉。
+1. 依「影片路線」生成，只生 `realize` 為 model 的部分（標 post 的效果留給 P9）；每鏡頭尾各多生約 0.3–0.5 秒，剪輯時再裁掉。
 2. 每鏡最多試 4 個 seed；都失敗就改路線或改設計（特寫、縮短、改成視差）。
 3. 候選放在 `candidates/`，由我選 seed，Claude Sonnet 5.5 把選定的結果複製成 `video.mp4`。
 4. **G3**：把選定影片換進 animatic，當成粗剪來看。
@@ -114,8 +126,8 @@ H3 產生的任何畫面都不能放進 LoRA 資料集，因為授權禁止用�
 2. **幀率統一**：Wan 的 16fps 先用 RIFE 補到 48fps，再隔幀抽取成 24fps；H3 原生就是 24fps。
 3. **放大**：1280×720 放大到 1920×1080，方法依試作結果決定。
 4. **調色**（DaVinci Resolve）：定剪後轉成 DNxHR 匯入 Resolve，依 style bible 套統一的 LUT，再依段落微調。
-5. **拍點特效**：閃白、震動、色差、速度變化、轉場，對準重拍。
-6. **疊加**：CSFCCA 與 LIVE AI 字標用官方素材，歌詞字卡用字型排版。
+5. **拍點特效與合成**：照 `shots.yaml` 的 `beat_events`、`transition_in`、`post` 與 `realize` 為 post 的動作做（閃白、glow_pulse、震動、色差、速度變化、轉場、特效合成），時間對準標註的拍點。
+6. **疊加**：字標用官方素材，歌詞與其他字卡用字型排版；位置與內容照 `overlay` 欄位。
 7. **音訊**：一律用原曲。
 8. 輸出 1920×1080、24fps 的 `final/final.mp4`。
 9. **G4**：全片沒有跳幀、切點對拍、外觀五項全數通過。
@@ -125,7 +137,7 @@ H3 產生的任何畫面都不能放進 LoRA 資料集，因為授權禁止用�
 | 路線 | 適用 | 工具 |
 | --- | --- | --- |
 | A 一般 I2V（多數鏡頭） | 上半身律動、甩髮、轉頭、推拉搖移、特寫的眨眼與呼吸 | 主模型＋首幀（必要時加尾幀）＋文字 prompt |
-| B 指定動作 | 副歌舞蹈英雄鏡頭（3–6 鏡）；比 V、指向鏡頭、轉身等短而精確的姿勢 | 舞蹈：Wan-Dancer-14B，備案 Wan2.2-Animate-14B 加替身驅動影片。姿勢：OpenPose 編輯器擺關鍵姿勢，加姿勢插值，經 Wan 2.2 Fun Control 生成 |
+| B 指定動作 | 比 V、指向鏡頭、轉身等短而精確的姿勢；（`dance_shots` > 0 時）舞蹈英雄鏡頭 | 姿勢：OpenPose 編輯器擺關鍵姿勢，加姿勢插值，經 Wan 2.2 Fun Control 生成。舞蹈：Wan-Dancer-14B，備案 Wan2.2-Animate-14B 加替身驅動影片 |
 | C 靜態插畫 | 歌詞字卡、背景、插入鏡頭、不超過 1 小節的快切 | 關鍵幀＋Depthflow＋Depth Anything V2 或 3；位移要小，特寫不走視差 |
 
 Bailando 與 HY-Motion 只在 B 路線的選項都失敗時才啟用。
@@ -148,7 +160,7 @@ Bailando 與 HY-Motion 只在 B 路線的選項都失敗時才啟用。
 
 | 代碼 | 問題 | 退回到 | 重跑範圍 |
 | --- | --- | --- | --- |
-| S | 敘事或段落概念 | P2 | 該段落的劇本、鏡頭、關鍵幀、影片 |
+| S | 敘事或段落概念 | P2（改 `plan/*.yaml` → lint → render） | 該段落的劇本、鏡頭、關鍵幀、影片 |
 | T | 節奏或切點 | P5 或 P9 | 先試重剪，不夠再重生該鏡頭 |
 | K | 構圖、場景、色調 | P6（色調可能只要在 P9 調色） | 該鏡頭的關鍵幀與影片 |
 | C | 角色走樣 | P6；多鏡走樣時回 P3 | 重訓 LoRA 時，未完成段落的關鍵幀全部重出 |
