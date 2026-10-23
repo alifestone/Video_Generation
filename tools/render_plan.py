@@ -27,7 +27,12 @@ FIELD_ZH = {"style": "風格", "role": "角色設定", "notes": "備註", "refs"
             "footstep_patch": "腳步區塊", "surge": "湧升", "start": "開始", "progress": "進度",
             "material": "材質", "ribs": "結構肋", "platforms": "維修平台", "bands": "分層燈帶", "deck": "觀景台",
             "window_open": "開窗", "antenna": "天線", "base": "塔底", "interior": "內部", "state_chorus1": "Chorus 1 時的狀態",
-            "origin": "發出點", "front": "波前", "speed": "速度", "stop": "停住", "end": "結束"}
+            "origin": "發出點", "front": "波前", "speed": "速度", "stop": "停住", "end": "結束",
+            "interior_layout": "控制室配置", "interior_online": "系統接回後", "bands_online": "燈帶就緒",
+            "state_bridge": "Bridge 時的狀態", "entry_window": "入口窗", "main_console": "主控台",
+            "light_column": "光柱", "cabinets": "機櫃", "sub_consoles": "副控台", "sub_console": "副控台",
+            "ring_floor": "外圈地板", "socket": "插座", "windows": "全景窗", "overall": "整體",
+            "surface": "顯示面", "generate": "生成", "outside": "從塔外看"}
 REALIZE_ZH = {"model": "影片模型生成", "post": "後製", "model+post": "影片模型＋後製", "none": "不動"}
 
 
@@ -121,7 +126,7 @@ class Renderer:
                 self.w("| --- | --- |")
                 for k, v in rows:
                     if isinstance(v, dict):
-                        v = "；".join(f"{a}：{b}" for a, b in v.items())
+                        v = "；".join(f"{FIELD_ZH.get(a, a)}：{b}" for a, b in v.items())
                     elif isinstance(v, list):
                         v = "；".join(str(x) for x in v)
                     self.w(f"| {FIELD_ZH.get(k, k)} | {self.r(v)} |")

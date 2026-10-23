@@ -75,3 +75,12 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   tower_chase: gray_climbs_tower         # 灰色從塔底沿塔身往上爬追她
   chorus1_end: echo_opens_window         # bar 33：ECHO 用光束開一扇全景窗，她翻進控制室
   chorus1_structure: 14_shots_half_bar_end   # 使用者交給 Claude 決定：bar 21–31 每鏡 1 小節（bar 28–29 一鏡 2 小節），bar 32–33 半小節快切
+  # 2026-10-24 Bridge（bridge session）
+  bridge_mechanism: hands_on_tour        # 動手開機巡一圈：Create 拍主控台、Make 推副控台推桿、Show 窗生成影像、Dream 送 ECHO 進插座、Build 光柱逐段亮、Unfold 塔外燈帶往上亮
+  bridge_world_stutter: one_window_per_hit   # 「world world w w w world」：窗上影像不閃動，跟著每一聲一片接一片生成
+  echo_in_bridge: system_core            # ECHO 降進主控台插座當訊號核心，Build 時隨光升到光柱頂端
+  window_images: city_restored_views     # 窗上影像＝@city 各處恢復後的彩色版（沿用 @monitor_wall 的城市畫面）
+  control_room_palette: cyan_magenta_accent  # 青為主、洋紅點綴，和塔外一致
+  bridge_lighting: interior_then_exterior    # 室內為主，最後一鏡出塔外：燈帶由下往上一圈接一圈亮、天線亮起
+  bridge_end_state: ready_not_broadcast  # Bridge 結束時系統只到就緒，廣播在 Build 倒數才發
+  bridge_structure: 6_shots_per_verb     # 每個動詞一鏡，切點跟人聲

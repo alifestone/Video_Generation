@@ -76,10 +76,13 @@ beats:
     bars: [34, 36]
     places: ["@signal_tower"]
     story: >
-      @signal_tower 內部。@luna 一處處接回塔的系統，每一個英文動詞是一個動作。
+      @signal_tower 的控制室裡，@luna 一處處動手接回廣播系統，每一個英文動詞是一個動作：Create 拍下主控台、它亮起；
+      Make 推上副控台的推桿，機櫃一排排亮起；Show me your world 讓全景窗一片接一片生成 @city 各處恢復後的彩色影像（@window_feed），跟著「world」的每一聲生成一片；
+      Dream 她把 @drone 送進主控台中央的插座，讓它當訊號核心；Build 光柱一段段亮上去，@drone 在光柱裡跟著升到頂；
+      Let the future unfold 塔外的燈帶一圈接一圈往上亮、天線亮起——系統就緒，但廣播還沒發出。塔外的灰色仍在下方往上爬。
     emotion: 俏皮、亢奮
     lyric_link: 「Create it, Make it, Show me your world, Dream it, Build it, Let the future unfold」＝重建廣播系統
-    status: proposed
+    status: confirmed
 
   - id: build
     section: build

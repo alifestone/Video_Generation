@@ -1,0 +1,376 @@
+# Bridge（s037–s042）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-24）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+# 31 題都是精確度題，依授權由 Claude 決定（ask-dont-guess）；只有 Q22 的「何時回到肩旁」屬劇情，留給 Build／Final Chorus 問使用者。
+round: bridge_r1
+issues:
+- id: Q01
+  where: shots.s037.first_frame
+  category: 4
+  severity: high
+  quote: 與桌面同高略仰（約 5°）
+  question: 鏡頭高度與俯仰角要怎麼改，才能同時看到桌面光紋擴散和站在遠側的她？桌面到底要在畫面裡佔多大、看得到多少光紋？
+  options:
+  - 鏡頭抬高到約 1.6–2 m，往下俯拍桌面（桌面約佔下 25%，光紋清楚可見）
+  - 維持與桌面同高，只看到桌緣洋紅細線，光紋只靠打在她臉上的光表現
+  - 改成從她身後或側面拍，桌面光紋作為前景
+  status: resolved
+  resolution: 鏡頭抬到離地約 1.7 m、略往下約 10°，桌面佔畫面下緣約 25%，光紋看得到；angle 改 eye（約與她眼睛同高）。
+- id: Q02
+  where: shots.s037.subjects.luna.size
+  category: 4
+  severity: medium
+  quote: 全身；落地站直時身高約畫面高 55%（離鏡頭約 5 m）
+  question: 落地後她的腳要看得到嗎？若看不到，景別改成什麼？若要看到，鏡頭要抬高到多少？
+  options:
+  - 景別改 MLS，腳被主控台擋住
+  - 鏡頭抬高到能看到腳（與 Q01 一併處理）
+  - 維持 FS，容許檯身遮住小腿以下並視為全身
+  status: resolved
+  resolution: 景別改 MLS：她在主控台後方，膝蓋以下被主控台擋住；大小改為落地後頭頂到桌面約畫面高 40%。
+- id: Q03
+  where: shots.s037.notes
+  category: 8
+  severity: medium
+  quote: 用首尾幀生成（首幀桌面不亮、末幀桌面亮）；亮起的時間點與光紋擴散由後製以遮罩對齊 [34,1.6]
+  question: s037／s038 的亮起，是模型直接畫出（後製只微調時間），還是模型整鏡畫不亮的版本、亮起全由後製合成？末幀要不要仍寫成亮著？
+  options:
+  - 模型整鏡畫不亮，亮起（光紋、燈條、洋紅線、照在她臉上的光）全由後製合成；末幀僅作為構圖與後製參考
+  - 模型用首尾幀畫出亮起，後製只重新對齊時間
+  - 兩種各取一部分：桌面光紋後製，機櫃燈條由模型畫
+  status: resolved
+  resolution: 統一做法：模型整鏡畫『這一鏡裡會亮起的東西還不亮』的版本，亮起（光紋、燈條、洋紅線、照在她臉上的光）全由後製合成並對齊拍點；末幀只當構圖與後製參考。套用到 s037、s038、s039、s041；s040 的桌面本來就亮，由模型畫。
+- id: Q04
+  where: shots.s037.transition_in
+  category: 6
+  severity: low
+  quote: 省略約 9 m 的奔跑
+  question: 跳接省略的距離是否要改成約 12–15 m？或是入口窗到主控台的位置另有定義？
+  options:
+  - 改寫備註為約 12–15 m
+  - 維持約 9 m（說明 s036 的蹲點位置不同）
+  status: resolved
+  resolution: 重算：入口窗內約 3 m（離中心約 15 m）到主控台遠側桌緣外（約 3.5 m）約 11 m，備註改為約 11 m。
+- id: Q05
+  where: shots.s038.subjects.signal_tower
+  category: 4
+  severity: medium
+  quote: 站在一座內端副控台前
+  question: s038／s039 用的副控台是哪一排？它與入口窗的夾角多少（例如最靠近入口窗那條走道的哪一側）？s038 背景的機櫃排朝哪個方向延伸？
+  options:
+  - 入口窗兩側走道中靠畫面左（從 s037 鏡頭看）的那一排內端副控台
+  - 入口窗兩側走道中靠畫面右的那一排內端副控台
+  - 正對入口窗的那一排（入口窗開在該排軸線延伸處）
+  status: resolved
+  resolution: 指定為入口窗走道畫面左側（從 s037／s039 的鏡頭看）那一排的內端副控台，這排與入口窗方向差約 15°。s038 鏡頭改在她 char_left 那一側的走道上，她正側面朝畫面右（profile_right），@drone 在靠鏡頭這一側、她頭部的畫面左上方。
+- id: Q06
+  where: shots.s039.first_frame
+  category: 4
+  severity: high
+  quote: 往下約 25° 俯拍整個控制室
+  question: 鏡頭的俯角與視角要怎麼定，才能讓窗在上半、主控台與機櫃在下半？
+  options:
+  - 俯角改成約 10–12°，主控台與窗都在畫面內，窗約佔畫面上 1/3
+  - 維持 25° 俯角，但鏡頭移近、抬高，窗只拍到下半
+  - 改為低俯角廣角鏡，數字依實際構圖重算
+  status: resolved
+  resolution: 俯角改約 12°：畫面下 2/3 是主控台與機櫃，上 1/3 是對面那半圈窗，每片窗高約畫面高 15%。
+- id: Q07
+  where: shots.s039.beat_events
+  category: 5
+  severity: medium
+  quote: 約 14 幀後（[35,4.9]）整圈完成（含鏡頭背後看不到的窗）
+  question: 整圈完成的時間點是要提前（縮短間隔），還是容許最後幾片在 s040 才補完（鏡頭背後看不到的窗無所謂）？畫面中看得到的那約 17 片最晚要在什麼時間點完成？
+  options:
+  - 每側改成每 0.5 幀開始一片，[35,4.5] 前全部掃完
+  - 只要求畫面看得到的窗在 [36,1] 前完成，背後的不管
+  - 把 6 聲之後的窗改成同時在 [35,4.5] 一起掃出
+  status: resolved
+  resolution: 其餘的窗改成每側每 0.5 幀開始一片，[35,4.8] 前全部掃完，早於鏡頭結尾 [36,1]，末幀『全部亮著』成立。
+- id: Q08
+  where: shots.s039.beat_events
+  category: 2
+  severity: low
+  quote: 其餘的窗從這 6 片往兩側接連生成，每側每 1 幀開始一片
+  question: 每側剩餘的窗是幾片？間隔是每幀 1 片、還是依實際片數均分到 [35,4.9] 前？
+  options:
+  - 每側各 15–16 片，間隔 1 幀，約 16 幀後完成
+  - 維持 14 幀，窗總數改成約 34 片
+  - 不管片數，一律約 14 幀內均分
+  status: resolved
+  resolution: 剩 31 片：左側 15、右側 16，寫進 beat_events。
+- id: Q09
+  where: entities.window_feed.look.generate
+  category: 3
+  severity: low
+  quote: '一條細的青色亮線 #29d3f5 從窗下緣升到上緣，亮線經過的部分出現影像'
+  question: 亮線到上緣後要消失嗎？亮線有沒有光暈或拖尾？
+  options:
+  - 到上緣後 1 幀內消失，無光暈
+  - 到上緣後留下一條約 1 幀的亮邊再消失
+  - 亮線有約 10 cm 的青色光暈，掃完後消失
+  status: resolved
+  resolution: 亮線沒有光暈，到上緣後 1 幀內消失。
+- id: Q10
+  where: entities.window_feed.look
+  category: 9
+  severity: medium
+  quote: 霓虹與全息看板的光輕微變化
+  question: 光的變化允許多大？是否只做慢速呼吸式變化而不做明暗跳動？
+  options:
+  - 亮度變化不超過 ±5%，週期至少 1 秒，不算閃動
+  - 霓虹與全息看板完全靜止，只有雨與 @hovercar 動
+  - 允許色相緩慢漂移，亮度不變
+  status: resolved
+  resolution: 為了符合使用者『不閃動』：霓虹與全息看板的光不變，動態只有雨與 @hovercar 原地浮動。
+- id: Q11
+  where: entities.window_feed.look.content
+  category: 2
+  severity: medium
+  quote: 沿用 @monitor_wall 城市畫面那約 7 張的彩色版
+  question: 7 張的清單是什麼？分配到各窗的順序規則是什麼（例如依生成順序固定循環 1–7）？
+  options:
+  - 精確 7 張，依生成順序循環 1→7；兩側各自循環，背後相接處不要求不重複
+  - 精確 7 張，依窗的位置編號固定對應，相接處重新排
+  - 不限張數，每片窗一張獨立圖，只要求相鄰不同
+  status: resolved
+  resolution: 固定 7 張＝@monitor_wall 的 7 張城市畫面（哪些角落在 P3 做 @monitor_wall 參考圖時一起定）；從入口窗往兩側依生成順序循環 1→7，兩側各自循環，鏡頭背後相接處不要求不重複。
+- id: Q12
+  where: entities.window_feed.look.content
+  category: 8
+  severity: low
+  quote: 裁成直式 3:4 填滿一片窗
+  question: 直式裁切是取原圖中央，還是各張指定裁切位置？允許重新生成直式構圖嗎？
+  options:
+  - 取原圖水平中央 3:4
+  - 每張指定主體所在的裁切位置
+  - 直接重新生成 3:4 直式版本，不要求與 monitor_wall 的橫式構圖一致
+  status: resolved
+  resolution: 取原圖水平中央裁成 3:4。
+- id: Q13
+  where: entities.window_feed.look.realize
+  category: 8
+  severity: medium
+  quote: 由後製合成（貼在窗面上，跟著鏡頭追蹤）
+  question: 窗影像在 s039／s040／s041 各要不要追蹤？s039 的後製推近是在貼圖之前還是之後做？
+  options:
+  - s039 不追蹤（推近在貼圖後做），s040／s041 靜止鏡頭也不追蹤，刪掉「跟著鏡頭追蹤」
+  - 全部都追蹤，s039 的推近先在拍攝端做
+  - 只有鏡頭有動的鏡頭追蹤
+  status: resolved
+  resolution: 刪掉『跟著鏡頭追蹤』：s039 靜止拍攝、貼圖後再做數位推近；s040、s041 的窗由模型畫成失焦色塊，不貼圖。
+- id: Q14
+  where: shots.s040.first_frame
+  category: 8
+  severity: medium
+  quote: 她背後失焦的是亮著 @window_feed 彩色影像的全景窗
+  question: s040（及 s041 的天花板彩色光）的窗影像由誰產生？
+  options:
+  - 模型畫出失焦的彩色窗（不要求與 7 張一致），只當氛圍
+  - 模型畫暗窗，後製貼上 7 張並加模糊，用她的遮罩處理遮擋
+  - 模型畫出約 3 張粗略彩色色塊，後製不處理
+  status: resolved
+  resolution: s040 背景的窗、s041 天花板下緣的彩色光都由影片模型畫成失焦的彩色色塊，只當氛圍，不要求和 7 張一致（寫進 @window_feed.look.realize）。
+- id: Q15
+  where: shots.s040.subjects.window_feed
+  category: 4
+  severity: medium
+  quote: 她背後失焦的窗上影像，佔畫面上半的背景
+  question: s040 的背景裡看得到入口窗開口嗎？看得到的話在畫面哪個位置、約多大？
+  options:
+  - 看得到：在她身後偏畫面左（約畫面寬 8%），露出灰色城市
+  - 看不到：鏡頭角度偏開，背景只有已生成影像的窗
+  - 看得到且被她的身體遮住一半
+  status: resolved
+  resolution: 看得到：入口窗開口在她身後偏畫面左，約畫面寬 6%，失焦的灰色。
+- id: Q16
+  where: shots.s040.first_frame
+  category: 4
+  severity: high
+  quote: 比桌面高約 10 cm，越過桌面平視
+  question: 鏡頭高度與俯仰角要怎麼定，才能看到桌面光紋與插座降入的動作？
+  options:
+  - 鏡頭抬到約 1.4 m、俯拍約 15°，桌面約佔下 1/3
+  - 維持低機位，只看到桌緣與插座側面，桌面光紋靠臉上的光暗示
+  - 改成近側桌緣的高機位俯拍
+  status: resolved
+  resolution: 鏡頭改為離地約 1.5 m、往下約 15° 俯拍，並往旁邊偏約 1.5 m；angle 改 high。
+- id: Q17
+  where: shots.s040.subjects.signal_tower
+  category: 4
+  severity: medium
+  quote: 光柱直立到畫面上緣外，寬約畫面寬 10%
+  question: 以哪些數字為準？光柱、@drone、她的畫面比例要重新算成多少？
+  options:
+  - 以她的大小為準：光柱約畫面寬 25%、@drone 約畫面寬 10%
+  - 以光柱 10% 為準，她離鏡頭拉遠到約 6 m、畫面縮小
+  - 改成長焦壓縮，所有比例重新給
+  status: resolved
+  resolution: 依新機位重算：她離鏡頭約 5 m、頭頂到桌面約畫面高 35%；光柱離鏡頭約 2.9 m、寬約畫面寬 30%（透明、比她近）；@drone 嵌在插座時寬約畫面寬 13%。
+- id: Q18
+  where: shots.s040.motion.subject.text
+  category: 5
+  severity: low
+  quote: 沿桌面上方約 40 cm 滑行到插座正上方（約 2 m，8 幀），[36,1.5] 垂直降進插座
+  question: 滑行與下降各幾幀？降入那一幀（細環亮起）精確落在哪個位置？
+  options:
+  - 滑行 6 幀（到 [36,1.45]），[36,1.5] 開始下降、下降 4 幀，[36,1.7] 細環亮
+  - 滑行 8 幀，[36,1.6] 開始下降、下降 4 幀，[36,1.8] 細環亮
+  - 把滑行距離縮短，維持原時間點
+  status: resolved
+  resolution: 滑行 6 幀（[36,1.45] 到達），[36,1.5] 起垂直下降 4 幀，[36,1.8] 落進插座、插座環亮起；[36,2] 管口亮。beat_events 補 [36,1.8]。
+- id: Q19
+  where: entities.signal_tower.look.interior_layout.main_console
+  category: 10
+  severity: medium
+  quote: 直徑約 30 cm 的淺圓盤，邊緣一圈細環
+  question: 插座的深度與形狀是什麼？@drone 嵌進去後球體露出多少？
+  options:
+  - 凹陷約 12 cm 的碗形座，球體下半嵌入
+  - 平的圓盤，@drone 只是停在上面（改掉「落進圓盤」）
+  - 桌面下沉的圓孔，球體下 1/3 嵌入
+  status: resolved
+  resolution: 插座改為直徑約 30 cm、凹陷約 12 cm 的碗形座，@drone 球體下半在碗裡。
+- id: Q20
+  where: entities.signal_tower.look.interior_online.socket
+  category: 1
+  severity: low
+  quote: 插座邊緣的細環亮成青色
+  question: 三種環要不要各用不同名稱固定下來？
+  options:
+  - 插座環＝「插座環」、分段環＝「分段環」、頂端環＝「頂端套環」
+  - 維持現狀，所有鏡頭一律寫完整位置（如「插座邊緣的細環」）
+  - 把分段環改叫「接縫環」
+  status: resolved
+  resolution: 三種環固定名稱：插座環、分段環、頂端套環；glossary 與 s040、s041 都改。
+- id: Q21
+  where: entities.drone.plot_functions
+  category: 3
+  severity: medium
+  quote: 在光柱裡看起來是一顆較暗的白色球形剪影，正面青色光帶比光柱更亮
+  question: '@drone 在發光光柱裡的外殼顏色／亮度是什麼？'
+  options:
+  - '偏灰青的暗色剪影（約 #7fa6b4），輪廓清楚'
+  - 仍是白色外殼，但亮度比光柱低約 30%，邊緣有細暗線
+  - 接近全黑剪影，只有正面光帶亮
+  status: resolved
+  resolution: 在亮著的光柱裡 @drone 仍是白色外殼，亮度比光柱低約 30%、邊緣一圈細暗線，正面光帶比光柱更亮；不再叫『剪影』。
+- id: Q22
+  where: entities.drone.look.position
+  category: 7
+  severity: low
+  quote: Bridge [36,1] 起接進 @signal_tower 的光柱，不在她肩旁
+  question: 「不在她肩旁」的起點應是哪一刻？它之後什麼時候回到肩旁？
+  options:
+  - 起點改成 [36,1.5]（降進插座）；Build 被凍結掉落後、Final Chorus 恢復時才回到她肩旁
+  - 起點維持 [36,1]；其後狀態由各段自行定義
+  - 起點 [36,1.5]；終點由 Build 劇情再問
+  status: resolved
+  resolution: 改為 [36,1] 起離開她肩旁、[36,1.8] 接進插座；什麼時候回到她肩旁屬劇情，留給 Build／Final Chorus 問使用者。
+- id: Q23
+  where: entities.signal_tower.look.antenna
+  category: 8
+  severity: medium
+  quote: '天線桿正面有一條從底到頂的青色細發光線 #29d3f5（寬約 10 cm）'
+  question: 要把線加寬、加光暈，還是接受幾乎看不見？亮起時要靠什麼被看出來？
+  options:
+  - 線寬放大到約 0.5 m 並加光暈（視覺上不要求物理比例）
+  - 線維持細，但亮起時整根天線周圍加青色光暈（bloom）
+  - 改成天線每隔一段有發光環
+  status: resolved
+  resolution: 線維持寬約 10 cm；遠景亮起時由後製沿天線加一層寬約 3 m 的青色光暈（bloom）讓它看得見。
+- id: Q24
+  where: entities.signal_tower.look.antenna
+  category: 10
+  severity: medium
+  quote: 廣播系統離線時不亮（Chorus 1 以前看不到）
+  question: Chorus 1 的鏡頭裡，天線上的青色細線存在嗎？亮不亮？state_chorus1 的「青色線」專指肋上的線嗎？
+  options:
+  - 線存在但不亮（暗線）；state_chorus1 的「青色線」專指肋上的線
+  - 線在 s042 之前根本不畫（先不存在），s042 才出現
+  - 線在 Chorus 1 亮著、s035 前後才熄滅
+  status: resolved
+  resolution: 線在 Chorus 1 以前就存在但不亮（暗線，遠景看不出）；state_chorus1 的『青色線』改寫成『肋上的青色線』。
+- id: Q25
+  where: shots.s042.beat_events
+  category: 3
+  severity: medium
+  quote: 1 幀內抬升到約 3 倍、6 幀回落到原亮度
+  question: glow_pulse 的「倍」是以什麼為基準？在已經接近滿亮的白色上要怎麼表現？
+  options:
+  - 以光暈（bloom）半徑與強度表現：光暈半徑放大到約 3 倍，本體亮度不變
+  - 把常亮亮度壓低到約 60%，脈衝時升到 100%
+  - 維持本體不變，只加一圈白色擴散光環
+  status: resolved
+  resolution: glow_pulse 在這裡以光暈表現：燈帶光暈半徑與強度放大約 2 倍、警示燈約 3 倍，燈本體不過曝。
+- id: Q26
+  where: shots.s042.beat_events
+  category: 5
+  severity: medium
+  quote: 細線亮到頂端；警示燈 glow_pulse
+  question: 脈衝尾巴被下一鏡切掉可以嗎？還是要把時間點整體提前？
+  options:
+  - 可以，下一鏡硬切；脈衝只要峰值出現在鏡內
+  - 整體提前：天線細線 [36,4.35] 前開始往上亮，警示燈峰值落在 [36,4.5]
+  - 縮短回落幀數（警示燈 3 幀回落）
+  status: resolved
+  resolution: 整體提前：燈帶 [36,4.0]／[36,4.1]／[36,4.2]／[36,4.3]，警示燈峰值 [36,4.65]、3 幀回落，在 [37,1] 前完成。
+- id: Q27
+  where: shots.s042.beat_events
+  category: 5
+  severity: low
+  quote: 天線青色細線從天線底部（離地 180 m）開始往上亮
+  question: 細線的由下往上掃出，要不要拉長到至少 4–6 幀？
+  options:
+  - 拉長到 5 幀（[36,4.45]–[36,4.85]），警示燈峰值改在 [36,4.85]
+  - 維持 2 幀，視為瞬間亮起
+  - 改成從 [36,4.3] 起跑
+  status: resolved
+  resolution: 天線細線改為 [36,4.3]–[36,4.65] 由下往上亮（約 5 幀）。
+- id: Q28
+  where: stories.bridge.story
+  category: 7
+  severity: low
+  quote: 塔外的灰色仍在下方往上爬
+  question: s042 裡灰色交界要不要在畫面上緩慢上升？
+  options:
+  - 要，由後製把交界從約 91% 緩慢升到約 89%
+  - 不要，交界固定，視為靜態圖
+  - 不寫，由灰色邊界的 1 m 漸層帶自然呈現
+  status: resolved
+  resolution: 要：交界由後製從畫面高約 91% 緩慢升到約 89%（約 13 幀內約 2.8 m）。
+- id: Q29
+  where: shots.s042.subjects.city
+  category: 4
+  severity: low
+  quote: 地平線在畫面高約 55%
+  question: 地平線要在畫面高約 50%，還是 55%（鏡頭略微俯角）？
+  options:
+  - 改為約 50%
+  - 維持 55%，鏡頭改為略俯（約 3°）
+  - 不寫地平線精確位置
+  status: resolved
+  resolution: 平視，地平線改在畫面高約 50%。
+- id: Q30
+  where: shots.s042.first_frame
+  category: 4
+  severity: low
+  quote: 全景窗透出混雜的彩色光
+  question: s042 看得到入口窗嗎？看得到的話它在觀景台哪個位置、是什麼樣子（暗洞、透出灰色）？
+  options:
+  - 看不到：鏡頭面對入口窗的背面
+  - 看得到：在觀景台畫面右側，表現為一小塊暗灰色缺口
+  - 看得到：位置不指定，由後製隨機放
+  status: resolved
+  resolution: 看不到：鏡頭面對入口窗的另一側。
+- id: Q31
+  where: shots.s040.first_frame
+  category: 9
+  severity: low
+  quote: 食指與中指併攏、指尖朝著插座
+  question: 這個手勢可以保留嗎？還是改成較不容易崩的手勢？
+  options:
+  - 保留兩指併攏，但只用中景、不放大、並在檢查表加手部逐格檢查
+  - 改成整隻手掌攤開朝插座一揮
+  - 改成食指單指指向
+  status: resolved
+  resolution: 改成手掌攤開朝插座一揮，避開兩指細動作崩手。
