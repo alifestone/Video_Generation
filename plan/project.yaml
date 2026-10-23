@@ -34,3 +34,15 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   countdown_numbers: deferred    # A07：「3、2、1」數字字卡先不疊，完整影片產出後再決定
   final_frame: look_back_to_camera   # A10：outro 最後一格 LUNA 回頭看鏡頭
   hook_transition_in: {type: flash_white, frames: 2}   # A12：Hook 第一鏡的進場轉場
+  # 2026-10-23 Hook（storyboard session）
+  launch_tunnel_look: ring_shaft         # 光環豎井
+  launch_method: platform                # 站在 @pod 底座平台上被送上去
+  tunnel_exit: rooftop                   # 出口在高樓樓頂（@launch_roof）
+  drone_in_hook: rises_with_luna         # ECHO 跟在她旁邊上升
+  hook_structure: 3_shots                # bar5、bar6 各一鏡，bar7–8 一鏡（揭示 2 小節）
+  city_at_hook: near_gray_far_color      # 近處全灰、遠方還有彩色
+  raindrop_touch: brief_restore          # 她碰到的雨滴短暫恢復（@restore_touch 預告）
+  signal_tower_silhouette: spire_with_disc   # 細長尖塔＋圓盤觀景台；細節到 Chorus 1 前再問
+  signal_tower_at_hook: color_zone_threatened  # 塔在彩色區，灰色正逼近
+  roof_hatch_opened_by: echo_beam        # 艙口由 ECHO 光束打開（仍維持灰色）
+  exit_action: leap_kneel_landing        # 她躍出艙口、單膝落地

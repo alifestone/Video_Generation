@@ -1,0 +1,354 @@
+# Hook（s006–s008）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-23）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+round: hook_r1
+issues:
+- id: Q01
+  where: shots.s008.motion.subject.text
+  category: 6
+  quote: '[7,2.37] 平台從下方撞上艙口'
+  problem: s007 末幀平台離鏡頭（艙口正下方）約 15 m，速度每秒 37 m，只要約 0.4 s（約 [7,1.7]）就會到艙口；但 s008 要到 [7,2.37] 才撞上，中間 0.78 s 平台會多走約 29 m。兩鏡的距離、速度對不起來。
+  question: s007 結束到 s008 撞上艙口之間，平台怎麼走？要改 s007 末幀的距離、改撞擊時間，還是讓平台在 s008 開頭之前先減速？
+  options:
+  - s007 末幀平台改成離艙口約 29 m（圓盤約畫面高 20%），維持 [7,2.37] 撞上
+  - 維持 s007 不變，s008 撞擊提前到約 [7,1.7]，並重排後面的拍點
+  - 平台在 s007 末段起減速，s008 以較低速度到達艙口（寫出速度）
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s007 末幀平台改成距鏡頭約 30 m（圓盤畫面高 20%），s007 內由 36 m/s 減速到 25 m/s；s007→s008 的切點省略最後約 30 m 的減速（約 1 s），寫在 s007 notes。
+- id: Q02
+  where: shots.s008.beat_events[0].event
+  category: 4
+  quote: 平台撞上艙口；整個畫面 shake 3 幀
+  problem: 艙口閉合時，站在平台上的 @luna 頭頂比平台頂面高約 1.7 m，會先撞到鋼板；但 beat_events[3] 又說停住時平台頂面與樓頂齊平。撞上的瞬間，是平台的哪個部位、平台頂面離樓頂地面幾 m，沒有寫。
+  question: '[7,2.37] 撞上艙口的瞬間，是 @luna 頭頂、@drone 還是平台邊緣先碰到鋼板？此時平台頂面在樓頂地面下方幾 m？@luna 頭頂離鋼板多近？'
+  options:
+  - 平台頂面在地面下約 1.8 m，@luna 頭頂（含頭髮）剛好貼到鋼板下緣，這就是「撞上」
+  - '@drone 先碰到鋼板（它比 @luna 高），@luna 頭頂離鋼板約 10 cm'
+  - 撞上的是平台，@luna 與 @drone 在艙口開啟前尚未碰到鋼板（寫出離地高度）
+  severity: high
+  status: resolved
+  resolution: 使用者決定（2026-10-23）。艙口改由 @drone 的 @echo_beam 打開（新增 vfx 實體 echo_beam；drone.plot_functions 補上「被照到的門在 @silence 內也能開、但仍是灰色」）。[7,2.37] 只是接縫透出青光，沒有任何東西撞上鋼板。
+- id: Q03
+  where: shots.s008.beat_events[3].event
+  category: 5
+  quote: 平台停住、頂面與樓頂齊平
+  problem: 平台從 s007 的每秒 37 m，經撞擊、等艙口打開，到 [7,3.39] 停住且頂面與地面齊平，全程只有約 1 s，且 [7,3] 到 [7,3.39] 只有約 5 幀。升出的速度曲線（撞擊後停多久、升多快、怎麼停）沒有寫，模型與後製都得自己猜。
+  question: 從 [7,2.37] 到 [7,3.39]，平台的速度怎麼變？撞擊後是否先停住？[7,3] 起升出的速度、到 [7,3.39] 是急停還是減速？
+  options:
+  - '[7,2.37] 撞上後速度歸零並停住約 5 幀，[7,3] 起 5 幀內急升約 1.8 m、[7,3.39] 急停'
+  - 撞上後不停，鋼板滑開後平台以約 10 m/s 衝出並在 [7,3.39] 減速停住
+  - 平台全程連續減速，沒有停頓，[7,3.39] 剛好停在齊平位置
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。速度曲線改為：鋼板 [7,2.62] 起 5 幀全開 → [7,3] 平台衝到齊平並急停 → @luna 被慣性帶出。平台不再在 [7,3.39] 停。
+- id: Q04
+  where: story.beats.hook.story
+  category: 7
+  quote: 從 @launch_roof 的艙口衝出
+  problem: story 寫「衝出」，情緒是爆發、果斷；s008 的平台是停在與樓頂齊平，@luna 站著不動、背對鏡頭，沒有任何衝出艙口、飛起的畫面。
+  question: 「衝出」要在畫面上看到嗎？@luna 升出艙口後是停在地面，還是會躍起、離開平台？不改鏡頭的話，story 要改寫成什麼？
+  options:
+  - story 改成「從艙口升出」，鏡頭不變
+  - s008 在 [7,3] 之後平台升過樓頂地面約 1 m 再回落，表現衝出感
+  - '@luna 升出後離開平台向前跳一步，落在樓頂'
+  severity: medium
+  status: resolved
+  resolution: 使用者決定（2026-10-23）。她躍出艙口、單膝落地：[7,3] 躍起，[7,4] 左右最高點（腳離地約 1.6 m），[8,1] 落在艙口前約 2.5 m 單膝著地，[8,2]–[8,3] 站起。s008 改走 B 路線；story 同步改寫。
+- id: Q05
+  where: shots.s008.angle
+  category: 5
+  quote: 朝 @city 的方向平視
+  problem: angle 標 high（鏡頭高於主體往下拍），但 first_frame 寫鏡頭離地 1.2 m、平視；到末幀才是 6 m 高的俯看。首幀與整鏡的角度標示不一致。
+  question: angle 欄要標首幀的 eye，還是標整鏡的結果 high？若鏡頭在首幀是平視，要不要把 angle 改成 eye 並在 notes 寫 crane_up 後變俯角？
+  options:
+  - angle 改 eye（首幀為準）
+  - 維持 high，first_frame 改成鏡頭略往下看（說明俯角度數）
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。angle 改 eye（以首幀為準），notes 註明 crane_up 後末幀變俯角。
+- id: Q06
+  where: shots.s008.motion.camera.move
+  category: 5
+  quote: 'camera: {move: crane_up, speed: medium, realize: model}'
+  problem: camera.move 只填 crane_up，但 subject.text 寫「[8,1] 起鏡頭一邊升高一邊往前推」；而且 [7,1]–[7,3.39] 鏡頭不動，move 欄看不出前半段是 static。往前推的距離（8 m → 約 5 m）也不在 camera 欄。
+  question: camera 欄要怎麼寫才完整？push_in 算不算這一鏡的 move？[7,1]–[7,3.39] 靜止、[8,1] 起才動，要不要把鏡頭拆成兩段？
+  options:
+  - move 維持 crane_up，在 subject.text 之外再加一行註明同時 push_in 約 3 m
+  - move 改 crane_up，speed 保留 medium，並註明 [8,1] 才開始
+  - 照 notes 的備案從 [8,1] 拆成兩鏡
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。move 維持 crane_up（欄位只能一個值），subject.text 寫明 [7,1]–[8,2] 不動、[8,2] 起升高約 5 m 並前推約 3 m；notes 說明。拆鏡備案改為從 [8,2] 拆。
+- id: Q07
+  where: shots.s008.subjects[7].size
+  category: 3
+  quote: 直徑約 1.5 m
+  problem: 鏡頭離艙口約 8 m，一柱直徑 1.5 m、高度未寫的細雨，在 LS 裡只有畫面寬的幾個百分比，約 12 幀，水珠是透明的；觀眾很可能完全看不到「恢復」。另外 glossary.restore_touch 說範圍只有「身體或平台直接碰到的東西」，平台直徑 1 m，雨柱 1.5 m 比平台寬。
+  question: 雨柱高度多少（從艙口往上到哪裡）？在畫面上要大到什麼程度才算看得到？1.5 m 的寬度和「直接碰到」的規則怎麼調和？
+  options:
+  - 雨柱高 2.5 m，直徑縮成平台的 1 m；後製把恢復的水珠加亮到約 2 倍，確保看得見
+  - 維持 1.5 m，glossary 改成「身體或平台周圍 25 cm 內」
+  - 鏡頭在 [7,3] 前後推近，讓雨柱更大（改 camera）
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。範圍改成只有她身體碰到的雨滴（躍出軌跡上），glossary 的範圍也改成只限 @luna 身體（平台不算）；後製把恢復中的水珠提亮到約 2 倍，寫進 restore_touch.rain_drop 與 beat_events。
+- id: Q08
+  where: story.beats.hook.story
+  category: 7
+  quote: 她穿過的定格雨滴短暫恢復彩色
+  problem: story 說雨滴「恢復彩色」；glossary.restore_touch.look.rain_drop 與 s008 寫的是「透明水珠，映出白光與青光」，不是有彩色的物體。觀眾看到的是白／青色反光，還是彩色？
+  question: 雨滴恢復時要看到什麼顏色？是透明水珠帶白與青的反光，還是帶有城市霓虹（洋紅、琥珀）的彩色？story 要不要改成「恢復透明、會動」？
+  options:
+  - story 改成「恢復成透明、會落下的水珠」，維持 glossary 的白／青反光
+  - 水珠除了白／青反光，還映出遠方 @city 霓虹的洋紅與琥珀色
+  - 水珠本身帶淡青色（受 @drone 光帶影響），其餘不變
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。story 改成「恢復成透明、會落下的水珠」，維持 glossary 的白／青反光。
+- id: Q09
+  where: glossary.launch_roof.look.hatch
+  category: 10
+  quote: '艙口邊緣有一圈寬約 5 cm 的青色燈環 #29d3f5，常亮'
+  problem: 燈環在「艙口邊緣」，但沒寫它在兩片鋼板上（會跟著滑進地面）還是在艙口周圍的地面上（鋼板滑開後仍留著）。s008 在鋼板滑開後仍要「艙口燈環約 12 幀後退回淺灰白」，這決定後製遮罩要追蹤什麼。
+  question: 燈環是裝在地面的圓形開口邊緣，還是鋼板的外緣？鋼板滑開後，燈環是整圈留在地面，還是被切成兩半隨鋼板消失？
+  options:
+  - 燈環在地面開口邊緣，鋼板滑開後仍是完整一圈
+  - 燈環在兩片鋼板外緣，滑開後燈環跟著消失
+  - 地面有一圈，鋼板外緣也有一圈（共兩圈）
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。燈環在地面上圍著開口，鋼板滑開後仍是完整一圈；被 ECHO 打開後仍是灰色（不恢復）。
+- id: Q10
+  where: glossary.launch_roof.look.roof
+  category: 4
+  quote: 靠矮牆有 4 個方形空調箱，沒有其他設備
+  problem: 沒寫 4 個空調箱在哪幾面矮牆、多大、離鏡頭多遠。s008 首幀鏡頭在艙口後方 8 m、朝 @city 看，空調箱可能擋住 @city 與 @signal_tower，但 first_frame／last_frame 完全沒提。
+  question: 4 個空調箱的位置與大小？s008 的畫面裡看得到幾個？會不會擋住 @signal_tower 或地平線？
+  options:
+  - 4 個各靠樓頂四邊矮牆的中點，高約 1.5 m；首幀看得到面前方那一個在艙口右後方，不擋住正中
+  - 4 個都在鏡頭背後的兩側矮牆，畫面中看不到
+  - 4 個集中在樓頂一角，畫面左側可見
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。4 個空調箱都在背向 @city 那一側的矮牆邊，s008 朝 @city 拍時在鏡頭背後、看不到。
+- id: Q11
+  where: shots.s008.subjects[5].size
+  category: 4
+  quote: 一條橫過 @city 的界線，在畫面高約 36%（末幀）
+  problem: 地平線在 32%、界線在 36%，彩色區在畫面上只剩約 4% 高的一條，但 last_frame 要看得到洋紅、青、琥珀色霓虹與全息看板，story 說「遠方還有幾區彩色」。彩色區要多大、有幾區，無法同時成立。
+  question: 末幀的彩色區要佔畫面多少？是 4% 的細條，還是彩色街區高過地平線（遠處高樓頂端在地平線以上也是彩色的）？「幾區」是 1 條還是多塊？
+  options:
+  - 彩色區只有地平線下方約 4% 的細條，加上高過地平線的遠處高樓頂部也是彩色
+  - 界線改成畫面高約 45%，彩色區佔約 13% 高
+  - 彩色區分成左中右 3 塊，以灰色街區隔開
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。彩色區＝分界（36%）到地平線（32%）的細條，加上高過地平線的遠處高樓頂部也是彩色。
+- id: Q12
+  where: shots.s008.subjects[6].size
+  category: 3
+  quote: 塔身寬不到畫面寬 1%
+  problem: '@signal_tower 的辨識特徵是中上段的圓盤觀景台和細長天線，但塔身寬不到畫面寬 1%，觀景台約是塔身的 4–5 倍寬、也只有畫面寬的 4% 內；glossary 沒寫觀景台高度在塔上哪裡、有多寬。另外它被當成「黑色剪影」，但塔在彩色區內。'
+  question: 末幀要不要讓觀景台明顯可見？觀景台寬約畫面寬多少？剪影為什麼是黑的（背對光？沒開燈？）還是會被霓虹照出邊緣？
+  options:
+  - 觀景台寬約畫面寬 3%，剪影純黑，邊緣被背後低雲與霓虹映出細亮邊
+  - 觀景台畫面寬 2%，塔身也會有少量霓虹反光（非純黑）
+  - 塔做成純黑剪影，只要求塔頂天線與觀景台的輪廓可辨
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。觀景台寬約畫面寬 3%；塔是純黑剪影（逆光），邊緣被背後映著霓虹的低雲勾出細亮邊。glossary 補觀景台寬約塔身 4 倍、天線約塔高 1/4。
+- id: Q13
+  where: glossary.signal_tower.look.state_at_hook
+  category: 7
+  quote: Hook 時仍在彩色區內，灰色邊界正往它推進
+  problem: story 說「灰色邊界正往那裡推進」，但 s008 是靜止畫面，邊界在 1.5 km 外、塔在 3 km，速度每秒 1 m；畫面裡看不出「正在推進」，也沒有鏡頭指出塔面臨威脅。
+  question: 「正在推進」要讓觀眾看到嗎？是用邊界上的某個特徵（灰色顆粒、帶狀漸層）表現，還是只靠台詞／後面的鏡頭，story 這句改成只描述狀態？
+  options:
+  - story 與 glossary 改成「灰色邊界在塔前方」，不寫推進
+  - s008 末幀的界線前方加上約 1 m 寬、帶灰色顆粒的漸層帶（依 @silence.boundary）
+  - 不處理，由 Verse 的鏡頭交代
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s008 只呈現狀態；邊界推進的過程留給 Verse／Prechorus 的鏡頭交代（寫在 s008 notes）。story 不改，因為那是劇情事實。
+- id: Q14
+  where: shots.s008.subjects[5].size
+  category: 3
+  quote: 灰與彩色的交界是一條橫過 @city 的界線
+  problem: glossary.silence 寫邊界是約 1 m 寬的漸層帶、帶內有靜止灰色顆粒，但 s008 用「界線」，在 1.5 km 外 1 m 寬看起來就是一條銳利的線。「界線」是不是同一個東西、要不要畫成銳利或有漸層，沒有說。
+  question: 遠方的灰彩交界在畫面上要畫成銳利分界，還是有看得出的漸層？「界線」是 @silence 的 boundary 嗎？
+  options:
+  - 銳利分界，不畫漸層（距離太遠，1 m 看不出）
+  - 畫成約畫面高 1% 的漸層帶，由彩色到灰色
+  - 按顏色塊分段，街區一區一區地變灰
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。畫成銳利分界，不畫漸層帶（1.5 km 外 1 m 寬看不出）。
+- id: Q15
+  where: glossary.launch_tunnel.look.wall
+  category: 10
+  quote: 平台邊緣扣在導軌上
+  problem: 豎井內徑 3 m，牆上的導軌距軸心 1.5 m；平台直徑只有 1 m（邊緣距軸心 0.5 m），邊緣碰不到導軌。同一句話說平台扣在導軌上，尺寸矛盾。
+  question: 平台怎麼扣在導軌上？是平台有伸出的臂，還是導軌不在牆面上、改成靠近中軸？或者導軌不用扣住，只是裝飾？
+  options:
+  - 導軌改成豎井中央三根細柱，離軸心 0.6 m，平台邊緣扣住
+  - 平台下方有三支向外伸到牆面導軌的支臂（在畫面下緣外，看不到）
+  - 導軌只是牆面裝飾，平台不靠導軌，刪掉「扣在」
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。刪掉導軌；平台改成磁浮沿中軸上升、不接觸牆面（glossary launch_tunnel.travel）。
+- id: Q16
+  where: shots.s006.motion.subject.text
+  category: 4
+  quote: 鏡頭固定在平台上、和 @luna 同速往上射
+  problem: first_frame 寫鏡頭在「豎井牆邊」、距 @luna 約 1.3 m；平台半徑只有 0.5 m，鏡頭根本不在平台上（豎井半徑 1.5 m）。鏡頭是靠什麼跟著上升？牆邊的鏡頭在畫面裡會不會看到自己的支架？
+  question: 鏡頭的位置到底是在牆邊還是平台上？如果在牆邊，它如何與平台同速上升，畫面中會不會看到導軌或支架？
+  options:
+  - 鏡頭懸在豎井空氣中、離平台約 1.3 m，與平台同速，無支架入鏡
+  - 鏡頭裝在平台邊緣的支臂上，支臂在畫面外
+  - 不管物理，只要求畫面中鏡頭與 @luna 的相對位置不變
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。鏡頭懸在豎井裡、離中軸約 1.3 m、高於平台約 0.6 m，與平台同速，畫面中沒有支架。
+- id: Q17
+  where: shots.s006.first_frame
+  category: 3
+  quote: 用廣角
+  problem: 沒有焦距或視角。廣角會決定燈環往消失點收斂的程度、@luna 與 @drone 的比例，以及 s006 的畫面寬能看到幾 m 的牆面。
+  question: 「廣角」是多少？可用 35 mm 等效焦距或水平視角表示。
+  options:
+  - 約 24 mm（水平視角約 74°）
+  - 約 18 mm（水平視角約 90°）
+  - 不指定，由模型決定，只要燈環明顯往上收斂
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。等效焦距約 24 mm（水平視角約 74°）。
+- id: Q18
+  where: shots.s006.motion.subject.text
+  category: 8
+  quote: 畫面內所有燈環 glow_pulse
+  problem: glow_pulse 要由後製做，但燈環是整鏡以每秒 3 到 6 圈的速度掠過畫面；要逐幀追蹤哪些燈環在畫面內、遮罩出來，才能只提亮燈環而不影響 @luna 與牆面。beat_events 的「所有燈環」在執行上沒有交代做法。
+  question: '後製怎麼做這個 glow_pulse？是用顏色（青色 #29d3f5）鍵控整個畫面提亮，還是由影片模型先產生燈環再追蹤？被燈環青光照到的 @luna 與 @drone 要不要一起亮？'
+  options:
+  - '以青色 #29d3f5 的色相鍵控出燈環，只提亮燈環本身'
+  - 整個畫面中青色的部分（含燈環、@drone 光帶、@luna 身上的青光）一起提亮
+  - 不做鍵控，改成全畫面亮度抬升 2 倍（類似 flash_frames 但不到白）
+  severity: medium
+  status: resolved
+  resolution: 'Claude 決定（依授權，2026-10-23）。以青色 #29d3f5 色相鍵控出燈環，只提亮燈環；@drone 光帶與 @luna 身上的青光不動。'
+- id: Q19
+  where: shots.s006.motion.subject.text
+  category: 5
+  quote: '@drone 的底部光暈隨速度輕微拖尾'
+  problem: 前面說 @drone 與 @luna、鏡頭同速上升，相對速度為 0；光暈卻「隨速度」拖尾，拖往哪個方向、多長、為什麼，有衝突。
+  question: 拖尾是往下（被氣流壓下）的短尾嗎？長度多少（@drone 直徑的幾倍）？是否在整鏡持續，還是只隨加速逐漸變長？
+  options:
+  - 往下拖尾，長度約 @drone 直徑的 0.5 倍，整鏡不變
+  - 往下拖尾，由 0 隨加速增長到約 1 倍直徑
+  - 刪掉拖尾
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。刪掉拖尾。
+- id: Q20
+  where: shots.s006.first_frame
+  category: 6
+  quote: '臉被平台頂面的白光 #e8f4ff 由下往上照亮'
+  problem: 's005 末幀 @luna 的白衣已接近純白、只保留皺褶，之後是 2 幀 flash_white；s006 第一幀的白光顏色是 #e8f4ff，沒有寫白衣亮度是否仍接近純白、臉上的曝光是否接續。'
+  question: s006 第一幀 @luna 的白衣亮度是否延續 s005 末幀（接近純白、保留皺褶），還是回到正常曝光？臉要看得出表情嗎？
+  options:
+  - 延續：白衣接近純白、保留皺褶，到 [5,2] 前後逐漸回到正常曝光
+  - '直接回到正常曝光（白衣最亮處約 #e8f4ff），閃白遮住變化'
+  - 白衣近純白維持整鏡
+  severity: medium
+  status: resolved
+  resolution: 'Claude 決定（依授權，2026-10-23）。s006 直接回到正常曝光（白衣最亮處約 #e8f4ff），閃白遮住跳變；寫進 s006 first_frame 與 notes。'
+- id: Q21
+  where: shots.s006.subjects[1].state
+  category: 6
+  quote: 懸在 @luna 的 char_right 肩旁，和她同速上升
+  problem: s003 的 @drone 停在畫面右上（@luna 的 char_left 側），s005 沒有 @drone；s006 起 @drone 在 char_right（畫面左）。切換藏在 s005→s006 的 flash_white 裡，但 s003 已確定在她的 char_left，觀眾可能覺得 @drone 換邊。notes 只說 Hook 三鏡維持 char_right。
+  question: '@drone 從 char_left 換到 char_right 要不要視為可接受（藏在閃白裡）？還是 Intro 要改，或 s006 改成 char_left？'
+  options:
+  - 接受，藏在閃白裡不處理
+  - s006–s008 的 @drone 都改到 @luna 的 char_left（畫面右，s008 變畫面左）
+  - glossary.drone 規定 @drone 的預設位置，Hook 起一律在 char_right，notes 補一句說明已換邊
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。@drone 全片固定在 @luna 的 char_left（與 s003 一致）：s006 畫面右、s007 畫面右（她正面朝畫面下緣）、s008 畫面左（她背對鏡頭）。
+- id: Q22
+  where: shots.s007.subjects[2].size
+  category: 4
+  quote: 首幀身高約畫面高 5%，末幀約 35%
+  problem: 從正上方往下拍，@luna 身體被透視縮短，而且頭向後仰；「身高」應該是投影後的長度，但沒寫量法。平台圓盤直徑 1 m 在末幀是畫面高 40%，@luna 的投影高 35% 表示她幾乎像躺著，和「站在平台上、從正上方看到她全身」的描述難以對得上。
+  question: '@luna 的 5% 與 35% 是量什麼？是頭頂到腳的投影長度、還是肩寬？從正上方看她全身的實際樣子是什麼？'
+  options:
+  - 量頭頂到腳的投影長度，因為她頭向後仰、身體傾向鏡頭，投影長度約為平台直徑的 0.85 倍
+  - 量肩寬，末幀肩寬約畫面高 15%、首幀約 2%
+  - 不規定，只要求人物比平台圓盤小、完全落在圓盤內
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。@luna 不另訂身高比例，只要求人物完全落在平台圓盤內。
+- id: Q23
+  where: shots.s007.first_frame
+  category: 3
+  quote: 看得到她仰起的臉、紫色頭髮與白色上衣的肩膀
+  problem: 首幀平台圓盤只有畫面高 6%（約 65 px）、@luna 只有畫面高 5%，在這個尺寸下臉與肩膀只有幾個像素，影片模型不太可能畫出可辨的臉與頭髮。
+  question: 首幀的 @luna 需要看到到什麼程度？只要是白色上衣加紫色的一點，還是要有臉？
+  options:
+  - 首幀只要求平台是白色圓盤、中間有一個白衣紫髮的小人影，臉不必可辨
+  - 首幀把平台圓盤放大到畫面高 10%，讓臉可辨
+  - 維持現狀，臉可辨但不要求
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。首幀只要求白色圓盤中間有一個白衣紫髮的小人影，臉不必看得清；末幀（圓盤 20%）才要看得出臉。
+- id: Q24
+  where: shots.s007.motion.subject.text
+  category: 1
+  quote: 平台經過的每一圈燈環被平台白光照亮一瞬間
+  problem: 燈環在 glossary 是「全部常亮」，且 s007 還有 [6,3.43] 的 glow_pulse。「被平台白光照亮」是燈環變亮、變白，還是燈環周圍的牆面被照亮？和後製的 glow_pulse（亮度 2 倍）是不是同一種效果？持續幾幀？
+  question: 平台經過燈環時，要看到什麼？亮度、顏色（青還是偏白）、持續幾幀？與 [6,3.43] 的 glow_pulse 如何區分？
+  options:
+  - 燈環本身偏白、亮度約 1.5 倍，約 4 幀，與 glow_pulse 同樣由影片模型生成
+  - 只有牆面被白光掃亮，燈環本身不變
+  - 取消這項，平台經過時不特別處理，glow_pulse 才是亮燈環
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。平台白光照亮它經過的那一段牆面，燈環本身不變；亮燈環只有 [6,3.43] 的 glow_pulse。
+- id: Q25
+  where: shots.s007.beat_events[0].at
+  category: 6
+  quote: 'at: [6, 3.43]'
+  problem: s007 的 glow_pulse 在 [6,3.43]，那時平台離鏡頭的距離與燈環是否都在畫面內沒有交代；而且 s006 的 glow_pulse 在 [5,4.63]，兩鏡的 glow_pulse 都是「所有燈環」，但 s007 是從正上方看的同心圓，「全部」包括離鏡頭更近、在畫面外的環嗎？
+  question: '[6,3.43] 時平台在畫面中大約多大？glow_pulse 只作用在畫面內的燈環，還是也包括平台背後（較遠）那些被平台擋住的？'
+  options:
+  - 只作用在畫面內看得到的燈環，不管被平台擋住的
+  - 平台背後被遮的燈環不亮，其餘都亮
+  - 改為只有平台正上方（鏡頭一側）最近的 3 圈亮
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。只作用在畫面內看得到的燈環，被平台擋住的不管。
+- id: Q26
+  where: glossary.launch_tunnel.look.top
+  category: 10
+  quote: 上端是 @launch_roof 中央的艙口
+  problem: 豎井內徑 3 m，艙口直徑 1.6 m；豎井上端如何收窄、下端開口也是 1.6 m，glossary 沒寫收窄段在哪裡、長度、牆面與燈環怎麼處理。s007 鏡頭就在上端艙口正下方往下拍，看得到的最外圈燈環大小就取決於這裡。
+  question: 豎井上端與下端怎麼從 3 m 收窄到 1.6 m？s007 的鏡頭位置在收窄段之前還是之後，鏡頭上方的艙口鋼板看得到嗎？
+  options:
+  - 收窄段在最後 1 m，有一圈平滑的圓錐面；鏡頭在收窄段之下，頭頂看不到鋼板
+  - 不收窄，內徑 3 m 到頂，艙口只是頂端的 1.6 m 蓋板，鏡頭離蓋板約 3 m
+  - 全長都是 1.6 m 內徑（把 3 m 改成 1.6 m）
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。豎井內徑 3 m 上下一樣寬；上下兩端都是水平樓板，正中開直徑 1.6 m 的圓孔（上端就是艙口）。s007 鏡頭在頂板下方約 2 m，看不到鋼板。
+- id: Q27
+  where: shots.s008.first_frame
+  category: 5
+  quote: 艙口在畫面水平正中、畫面下方，兩片半圓鋼板關著
+  problem: 兩片半圓鋼板是左右滑開（沿畫面左右），那接縫是前後向（朝向鏡頭）的直線；first_frame 沒有說接縫在畫面上是一條垂直線還是橫線，而且鏡頭在 8 m 外、離地 1.2 m 的低角度，圓形艙口在畫面上是一個很扁的橢圓。
+  question: 首幀艙口的接縫在畫面上是哪個方向？兩片鋼板是左右（畫面左右）滑開，還是前後（朝向鏡頭／遠離鏡頭）滑開？
+  options:
+  - 接縫是朝向鏡頭的一條直線（在扁橢圓上看是縱向短線），鋼板往畫面左右滑開
+  - 鋼板往畫面前後滑開（一片朝向鏡頭、一片遠離）
+  - 接縫與滑開方向由模型決定，只要求兩片分開、露出白光
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。鋼板接縫是一條朝向 @city（遠方）的直線，在首幀低角度下是從畫面下方往遠處延伸的短直線；兩片往接縫兩側（畫面左右）滑開。

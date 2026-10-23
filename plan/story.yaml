@@ -24,12 +24,14 @@ beats:
   - id: hook
     section: hook
     bars: [5, 8]
-    places: ["@launch_tunnel", "@city"]
+    places: ["@launch_tunnel", "@launch_roof", "@city"]
     story: >
-      倒數歸零，@luna 從 @pod 被送進 @launch_tunnel，衝出地面，第一次看見 frozen 的 @city 全貌。
+      倒數歸零，@pod 的底座平台載著 @luna 與 @drone 沿 @launch_tunnel 射上去；@drone 用 @echo_beam 打開 @launch_roof 的艙口，
+      平台急停，@luna 順勢躍出艙口、單膝落在樓頂。她穿過的定格雨滴短暫恢復成透明、會落下的水珠（@restore_touch 的第一次預告，她還沒注意到）。
+      她第一次看見 @city：近處全被 @silence 吞沒，遠方還有幾區彩色，@signal_tower 就在彩色區裡，灰色邊界正往那裡推進。
     emotion: 爆發、果斷
     lyric_link: 「LIVE AI」＝出擊
-    status: proposed
+    status: confirmed
 
   - id: verse
     section: verse

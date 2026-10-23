@@ -17,7 +17,11 @@ FIELD_ZH = {"style": "風格", "role": "角色設定", "notes": "備註", "refs"
             "light": "光", "motion": "動態", "plot_functions": "劇情功能", "layout": "配置", "floor": "地面",
             "palette": "色調", "weather": "天氣", "variants": "版本", "extras": "路人", "opening": "開啟方式",
             "content": "內容", "off_state": "關機時", "segments": "分段", "count_rule": "倒數規則",
-            "boundary": "邊界", "spread": "擴散", "realize": "做法"}
+            "boundary": "邊界", "spread": "擴散", "realize": "做法", "platform": "平台",
+            "bottom": "下端", "top": "上端", "wall": "牆面", "rings": "燈環", "building": "大樓", "roof": "樓頂",
+            "hatch": "艙口", "state": "狀態", "silhouette": "剪影", "location": "位置", "state_at_hook": "Hook 時的狀態",
+            "restore": "恢復", "duration": "持續時間", "return": "退回", "rain_drop": "雨滴",
+            "travel": "移動方式", "timing": "時間", "position": "位置"}
 REALIZE_ZH = {"model": "影片模型生成", "post": "後製", "model+post": "影片模型＋後製", "none": "不動"}
 
 

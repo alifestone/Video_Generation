@@ -90,13 +90,14 @@ entities:
       color: "白色外殼 #f4f4f6，分割線 #a8a8b0"
       light: "正面一條橫向的青色光帶 #29d3f5（當作「眼睛」），底部一圈淡青色光暈"
       motion: 懸浮，沒有螺旋槳；移動時平滑滑行；停下時輕微上下浮動，幅度約 2 cm、週期約 2 拍
+      position: 全片固定在 @luna 的 char_left 肩旁（s003 起）
     not_this:
       - 不是有螺旋槳的四軸無人機
       - 沒有手臂、沒有臉部五官、不說話、外殼上沒有文字或 logo
     plot_functions:      # A02 已接受
       - 投影 @countdown_ring 做倒數
       - 在凍結城市裡帶路
-      - 用光束打開門或通道
+      - 用 @echo_beam 打開門或通道：被照到的門即使在 @silence 範圍內也能開啟，但仍維持灰色（顏色只有 @luna 碰到才會恢復）
 
   # ── 場景 ─────────────────────────────────────────────
   hq_control:
@@ -132,13 +133,47 @@ entities:
     kind: place
     name: 發射通道
     status: proposed
-    definition: 從 @hq_control 通往地面的垂直通道，@luna 由此出擊。外觀在寫 Hook 鏡頭時定義。
+    definition: 從 @hq_control 天花板通往 @launch_roof 的垂直豎井；@pod 的底座平台載著 @luna 沿它射上地面。
+    look:   # 2026-10-23 使用者選「光環豎井」
+      shape: 圓形垂直豎井，內徑約 3 m、上下一樣寬，總長約 180 m（地下約 30 m＋大樓內約 150 m）
+      bottom: 下端是 @hq_control 的天花板，在 @pod 正上方開一個直徑約 1.6 m 的圓孔；Intro 各鏡都沒拍到天花板
+      top: 上端是一片水平頂板（就是 @launch_roof 的樓頂樓板），正中是直徑約 1.6 m 的艙口（外觀見 @launch_roof）
+      wall: "黑色霧面金屬 #0b0d12，表面只有細的垂直接縫；沒有導軌"
+      travel: 平台以磁浮沿豎井中軸上升，不接觸牆面，平台下方沒有支架或纜繩
+      rings: "每隔 6 m 一圈嵌在牆面的青色燈環 #29d3f5，環寬約 10 cm，發光；豎井全長約 30 圈，全部常亮"
+      light: 只有燈環與底座平台頂面的白光，沒有其他光源
+      palette: "冷藍黑，與 @hq_control 相同的底色 #07080c"
+    not_this:
+      - 沒有窗戶，牆面不透明，看不到外面
+      - 沒有外露管線、黃黑警示條紋、紅色警示燈
+      - 牆上沒有文字、數字、樓層標示
+
+  launch_roof:
+    kind: place
+    name: 發射口樓頂
+    status: proposed
+    definition: "@hq_control 正上方一棟高樓的樓頂，@launch_tunnel 的出口在這裡；@luna 第一次看見 @city 的地方。"
+    look:
+      building: 高約 150 m，比四周大樓高，往 @city 中心方向沒有更高的樓擋住視線
+      roof: 平頂，約 30 m × 30 m，水泥地面；邊緣一圈高約 1.1 m 的矮牆；4 個方形空調箱（高約 1.5 m）都靠在背向 @city 那一側的矮牆邊，朝 @city 拍時在鏡頭背後、看不到；沒有其他設備
+      hatch: "樓頂正中的圓形艙口，直徑約 1.6 m，與地面齊平；由兩片半圓形鋼板組成，接縫是一條朝向 @city 的直線，開啟時兩片各自往接縫的兩側水平滑進地面下（與 @pod 玻璃罩同樣是側滑）；地面上圍著開口有一圈寬約 5 cm 的青色燈環 #29d3f5，常亮，鋼板滑開後仍是完整一圈"
+      state: 位在 @silence 範圍內，所以整個樓頂（含艙口）都是 frozen：灰階、雨滴停在半空；艙口燈環仍亮（@silence 不改亮度），但看起來是淺灰白色的發光環。艙口被 @echo_beam 打開後仍是灰色
+    not_this:
+      - 不是直升機停機坪，地面沒有 H 標記或任何字
+      - 艙口不是往上掀的蓋子，也不是光圈式葉片
 
   signal_tower:
     kind: place
     name: 訊號塔
     status: proposed
-    definition: "@city 中央最高的廣播塔，全頻廣播從這裡發出。外觀在寫 Chorus 1 鏡頭時定義。"
+    definition: "@city 中央最高的廣播塔，全頻廣播從這裡發出。"
+    look:   # 2026-10-23 先定剪影；材質、燈光、內部在寫 Chorus 1 前再問
+      silhouette: 細長的直立塔身，中上段（約塔高 2/3 處）有一個圓盤形觀景台，寬約塔身的 4 倍，觀景台以上是一根細長天線（約塔高 1/4）；塔高約周圍大樓的 2 倍
+      location: "@city 中心，距 @launch_roof 約 3 km"
+      state_at_hook: Hook 時仍在彩色區內，灰色邊界正往它推進
+    not_this:
+      - 不是格子鋼構的鐵塔
+      - 不是頂端有大圓環的塔
 
   # ── 物件 ─────────────────────────────────────────────
   pod:
@@ -152,6 +187,7 @@ entities:
       color: "底座白 #f4f4f6；玻璃無色透明，邊緣有淡青色反光"
       light: "底座頂面整片發出柔和白光 #e8f4ff，由下往上照亮 @luna"
       opening: 玻璃罩分成左右兩半，接縫在艙的左右兩側（正面看不到接縫）；開啟時向兩側滑開（不是往上掀）
+      platform: 底座頂端是一片圓形平台（直徑約 1 m、厚約 10 cm，頂面就是發白光的那一面），可以和底座下段分離，沿 @launch_tunnel 往上射；平台升走後玻璃罩兩半與底座下段留在 @hq_control
     not_this:
       - 不是躺著的冷凍艙
       - 玻璃罩內沒有液體或霧氣
@@ -199,6 +235,21 @@ entities:
       - 光環上沒有數字；後製也先不疊數字字卡（project.yaml decisions.countdown_numbers）
       - "@drone 與光環之間沒有可見的投影光束"
 
+  echo_beam:
+    kind: vfx
+    name: ECHO 光束
+    status: proposed
+    definition: "@drone 從正面光帶射出的開門光束；照到門、艙口或通道的開關處時，那扇門會開啟（見 @drone 的劇情功能）。"
+    look:
+      shape: 一條筆直的細光束，從 @drone 光帶正中射到目標，粗細一致
+      size: 寬約 3 cm
+      color: "青色 #29d3f5，光束本身發光，周圍有約 2 倍寬的柔和光暈；照到的地方出現一個直徑約 20 cm 的青色光點"
+      timing: 每次約 6 幀：1 幀內出現、維持 4 幀、1 幀內消失
+      realize: 由後製合成
+    not_this:
+      - 不是雷射武器，不會燒穿或炸開東西
+      - 不會恢復顏色（恢復顏色是 @restore_touch，只有 @luna 會）
+
   silence:
     kind: state
     name: 靜默
@@ -212,3 +263,17 @@ entities:
     not_this:
       - 不是黑霧、黑洞、漩渦或怪物
       - 不是冰凍：沒有冰晶與白霜
+
+  restore_touch:
+    kind: state
+    name: 觸碰恢復
+    status: proposed
+    definition: "@luna 身體碰到的 frozen 物體短暫恢復原本的顏色與動態，之後又被 @silence 蓋回灰色定格。只有 @luna 有這個能力（@drone 與平台沒有）。Hook 是小小的預告（雨滴），Verse 她才真正發現這個能力。"
+    look:
+      restore: 物體在 2 幀內恢復原色，動作從停住的地方接著進行；恢復時沒有發光、光暈或粒子特效
+      duration: 依鏡頭指定（Hook 的雨滴約 12 幀）
+      return: 時間到時顏色在 6 幀內退回灰階、動作停在當下的位置
+      rain_drop: 恢復的雨滴是透明水珠，映出附近光源的顏色（平台白光、@drone 的青色光帶），會往下落；退回灰色時停在半空。遠景裡水珠太小，後製把恢復中的水珠亮度提高到約 2 倍，讓它們看得見
+    not_this:
+      - 不是 @luna 身上發出的光或衝擊波（衝擊波是 Chorus 1 的廣播）
+      - 恢復範圍只有她身體直接碰到的東西，不會向外擴散

@@ -259,3 +259,214 @@ shots:
       @drone 不入鏡。光環熄滅與臉上青光由後製做；@luna 的呼吸、眨眼與白光照亮由影片模型生成，白光強度後製再補。
       下一鏡（Hook 第一鏡，@launch_tunnel）的 transition_in 已定為 flash_white 2 幀（decisions.hook_transition_in），
       這 2 幀閃白不算本鏡的 last_frame。
+
+  # ── Hook（bar 5–8）──────────────────────────────────────
+  # 人聲時間（人聲分軌 onset，2026-10-23 量）：「LIVE」13.90 s＝[5,4.63]；「AI」15.48–15.92 s＝[6,3.43]–[6,4.2]；
+  # 「Li」17.15 s＝[7,2.37]、「Li」17.29 s＝[7,2.62]、「Live」17.50 s＝[7,3]、「AI」17.72 s＝[7,3.39]；
+  # bar 8 幾乎沒有人聲；Verse 第一句「一張」20.64 s＝[8,4.53]。
+  # @drone 全片固定在 @luna 的 char_left 肩旁（與 s003 一致）。
+
+  - id: s006
+    section: hook
+    story_beat: hook
+    span: {from: [5, 1], to: [6, 1]}
+    lyrics: [3]
+    place: "@launch_tunnel"
+    shot_size: MLS
+    angle: low
+    route: A
+    variation: small
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 膝以上；膝蓋在畫面下緣，頭頂在畫面高約 15%
+        facing: to_camera
+        state: 站在平台中央，雙腳與肩同寬、膝蓋微彎，雙手垂在身側微握拳；抬頭看豎井上方，眼神堅定；紫色編髮與銀鏈被由上往下的氣流壓向下方、髮尾抖動
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；中心約在畫面寬 70%、畫面高 30%，與 @luna 的 char_left 肩膀同高
+        facing: to_camera
+        state: 懸在 @luna 的 char_left 肩旁，和她同速上升；青色光帶常亮
+      - ref: "@pod"
+        placement: {x: center, y: bottom, depth: fg}
+        size: 只有底座平台；平台本身在畫面下緣外，只看得到它由下往上的白光
+      - ref: "@launch_tunnel"
+        placement: {x: center, y: top, depth: bg}
+        size: 佔滿 @luna 身後與頭頂以上的畫面；豎井牆面與燈環往上收斂，消失點在畫面水平正中、畫面高約 5%，消失點處是黑的
+    first_frame: >
+      在 @launch_tunnel 裡由下往上仰拍 @luna 膝以上：鏡頭懸在豎井裡、離中軸約 1.3 m（靠牆）、高於平台頂面約 0.6 m，
+      等效焦距約 24 mm（水平視角約 74°），畫面中看不到任何鏡頭支架。
+      她站在平台中央抬頭看上方，臉被平台頂面的白光由下往上照亮，正常曝光：白衣最亮處約 #e8f4ff、皺褶清楚，表情看得清楚；
+      紫色編髮與銀鏈壓向下方。@drone 懸在她 char_left 肩旁（畫面右上）。她身後與頭頂上方是黑色豎井，一圈圈青色燈環往上縮小、
+      收斂到畫面上方正中的黑色消失點；最近的一圈燈環在她頭頂上方約 1/3 畫面高處，弧形橫過畫面。
+    motion:
+      camera: {move: track, speed: fast, realize: model}
+      subject:
+        text: >
+          鏡頭和平台同速往上射，所以 @luna 與 @drone 在畫面中的位置不變；
+          豎井牆面與燈環從畫面上方的消失點往外、往下掠過鏡頭，一圈燈環掠過時把青光由上往下掃過 @luna 全身。
+          平台加速：本鏡開頭每秒約 3 圈掠過（約 18 m/s），本鏡結尾每秒約 6 圈（約 36 m/s）。紫色編髮與銀鏈整鏡被氣流壓向下方、髮尾抖動；
+          @luna 身體不動，只有眨眼；@drone 依 glossary 不動地懸著，沒有拖尾。
+        realize: model+post
+    last_frame: null
+    beat_events:
+      - at: [5, 1]
+        sync: 閃白結束後的第一幀；bar 5 正拍，能量從 3 升到 8
+        event: 對整個畫面做 shake 4 幀（平台發射的震動）
+      - at: [5, 4.63]
+        sync: 人聲「LIVE」13.90 s
+        event: "畫面內所有燈環 glow_pulse：以青色 #29d3f5 色相鍵控出燈環，只提亮燈環本身（@drone 光帶與 @luna 身上的青光不動），1 幀內抬升到約 2 倍、3 幀回落"
+    transition_in: {type: flash_white, frames: 2, note: "s005 最後 2 幀變純白（decisions.hook_transition_in）；@pod 玻璃罩打開、平台脫離底座的過程藏在閃白裡省略，不拍"}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: >
+      variation 標 small：燈環是週期性重複的，首尾幀看起來等價，只用首幀生成。燈環掠過與頭髮抖動由影片模型生成；
+      shake 與燈環 glow_pulse 由後製做。s005 結尾白光漸強到近乎純白，閃白之後 s006 直接回到正常曝光（閃白遮住跳變）。
+
+  - id: s007
+    section: hook
+    story_beat: hook
+    span: {from: [6, 1], to: [7, 1]}
+    lyrics: [3]
+    place: "@launch_tunnel"
+    shot_size: LS
+    angle: top
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@launch_tunnel"
+        placement: {x: center, y: middle, depth: bg}
+        size: 佔滿畫面；同心燈環最外圈直徑約畫面高，往畫面中心一圈圈縮小
+      - ref: "@pod"
+        placement: {x: center, y: middle, depth: mg}
+        size: 只有底座平台；首幀平台圓盤直徑約畫面高 6%（距鏡頭約 100 m），末幀約 20%（約 30 m），圓心始終在畫面正中
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 站在平台上，從正上方看，人物完全落在平台圓盤內，不另訂身高比例
+        facing: to_camera
+        state: 正面朝向畫面下緣，頭仰起直視鏡頭（正上方）；雙手垂在身側
+      - ref: "@drone"
+        placement: {x: center_right, y: middle, depth: mg}
+        size: 直徑約平台圓盤的 1/4；位置在 @luna 的 char_left（從正上方看，她正面朝畫面下緣，所以是畫面右），貼著平台邊緣上方
+        facing: to_camera
+        state: 和平台同速上升
+    first_frame: >
+      鏡頭固定在 @launch_tunnel 頂端、頂板下方約 2 m，垂直往下拍；頭頂的艙口鋼板不在畫面內。黑色豎井裡一圈圈青色燈環形成同心圓：
+      最外圈直徑約畫面高，往畫面中心一圈比一圈小，最深處是黑的。畫面正中、很深的地方是一個發白光的小圓盤（平台），
+      圓盤中間有一個白衣紫髮的小人影（@luna），臉不必看得清；@drone 是圓盤右側邊緣的一個小白點。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          平台載著 @luna 與 @drone 沿豎井中軸筆直往上、朝鏡頭衝來，本鏡內開始減速（由約 36 m/s 降到約 25 m/s），
+          畫面中平台圓盤由畫面高 6% 放大到 20%；平台白光照亮它經過的那一段牆面，燈環本身亮度與顏色不變。
+          @luna 整鏡仰頭直視鏡頭，頭髮被氣流壓向下方；@drone 跟在平台右側同速上升。
+        realize: model+post
+    last_frame: >
+      同樣的同心圓構圖：平台圓盤直徑約畫面高 20%，圓心在畫面正中；@luna 站在平台上，仰起的臉直視鏡頭、表情堅定，看得出臉與紫色編髮；
+      @drone 在平台右側邊緣上方；平台周圍的牆面被白光照亮，平台外圍仍看得到下方縮小的同心燈環。
+    beat_events:
+      - at: [6, 3.43]
+        sync: 人聲「AI」15.48 s
+        event: 畫面內看得到的燈環 glow_pulse（被平台擋住的不管）：青色色相鍵控，1 幀內抬升到約 2 倍、3 幀回落
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: >
+      物理對照：100 m→30 m（圓盤 6%→20%，大小與距離成反比），2.27 s 內移動約 70 m，平均約 31 m/s，與 36→25 m/s 的減速相符。
+      s007→s008 的切點省略平台最後約 30 m 的減速（約 1 s）。燈環 glow_pulse 由後製做；平台上升與牆面被照亮由影片模型生成（首尾幀）。
+
+  - id: s008
+    section: hook
+    story_beat: hook
+    span: {from: [7, 1], to: [9, 1]}
+    lyrics: [3, 4]
+    place: "@launch_roof"
+    shot_size: LS
+    angle: eye
+    route: B
+    variation: large
+    subjects:
+      - ref: "@launch_roof"
+        placement: {x: center, y: lower, depth: mg}
+        size: 首幀樓頂地面佔畫面下 1/3，艙口在畫面水平正中、畫面高約 80%，寬約畫面寬 8%（低角度下是扁橢圓，接縫是一條從畫面下方往遠處延伸的短直線）；末幀樓頂與矮牆佔畫面下 1/4
+      - ref: "@luna"
+        placement: {x: center, y: lower, depth: mg}
+        size: 首幀不在畫面內；[8,1] 落地單膝跪姿時高約畫面高 15%；末幀站立，身高約畫面高 22%，腳在畫面高約 92%
+        facing: away
+        state: "[7,3] 從艙口躍出，往 @city 的方向（遠離鏡頭）飛出；[8,1] 落在艙口前方約 2.5 m 處，char_left 膝與 char_right 手掌著地、char_right 腳在前；[8,2]–[8,3] 站起，之後站著看向遠方"
+      - ref: "@drone"
+        placement: {x: center_left, y: lower, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；落地後懸在她 char_left 肩旁（她背對鏡頭，所以是畫面左）
+        facing: away
+        state: "[7,3] 與 @luna 一起從艙口衝出；她落地後停在她肩旁，依 glossary 輕微上下浮動"
+      - ref: "@echo_beam"
+        placement: {x: center, y: lower, depth: mg}
+        size: 光束本身在艙口下方、看不到；只看得到它照在鋼板背面時，從接縫透出的一條青光
+      - ref: "@pod"
+        placement: {x: center, y: lower, depth: mg}
+        size: 只有底座平台；[7,3] 起頂面與樓頂地面齊平，白光從艙口往上照
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 矮牆以外的整片 @city，地平線在畫面高約 32%（末幀）；近處 frozen，遠方彩色
+      - ref: "@silence"
+        placement: {x: center, y: middle, depth: bg}
+        size: 從樓頂到約 1.5 km 外全在 @silence 內；灰與彩色的交界在畫面高約 36%（末幀），距離太遠，畫成銳利的分界、不畫漸層帶
+      - ref: "@signal_tower"
+        placement: {x: center, y: upper, depth: bg}
+        size: 地平線正中的黑色剪影，末幀天線尖端在畫面高約 15%，觀景台寬約畫面寬 3%、塔身寬不到 1%；位在彩色區內
+      - ref: "@restore_touch"
+        placement: {x: center, y: lower, depth: mg}
+        size: 只作用在 @luna 身體碰到的雨滴（她從艙口躍出到落地的軌跡上），以及落地時膝蓋與手掌碰到的地面
+    first_frame: >
+      @launch_roof 的樓頂，整片灰階、frozen：細雨停在半空，每一滴都是灰色的小點。鏡頭在艙口後方約 8 m、離地約 1.2 m，朝 @city 的方向平視；
+      空調箱都在鏡頭背後，畫面中看不到。艙口在畫面水平正中、畫面下方，兩片半圓鋼板關著，接縫是一條朝向遠方的短直線；
+      地面上圍著艙口的燈環是淺灰白色的發光環。艙口後方是樓頂矮牆，矮牆以外是 @city 的灰色高樓、停在半空的灰色懸浮車與灰色的全息看板（看板仍亮，但沒有顏色）。
+      地平線附近有一條橫向的彩色光帶（遠方仍未被吞沒的街區），正中有一座細長的黑色塔形剪影（@signal_tower）。畫面裡沒有 @luna 與 @drone。
+    motion:
+      camera: {move: crane_up, speed: medium, realize: model}
+      subject:
+        text: >
+          [7,1]–[8,2] 鏡頭不動。[7,2.37] 艙口接縫透出一條青光（@echo_beam 從下方照在鋼板背面），[7,2.62] 兩片鋼板往接縫兩側滑進地面下、5 幀內全開，
+          豎井裡的白光從艙口往上照；鋼板與燈環仍是灰色。[7,3] 平台衝到與樓頂齊平並急停，@luna 被慣性帶出艙口，往前上方躍起，@drone 同時衝出；
+          她在 [7,4] 左右到最高點（腳離地約 1.6 m），[8,1] 落在艙口前方約 2.5 m 處、單膝著地，[8,2]–[8,3] 站起。
+          她身體碰到的雨滴依 @restore_touch 變回透明水珠、映出白光與青光並往下落，每一滴在碰到後約 12 幀於 6 幀內退回灰色、停在新的位置；
+          落地時膝蓋與手掌碰到的地面同樣短暫恢復原色。紫色編髮在落地後垂下。
+          [8,2] 起鏡頭一邊升高一邊往前推（升高約 5 m、前推約 3 m），到本鏡結束時停在 @luna 後上方，變成俯角，露出整座 @city。
+        realize: model+post
+    last_frame: >
+      鏡頭在 @luna 後上方約 6 m 高、她身後約 5 m，往前下方俯看越過她看向 @city。@luna 背對鏡頭站在艙口前方（腳在畫面高約 92%，身高約畫面高 22%），
+      @drone 懸在她左肩旁（畫面左）；她身後的艙口開著，平台頂面與地面齊平、發白光。矮牆以外的 @city 往遠方鋪開：近處到約 1.5 km 外全是 frozen 的灰階高樓、
+      看板與停在半空的懸浮車，雨滴全停在半空；畫面高約 36% 處是銳利的灰彩分界，分界以外到地平線（畫面高約 32%）是彩色街區，
+      高過地平線的遠處高樓頂部也是彩色的：洋紅、青、琥珀色霓虹與全息看板亮著。
+      地平線正中是 @signal_tower 的純黑剪影，觀景台與天線輪廓清楚，邊緣被背後映著霓虹的低雲勾出細亮邊。
+    beat_events:
+      - at: [7, 2.37]
+        sync: 人聲「Li」17.15 s
+        event: 艙口接縫透出 @echo_beam 的青光（6 幀，依 glossary）；整個畫面 shake 3 幀
+      - at: [7, 2.62]
+        sync: 人聲「Li」17.29 s
+        event: 艙口兩片鋼板往接縫兩側滑進地面下，5 幀內全開，白光從艙口往上照
+      - at: [7, 3]
+        sync: 人聲「Live」17.50 s
+        event: 平台與樓頂齊平急停，@luna 躍出艙口、@drone 同時衝出；整個畫面 shake 2 幀
+      - at: [7, 3.39]
+        sync: 人聲「AI」17.72 s
+        event: "@luna 在半空上升中，穿過的雨滴依 @restore_touch 恢復（後製把恢復中的水珠提亮到約 2 倍）"
+      - at: [8, 1]
+        sync: bar 8 正拍，人聲幾乎停止
+        event: "@luna 單膝落地；整個畫面 shake 3 幀"
+      - at: [8, 2]
+        event: "@luna 開始站起；鏡頭開始 crane_up 並同時 push_in，直到本鏡結束"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: >
+      使用者選 3 鏡結構，本鏡 2 小節、variation large。躍出與單膝落地是指定動作，走 B 路線（OpenPose 關鍵姿勢：躍起最高點、單膝落地、站立）。
+      若 P4 試作發現無法一次生成，從 [8,2] 拆成兩鏡（上半 static 的躍出落地、下半 crane_up 的揭示），不改劇情。
+      angle 以首幀為準標 eye，[8,2] 起的 crane_up 讓末幀變成俯角。camera.move 只能填一個值，填主要的 crane_up，同時的 push_in 寫在 subject.text。
+      分工：艙口開啟、平台與 @luna 的動作、鏡頭升高由影片模型生成；shake、@echo_beam 青光、雨滴恢復與退回由後製合成。
+      灰色邊界「正往 @signal_tower 推進」在本鏡只呈現狀態（彩色區在遠方），推進的過程留給 Verse／Prechorus 交代。
