@@ -32,7 +32,10 @@ FIELD_ZH = {"style": "風格", "role": "角色設定", "notes": "備註", "refs"
             "state_bridge": "Bridge 時的狀態", "entry_window": "入口窗", "main_console": "主控台",
             "light_column": "光柱", "cabinets": "機櫃", "sub_consoles": "副控台", "sub_console": "副控台",
             "ring_floor": "外圈地板", "socket": "插座", "windows": "全景窗", "overall": "整體",
-            "surface": "顯示面", "generate": "生成", "outside": "從塔外看"}
+            "surface": "顯示面", "generate": "生成", "outside": "從塔外看",
+            "trigger": "觸發", "film": "電影", "music": "音樂", "animation": "動畫", "frame": "看板", "elsewhere": "其他鏡頭",
+            "center": "球心", "radius": "半徑", "column": "光柱", "inside": "球內", "build_fall": "Build 掉落",
+            "state_build": "Build 時的狀態", "outro": "Outro"}
 REALIZE_ZH = {"model": "影片模型生成", "post": "後製", "model+post": "影片模型＋後製", "none": "不動"}
 
 
@@ -66,6 +69,8 @@ class Renderer:
         self.out.append(line)
 
     def pos(self, p):
+        if p == "end":
+            return "歌曲結尾"
         return f"bar {p[0]} 第 {p[1]} 拍" if p != [0, 0] else "歌曲開頭"
 
     def status(self, d):
