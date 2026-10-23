@@ -470,3 +470,405 @@ shots:
       angle 以首幀為準標 eye，[8,2] 起的 crane_up 讓末幀變成俯角。camera.move 只能填一個值，填主要的 crane_up，同時的 push_in 寫在 subject.text。
       分工：艙口開啟、平台與 @luna 的動作、鏡頭升高由影片模型生成；shake、@echo_beam 青光、雨滴恢復與退回由後製合成。
       灰色邊界「正往 @signal_tower 推進」在本鏡只呈現狀態（彩色區在遠方），推進的過程留給 Verse／Prechorus 交代。
+      2026-10-23 @silence 速度改為每秒約 30 m：本鏡 4.5 s 內邊界約推進 135 m，在 1.5 km 外幾乎看不出，後製不另做。
+
+  # ── Verse（bar 9–16）────────────────────────────────────
+  # 人聲（faster-whisper，人聲分軌）：「光」23.56 s＝[10,1.71]；「指尖」27.22 s＝[11,4.18]；「時間」32.00 s＝[13,4.62]；
+  # 「不可能的畫面」34.36–35.42 s＝[14,4.8]–[15,2.66]；「變成眼前」36.68–38.60 s；Prechorus 弱起「從」38.44 s＝[16,4]。
+  # 方向：@signal_tower 在 @street 的街尾；鏡頭背對大樓往街尾拍時，塔在畫面深處。
+  # 側拍（s011–s015）鏡頭一律在街道同一側，畫面右＝街尾、畫面左＝大樓。
+  # 全段：@luna 身體穿過的定格雨滴都依 @restore_touch 恢復（後製，約 12 幀後退回灰色），各鏡不再重複寫。
+
+  - id: s009
+    section: verse
+    story_beat: verse
+    span: {from: [9, 1], to: [10, 1]}
+    lyrics: [4]
+    place: "@street"
+    shot_size: LS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀身高約畫面高 40%，腳在畫面高約 85%；末幀走遠到約畫面高 23%
+        facing: away
+        state: 背對鏡頭往街尾走，步伐平穩，雙手垂在身側
+      - ref: "@drone"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；懸在她 char_left 肩旁（她背對鏡頭，所以是畫面左）
+        facing: away
+        state: 和她同速滑行
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 佔滿畫面；街道兩側商店樓往街尾收斂，消失點在畫面水平正中、畫面高約 45%
+      - ref: "@signal_tower"
+        placement: {x: center, y: upper, depth: bg}
+        size: 街尾正上方的黑色剪影，天線尖端在畫面高約 25%，觀景台寬約畫面寬 1%（本鏡用較廣的焦距，約 24 mm，所以比 s008 小）
+    first_frame: >
+      @street 的街心，鏡頭離地約 1.4 m，背對 @launch_roof 那棟大樓、朝街尾平視。整條街灰階、frozen：兩側商店的櫥窗與二到四樓的全息看板仍亮但沒有顏色，
+      懸浮車停在街道上方，細雨停在半空，濕石板路上有水窪，零散的灰色路人像雕像一樣停在路上。
+      @luna 在畫面正中、距鏡頭約 4 m，背對鏡頭；街尾彩色區以外，只有她與 @drone 有顏色。街尾很遠處是一小片彩色霓虹，正上方是 @signal_tower 的黑色剪影。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @luna 以一般步行速度往街尾走，本鏡內走約 3 m（約每秒 1.3 m），在畫面中由畫面高 40% 縮到約 23%；@drone 在她 char_left 肩旁同速滑行。
+          其他東西全部不動。
+        realize: model+post
+    last_frame: >
+      同一構圖：@luna 走到距鏡頭約 7 m，仍在畫面正中、背對鏡頭，身高約畫面高 23%；@drone 在她左肩旁；街道與遠方剪影不變。
+    beat_events: []
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 與 s008 末幀同樣是背影、同樣朝街尾，從樓頂直接切到街上（省略下樓過程，decisions.verse_descent）。
+
+  - id: s010
+    section: verse
+    story_beat: verse
+    span: {from: [10, 1], to: [11, 1]}
+    lyrics: [4, 5]
+    place: "@street"
+    shot_size: FS
+    angle: low
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 首幀全身、距鏡頭約 3 m，身高約畫面高 60%（腳在畫面高約 78%）；踩進水窪後距鏡頭約 2.3 m，身高約 78%（腳在約 90%）
+        facing: to_camera
+        state: 往鏡頭方向（街尾方向）走來；[10,1.71] char_right 腳踩進水窪，之後停下、低頭看水窪
+      - ref: "@drone"
+        placement: {x: center_right, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她面向鏡頭，所以是畫面右）
+        facing: to_camera
+        state: 她停下時跟著停住，依 glossary 輕微上下浮動
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 背景是街道與兩側灰色商店，街底是 @launch_roof 那棟大樓，失焦；@signal_tower 在鏡頭背後、不入鏡
+    first_frame: >
+      鏡頭在 @luna 前方（街尾那一側）貼近濕石板路面（離地約 30 cm），往大樓方向仰拍迎面走來的 @luna 全身。她前方約 0.7 m、距鏡頭約 2.3 m 的路面上
+      有一個直徑約 1.5 m 的灰色水窪，在畫面下半中間呈扁橢圓，水面平靜、映著灰色的街道。@luna 距鏡頭約 3 m，char_left 腳在前、剛落地；@drone 在她左肩旁（畫面右上）。背景的街道與商店灰階、失焦，雨滴停在半空。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @luna 往前一步（約 0.7 m），[10,1.71] char_right 腳踩進水窪：整個水窪依 @restore_touch 恢復——水花濺起、漣漪擴散到整個水窪，水花與水面映出 @luna 的紫髮、白衣與 @drone 的青光；
+          恢復維持 24 幀，接著在 6 幀內退回灰色（共 30 幀），水花停在半空、漣漪停住。她因為走近，在畫面中由畫面高 60% 變成約 78%。她踩進去後停步，[10,2.5] 起低頭看水窪，表情從平靜變成驚訝。
+        realize: model+post
+    last_frame: >
+      同一個鏡位：@luna 站在水窪裡（char_right 腳在水窪中），距鏡頭約 2.3 m、身高約畫面高 78%，低頭看水窪，表情驚訝；水窪上方停著一圈灰色的定格水花，水面的漣漪也停住；@drone 停在她左肩旁。
+    beat_events:
+      - at: [10, 1.71]
+        sync: 人聲「光」23.56 s（「等著第一束光出現」）
+        event: "@luna 的 char_right 腳踩進水窪，水窪依 @restore_touch 恢復"
+      - at: [10, 2.5]
+        event: "@luna 低頭看水窪"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 她第一次注意到自己的能力。水窪恢復 24 幀＋退回 6 幀（比雨滴長，讓觀眾看清楚）；被碰到的物體整個恢復（glossary restore_touch）。水花的濺起由影片模型生成，恢復與退回灰色由後製調色。
+
+  - id: s011
+    section: verse
+    story_beat: verse
+    span: {from: [11, 1], to: [12, 1]}
+    lyrics: [5]
+    place: "@street"
+    shot_size: MS
+    angle: low
+    route: B
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面高約 30%
+        facing: three_quarter_right
+        state: 仰頭看前上方的 @balloon；[11,2] 起 char_right 手往上伸，[11,4.18] 食指指尖碰到 @balloon 底部
+      - ref: "@balloon"
+        placement: {x: center_right, y: top, depth: mg}
+        size: 直徑約畫面高 18%，中心在畫面寬約 65%、畫面高約 15%；繩子（約 0.6 m）往下垂到畫面高約 55%，在 @luna 右側、不遮住她
+      - ref: "@drone"
+        placement: {x: center, y: middle, depth: bg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她臉朝畫面右前方，char_left 是遠側），在她頭部右後方、中心約在畫面寬 48%、畫面高 45%，被她的肩膀遮住約 1/3
+        facing: three_quarter_right
+        state: 停在她肩旁輕微浮動
+      - ref: "@balloon_child"
+        placement: {x: center_right, y: bottom, depth: bg}
+        size: 只看得到失焦的灰色帽子與伸出的手，在畫面寬約 55% 的下緣，手往右上方伸向 @balloon（氣球在小孩右上方，與 s012 一致）
+        facing: three_quarter_right
+        state: 灰色定格的奔跑姿勢（本鏡不動）
+    first_frame: >
+      微仰角拍 @luna 腰以上的四分之三側面，她在畫面左半、仰頭看畫面右上方：一顆灰色的 @balloon 定格在半空，繩子垂下。
+      畫面下緣中間偏右是 @balloon_child 失焦的灰色帽子與伸出的手，手朝右上方的 @balloon。@drone 在她頭部右後方，被她的肩膀遮住一部分。背景是灰色商店與停在半空的雨滴。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [11,2] 起 @luna 的 char_right 手慢慢往上伸，[11,4.18] 食指指尖輕碰 @balloon 底部：@balloon 依 @restore_touch 在 2 幀內變回紅色，
+          並以約每秒 0.5 m 往上飄（本鏡剩下約 10 幀，只上升約 20 cm）。她的手停在半空，表情專注。
+        realize: model+post
+    last_frame: >
+      同一構圖：@luna 的 char_right 手舉在半空、食指剛離開 @balloon；@balloon 已是紅色，比首幀高約 20 cm（中心在畫面高約 5%）；@balloon_child 仍是灰色。
+    beat_events:
+      - at: [11, 2]
+        event: "@luna 的 char_right 手開始往上伸"
+      - at: [11, 4.18]
+        sync: 人聲「指尖」27.22 s
+        event: "@luna 指尖碰到 @balloon，@balloon 變回紅色、開始往上飄"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 伸手碰 @balloon 是精確動作，走 B 路線（姿勢：手放下、手伸到 @balloon 底部）。@balloon 變色由後製做；@balloon 上飄由影片模型生成，後製補色。
+
+  - id: s012
+    section: verse
+    story_beat: verse
+    span: {from: [12, 1], to: [13, 1]}
+    lyrics: [5, 6]
+    place: "@street"
+    shot_size: FS
+    angle: eye
+    route: B
+    variation: medium
+    subjects:
+      - ref: "@balloon_child"
+        placement: {x: center, y: lower, depth: mg}
+        size: 全身，身高約畫面高 35%，腳在畫面高約 85%
+        facing: profile_right
+        state: 首幀是灰色定格的奔跑姿勢；[12,2.5] 被碰到後恢復黃色雨衣，往畫面右跑 3 步、手伸向 @balloon
+      - ref: "@balloon"
+        placement: {x: center_right, y: top, depth: mg}
+        size: 直徑約畫面高 11%；首幀中心在畫面寬約 58%、畫面高約 19%（在小孩右上方），以每秒約 0.5 m 往上飄，約 [12,3.5] 飛出畫面上緣
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 全身，身高約畫面高 50%，腳在畫面高約 86%；站在小孩左後方約 0.5 m、比小孩離鏡頭遠約 0.5 m
+        facing: profile_right
+        state: 剛碰完氣球、手放下；[12,2.5] 用 char_right 手（靠鏡頭那隻）輕拍小孩肩膀，之後停步看著小孩跑開
+      - ref: "@drone"
+        placement: {x: center_left, y: upper, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（她面向畫面右，char_left 是遠側），從她頭部後上方露出約一半，中心約在畫面寬 33%、畫面高 32%
+        facing: profile_right
+        state: 停在她肩旁輕微浮動
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 背景是街道對面的灰色商店門面，與街道平行；畫面右＝街尾
+    first_frame: >
+      鏡頭在街道一側、與街道垂直，平視拍街上的一段：背景是對面灰色的商店門面。畫面中間是灰色定格的 @balloon_child，側身朝畫面右、char_left 腳離地、手伸向右上方；
+      紅色的 @balloon 在小孩右上方的半空。@luna 在小孩左後方約 0.5 m、側身朝畫面右，@drone 從她頭部後上方露出一半。雨滴停在半空。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @balloon 整鏡以約每秒 0.5 m 往上飄，約 [12,3.5] 飛出畫面上緣。@luna 往前半步，[12,2.5] 用 char_right 手輕拍 @balloon_child 的肩膀：小孩依 @restore_touch 恢復黃色雨衣，
+          接著往畫面右跑 3 步、手伸向 @balloon，本鏡結束時仍在奔跑中（在畫面寬約 70%）。@luna 拍完後停步看著小孩，表情驚喜。小孩不回頭。
+        realize: model+post
+    last_frame: >
+      同一構圖：黃色雨衣的 @balloon_child 在畫面寬約 70% 處奔跑中、手伸向畫面上緣（@balloon 已飛出畫面）；@luna 停在原地側身看著小孩，嘴角微揚；@drone 在她肩旁。
+    beat_events:
+      - at: [12, 2.5]
+        event: "@luna 輕拍 @balloon_child 肩膀，小孩恢復並開始跑"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 拍肩是精確動作，走 B 路線。小孩只拍側影，雨衣帽子遮住臉。小孩恢復的變色由後製做，奔跑由影片模型生成。
+
+  - id: s013
+    section: verse
+    story_beat: verse
+    span: {from: [13, 1], to: [14, 1]}
+    lyrics: [6]
+    place: "@street"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: fg}
+        size: 腰以上，頭頂在畫面高約 15%
+        facing: three_quarter_right
+        state: 先看著畫面右後方（街尾方向）的小孩；[13,2] 起低頭看自己舉起的 char_right 手掌
+      - ref: "@balloon_child"
+        placement: {x: center_right, y: middle, depth: bg}
+        size: 全身，身高約畫面高 30%，略失焦
+        facing: profile_right
+        state: 首幀仍是黃色雨衣、奔跑中；[13,1] 起 6 幀內退回灰色、停在半空中的奔跑姿勢
+      - ref: "@balloon"
+        placement: {x: center_right, y: top, depth: bg}
+        size: 直徑約畫面高 5%，在畫面寬約 75%、畫面高約 8%
+    first_frame: >
+      @luna 腰以上在畫面左半前景、四分之三側面朝畫面右，看著右後方：@balloon_child 穿著黃色雨衣在背景奔跑中（略失焦），紅色 @balloon 在更高處。
+      背景其他東西全是灰色。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [13,1] @balloon_child 與 @balloon 同時依 @restore_touch 在 6 幀內退回灰色：小孩停在奔跑姿勢、@balloon 停在半空。
+          @luna 的笑容消失；[13,2] 起她慢慢舉起 char_right 手、低頭看掌心，直到本鏡結束。
+        realize: model+post
+    last_frame: >
+      同一構圖：背景的小孩與 @balloon 都是灰色、定格；@luna 低頭看著舉在胸前的 char_right 掌心，表情困惑、凝重。
+    beat_events:
+      - at: [13, 1]
+        sync: bar 13 正拍
+        event: "@balloon_child 與 @balloon 在 6 幀內退回灰色、定格"
+      - at: [13, 2]
+        event: "@luna 舉起 char_right 手、低頭看掌心"
+      - at: [13, 4.62]
+        sync: 人聲「時間」32.00 s（「只有時間不停往前」）
+        event: "@luna 的手指輕輕握起（表示她明白這力量只能撐一下）"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: "@balloon 恢復約 2.7 s（[11,4.18]→[13,1]），小孩約 1.4 s（[12,2.5]→[13,1]），兩者在同一幀開始退回。退回灰色由後製做。@drone 在她 char_left（遠側）肩旁、被她身體擋住，不入鏡。"
+
+  - id: s014
+    section: verse
+    story_beat: verse
+    span: {from: [14, 1], to: [15, 1]}
+    lyrics: [6, 7]
+    place: "@street"
+    shot_size: ELS
+    angle: eye
+    route: C
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: screen_left, y: middle, depth: fg}
+        size: 只有失焦的後腦與 char_left 肩膀，佔畫面左緣約 15% 寬；@drone 在她 char_left 肩旁、畫面左緣外，不入鏡
+        facing: away
+        state: 抬頭望向街尾
+      - ref: "@city"
+        placement: {x: center, y: middle, depth: bg}
+        size: 長焦壓縮的街尾遠景：約 1.5 km 外的彩色街區佔畫面中段，畫面寬約對應 400 m
+      - ref: "@silence"
+        placement: {x: center_left, y: middle, depth: bg}
+        size: 灰彩交界是一條斜斜穿過遠方樓群的界線，首幀在畫面寬約 35%，末幀推進到約 52%
+      - ref: "@signal_tower"
+        placement: {x: center_right, y: upper, depth: bg}
+        size: 在彩色區後方，塔身下半被樓群擋住，看得到觀景台與天線，觀景台寬約畫面寬 4%；整鏡仍在彩色區
+    first_frame: >
+      長焦鏡頭越過 @luna 的肩膀看街尾：畫面左緣是她失焦的後腦與肩膀。被長焦壓縮的遠方樓群擠滿畫面中段：畫面寬約 35% 以左的大樓是灰色、定格的，
+      以右的大樓仍是彩色，洋紅、青、琥珀色霓虹與全息看板亮著，雨在彩色區裡仍落下。灰彩交界是一條斜穿樓群的銳利界線。
+      @signal_tower 的觀景台與天線從彩色樓群後方露出（畫面右上）。前景街道兩側的灰色商店樓框住畫面上下。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          灰彩交界從畫面寬約 35% 往右推進到約 52%（界線在那一帶與視線約成直角、橫向推進，實際約 68 m，每秒約 30 m）：被掃過的大樓在 @silence 邊界帶通過時顏色退成灰、霓虹停住、雨滴停在半空。
+          @luna 的頭與肩膀不動。
+        realize: post
+    last_frame: >
+      同一構圖：灰彩交界推進到畫面寬約 52%，左邊多出一塊灰色樓群；右邊仍是彩色，@signal_tower 仍在彩色區；@luna 的後腦與肩膀不動。
+    beat_events:
+      - at: [14, 3.68]
+        sync: 人聲「把腦海裡」33.74 s
+        event: 推進中的界線開始掃過一面寬約 12 m 的大型全息看板（在畫面寬約 40%、寬約畫面寬 3%），由左往右約 10 幀掃完、退成灰色
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 走 C 路線：關鍵幀畫一張彩色版、一張 frozen 版的遠景，後製用沿界線移動的遮罩在兩版之間推進；前景肩膀加輕微視差。景別標 ELS：前景只有失焦的局部，不算人物。
+
+  - id: s015
+    section: verse
+    story_beat: verse
+    span: {from: [15, 1], to: [16, 1]}
+    lyrics: [7]
+    place: "@street"
+    shot_size: MCU
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 胸口以上，雙眼在畫面高約 35%，臉在畫面寬約 35%
+        facing: three_quarter_right
+        state: 看著面前的 @tower_hologram，臉被 @tower_hologram 的青光照亮；表情從凝重變成堅定
+      - ref: "@drone"
+        placement: {x: center_right, y: middle, depth: fg}
+        size: 直徑約畫面高 18%，中心在畫面寬約 72%、畫面高約 50%
+        facing: three_quarter_left
+        state: 為了投影暫時飄到她面前（glossary drone.position 的例外），光帶朝向 @luna；[15,4] 起光帶轉向畫面右（街尾方向）；下一鏡回到她 char_left 肩旁
+      - ref: "@tower_hologram"
+        placement: {x: center, y: middle, depth: mg}
+        size: 高約畫面高 35%，在 @drone 與 @luna 之間、中心在畫面寬約 53%，底部與 @luna 下巴同高
+    first_frame: >
+      @luna 胸口以上在畫面左半，四分之三側面朝畫面右；@drone 在前景右側、她面前約 0.6 m，光帶朝向她。兩者之間還沒有 @tower_hologram。背景是失焦的灰色街道。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          [15,1.5] @drone 光帶 glow_pulse，同一幀 @tower_hologram 開始在 4 幀內由下往上掃出，之後表面掃描線持續往上移動；青光照亮 @luna 的臉。
+          @luna 看著 @tower_hologram，[15,3] 起表情轉為堅定。[15,4] @tower_hologram 在 4 幀內由上往下收掉，@drone 的光帶轉向畫面右（街尾方向），@luna 的視線跟著轉向畫面右遠處。
+        realize: model+post
+    last_frame: >
+      同一構圖：@tower_hologram 已消失；@drone 光帶朝畫面右；@luna 的臉轉向畫面右遠處（看向街尾），眼神堅定，臉上不再有青光。
+    beat_events:
+      - at: [15, 1.5]
+        event: "@drone 光帶 glow_pulse，@tower_hologram 4 幀內出現"
+      - at: [15, 4]
+        event: "@tower_hologram 4 幀內收掉；@drone 光帶與 @luna 視線轉向畫面右"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: "@tower_hologram 與臉上青光由後製合成；@luna 的表情與轉頭、@drone 的轉向由影片模型生成。畫面右＝街尾方向，與 s011–s013 一致；s016 改從背後拍她望向街尾。"
+
+  - id: s016
+    section: verse
+    story_beat: verse
+    span: {from: [16, 1], to: [17, 1]}
+    lyrics: [7, 8]
+    place: "@street"
+    shot_size: LS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@luna"
+        placement: {x: center, y: middle, depth: mg}
+        size: 全身，距鏡頭約 3.5 m，身高約畫面高 45%，腳在畫面高約 88%（與 s009 同焦距）
+        facing: away
+        state: 背對鏡頭站在街心望向街尾；[16,4] 起步往街尾跑
+      - ref: "@drone"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 直徑約 @luna 頭部的 1.2 倍；在她 char_left 肩旁（畫面左）
+        facing: away
+        state: "[16,4] 和她一起往前衝"
+      - ref: "@street"
+        placement: {x: center, y: middle, depth: bg}
+        size: 與 s009 相同的街道透視，消失點在畫面水平正中、畫面高約 45%
+      - ref: "@signal_tower"
+        placement: {x: center, y: upper, depth: bg}
+        size: 街尾正上方的剪影，天線尖端在畫面高約 22%；鏡頭推近後略大於 s009
+    first_frame: >
+      與 s009 同樣朝街尾的街心視角、同焦距，但鏡頭較近：@luna 背對鏡頭站在畫面正中、距鏡頭約 3.5 m，@drone 回到她左肩旁。
+      整條街灰階、frozen，街尾的彩色霓虹與 @signal_tower 剪影在她頭頂上方遠處（彩色區的範圍以 s014 末幀為準，廣角下與 s009 幾乎看不出差別）；她的頭頂與塔的觀景台在畫面上下對齊。
+    motion:
+      camera: {move: push_in, speed: slow, realize: model}
+      subject:
+        text: >
+          鏡頭緩慢推近（本鏡內約 8%）。@luna 站定望向街尾，雙手握拳；[16,4] 她往前起跑，@drone 同時往前衝。本鏡結束在她跨出第一步的瞬間。
+        realize: model
+    last_frame: >
+      鏡頭略推近：@luna 背對鏡頭、跨出第一步（char_right 腳在前、身體前傾），@drone 在她左肩旁往前衝；街尾的 @signal_tower 剪影在她頭頂上方。
+    beat_events:
+      - at: [16, 4]
+        sync: Prechorus 弱起人聲「從」38.44 s；bar 16 是鼓的過門
+        event: "@luna 起跑"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    notes: 首尾呼應 s009 的構圖。起跑的動作接 Prechorus 第一鏡（預計用 cut_on_action）。

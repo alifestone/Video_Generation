@@ -90,7 +90,7 @@ entities:
       color: "白色外殼 #f4f4f6，分割線 #a8a8b0"
       light: "正面一條橫向的青色光帶 #29d3f5（當作「眼睛」），底部一圈淡青色光暈"
       motion: 懸浮，沒有螺旋槳；移動時平滑滑行；停下時輕微上下浮動，幅度約 2 cm、週期約 2 拍
-      position: 全片固定在 @luna 的 char_left 肩旁（s003 起）
+      position: 全片固定在 @luna 的 char_left 肩旁（s003 起）；執行劇情功能（投影、開門）時可暫時離開，做完回到原位
     not_this:
       - 不是有螺旋槳的四軸無人機
       - 沒有手臂、沒有臉部五官、不說話、外殼上沒有文字或 logo
@@ -161,6 +161,52 @@ entities:
     not_this:
       - 不是直升機停機坪，地面沒有 H 標記或任何字
       - 艙口不是往上掀的蓋子，也不是光圈式葉片
+
+  street:
+    kind: place
+    name: 商店街
+    status: proposed
+    definition: "@launch_roof 那棟大樓前的一條商店街，筆直通往 @city 中心；Verse 全段在這裡。"
+    look:
+      layout: 筆直的步行商店街，寬約 15 m，兩側是 4–6 層的商店樓；街道正對 @city 中心，從街上往遠處看，街尾約 1.5 km 外是仍為彩色的街區，@signal_tower 的剪影在街尾正上方
+      storefront: 一樓是玻璃櫥窗的商店（櫥窗內沒有文字招牌），二到四樓外牆掛著全息看板（只有抽象色塊或影像，無文字）
+      ground: 濕的石板路面，散布直徑 0.5–2 m 的水窪
+      air: 懸浮車停在街道上方約 6–10 m 處；細雨停在半空
+      extras: 街上有零散的定格路人（灰色、像雕像），約每 10 m 一兩位，以背影與側影為主
+      state: 位在 @silence 範圍內，全部 frozen；看板與路燈仍亮（@silence 不改亮度），所以街道被中性的灰白光照亮
+    not_this:
+      - 沒有任何文字招牌、店名、路牌
+      - 不是車道，路面上沒有行駛中的車
+
+  balloon_child:
+    kind: character
+    name: 追氣球的小孩
+    status: proposed
+    definition: "@street 上一個定格的路人小孩，正在追一顆飛走的 @balloon。路人不算第二角色（project.yaml extras_count_as_character: false）。"
+    look:
+      body: 約 6 歲，身高約 1.15 m
+      outfit: "連帽黃色雨衣 #f2c230（帽子戴著，遮住大半張臉）、深藍色雨靴 #1f2a44"
+      pose_frozen: 往街尾方向奔跑中、char_left 腳離地，char_right 手往上伸向前上方的 @balloon
+      face: 只拍背影與側影，帽子遮住臉，不畫清楚的五官
+      state: frozen 時全身灰階；@luna 碰到後依 @restore_touch 恢復黃色雨衣與動作
+    not_this:
+      - 不和 @luna 互動、不回頭看她
+      - 不是第二主角，之後的段落不再出現
+
+  balloon:
+    kind: object
+    name: 紅氣球
+    status: proposed
+    definition: "@balloon_child 追著的一顆氦氣球，定格在半空。"
+    look:
+      shape: 圓形橡膠氦氣球，下方有一條細繩
+      size: 直徑約 35 cm；繩長約 0.6 m
+      color: "紅色 #d8323a，表面有柔和高光；繩子白色"
+      position_frozen: 在 @balloon_child 伸出的手前上方約 0.3 m（往街尾方向），氣球底部離地約 1.9 m，繩尾垂到離地約 1.3 m，剛好在小孩指尖前方
+      state: frozen 時灰階、停在半空；恢復時變回紅色並以約每秒 0.5 m 往上飄
+    not_this:
+      - 氣球上沒有圖案或文字
+      - 不是心形或其他造型氣球
 
   signal_tower:
     kind: place
@@ -250,6 +296,21 @@ entities:
       - 不是雷射武器，不會燒穿或炸開東西
       - 不會恢復顏色（恢復顏色是 @restore_touch，只有 @luna 會）
 
+  tower_hologram:
+    kind: vfx
+    name: 全息訊號塔
+    status: proposed
+    definition: "@drone 投影在 @luna 面前的一個小型 @signal_tower 全息模型，用來告訴她要去哪裡。"
+    look:
+      shape: "@signal_tower 的縮小模型：細長塔身、中上段圓盤觀景台、頂端天線，比例與 glossary 的剪影相同"
+      size: 高約 25 cm，懸在 @drone 光帶正前方約 30 cm，底部與 @luna 下巴同高
+      color: "半透明青色 #29d3f5，輪廓線較亮，表面有細的水平掃描線往上移動"
+      motion: 出現時 4 幀內由下往上掃出；存在時不自轉，只有表面掃描線持續往上移動；消失時 4 幀內由上往下收掉
+      realize: 由後製合成
+    not_this:
+      - 沒有文字、數字、地圖或箭頭
+      - "@drone 與全息塔之間沒有可見的投影光束"
+
   silence:
     kind: state
     name: 靜默
@@ -259,7 +320,7 @@ entities:
       color: 飽和度降到 0（純灰階），亮度不變
       motion: 區域內的一切停在半空：雨滴、水花、煙、旗子、行人都靜止
       boundary: 被吞沒與未被吞沒的區域之間，是一條約 1 m 寬的漸層帶；顏色在帶內由飽和逐漸變灰；帶內有細小、靜止的灰色顆粒
-      spread: 邊界緩慢向外推進，速度約每秒 1 m；推進時沒有光、沒有聲音特效
+      spread: 邊界向外推進，速度約每秒 30 m（2026-10-23 使用者改，原為每秒 1 m）；推進時沒有光、沒有聲音特效。這個速度只用來決定一鏡之內看得到多少推進，不用來推算全片的地理與時間
     not_this:
       - 不是黑霧、黑洞、漩渦或怪物
       - 不是冰凍：沒有冰晶與白霜
@@ -270,8 +331,8 @@ entities:
     status: proposed
     definition: "@luna 身體碰到的 frozen 物體短暫恢復原本的顏色與動態，之後又被 @silence 蓋回灰色定格。只有 @luna 有這個能力（@drone 與平台沒有）。Hook 是小小的預告（雨滴），Verse 她才真正發現這個能力。"
     look:
-      restore: 物體在 2 幀內恢復原色，動作從停住的地方接著進行；恢復時沒有發光、光暈或粒子特效
-      duration: 依鏡頭指定（Hook 的雨滴約 12 幀）
+      restore: 被碰到的物體整個恢復（一整個水窪、一整顆氣球連繩子、一整個人），在 2 幀內恢復原色，動作從停住的地方接著進行；恢復時沒有發光、光暈或粒子特效
+      duration: 依鏡頭指定（Hook 的雨滴約 12 幀）；duration 是恢復維持的時間，不含之後 6 幀的退回
       return: 時間到時顏色在 6 幀內退回灰階、動作停在當下的位置
       rain_drop: 恢復的雨滴是透明水珠，映出附近光源的顏色（平台白光、@drone 的青色光帶），會往下落；退回灰色時停在半空。遠景裡水珠太小，後製把恢復中的水珠亮度提高到約 2 倍，讓它們看得見
     not_this:

@@ -21,7 +21,9 @@ FIELD_ZH = {"style": "風格", "role": "角色設定", "notes": "備註", "refs"
             "bottom": "下端", "top": "上端", "wall": "牆面", "rings": "燈環", "building": "大樓", "roof": "樓頂",
             "hatch": "艙口", "state": "狀態", "silhouette": "剪影", "location": "位置", "state_at_hook": "Hook 時的狀態",
             "restore": "恢復", "duration": "持續時間", "return": "退回", "rain_drop": "雨滴",
-            "travel": "移動方式", "timing": "時間", "position": "位置"}
+            "travel": "移動方式", "timing": "時間", "position": "位置",
+            "storefront": "店面", "ground": "路面", "air": "空中", "body": "體型", "outfit": "服裝",
+            "pose_frozen": "定格姿勢", "face": "臉", "position_frozen": "定格位置"}
 REALIZE_ZH = {"model": "影片模型生成", "post": "後製", "model+post": "影片模型＋後製", "none": "不動"}
 
 

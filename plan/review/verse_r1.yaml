@@ -1,0 +1,333 @@
+# Verse（s009–s016）第 1 輪歧義審稿（tools/prompts/plan_critic.md，Claude Sonnet 5.5，2026-10-23）
+# status：open＝等使用者回答；resolved＝已處理（resolution 寫怎麼處理）
+round: verse_r1
+issues:
+- id: Q01
+  where: shots.s011.subjects[2].size
+  category: 4
+  quote: 在她 char_left 肩旁（她臉朝畫面右前方，char_left 在畫面左）
+  problem: '@luna 朝畫面右前方（three_quarter_right）時，char_right 在靠鏡頭、偏畫面左的一側，char_left 在遠側、偏畫面右；drone 放在畫面左就是她的 char_right 側，違反「全片固定在 char_left」。'
+  question: s011 的 @drone 要在她的 char_left（那就是畫面右側、被她身體部分遮住或在她背後），還是為了構圖放在畫面左（那就破例在 char_right）？
+  options:
+  - 維持 char_left：drone 改在畫面右、她身後偏遠側，露出一部分
+  - 破例：s011 drone 在 char_right（畫面左），並在 glossary drone.position 註明例外
+  - 改 @luna 的朝向（例如 profile_left），使 char_left 落在畫面左
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。@drone 維持在 char_left：s011 她臉朝畫面右前方，char_left 是遠側，@drone 在她頭部右後方（畫面寬約 48%、高 45%），被肩膀遮住約 1/3。
+- id: Q02
+  where: shots.s012.subjects[3].size
+  category: 4
+  quote: 她面向畫面右，char_left 在靠鏡頭的一側，略偏畫面左上
+  problem: '@luna 面向畫面右（profile_right）時，鏡頭看到的是她的 char_right（腿環也在這側），char_left 在遠側、被身體遮住；原文寫 char_left 靠鏡頭，左右剛好相反。'
+  question: s012 的 @drone 在 @luna 的哪一側？是遠側（被她遮住大半、只露一部分）還是近側（破例在 char_right）？
+  options:
+  - 遠側 char_left：drone 在她身後偏畫面右上，部分被遮住，改寫 size 與 first_frame
+  - 近側：破例在 char_right，glossary 註明例外
+  - '@luna 面向改為 profile_left，char_left 才會靠鏡頭'
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s012 改正：她面向畫面右時 char_left 是遠側；@drone 從她頭部後上方露出約一半（畫面寬約 33%、高 32%）。拍肩改用靠鏡頭的 char_right 手。
+- id: Q03
+  where: shots.s013.subjects[3].size
+  category: 4
+  quote: 只露出右半邊，在畫面左上緣
+  problem: '@luna 是 three_quarter_right，char_left 在遠側偏畫面右；drone 在畫面左上緣是她的 char_right 側。同樣與 s011 的左右問題。另外「只露出右半邊」是 drone 的右半邊還是畫面中看到的右半邊，也沒寫。'
+  question: s013 的 @drone 在 @luna 的 char_left（遠側）還是 char_right？「右半邊」指畫面的右半邊嗎？
+  options:
+  - drone 在 char_left 遠側，畫面右上、被她肩膀部分遮住
+  - 破例在 char_right（畫面左上緣），寫明例外
+  - s013 不拍 drone（它在畫面外），刪掉該主體
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s013 的 @drone 在遠側、被她身體擋住，不入鏡；從 subjects 刪除，寫在 notes。
+- id: Q04
+  where: shots.s015.subjects[1].size
+  category: 4
+  quote: 在她 char_left 肩前方，光帶朝向 @luna 與 @tower_hologram
+  problem: '@luna 是 three_quarter_left（面向畫面左前方），她的 char_left 在近側偏畫面右；drone 卻放在 center_left（她的畫面左，也就是她面前）。first_frame 又寫「前景左側、她的左肩前方」，「左肩前方」與畫面左衝突。同時 hologram 在 drone 與 @luna 之間，drone 在她前方而不在肩旁，也違反「全片固定在
+    char_left 肩旁」。'
+  question: s015 的 @drone 到底在哪？是在她 char_left 肩旁（畫面右、近側），還是飄到她面前（畫面左）？若飄到面前，是否算此鏡的例外？
+  options:
+  - drone 在她 char_left 肩旁（畫面右前景），hologram 懸在 drone 與她之間偏畫面中右，她視線偏向畫面右
+  - 維持 drone 在畫面左、她面前，破例並在 glossary drone.position 註明 s015 例外，first_frame 改成「面前」不寫「左肩」
+  - 把 @luna 改成 three_quarter_right，drone 在畫面左（她 char_right 側）仍是破例，不建議
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s015 的 @drone 為了投影暫時飄到她面前（畫面右前景），glossary drone.position 補「執行劇情功能時可暫時離開，做完回到原位」；@luna 改成 three_quarter_right，最後望向畫面右（街尾）。
+- id: Q05
+  where: shots.s011.subjects[3].size
+  category: 4
+  quote: 只看得到失焦的灰色背影一角（帽子與伸出的手），在畫面右下
+  problem: s011 的 @balloon 在畫面寬 62%、@balloon_child 在畫面右下（x 大於 balloon），小孩的手伸向 balloon 就是往畫面左；s012 卻是小孩往畫面右跑、balloon 在小孩右上方。氣球相對小孩的方向在兩鏡相反，而且 s011 小孩是背影，背影＋手往左伸＝小孩背對鏡頭朝畫面左前方。
+  question: 兩鏡的氣球與小孩的相對位置如何統一？s011 的小孩要放在 balloon 的左邊（畫面左下）嗎？還是 s012 改成小孩往畫面左跑？
+  options:
+  - s011 小孩改在畫面左下偏後（x 小於 balloon），伸手往右，與 s012 一致
+  - s012 改成小孩往畫面左跑、balloon 在小孩左上方，鏡頭左右對調
+  - 兩鏡拍攝角度不同，在 notes 寫明 s011 是反打角度，並畫示意位置
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。統一：氣球在小孩右上方（往街尾方向）。s011 小孩改在畫面寬約 55% 的下緣、手往右上方伸；glossary 氣球位置改為小孩手前上方約 0.3 m。
+- id: Q06
+  where: shots.s015.notes
+  category: 6
+  quote: 畫面左＝街尾方向，與 s016 的背影方向接得上
+  problem: s009／s014／s016 鏡頭在 @luna 背後朝街尾拍，街尾在畫面深處；s010 她朝鏡頭走來，s011–s013 她朝畫面右（面向、小孩跑向右），s015 卻說畫面左才是街尾。s011–s013 的畫面右是朝街尾還是朝大樓沒有寫，造成 @luna 在 s012 面向大樓、s015 面向街尾的方向反覆。
+  question: s010–s013（側拍街道的鏡頭）裡，畫面右是朝街尾還是朝大樓？@luna 與小孩跑的方向要不要和街尾一致？
+  options:
+  - 畫面右＝街尾：s015 改成畫面右（@luna 朝畫面右、drone 光帶轉向畫面右），重排 s015 的左右
+  - 畫面左＝街尾：s011–s013 的小孩與 @luna 面向畫面左，所有左右對調
+  - 維持現狀：小孩往大樓方向跑（背離塔）是刻意的，在 notes 寫明
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。側拍（s011–s015）的畫面右＝街尾，寫進 Verse 開頭註解；小孩往街尾跑；s015 改成畫面右＝街尾。
+- id: Q07
+  where: shots.s012.subjects[1].size
+  category: 5
+  quote: 整鏡往上飄，末幀接近畫面上緣
+  problem: glossary 氣球上升速度每秒 0.5 m，s012 一鏡 1 小節約 2.26 s，上升約 1.1 m；以小孩身高約畫面高 35%（1.15 m）換算，畫面高約 3.3 m，上升等於 34% 畫面高，首幀中心在 12%，末幀會飛出畫面頂端，不是「接近畫面上緣」。
+  question: s012 氣球要不要飛出畫面？若不要，上升速度、起始高度或鏡頭範圍哪個要改？
+  options:
+  - 首幀中心移到畫面高約 40%，末幀約 6%（維持 0.5 m/s）
+  - 氣球上升速度在 s012 改成約 0.2 m/s，並同步改 glossary 與 s011/s013 數字
+  - 允許末幀氣球出畫，last_frame 改寫成「氣球已飛出畫面上緣」
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。允許出畫：s012 氣球首幀中心在畫面高約 19%，以每秒 0.5 m 上升，約 [12,3.5] 飛出畫面上緣；last_frame 改寫。
+- id: Q08
+  where: shots.s011.last_frame
+  category: 5
+  quote: 中心在畫面高約 10%
+  problem: 首幀中心 15%、氣球直徑 18% 畫面高（35 cm）→ 畫面高約 1.9 m；上升約 20 cm 等於 10% 畫面高，末幀中心應在約 5%，不是 10%。
+  question: 末幀氣球中心要在畫面高 5% 還是 10%？若維持 10%，上升量要改成多少？
+  options:
+  - 末幀改為約 5%（氣球上緣幾乎貼畫面上緣）
+  - 維持 10%，首幀中心改為約 20%
+  - 維持 10% 並把上升量寫成約 10 cm（需改飄升速度或幀數）
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s011 末幀氣球中心改為畫面高約 5%。
+- id: Q09
+  where: shots.s011.subjects[1].size
+  category: 4
+  quote: 繩子往下垂到畫面高約 55%
+  problem: 氣球底部約在畫面高 24%，繩長 1.2 m 約等於畫面高 62%（以 35 cm＝18% 換算），繩尾應到約 86%，不是 55%；而且 Luna 站在畫面左，繩尾是否被她或小孩遮住也沒寫。
+  question: 繩尾要到畫面高多少？繩子與 @luna 的手、頭部有沒有交疊？
+  options:
+  - 繩尾到約 86%，在 @luna 右側，不遮擋她
+  - 維持 55%，glossary 繩長改為約 0.6 m
+  - 繩子被畫面下緣裁掉，不要求看到繩尾
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。glossary 繩長改為約 0.6 m（等於畫面高約 31%，從氣球底部約 24% 垂到 55%），在 @luna 右側、不遮住她。
+- id: Q10
+  where: shots.s010.first_frame
+  category: 4
+  quote: 畫面下緣前景是一個直徑約 1.5 m 的灰色水窪
+  problem: 水窪在前景（比 @luna 更靠近鏡頭，鏡頭在離地 30 cm），@luna 卻在距鏡頭約 3 m 處，且只走一步 char_right 腳就踩進水窪。水窪離鏡頭多遠、@luna 一步（約 0.7 m）能不能踩到，兩者不能同時成立；末幀「同一構圖」又要求 @luna 站在水窪裡且身高、腳位不變。
+  question: 水窪中心離鏡頭幾公尺？@luna 踩進去後，末幀她的大小與位置是否變化（會更靠近鏡頭、變大）？
+  options:
+  - 水窪在 @luna 正前方約 0.7 m（離鏡頭約 2.3 m）；末幀她身高放大到畫面高約 85%，改為 MS/FS 並寫明構圖不再相同
+  - '@luna 首幀改為距鏡頭約 1.5 m，水窪在她腳前，FS 改成 MLS'
+  - 鏡頭同步後退或 dolly，維持 @luna 大小不變（camera 改 pull_out）
+  severity: high
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。水窪在她前方約 0.7 m、距鏡頭約 2.3 m（畫面下半中間）；她首幀距鏡頭 3 m、身高 60%，踩進去後 2.3 m、身高約 78%；last_frame 改成「同一個鏡位」並寫出大小變化。
+- id: Q11
+  where: shots.s010.motion.subject.text
+  category: 9
+  quote: 水窪依 @restore_touch 恢復——水花濺起、漣漪往外擴散
+  problem: glossary 規定恢復範圍「只有她身體直接碰到的東西，不會向外擴散」；水窪是整面約 1.5 m 的水，腳只碰到一小塊，但漣漪往外擴散並映出紫髮白衣，等於整面恢復。
+  question: 整個水窪都算「她碰到」的物體嗎？或只有腳周圍的水花與漣漪恢復、其餘水面仍是灰色？
+  options:
+  - 整個水窪視為一個物體，整面恢復（glossary 補一句：被碰到的物體整體恢復）
+  - 只有腳周圍約 30 cm 的水面與水花恢復，漣漪到此為止
+  - 水面維持灰色，只有濺起的水花恢復
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。被碰到的物體整個恢復（整個水窪、整顆氣球連繩、整個人），寫進 glossary restore_touch.restore。
+- id: Q12
+  where: shots.s009.subjects[0].size
+  category: 5
+  quote: 末幀走遠到約畫面高 30%
+  problem: 距鏡頭 4 m 時身高佔 40%，走到 7 m 同鏡頭同焦距，身高應約 23%（40%×4/7），不是 30%；若 30% 對的話，距離只有約 5.3 m（走 1.3 m）。last_frame 與 motion.text 的「走約 3 m」「約 7 m」互相矛盾。
+  question: s009 要以距離為準（7 m，身高約 23%）還是以畫面比例為準（30%，走約 1.3 m）？
+  options:
+  - 以距離為準：末幀身高改約 23%
+  - 以比例為準：末幀 30%、距鏡頭約 5.3 m，走約 1.3 m（步行偏慢，須註明速度）
+  - 鏡頭 dolly 後退一點，維持 3 m、30%
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。以距離為準：s009 末幀身高改為約 23%（走約 3 m，每秒約 1.3 m）。
+- id: Q13
+  where: shots.s009.first_frame
+  category: 3
+  quote: 她與 @drone 是畫面裡唯一有顏色的東西
+  problem: 同一段落下一句又寫街尾有一小片彩色霓虹，並且看板「仍亮但沒有顏色」；「唯一有顏色」與街尾彩色區矛盾，@drone 的青色光帶、@luna 的紫髮是否也算色彩也沒說。
+  question: s009 畫面裡「有顏色」的東西有哪些？是否改成「近處只有她與 @drone 有顏色，街尾除外」？
+  options:
+  - 改為「近處（街尾彩色區以外）只有她與 @drone 有顏色」
+  - 刪掉「唯一」，另寫彩色的範圍（街尾、天空）
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。改為「街尾彩色區以外，只有她與 @drone 有顏色」。
+- id: Q14
+  where: shots.s014.motion.subject.text
+  category: 5
+  quote: 灰彩交界從畫面寬約 35% 往右推進到約 52%（實際約 68 m，每秒約 30 m）
+  problem: 68 m 是以界線與視線垂直（橫向）推進換算；但 @silence 向外推進、s008 的界線在 @luna 正前方 1.5 km，界線很可能沿視線方向向塔推進，這時在畫面上只會小幅縮小，不會向右橫移 17% 畫面寬。推進的世界方向沒有交代，後製遮罩的移動方向與量就沒有依據。
+  question: s014 的界線在世界裡是朝哪個方向推進？是橫向掃過街尾、還是朝塔的方向（沿視線往遠處）？
+  options:
+  - 橫向：界線與視線約 90°，從左往右掃過，維持現寫
+  - 界線斜向（約 45°）往塔推進，畫面移動量改為約 12%，實際距離重算
+  - 不要求物理一致，畫面只要看到界線從左往右移動約 17% 即可，glossary 註明
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。橫向：界線在那一帶與視線約成直角、從左往右推進，畫面移動約 17%（約 68 m），寫進 s014。
+- id: Q15
+  where: shots.s014.beat_events[0].event
+  category: 5
+  quote: 看板畫面在 6 幀內退成灰色
+  problem: 界線速度約 30 m/s，glossary 又說邊界帶寬約 1 m，所以一個點被界線帶掃過只要約 0.03 s（不到 1 幀）；一面看板寬若 20 m 約 0.7 s（約 16 幀）才掃完。「6 幀退成灰」對應看板多寬？由界線帶掃過，還是整面看板同時淡成灰？
+  question: 看板要由界線掃過逐漸變灰（寬度與幀數要對應），還是整面 6 幀同時淡灰？看板在畫面中有多大？
+  options:
+  - 界線掃過：看板寬約 6 m（掃過約 6 幀），在畫面寬約 3%
+  - 整面同時 6 幀淡灰，界線只標示位置
+  - 改成約 16 幀，看板寬約 20 m
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。看板寬約 12 m（畫面寬約 3%），界線由左往右約 10 幀掃完、退成灰色。
+- id: Q16
+  where: shots.s014.subjects[0].size
+  category: 4
+  quote: 只有失焦的後腦與 char_left 肩膀，佔畫面左緣約 15% 寬
+  problem: '@drone 全片固定在 @luna 的 char_left 肩旁（背對鏡頭時是她的畫面左側），她的後腦已佔畫面左緣 15% 寬，drone 會在畫面外還是在畫面左緣前景失焦入鏡，沒有寫。'
+  question: s014 的 @drone 要入鏡嗎？在哪？
+  options:
+  - 不入鏡（在畫面左外），寫進 notes
+  - 失焦入鏡，在畫面最左緣、約半個球
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s014 的 @drone 在畫面左緣外，不入鏡。
+- id: Q17
+  where: glossary.tower_hologram.look.motion
+  category: 10
+  quote: 繞垂直軸緩慢自轉（約每 2 拍 90°）
+  problem: 塔身、圓盤、天線都是繞垂直軸對稱的形狀，轉 90° 在畫面上幾乎看不出差別；自轉只有靠掃描線才可能被看到，而掃描線寫的是「往上移動」。旋轉方向（順／逆時針）也沒寫。
+  question: 自轉要如何被看見？是否要在模型上加不對稱的細節，還是自轉其實不必看得出來？
+  options:
+  - 塔身有 4 條亮的垂直稜線，自轉才看得出，順時針（由上往下看）
+  - 圓盤上有一個缺口或亮點作為方向標記
+  - 刪掉自轉，只保留掃描線上移
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。刪掉自轉，只保留表面掃描線往上移動。
+- id: Q18
+  where: glossary.tower_hologram.look.size
+  category: 5
+  quote: 懸在 @drone 光帶正前方約 30 cm、與 @luna 下巴同高
+  problem: 「與下巴同高」是全息塔的底、中心還是頂？s015 寫的是「底部與 @luna 下巴同高」，glossary 沒有說。
+  question: glossary 要寫成「底部與下巴同高」嗎？
+  options:
+  - 改為「底部與 @luna 下巴同高」
+  - 改為「中心與 @luna 下巴同高」，並修改 s015
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。glossary 改為「底部與 @luna 下巴同高」。
+- id: Q19
+  where: shots.s016.first_frame
+  category: 6
+  quote: 街尾的彩色霓虹與 @signal_tower 剪影在她頭頂上方遠處
+  problem: s014 已經讓灰色往彩色街區推進一塊，s016 notes 又說「與 s009 相同的街道透視」，但沒有寫街尾彩色區比 s009 小了多少（約 16 s×30 m/s≈480 m 全段，s009→s016 合計）。
+  question: s016 街尾的彩色區要和 s009 一樣大，還是變小？變小多少（畫面寬佔比或高度）？
+  options:
+  - 比 s009 明顯變小，約縮到 s009 的 2/3，並寫進 first_frame
+  - 與 s009 相同，因為 30 m/s 在 1.5 km 外幾乎看不出（在 notes 註明）
+  - 只在 s014 看到推進，s016 以 s014 末幀的彩色邊界為準
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s016 的彩色區範圍以 s014 末幀為準；廣角下與 s009 幾乎看不出差別，寫進 first_frame。
+- id: Q20
+  where: shots.s016.subjects[0].size
+  category: 5
+  quote: 身高約畫面高 45%，腳在畫面高約 88%
+  problem: s009 距鏡頭 4 m 時是 40%（腳 85%），s016 說距鏡頭約 3 m 是 45%；同樣視角下 3 m 應約 53%。s016 又說「與 s009 相同的街道透視」，焦距是否改變沒有寫。
+  question: s016 的焦距是否與 s009 相同？若相同，3 m 的身高要寫成多少？
+  options:
+  - 同焦距：改成約 53%，或距離改為約 3.5 m（45%）
+  - s016 用較長焦距（寫出視角），壓縮距離
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s016 與 s009 同焦距，距離改為約 3.5 m（身高約 45%）。
+- id: Q21
+  where: shots.s015.motion.subject.text
+  category: 2
+  quote: '[15,1.5] @drone 光帶 glow_pulse，@tower_hologram 在 4 幀內由下往上掃出'
+  problem: glow_pulse 是 1 幀升到約 2 倍、3 幀回落共 4 幀，hologram 掃出也是 4 幀，兩者是同一幀開始、還是 glow_pulse 先？hologram 出現是由脈衝觸發，順序影響後製。
+  question: glow_pulse 與 hologram 掃出是同一幀開始，還是 glow_pulse 先一幀？
+  options:
+  - 同一幀開始
+  - glow_pulse 先 1 幀，hologram 從脈衝最亮那一幀開始掃出
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。glow_pulse 與全息塔掃出在同一幀開始。
+- id: Q22
+  where: shots.s010.motion.subject.text
+  category: 5
+  quote: 約 24 幀後水花在 6 幀內退回灰色、停在半空
+  problem: 「約 24 幀後」是從 [10,1.71] 起算 24 幀才開始退，還是 24 幀內包含退回的 6 幀？glossary 的 duration 定義是「依鏡頭指定」，退回另有 6 幀；同一個詞兩種讀法。
+  question: 水窪恢復是 24 幀（含 6 幀退回）還是 24+6=30 幀？
+  options:
+  - 24 幀停留後再 6 幀退回，共 30 幀
+  - 共 24 幀，其中最後 6 幀退回
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。恢復維持 24 幀，之後再 6 幀退回，共 30 幀；glossary duration 補「不含之後 6 幀的退回」。
+- id: Q23
+  where: shots.s013.notes
+  category: 5
+  quote: 小孩約 1.6 s（[12,2.5]→[13,1]）
+  problem: bar 12 起 [12,2.5]→[13,1] 是 2.5 拍，一拍約 0.566 s，共約 1.4 s，不是 1.6 s。
+  question: 小孩恢復時間要改成約 1.4 s 嗎？
+  options:
+  - 改為約 1.4 s
+  - 保留 1.6 s，把拍點改為 [12,2.2]
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。改為約 1.4 s。
+- id: Q24
+  where: shots.s009.subjects[3].size
+  category: 4
+  quote: 觀景台寬約畫面寬 1%
+  problem: s008 末幀的 @signal_tower 距離相同（約 3 km），觀景台是畫面寬 3%；s009 同樣是 LS 朝塔拍，同距離卻只有 1%，焦距若相同則不符，也沒有說 s009 改用較廣的焦距。
+  question: s009 的焦距與 s008 不同嗎？塔在畫面中的大小要以哪個為準？
+  options:
+  - s009 改為約 2%，與 s008 的焦距相近
+  - 維持 1%，notes 註明 s009 用較廣的焦距
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。維持 1%，s009 註明用較廣的焦距（約 24 mm）。
+- id: Q25
+  where: shots.s010.first_frame
+  category: 4
+  quote: 鏡頭貼近濕石板路面（離地約 30 cm），往上仰拍迎面走來的 @luna 全身
+  problem: s009 是 @luna 背對鏡頭往街尾走，s010 她迎面朝鏡頭走來，鏡頭是在她前方（街尾那一側）朝大樓方向拍，還是她折返？鏡頭位置與 s009 的關係、背景是大樓還是街尾（塔在鏡頭後方、不入鏡）都沒有寫。
+  question: s010 鏡頭是在 @luna 前方（街尾方向）面向大樓拍嗎？她是否仍在往街尾走？
+  options:
+  - 是，鏡頭在她前方朝大樓拍，她仍往街尾走，塔在鏡頭背後，寫進 first_frame
+  - 她折返往大樓走，需改 story
+  severity: medium
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。s010 鏡頭在她前方（街尾那一側）往大樓方向拍，她仍往街尾走，@signal_tower 在鏡頭背後不入鏡；寫進 first_frame 與 subjects。
+- id: Q26
+  where: shots.s014.shot_size
+  category: 4
+  quote: 'shot_size: ELS'
+  problem: vocab.ELS 定義是「人物高度不到畫面高 1/8，或畫面中沒有人物的環境全景」，s014 前景有後腦與肩膀，有人物入鏡，但不是全身，按定義屬於哪一類不清楚。
+  question: s014 標 ELS 是否合理？人物只露出前景一角時，景別怎麼標？
+  options:
+  - 維持 ELS，在 vocab 補充：前景只有失焦局部不計為人物
+  - 改標 LS
+  severity: low
+  status: resolved
+  resolution: Claude 決定（依授權，2026-10-23）。維持 ELS，s014 notes 註明前景只有失焦局部、不算人物。

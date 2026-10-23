@@ -36,13 +36,15 @@ beats:
   - id: verse
     section: verse
     bars: [9, 16]
-    places: ["@city"]
+    places: ["@street"]
     story: >
-      @luna 走進 frozen 的 @city。她碰到的東西會短暫恢復顏色與動態，但很快又被 @silence 蓋回灰色。
-      @drone 帶路，指向遠方的 @signal_tower。
+      @luna 走進 frozen 的 @street。她踩進水窪，水花短暫恢復，她第一次注意到自己的能力（@restore_touch）。
+      她用指尖碰了一顆定格的 @balloon，再碰了追著它的 @balloon_child：@balloon 往上飄、@balloon_child 追了兩三步，
+      然後兩個一起被 @silence 蓋回灰色。她看著自己的手；抬頭時看見遠方的彩色街區又被吞掉一塊。
+      @drone 投影 @tower_hologram，告訴她目標是 @signal_tower；她望向街尾的塔，起步。
     emotion: 好奇→發現自己的能力→意識到不夠
     lyric_link: 「一張空白的畫面…沒有攝影棚、沒有既定劇本…把不可能的畫面變成眼前」＝她在 frozen 的 @city 裡第一次讓東西動起來
-    status: proposed
+    status: confirmed
 
   - id: prechorus
     section: prechorus

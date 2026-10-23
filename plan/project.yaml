@@ -46,3 +46,11 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   signal_tower_at_hook: color_zone_threatened  # 塔在彩色區，灰色正逼近
   roof_hatch_opened_by: echo_beam        # 艙口由 ECHO 光束打開（仍維持灰色）
   exit_action: leap_kneel_landing        # 她躍出艙口、單膝落地
+  # 2026-10-23 Verse
+  verse_descent: cut_to_street           # 樓頂到街上直接切，不拍下樓
+  verse_touches: [puddle, balloon, child]   # 觸碰恢復的對象：水窪、氣球、路人小孩
+  child_and_balloon: chasing             # 小孩在追氣球（同一件事）
+  not_enough_shown_by: revert_and_distant_advance   # 恢復的東西變回灰＋遠方彩色區被吞
+  drone_points_by: tower_hologram        # ECHO 投影小全息塔指路
+  verse_structure: 8_shots_1_bar         # 8 鏡各 1 小節
+  silence_speed: 30_m_per_s              # 靜默邊界每秒約 30 m（全片）
