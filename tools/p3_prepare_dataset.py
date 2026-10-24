@@ -3,7 +3,7 @@
 
 python3 tools/p3_prepare_dataset.py --selection lora/selection_v1.json --version v1
 
-selection 檔是 {"keep": [{"file": "...png", "crop": [x0, y0, x1, y1] | null, "tags": "額外標籤", "note": "..."}], "reject": [...]}。
+selection 檔是 {"keep": [{"file": "...png", "framing": "實際構圖標籤", "crop": [x0,y0,x1,y1] 或 "crop_frac": [0-1 比例], "crop_kind": "upper", "tags": "額外標籤"}], "reject": [{"file", "reason"}]}。
 每張圖輸出到 lora/<version>/dataset/<repeats>_lunacsf/，旁邊放同名 .txt 標籤（Danbooru 風格，給 Illustrious）。
 標籤只寫會變動的東西（構圖、角度、姿勢、表情、光線、背景）；角色固定外觀不寫，讓觸發詞 lunacsf 吸收。
 """
@@ -78,6 +78,32 @@ TAGS = {
     "fs_front_wide": "full body, standing, looking at viewer, wide shot, white background, simple background",
     "fs_dynamic_lean": "full body, leaning forward, ready to run, determined, white background, simple background",
 }
+FRAMING_RE = re.compile(r"^(full body|cowboy shot|upper body|portrait|close-up, face|close-up|lower body)(, )?")
+HAIR = "purple hair, high ponytail, braided hair, hair chain"
+TOP = "white crop top, sleeveless, high collar, zipper, midriff, bracelets"
+SKIRT = "white skirt, cargo skirt, black belt, single thigh strap"
+FEET = "white socks, white sneakers"
+
+
+def outfit_tags(tags, mode):
+    """v2 起：依構圖只寫看得到的固定服裝（v1 全部不寫，結果正面被底模拉成黑裙＋過膝襪）。"""
+    if mode != "visible":
+        return ""
+    back = "from behind" in tags
+    top = TOP.replace("zipper, ", "") if back else TOP
+    if tags.startswith(("close-up", "portrait")):
+        parts = [HAIR, "earrings, high collar"]
+    elif tags.startswith("upper body"):
+        parts = [HAIR, top]
+    elif tags.startswith("cowboy shot"):
+        parts = [HAIR, top, SKIRT]
+    elif tags.startswith("lower body"):
+        parts = [SKIRT, FEET]
+    else:
+        parts = [HAIR, top, SKIRT, FEET]
+    return ", ".join(parts) + ", "
+
+
 CROP_TAGS = {"upper": "upper body", "cowboy": "cowboy shot", "portrait": "portrait", "face": "close-up, face"}
 
 
@@ -91,6 +117,7 @@ def main():
     ap.add_argument("--selection", required=True)
     ap.add_argument("--version", default="v1")
     ap.add_argument("--repeats", type=int, default=5)
+    ap.add_argument("--outfit", choices=["none", "visible"], default="visible")
     a = ap.parse_args()
     sel = json.loads((ROOT / a.selection).read_text())
     out = ROOT / "lora" / a.version / "dataset" / f"{a.repeats}_{TRIGGER}"
@@ -102,16 +129,27 @@ def main():
         src = ROOT / item["file"]
         im = Image.open(src).convert("RGB")
         tags = item.get("tags_override") or TAGS.get(spec_name(src) or "", "")
-        if item.get("crop"):
-            im = im.crop(tuple(item["crop"]))
+        if item.get("framing"):   # 實際出圖的構圖和規格不同時，照實際的寫
+            tags = item["framing"] + ", " + FRAMING_RE.sub("", tags)
+        for old, new in [item["tags_extra_replace"]] if item.get("tags_extra_replace") else []:
+            tags = tags.replace(old, new)
+        box = item.get("crop")
+        if item.get("crop_frac"):
+            x0, y0, x1, y1 = item["crop_frac"]
+            box = (int(x0 * im.width), int(y0 * im.height), int(x1 * im.width), int(y1 * im.height))
+        if box:
+            im = im.crop(tuple(box))
+            if min(im.size) < 896:   # 裁切後太小就放大，讓它能進 1024 的 bucket
+                k = 896 / min(im.size)
+                im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
             kind = item.get("crop_kind")
             if kind:
-                tags = CROP_TAGS[kind] + ", " + re.sub(r"^(full body|cowboy shot|upper body|portrait)(, )?", "", tags)
+                tags = CROP_TAGS[kind] + ", " + FRAMING_RE.sub("", tags)
         if item.get("tags"):
             tags += ", " + item["tags"]
         stem = f"{i:03d}_{Path(item['file']).stem}"
         im.save(out / f"{stem}.png")
-        (out / f"{stem}.txt").write_text(f"{TRIGGER}, {BASE}, {tags}\n")
+        (out / f"{stem}.txt").write_text(f"{TRIGGER}, {BASE}, {outfit_tags(tags, a.outfit)}{tags}\n")
         n += 1
     print(f"{n} 張 → {out.relative_to(ROOT)}")
 

@@ -1,0 +1,675 @@
+{
+ "version": "v2",
+ "reviewer": "Claude Opus 5.5（使用者授權自行完成；外觀五項逐張目視，G0 時請使用者複核）",
+ "date": "2026-10-24",
+ "keep": [
+  {
+   "file": "lora/dataset_raw/001_fs_front_stand_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/001_fs_front_stand_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/002_fs_3q_left_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/002_fs_3q_left_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/003_fs_3q_right_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/003_fs_3q_right_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/005_fs_side_right_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/005_fs_side_right_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/006_fs_back_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/006_fs_back_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/009_fs_high_angle_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/009_fs_high_angle_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/010_act_run_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/010_act_run_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/011_act_jump_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/011_act_jump_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/014_act_arms_open_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/014_act_arms_open_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/015_act_point_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/015_act_point_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/017_act_push_hands_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/017_act_push_hands_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/018_act_fist_up_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/018_act_fist_up_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/019_act_walk_front_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/019_act_walk_front_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/021_ms_front_neutral_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/021_ms_front_neutral_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/022_ms_3q_smile_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/022_ms_3q_smile_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/023_ms_3q_serious_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/023_ms_3q_serious_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/024_ms_side_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/024_ms_side_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/027_ms_look_up_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/027_ms_look_up_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/028_ms_laugh_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/028_ms_laugh_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/029_mcu_front_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/029_mcu_front_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/030_mcu_3q_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/030_mcu_3q_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/031_mcu_surprised_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/031_mcu_surprised_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/032_mcu_side_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/032_mcu_side_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/034_cu_face_3q_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/034_cu_face_3q_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/035_cu_eyes_closed_s0.png",
+   "framing": null,
+   "tags_extra_replace": [
+    "closed eyes",
+    "half-closed eyes"
+   ]
+  },
+  {
+   "file": "lora/dataset_raw/035_cu_eyes_closed_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/036_cu_eyes_open_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/036_cu_eyes_open_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/041_light_dawn_mcu_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/041_light_dawn_mcu_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/042_light_rain_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/042_light_rain_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/043_light_backlit_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/043_light_backlit_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/044_light_overhead_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/044_light_overhead_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/045_bg_rooftop_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/045_bg_rooftop_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/046_bg_street_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/046_bg_street_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/047_bg_control_room_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/047_bg_control_room_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/048_bg_tower_walkway_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/048_bg_tower_walkway_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/049_bg_pod_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/049_bg_pod_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/051_expr_determined_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/051_expr_determined_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/054_expr_calm_smile_s0.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/054_expr_calm_smile_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/055_detail_legs_front_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/055_detail_legs_front_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/058_detail_top_front_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/058_detail_top_front_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/059_fs_front_wide_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/059_fs_front_wide_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/060_fs_dynamic_lean_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/060_fs_dynamic_lean_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/020_act_turn_s0.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/025_ms_back_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/026_ms_hand_chest_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/033_cu_face_s0.png",
+   "framing": "portrait"
+  },
+  {
+   "file": "lora/dataset_raw/039_light_dark_room_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/053_expr_worried_s0.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/008_fs_low_angle_s1000.png",
+   "framing": null
+  },
+  {
+   "file": "lora/dataset_raw/016_act_reach_up_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/038_light_neon_ms_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/052_expr_playful_s1000.png",
+   "framing": "full body"
+  },
+  {
+   "file": "lora/dataset_raw/057_detail_hair_back_s1000.png",
+   "framing": "cowboy shot"
+  },
+  {
+   "file": "lora/dataset_raw/001_fs_front_stand_s1000.png",
+   "crop_frac": [
+    0,
+    0,
+    1,
+    0.52
+   ],
+   "crop_kind": "upper",
+   "note": "從全身圖裁出腰以上"
+  },
+  {
+   "file": "lora/dataset_raw/021_ms_front_neutral_s1000.png",
+   "crop_frac": [
+    0,
+    0,
+    1,
+    0.52
+   ],
+   "crop_kind": "upper",
+   "note": "從全身圖裁出腰以上"
+  },
+  {
+   "file": "lora/dataset_raw/019_act_walk_front_s0.png",
+   "crop_frac": [
+    0,
+    0,
+    1,
+    0.52
+   ],
+   "crop_kind": "upper",
+   "note": "從全身圖裁出腰以上"
+  },
+  {
+   "file": "lora/dataset_raw/048_bg_tower_walkway_s1000.png",
+   "crop_frac": [
+    0,
+    0,
+    1,
+    0.52
+   ],
+   "crop_kind": "upper",
+   "note": "從全身圖裁出腰以上"
+  },
+  {
+   "file": "lora/v1/eval/01_front_stand_s0.png",
+   "tags_override": "full body, standing, looking at viewer, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/02_back_s0.png",
+   "tags_override": "full body, from behind, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/03_side_right_s0.png",
+   "tags_override": "full body, from side, profile, standing, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/05_portrait_s0.png",
+   "tags_override": "cowboy shot, looking at viewer, determined, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/07_upper_smile_s0.png",
+   "tags_override": "cowboy shot, smile, looking at viewer, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/08_run_s0.png",
+   "tags_override": "full body, running, from side, motion lines, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/09_jump_s0.png",
+   "tags_override": "full body, jumping, midair, excited, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/11_arms_open_s0.png",
+   "tags_override": "full body, outstretched arms, smile, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/13_fist_up_s0.png",
+   "tags_override": "cowboy shot, arm up, clenched hand, open mouth smile, night, city lights, bokeh",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/14_look_up_s0.png",
+   "tags_override": "upper body, looking up, parted lips, dark, light from above",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/15_hand_chest_s0.png",
+   "tags_override": "upper body, hand on own chest, looking at hand, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/16_night_street_s0.png",
+   "tags_override": "full body, walking, night, street, wet, rain",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/17_rooftop_s0.png",
+   "tags_override": "full body, standing, rooftop, night, city lights",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/18_control_room_s0.png",
+   "tags_override": "upper body, hands on table, indoors, dark, cyan light",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/22_rim_light_s0.png",
+   "tags_override": "upper body, from side, profile, night sky, rim lighting",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/25_back_hair_s0.png",
+   "tags_override": "upper body, from behind, upper body, hair, braid, hair chain, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/26_lean_sprint_s0.png",
+   "tags_override": "full body, leaning forward, ready to run, determined, white background, simple background",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  },
+  {
+   "file": "lora/v1/eval/30_walk_front_s0.png",
+   "tags_override": "full body, walking towards viewer, night, street, wet",
+   "note": "v1 LoRA 輸出（prompt 含服裝標籤），外觀五項全對"
+  }
+ ],
+ "reject": [
+  {
+   "file": "lora/dataset_raw/004_fs_side_left_s0.png",
+   "reason": "側面朝畫面左卻把腿環畫在靠鏡頭的左腿"
+  },
+  {
+   "file": "lora/dataset_raw/004_fs_side_left_s1000.png",
+   "reason": "側面朝畫面左卻把腿環畫在靠鏡頭的左腿"
+  },
+  {
+   "file": "lora/dataset_raw/007_fs_back_3q_s0.png",
+   "reason": "回頭轉身的角度看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/dataset_raw/007_fs_back_3q_s1000.png",
+   "reason": "回頭轉身的角度看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/dataset_raw/008_fs_low_angle_s0.png",
+   "reason": "s0 外框有一圈青色光暈"
+  },
+  {
+   "file": "lora/dataset_raw/012_act_kneel_land_s0.png",
+   "reason": "單膝落地看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/dataset_raw/012_act_kneel_land_s1000.png",
+   "reason": "單膝落地看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/dataset_raw/013_act_crouch_s0.png",
+   "reason": "出現兩條腿環"
+  },
+  {
+   "file": "lora/dataset_raw/013_act_crouch_s1000.png",
+   "reason": "出現兩條腿環"
+  },
+  {
+   "file": "lora/dataset_raw/016_act_reach_up_s0.png",
+   "reason": "s0 膝蓋多一段白布"
+  },
+  {
+   "file": "lora/dataset_raw/020_act_turn_s1000.png",
+   "reason": "s1000 看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/dataset_raw/025_ms_back_s1000.png",
+   "reason": "s1000 背面卻把腿環畫在畫面左"
+  },
+  {
+   "file": "lora/dataset_raw/026_ms_hand_chest_s1000.png",
+   "reason": "s1000 正面卻把腿環畫在畫面右"
+  },
+  {
+   "file": "lora/dataset_raw/033_cu_face_s1000.png",
+   "reason": "s1000 兩張臉重疊的壞圖"
+  },
+  {
+   "file": "lora/dataset_raw/037_light_neon_fs_s0.png",
+   "reason": "招牌上有類似文字的形狀"
+  },
+  {
+   "file": "lora/dataset_raw/037_light_neon_fs_s1000.png",
+   "reason": "招牌上有類似文字的形狀"
+  },
+  {
+   "file": "lora/dataset_raw/038_light_neon_ms_s0.png",
+   "reason": "s0 變成白色過膝襪"
+  },
+  {
+   "file": "lora/dataset_raw/039_light_dark_room_s1000.png",
+   "reason": "s1000 螢幕上有 UI 文字線條"
+  },
+  {
+   "file": "lora/dataset_raw/040_light_dawn_fs_s0.png",
+   "reason": "背面卻把腿環畫在畫面左"
+  },
+  {
+   "file": "lora/dataset_raw/040_light_dawn_fs_s1000.png",
+   "reason": "背面卻把腿環畫在畫面左"
+  },
+  {
+   "file": "lora/dataset_raw/050_bg_white_sit_s0.png",
+   "reason": "身體朝畫面左卻把腿環畫在靠鏡頭的左腿"
+  },
+  {
+   "file": "lora/dataset_raw/050_bg_white_sit_s1000.png",
+   "reason": "身體朝畫面左卻把腿環畫在靠鏡頭的左腿"
+  },
+  {
+   "file": "lora/dataset_raw/052_expr_playful_s0.png",
+   "reason": "s0 有星形符號"
+  },
+  {
+   "file": "lora/dataset_raw/053_expr_worried_s1000.png",
+   "reason": "s1000 正面卻把腿環畫在畫面右"
+  },
+  {
+   "file": "lora/dataset_raw/056_detail_legs_back_s0.png",
+   "reason": "背面卻把腿環畫在畫面左"
+  },
+  {
+   "file": "lora/dataset_raw/056_detail_legs_back_s1000.png",
+   "reason": "背面卻把腿環畫在畫面左"
+  },
+  {
+   "file": "lora/dataset_raw/057_detail_hair_back_s0.png",
+   "reason": "s0 背面卻把腿環畫在畫面左"
+  },
+  {
+   "file": "lora/v1/eval/04_3q_smile_s0.png",
+   "reason": "腿環在錯的腿"
+  },
+  {
+   "file": "lora/v1/eval/06_face_close_s0.png",
+   "reason": "兩條腿環"
+  },
+  {
+   "file": "lora/v1/eval/10_kneel_land_s0.png",
+   "reason": "看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/v1/eval/12_point_s0.png",
+   "reason": "正面腿環在畫面右"
+  },
+  {
+   "file": "lora/v1/eval/19_walkway_s0.png",
+   "reason": "看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/v1/eval/20_dawn_back_s0.png",
+   "reason": "背面腿環在畫面左"
+  },
+  {
+   "file": "lora/v1/eval/21_rain_portrait_s0.png",
+   "reason": "腿環偏畫面右"
+  },
+  {
+   "file": "lora/v1/eval/23_eyes_closed_s0.png",
+   "reason": "構圖壞掉（只拍到腿與腰）"
+  },
+  {
+   "file": "lora/v1/eval/24_sitting_s0.png",
+   "reason": "看不清腿環在哪條腿"
+  },
+  {
+   "file": "lora/v1/eval/27_laugh_s0.png",
+   "reason": "膚色變深（走樣）"
+  },
+  {
+   "file": "lora/v1/eval/28_serious_3q_s0.png",
+   "reason": "兩條腿環"
+  },
+  {
+   "file": "lora/v1/eval/29_crouch_s0.png",
+   "reason": "看不清腿環在哪條腿"
+  }
+ ]
+}

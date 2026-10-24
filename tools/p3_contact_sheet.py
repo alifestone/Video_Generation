@@ -3,7 +3,7 @@
 import sys
 from PIL import Image, ImageDraw
 out, files = sys.argv[1], sys.argv[2:]
-H, cols = 420, 4
+H, cols = 560, 4
 cells = []
 for f in files:
     im = Image.open(f).convert("RGB")

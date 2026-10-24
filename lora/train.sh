@@ -13,8 +13,6 @@ bucket_no_upscale = true
 min_bucket_reso = 640
 max_bucket_reso = 1536
 caption_extension = ".txt"
-keep_tokens = 1
-shuffle_caption = true
 
 [[datasets]]
 resolution = 1024
