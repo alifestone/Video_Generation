@@ -3,13 +3,15 @@
 
 python3 tools/p3_entity_refs.py [--only drone,pod] [--steps 4]
 
-用 Qwen-Image-Edit-2511（不給參考圖＝文生圖）＋ Lightning 4 步，經 ComfyUI HTTP API（127.0.0.1:8188）。
+用 Qwen-Image-Edit-2511＋ Lightning 4 步：多數不給參考圖（＝文生圖）；規格第 6 欄給了來源圖的，就以那張為 image1 改圖
+（ECHO 的其他角度從 front 改，因為文生圖會在光帶上多畫鏡頭或眼睛）。來源圖會複製到 ComfyUI 的 input/，經 ComfyUI HTTP API（127.0.0.1:8188）。
 prompt 依 plan/glossary.yaml 各實體的 look 改寫成英文；完整 prompt 與 seed 記在 refs/entities/results.json。
 """
-import argparse, json, time, urllib.request, urllib.parse
+import argparse, json, shutil, time, urllib.request, urllib.parse
 from pathlib import Path
 
 HOST = "http://127.0.0.1:8188"
+COMFY_INPUT = Path.home() / "creative/ComfyUI/input"
 ROOT = Path(__file__).resolve().parent.parent
 SEED0 = 20261025
 STYLE = ("Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, "
@@ -31,12 +33,15 @@ CITY = "A near-future night city with tall buildings, holographic billboards sho
 # (entity id, file name, width, height, prompt)
 SPECS = [
     ("drone", "front", 1024, 1024, DRONE + "Front view, centered, plain white background, product design sheet."),
-    ("drone", "three_quarter", 1024, 1024, DRONE + "Three-quarter view from the front left, centered, plain white background."),
-    ("drone", "side", 1024, 1024, DRONE + "Side view showing the seam line and the edge of the cyan light band, plain white background."),
-    ("drone", "back", 1024, 1024, DRONE + "View from behind: plain white shell with the seam line, no light band visible, plain white background."),
-    ("drone", "night", 1024, 1024, DRONE + "Floating in a dark room, its cyan light band and bottom glow lighting the air around it."),
+    ("drone", "three_quarter", 1024, 1024, "Rotate this same drone to a three-quarter view from the front left (turned about 45 degrees): the cyan band curves around the sphere; "
+     "keep the same white shell, seam lines, plain cyan band and bottom glow exactly; plain white background.", "refs/entities/drone/front.png"),
+    ("drone", "side", 1024, 1024, "Rotate this same drone to an exact side view (camera 90 degrees to its right): the glowing cyan band now curves around the right edge of the sphere and is seen edge-on; "
+     "keep the same white shell, seam lines and bottom glow exactly; plain white background.", "refs/entities/drone/front.png"),
+    ("drone", "back", 1024, 1024, "A spherical companion drone about 25 cm in diameter seen exactly from behind: a perfect smooth white sphere (#f4f4f6) with one thin silver-grey horizontal seam line around its middle and a soft pale cyan glow ring under its bottom; the back of the shell has NO light band, NO window, NO eye, NO markings, it is completely plain white; no propellers, no arms. It floats in the air. Plain white background."),
+    ("drone", "night", 1024, 1024, "Keep this exact same drone unchanged (same shape, same plain cyan band, same bottom glow) and place it floating in a dark room at night; "
+     "its cyan band and bottom glow softly light the air and the floor around it.", "refs/entities/drone/front.png"),
     ("pod", "closed", 832, 1216, POD + "Closed glass canopy, empty pod, front view, standing in the center of a dark round control room, plain dark background."),
-    ("pod", "open", 832, 1216, POD + "The two glass halves slid open to the left and right sides, empty, front view, dark background."),
+    ("pod", "open", 832, 1216, POD + "Open state: the curved glass canopy is split vertically into two half-cylinders that have slid sideways and now stand fully apart on the left and right sides of the base, leaving the middle completely open with no glass in front; the glowing white top of the base is exposed; empty, front view, dark background."),
     ("pod", "platform", 1216, 832, "The round glowing white platform (1 m wide, 10 cm thick) on top of a white capsule pod base, seen from a high angle, dark room, soft white glow."),
     ("hq_control", "wide", 1344, 768, "An underground round control room about 12 m wide and 5 m high: the whole wall is a curved monitor wall of about 40 widescreen screens in three rows showing city views; "
      "in the center stands a tall white capsule pod with a glass canopy; black metal grating floor with thin cyan guide light lines converging toward the pod; no ceiling lights; cold blue-black palette; no people."),
@@ -45,11 +50,13 @@ SPECS = [
     ("monitor_wall", "frozen", 1344, 768, "A curved monitor wall of about 40 widescreen screens in three rows inside a dark round room; most screens show night city views in pure greyscale "
      "(frozen, no color), a few on the right still in color; no text, no user interface; the center screen of the middle row shows a thin cyan waveform line on black."),
     ("launch_tunnel", "shaft", 832, 1216, "Looking up a perfectly round vertical shaft 3 m wide made of matte black metal with thin vertical seams, cyan glowing rings (#29d3f5) "
-     "embedded every 6 m receding upward into the distance; at the bottom a round white glowing platform; no windows, no pipes, no warning stripes, no text."),
+     "Interior view from inside a dark vertical tunnel: the camera stands at the bottom and looks straight up, the black metal walls surround the viewer on all sides and converge "
+     "toward a small round dark opening at the center of the image; glowing cyan rings (#29d3f5) on the inner wall every 6 m form concentric circles shrinking toward the center; "
+     "the walls fill the whole frame, dark blue-black atmosphere."),
     ("launch_roof", "hatch", 1344, 768, "A flat concrete rooftop of a 150 m tall building at night, low parapet wall around the edge; in the center a round hatch 1.6 m wide flush with the floor, "
      "made of two semicircular steel plates, with a thin cyan glowing ring around it; beyond the parapet a sprawling night city; light rain. Not a helipad, no H mark."),
     ("street", "restored", 1344, 768, "A straight pedestrian shopping street 15 m wide at night, one-point perspective toward the end: glass shop windows on the ground floor without signs, "
-     "holographic billboards with abstract images on the upper floors of 4-6 story buildings, wet stone pavement with puddles, hover cars floating in a lane 6-10 m above the street, "
+     "holographic billboards with abstract images on the upper floors of 4-6 story buildings, wet stone pavement with puddles and no road markings, hover cars flying high in the air at second-floor height (6-10 m above the pavement, nothing on the ground), "
      "a slender tower silhouette far away at the end of the street, light rain; a few pedestrians seen from behind; no text anywhere."),
     ("street", "frozen", 1344, 768, "The same straight pedestrian shopping street at night in pure greyscale, completely frozen: raindrops hanging still in the air, hover cars stopped mid-air, "
      "pedestrians frozen like grey statues seen from behind, billboards and street lights still glowing but without color; far away at the end of the street a district still in color; no text."),
@@ -79,7 +86,7 @@ CITY_VIEWS = [
     ("station", "an elevated train station platform with a train arriving"),
 ]
 for i, (name, desc) in enumerate(CITY_VIEWS, 1):
-    SPECS.append(("monitor_wall", f"city_{i}_{name}", 1344, 768, f"{CITY}: {desc}. Single widescreen city view used as a monitor image, colorful, no text anywhere."))
+    SPECS.append(("monitor_wall", f"city_{i}_{name}", 1344, 768, f"{CITY}: {desc}. A single full-bleed widescreen illustration that fills the entire image edge to edge, no screen, no monitor frame, no bezel, no border, colorful, no text anywhere."))
 
 
 def api(path, data=None):
@@ -115,7 +122,7 @@ def main():
     base = ROOT / "refs/entities"
     log_path = base / "results.json"
     recs = json.loads(log_path.read_text()) if log_path.exists() else []
-    for idx, (eid, name, w, h, prompt) in enumerate(SPECS, 1):
+    for idx, (eid, name, w, h, prompt, *src) in enumerate(SPECS, 1):
         if only and eid not in only:
             continue
         dest = base / eid / f"{name}.png"
@@ -125,7 +132,15 @@ def main():
         seed = SEED0 + idx
         full = prompt + " " + STYLE
         t0 = time.time()
-        pid = api("/prompt", {"prompt": build(full, w, h, seed, a.steps), "client_id": "p3ent"})["prompt_id"]
+        wf = build(full, w, h, seed, a.steps)
+        if src:
+            COMFY_INPUT.mkdir(exist_ok=True)
+            img = f"p3ent_{eid}_src.png"
+            shutil.copy(ROOT / src[0], COMFY_INPUT / img)
+            wf["10"] = {"class_type": "LoadImage", "inputs": {"image": img}}
+            for k in ("20", "21"):
+                wf[k]["inputs"]["image1"] = ["10", 0]
+        pid = api("/prompt", {"prompt": wf, "client_id": "p3ent"})["prompt_id"]
         while True:
             hist = api("/history/" + pid)
             if pid in hist and hist[pid].get("outputs"):
@@ -136,7 +151,7 @@ def main():
         im = hist[pid]["outputs"]["60"]["images"][0]
         dest.write_bytes(urllib.request.urlopen(f"{HOST}/view?" + urllib.parse.urlencode(im)).read())
         recs.append(dict(entity=eid, name=name, file=str(dest.relative_to(ROOT)), seed=seed, steps=a.steps, size=f"{w}x{h}",
-                         seconds=round(time.time() - t0, 1), prompt=full))
+                         seconds=round(time.time() - t0, 1), prompt=full, source=src[0] if src else None))
         log_path.write_text(json.dumps(recs, ensure_ascii=False, indent=1))
         print(eid, name, recs[-1]["seconds"], flush=True)
 

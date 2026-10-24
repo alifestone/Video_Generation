@@ -31,4 +31,10 @@
 - **資料集**：v1 的 97 張，加上 v1 評估圖（`v1/eval`，prompt 含服裝）中外觀五項全對的 18 張，共 115 張（`selection_v2.json`，另記 12 張淘汰原因）。
 - **標籤**：改成依構圖寫出看得到的固定服裝（`p3_prepare_dataset.py --outfit visible`）：臉部特寫只寫頭髮與高領，全身才寫到鞋襪；固定寫 `single thigh strap`。
 - **參數**：同 v1。拿掉 `shuffle_caption`，因為和快取文字編碼器輸出不能並用。
-- **正式管線的 prompt**：一律帶服裝標籤（見 `tools/p3_lora_gen.py` 的 OUTFIT），負面加 `two thigh straps, thighhighs, kneehighs`。
+- **正式管線的 prompt**（`tools/p3_lora_gen.py`）：觸發詞＋`grey eyes, dark purple hair`＋依構圖只寫看得到的服裝（和訓練標籤同一個 `outfit_tags()`），另補底模容易畫錯色的部分（特寫補 `white shirt, sleeveless`、腰以上補 `white skirt`）；負面加 `green eyes, aqua eyes, blue eyes, two thigh straps, thighhighs, kneehighs`。LoRA 強度 0.9，euler_ancestral 28 步、cfg 6、CLIP skip 2，每張約 11 秒。
+- **v2 結果**（2026-10-24，第 10 epoch，2300 步，loss 0.088，約 58 分鐘）：
+  - kohya 的訓練取樣圖只寫觸發詞，臉和服裝都不像——這是預期內：v2 把服裝寫進標籤，觸發詞不再吸收服裝，所以 prompt 一定要帶服裝標籤。
+  - 評估 30 張（`v2/eval`）：服裝、紫色高馬尾、頭頂編髮、銀鏈、銀耳環、白色高領拉鍊上衣全部穩定；腿環只有一條，約 28／30 張在正確的腿（錯的是 09 跳躍、12 指向，都是正面畫在畫面右）。
+  - 評估過程修了兩次 prompt：第一輪（`v2/eval_r0`）服裝標籤全寫，特寫被拉成膝上構圖、瞳孔變綠；第二輪（`v2/eval_r1` 是被換掉的 7 張）特寫的高領變紫或黑、腰以上鏡頭的下半身變黑褲。現在的 prompt 三種構圖都正確。
+  - 仍要逐張檢查的：腿環左右、手指數；逆光時膚色會偏深。
+- **風格樣張**：見 `../refs/style_samples/`（10 個段落 × 2 seed）。角色穩定；背景只照文字 prompt 走，塔會畫成鐵架塔、整體比 style bible 的冷藍黑亮，正式關鍵幀要用 `../refs/entities/` 的參考圖合成。

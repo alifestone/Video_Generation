@@ -7,17 +7,29 @@ python3 tools/p3_lora_gen.py --lora luna_illustrious_v2.safetensors --set style 
 LoRA 檔要先放到 ComfyUI 的 models/loras/（用符號連結）。經 ComfyUI HTTP API（127.0.0.1:8188）。
 --set eval：30 個 v1 評估／擴充資料用的 prompt；--set style：每個主要段落 1–2 張風格樣張（style bible 的場景與色調）。
 """
-import argparse, json, time, urllib.request, urllib.parse
+import argparse, json, sys, time, urllib.request, urllib.parse
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from p3_prepare_dataset import outfit_tags
 
 HOST = "http://127.0.0.1:8188"
 ROOT = Path(__file__).resolve().parent.parent
-OUTFIT = ("purple hair, high ponytail, braided hair, hair chain, earrings, white crop top, sleeveless, high collar, zipper, midriff, "
-          "white skirt, cargo skirt, black belt, single thigh strap, bracelets, white socks, white sneakers, ")
-BASE = "lunacsf, 1girl, solo, " + OUTFIT
+# v2 評估：服裝標籤全寫會把特寫拉成膝上構圖，所以和訓練標籤一樣依構圖只寫看得到的（outfit_tags）；
+# 瞳色沒進訓練標籤，底模會畫成綠色，固定寫 grey eyes（style bible：深紫灰）
+BASE = "lunacsf, 1girl, solo, grey eyes, dark purple hair, "
+
+
+def prompt_outfit(tags):
+    """outfit_tags 之外，補上底模容易畫錯色的部分：特寫的高領會變紫或黑、腰以上鏡頭露出的下半身會變黑褲。"""
+    o = outfit_tags(tags, "visible")
+    if tags.startswith(("close-up", "portrait")):
+        o += "white shirt, sleeveless, "
+    elif tags.startswith("upper body"):
+        o += "white skirt, "
+    return o
 QUALITY = ", masterpiece, best quality, anime screencap, clean lineart, cel shading"
 NEG = ("lowres, bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra digits, text, watermark, signature, logo, "
-       "letters, username, two thigh straps, thighhighs, kneehighs, jacket, hat, glasses, chibi, 3d, realistic, photo, blurry, multiple girls")
+       "letters, username, green eyes, aqua eyes, blue eyes, two thigh straps, thighhighs, kneehighs, jacket, hat, glasses, chibi, 3d, realistic, photo, blurry, multiple girls")
 
 EVAL = [
     ("front_stand", 832, 1216, "full body, standing, looking at viewer, white background, simple background"),
@@ -109,7 +121,7 @@ def main():
             dest = out / f"{i:02d}_{name}_s{k}.png"
             if dest.exists():
                 continue
-            pos = BASE + tags + QUALITY
+            pos = BASE + prompt_outfit(tags) + tags + QUALITY
             t0 = time.time()
             pid = api("/prompt", {"prompt": workflow(a.lora, a.strength, pos, w, h, seed, a.steps, a.cfg), "client_id": "p3lora"})["prompt_id"]
             while True:

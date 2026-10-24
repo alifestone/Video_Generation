@@ -28,3 +28,7 @@ lora/v*/dataset/
 lora/v*/output/
 lora/v*/logs/
 lora/v*/samples/
+# 評估圖可由 results.json（prompt、seed）＋同一個 LoRA 重出；只留 results.json
+lora/v*/eval*/*.png
+# P3 淘汰的實體參考圖
+refs/entities_r0/

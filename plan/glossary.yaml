@@ -84,6 +84,7 @@ entities:
     name: ECHO
     status: proposed
     definition: CSFCCA 派給 @luna 的球形無人機夥伴，名叫 ECHO（只是設定名稱，外殼上不出現文字），負責投影、帶路、開門等劇情功能。
+    refs: [refs/entities/drone/front.png, refs/entities/drone/back.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       shape: 正球體，表面有銀灰色細分割線，分成上下兩半
       size: 直徑約 25 cm，約 @luna 頭部的 1.2 倍
@@ -107,6 +108,7 @@ entities:
     name: CSFCCA 控制室
     status: proposed
     definition: CSFCCA 位於地下的圓形控制室，@luna 在這裡被啟動。
+    refs: [refs/entities/hq_control/wide.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       layout: 圓形房間，直徑約 12 m，天花板高約 5 m；牆面整圈是 @monitor_wall；正中央立著 @pod
       floor: "黑色金屬格柵 #0b0d12，地面有一圈圈細的青色引導燈條 #29d3f5，從牆邊往 @pod 匯聚"
@@ -136,6 +138,7 @@ entities:
     name: 發射通道
     status: proposed
     definition: 從 @hq_control 天花板通往 @launch_roof 的垂直豎井；@pod 的底座平台載著 @luna 沿它射上地面。
+    refs: [refs/entities/launch_tunnel/shaft.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:   # 2026-10-23 使用者選「光環豎井」
       shape: 圓形垂直豎井，內徑約 3 m、上下一樣寬，總長約 180 m（地下約 30 m＋大樓內約 150 m）
       bottom: 下端是 @hq_control 的天花板，在 @pod 正上方開一個直徑約 1.6 m 的圓孔；Intro 各鏡都沒拍到天花板
@@ -155,6 +158,7 @@ entities:
     name: 發射口樓頂
     status: proposed
     definition: "@hq_control 正上方一棟高樓的樓頂，@launch_tunnel 的出口在這裡；@luna 第一次看見 @city 的地方。"
+    refs: [refs/entities/launch_roof/hatch.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       building: 高約 150 m，比四周大樓高，往 @city 中心方向沒有更高的樓擋住視線
       roof: 平頂，約 30 m × 30 m，水泥地面；邊緣一圈高約 1.1 m 的矮牆；4 個方形空調箱（高約 1.5 m）都靠在背向 @city 那一側的矮牆邊，朝 @city 拍時在鏡頭背後、看不到；沒有其他設備
@@ -169,6 +173,7 @@ entities:
     name: 懸浮車
     status: proposed
     definition: "@city 裡的近未來懸浮汽車；在 frozen 區域停在半空，Prechorus 時 @luna 踩著車頂往 @signal_tower 跑。"
+    refs: [refs/entities/hovercar/side.png, refs/entities/hovercar/three_quarter.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       shape: 流線形的雙人座膠囊車身，長約 4.5 m、寬約 1.8 m、高約 1.4 m；車頂平緩，可以站人；沒有輪子
       color: 車殼顏色各台不同（珍珠白、深藍、銀灰、酒紅）；車底一條發光燈帶（青或洋紅），車窗深色
@@ -183,6 +188,7 @@ entities:
     name: 商店街
     status: proposed
     definition: "@launch_roof 那棟大樓前的一條商店街，筆直通往 @city 中心；Verse 全段在這裡。"
+    refs: [refs/entities/street/restored.png, refs/entities/street/frozen.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       layout: 筆直的步行商店街，寬約 15 m，兩側是 4–6 層的商店樓；街道正對 @city 中心，從街上往遠處看，街尾約 1.5 km 外是仍為彩色的街區，@signal_tower 的剪影在街尾正上方
       storefront: 一樓是玻璃櫥窗的商店（櫥窗內沒有文字招牌），二到四樓外牆掛著全息看板（只有抽象色塊或影像，無文字）
@@ -199,6 +205,7 @@ entities:
     name: 追氣球的小孩
     status: proposed
     definition: "@street 上一個定格的路人小孩，正在追一顆飛走的 @balloon。路人不算第二角色（project.yaml extras_count_as_character: false）。"
+    refs: [refs/entities/balloon_child/back.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       body: 約 6 歲，身高約 1.15 m
       outfit: "連帽黃色雨衣 #f2c230（帽子戴著，遮住大半張臉）、深藍色雨靴 #1f2a44"
@@ -214,6 +221,7 @@ entities:
     name: 紅氣球
     status: proposed
     definition: "@balloon_child 追著的一顆氦氣球，定格在半空。"
+    refs: [refs/entities/balloon_child/back.png]   # 和 @balloon_child 同一張
     look:
       shape: 圓形橡膠氦氣球，下方有一條細繩
       size: 直徑約 35 cm；繩長約 0.6 m
@@ -229,6 +237,7 @@ entities:
     name: 訊號塔
     status: proposed
     definition: "@city 中央最高的廣播塔，全頻廣播從這裡發出。"
+    refs: [refs/entities/signal_tower/full_night.png, refs/entities/signal_tower/deck.png, refs/entities/signal_tower/base.png, refs/entities/signal_tower/control_offline.png, refs/entities/signal_tower/control_online.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:   # 2026-10-23 先定剪影；Chorus 1 前使用者選：深色金屬＋發光線條、分層燈帶、觀景台裡的廣播控制室、外牆有垂直結構肋＋維修平台
       silhouette: 細長的直立塔身，中上段（約塔高 2/3 處）有一個圓盤形觀景台，寬約塔身的 4 倍，觀景台以上是一根細長天線（約塔高 1/4）；塔高約周圍大樓的 2 倍
       location: "@city 中心，距 @launch_roof 約 3 km"
@@ -273,6 +282,7 @@ entities:
     name: 啟動艙
     status: proposed
     definition: 立在 @hq_control 正中央、@luna 啟動前站在裡面的直立艙。
+    refs: [refs/entities/pod/closed.png, refs/entities/pod/open.png, refs/entities/pod/platform.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       shape: 直立的膠囊形；下段是白色金屬底座，上段是透明弧形玻璃罩
       size: 高約 2.2 m、直徑約 1 m；@luna 站在裡面時頭頂離罩頂約 30 cm
@@ -289,6 +299,7 @@ entities:
     name: 監視牆
     status: proposed
     definition: 環繞 @hq_control 一整圈的螢幕牆，顯示 @city 各處的即時畫面。
+    refs: [refs/entities/monitor_wall/color.png, refs/entities/monitor_wall/frozen.png, refs/entities/monitor_wall/city_1_neon_street.png, refs/entities/monitor_wall/city_2_rooftops.png, refs/entities/monitor_wall/city_3_plaza.png, refs/entities/monitor_wall/city_4_hover_lane.png, refs/entities/monitor_wall/city_5_river.png, refs/entities/monitor_wall/city_6_market.png, refs/entities/monitor_wall/city_7_station.png]   # P3 參考圖（Qwen-Edit 文生圖，見 refs/entities/README.md）
     look:
       shape: 約 40 面 16:9 螢幕，排成 3 層，沿圓形牆面彎曲
       size: 每面螢幕寬約 1.6 m
