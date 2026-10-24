@@ -91,19 +91,6 @@
   "seconds": 11.0
  },
  {
-  "name": "kneel_land",
-  "file": "lora/v2/eval/10_kneel_land_s0.png",
-  "seed": 20261110,
-  "lora": "luna_illustrious_v2.safetensors",
-  "strength": 0.9,
-  "steps": 28,
-  "cfg": 6.0,
-  "size": "1216x832",
-  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, one knee, hand on ground, looking ahead, rooftop, night, masterpiece, best quality, anime screencap, clean lineart, cel shading",
-  "negative": "lowres, bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra digits, text, watermark, signature, logo, letters, username, green eyes, aqua eyes, blue eyes, two thigh straps, thighhighs, kneehighs, jacket, hat, glasses, chibi, 3d, realistic, photo, blurry, multiple girls",
-  "seconds": 11.0
- },
- {
   "name": "arms_open",
   "file": "lora/v2/eval/11_arms_open_s0.png",
   "seed": 20261111,
@@ -388,5 +375,23 @@
   "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, laughing, backlighting, sunrise, masterpiece, best quality, anime screencap, clean lineart, cel shading",
   "negative": "lowres, bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra digits, text, watermark, signature, logo, letters, username, green eyes, aqua eyes, blue eyes, two thigh straps, thighhighs, kneehighs, jacket, hat, glasses, chibi, 3d, realistic, photo, blurry, multiple girls",
   "seconds": 11.0
+ },
+ {
+  "name": "kneel_land",
+  "file": "lora/v2/eval/10_kneel_land_s0.png",
+  "seed": 965,
+  "lora": "luna_illustrious_v2.safetensors",
+  "strength": 0.9,
+  "steps": 28,
+  "cfg": 6.0,
+  "size": "832x1216",
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, superhero landing, one knee, fist on ground, arm up, leaning forward, determined, rooftop, concrete floor, night, city lights, rain, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "controlnet": {
+   "pose": "refs/poses/superhero_landing_portrait.png",
+   "lineart": "refs/poses/superhero_landing_lineart.png",
+   "seed": 965
+  },
+  "negative": "lowres, bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra digits, text, watermark, signature, logo, letters, username, green eyes, aqua eyes, blue eyes, two thigh straps, thighhighs, kneehighs, jacket, hat, glasses, chibi, 3d, realistic, photo, blurry, multiple girls",
+  "seconds": 16.0
  }
 ]

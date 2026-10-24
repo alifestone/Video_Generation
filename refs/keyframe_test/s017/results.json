@@ -1,0 +1,60 @@
+[
+ {
+  "step": "A",
+  "file": "refs/keyframe_test/s017/A_qwen_s0.png",
+  "seed": 20261124,
+  "refs": [
+   "refs/entities/hovercar/side.png",
+   "refs/entities/drone/front.png"
+  ],
+  "prompt": "Image 1 is the character sheet, image 2 shows the hover car design (no wheels, glowing strip under the body, floats in the air), image 3 shows the small spherical white drone. Wide side view of a night shopping street, camera perpendicular to the street at eye level: the girl from image 1 runs toward the right of the image in the left half, full body, left foot forward, ponytail flying behind; the small drone from image 3 floats just behind her head, half hidden. In front of her on the right, three hover cars like image 2 hang motionless in midair in a rising row like stairs: the first car's roof is at her waist height, the second higher, the third higher still at second-floor height, all side views, level with the ground, no wheels. Behind them are shop fronts and raindrops frozen in midair. Keep the exact same character and outfit as the reference sheet in image 1: dark purple high ponytail with braids on the crown and a silver chain, white sleeveless high-collar zip-up crop top, white cargo mini skirt, black belt with a long black strap, one black thigh strap on her right thigh only, silver bracelets, white ankle socks, white chunky sneakers. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos. ",
+  "seconds": 63.1
+ },
+ {
+  "step": "B1_img2img",
+  "file": "refs/keyframe_test/s017/B1_img2img_s0.png",
+  "seed": 20261124,
+  "denoise": 0.45,
+  "canny": false,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from side, running, hover car, floating car, no wheels, row of cars in midair, shop fronts, night, street, frozen raindrops, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 18.0
+ },
+ {
+  "step": "B2_canny",
+  "file": "refs/keyframe_test/s017/B2_canny_s0.png",
+  "seed": 20261124,
+  "denoise": 0.6,
+  "canny": true,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from side, running, hover car, floating car, no wheels, row of cars in midair, shop fronts, night, street, frozen raindrops, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 15.0
+ },
+ {
+  "step": "A",
+  "file": "refs/keyframe_test/s017/A_qwen_s1.png",
+  "seed": 20261125,
+  "refs": [
+   "refs/entities/hovercar/side.png",
+   "refs/entities/drone/front.png"
+  ],
+  "prompt": "Image 1 is the character sheet, image 2 shows the hover car design (no wheels, glowing strip under the body, floats in the air), image 3 shows the small spherical white drone. Wide side view of a night shopping street, camera perpendicular to the street at eye level: the girl from image 1 runs toward the right of the image in the left half, full body, left foot forward, ponytail flying behind; the small drone from image 3 floats just behind her head, half hidden. In front of her on the right, three hover cars like image 2 hang motionless in midair in a rising row like stairs: the first car's roof is at her waist height, the second higher, the third higher still at second-floor height, all side views, level with the ground, no wheels. Behind them are shop fronts and raindrops frozen in midair. Keep the exact same character and outfit as the reference sheet in image 1: dark purple high ponytail with braids on the crown and a silver chain, white sleeveless high-collar zip-up crop top, white cargo mini skirt, black belt with a long black strap, one black thigh strap on her right thigh only, silver bracelets, white ankle socks, white chunky sneakers. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos. ",
+  "seconds": 71.2
+ },
+ {
+  "step": "B1_img2img",
+  "file": "refs/keyframe_test/s017/B1_img2img_s1.png",
+  "seed": 20261125,
+  "denoise": 0.45,
+  "canny": false,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from side, running, hover car, floating car, no wheels, row of cars in midair, shop fronts, night, street, frozen raindrops, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 17.3
+ },
+ {
+  "step": "B2_canny",
+  "file": "refs/keyframe_test/s017/B2_canny_s1.png",
+  "seed": 20261125,
+  "denoise": 0.6,
+  "canny": true,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from side, running, hover car, floating car, no wheels, row of cars in midair, shop fronts, night, street, frozen raindrops, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 15.0
+ }
+]

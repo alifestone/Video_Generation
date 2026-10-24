@@ -41,7 +41,10 @@ SPECS = [
     ("drone", "night", 1024, 1024, "Keep this exact same drone unchanged (same shape, same plain cyan band, same bottom glow) and place it floating in a dark room at night; "
      "its cyan band and bottom glow softly light the air and the floor around it.", "refs/entities/drone/front.png"),
     ("pod", "closed", 832, 1216, POD + "Closed glass canopy, empty pod, front view, standing in the center of a dark round control room, plain dark background."),
-    ("pod", "open", 832, 1216, POD + "Open state: the curved glass canopy is split vertically into two half-cylinders that have slid sideways and now stand fully apart on the left and right sides of the base, leaving the middle completely open with no glass in front; the glowing white top of the base is exposed; empty, front view, dark background."),
+    ("pod", "open", 832, 1216, "Edit this capsule pod into its open state, keeping the same base, size, colors and drawing style: the transparent glass canopy is split "
+     "vertically down the middle into a left half and a right half; both halves have slid sideways away from each other and now stand beside the base on the left "
+     "and on the right, each still a curved glass half-cylinder, leaving the middle completely open; the glowing white top of the base is exposed and empty; "
+     "same dark room background, front view.", "refs/entities/pod/closed.png"),   # G0：照 glossary 從 closed 改圖
     ("pod", "platform", 1216, 832, "The round glowing white platform (1 m wide, 10 cm thick) on top of a white capsule pod base, seen from a high angle, dark room, soft white glow."),
     ("hq_control", "wide", 1344, 768, "An underground round control room about 12 m wide and 5 m high: the whole wall is a curved monitor wall of about 40 widescreen screens in three rows showing city views; "
      "in the center stands a tall white capsule pod with a glass canopy; black metal grating floor with thin cyan guide light lines converging toward the pod; no ceiling lights; cold blue-black palette; no people."),
@@ -71,7 +74,8 @@ SPECS = [
     ("signal_tower", "control_offline", 1344, 768, "Inside a round broadcast control room 36 m wide with a 6 m ceiling: panoramic dark windows all around showing a night city, a round 4 m console in the center "
      "with a transparent glass light column rising to the ceiling, twelve radial rows of dark equipment cabinets, waist-high sub-consoles at both ends of each row; everything is switched off, "
      "the room is lit only by city light from the windows and a ring of dim white floor lights along the windows; no screens with text."),
-    ("signal_tower", "control_online", 1344, 768, "The same round broadcast control room fully powered: the central console glows with cyan concentric rings and magenta edge line, the glass light column glows bright cyan-white, "
+    ("signal_tower", "control_online", 1344, 768, "The same round broadcast control room fully powered: in the exact center of the room a round 4 m console disc glows with cyan concentric rings and a magenta edge line, "
+     "and a glass light column rises vertically from the very center of that disc (the rings surround the column's base) up to the ceiling, glowing bright cyan-white; "
      "cabinets have vertical cyan light strips and thin magenta top lines, every panoramic window shows a different colorful city image; no text, no numbers, no user interface."),
     ("balloon_child", "back", 832, 1216, "A six-year-old child seen from behind and slightly to the side, running along a wet street at night reaching one hand up toward a red helium balloon, "
      "wearing a yellow hooded raincoat with the hood up (#f2c230) and dark navy rain boots; the face is hidden by the hood; the balloon is round, glossy red (#d8323a) with a white string."),
@@ -80,7 +84,7 @@ CITY_VIEWS = [
     ("neon_street", "a narrow neon-lit street with crowds seen from behind"),
     ("rooftops", "rooftops and water tanks under drizzle with distant skyscrapers"),
     ("plaza", "a round plaza with a fountain and holographic billboards"),
-    ("hover_lane", "a hover car lane between towers with streaks of under-glow"),
+    ("hover_lane", "hover cars without wheels flying high in the air between towers, several floors above the street, glowing under-body light strips, nothing touching the ground"),
     ("river", "a river embankment with reflections of city lights"),
     ("market", "a covered night market with lanterns of many colors, no signs"),
     ("station", "an elevated train station platform with a train arriving"),
@@ -119,11 +123,13 @@ def main():
     ap.add_argument("--steps", type=int, default=4)
     a = ap.parse_args()
     only = {x for x in a.only.split(",") if x}
+    # 兩輪都淘汰的規格（見 refs/entities/README.md）：不要因為檔案不存在又重出
+    skip = {("drone", "three_quarter"), ("drone", "side"), ("drone", "night")}
     base = ROOT / "refs/entities"
     log_path = base / "results.json"
     recs = json.loads(log_path.read_text()) if log_path.exists() else []
     for idx, (eid, name, w, h, prompt, *src) in enumerate(SPECS, 1):
-        if only and eid not in only:
+        if (only and eid not in only) or (eid, name) in skip:
             continue
         dest = base / eid / f"{name}.png"
         if dest.exists():

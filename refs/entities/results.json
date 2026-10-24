@@ -140,16 +140,6 @@
   "prompt": "Inside a round broadcast control room 36 m wide with a 6 m ceiling: panoramic dark windows all around showing a night city, a round 4 m console in the center with a transparent glass light column rising to the ceiling, twelve radial rows of dark equipment cabinets, waist-high sub-consoles at both ends of each row; everything is switched off, the room is lit only by city light from the windows and a ring of dim white floor lights along the windows; no screens with text. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. "
  },
  {
-  "entity": "signal_tower",
-  "name": "control_online",
-  "file": "refs/entities/signal_tower/control_online.png",
-  "seed": 20261047,
-  "steps": 4,
-  "size": "1344x768",
-  "seconds": 20.0,
-  "prompt": "The same round broadcast control room fully powered: the central console glows with cyan concentric rings and magenta edge line, the glass light column glows bright cyan-white, cabinets have vertical cyan light strips and thin magenta top lines, every panoramic window shows a different colorful city image; no text, no numbers, no user interface. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. "
- },
- {
   "entity": "balloon_child",
   "name": "back",
   "file": "refs/entities/balloon_child/back.png",
@@ -200,16 +190,6 @@
   "prompt": "A spherical companion drone about 25 cm in diameter seen exactly from behind: a perfect smooth white sphere (#f4f4f6) with one thin silver-grey horizontal seam line around its middle and a soft pale cyan glow ring under its bottom; the back of the shell has NO light band, NO window, NO eye, NO markings, it is completely plain white; no propellers, no arms. It floats in the air. Plain white background. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. "
  },
  {
-  "entity": "pod",
-  "name": "open",
-  "file": "refs/entities/pod/open.png",
-  "seed": 20261032,
-  "steps": 4,
-  "size": "832x1216",
-  "seconds": 20.0,
-  "prompt": "A tall upright capsule pod, about 2.2 m tall and 1 m wide: lower part is a white metal base, upper part is a transparent curved glass canopy split into left and right halves; the round top surface of the base glows soft white (#e8f4ff), lighting upward. Open state: the curved glass canopy is split vertically into two half-cylinders that have slid sideways and now stand fully apart on the left and right sides of the base, leaving the middle completely open with no glass in front; the glowing white top of the base is exposed; empty, front view, dark background. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. "
- },
- {
   "entity": "street",
   "name": "restored",
   "file": "refs/entities/street/restored.png",
@@ -228,16 +208,6 @@
   "size": "1344x768",
   "seconds": 20.0,
   "prompt": "A near-future night city with tall buildings, holographic billboards showing only abstract colorful shapes without any text, light rain, wet reflective streets: a narrow neon-lit street with crowds seen from behind. A single full-bleed widescreen illustration that fills the entire image edge to edge, no screen, no monitor frame, no bezel, no border, colorful, no text anywhere. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. "
- },
- {
-  "entity": "monitor_wall",
-  "name": "city_4_hover_lane",
-  "file": "refs/entities/monitor_wall/city_4_hover_lane.png",
-  "seed": 20261052,
-  "steps": 4,
-  "size": "1344x768",
-  "seconds": 20.0,
-  "prompt": "A near-future night city with tall buildings, holographic billboards showing only abstract colorful shapes without any text, light rain, wet reflective streets: a hover car lane between towers with streaks of under-glow. A single full-bleed widescreen illustration that fills the entire image edge to edge, no screen, no monitor frame, no bezel, no border, colorful, no text anywhere. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. "
  },
  {
   "entity": "monitor_wall",
@@ -269,5 +239,38 @@
   "seconds": 20.0,
   "prompt": "Looking up a perfectly round vertical shaft 3 m wide made of matte black metal with thin vertical seams, cyan glowing rings (#29d3f5) Interior view from inside a dark vertical tunnel: the camera stands at the bottom and looks straight up, the black metal walls surround the viewer on all sides and converge toward a small round dark opening at the center of the image; glowing cyan rings (#29d3f5) on the inner wall every 6 m form concentric circles shrinking toward the center; the walls fill the whole frame, dark blue-black atmosphere. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. ",
   "source": null
+ },
+ {
+  "entity": "signal_tower",
+  "name": "control_online",
+  "file": "refs/entities/signal_tower/control_online.png",
+  "seed": 20261047,
+  "steps": 4,
+  "size": "1344x768",
+  "seconds": 24.0,
+  "prompt": "The same round broadcast control room fully powered: in the exact center of the room a round 4 m console disc glows with cyan concentric rings and a magenta edge line, and a glass light column rises vertically from the very center of that disc (the rings surround the column's base) up to the ceiling, glowing bright cyan-white; cabinets have vertical cyan light strips and thin magenta top lines, every panoramic window shows a different colorful city image; no text, no numbers, no user interface. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. ",
+  "source": null
+ },
+ {
+  "entity": "monitor_wall",
+  "name": "city_4_hover_lane",
+  "file": "refs/entities/monitor_wall/city_4_hover_lane.png",
+  "seed": 20261052,
+  "steps": 4,
+  "size": "1344x768",
+  "seconds": 22.0,
+  "prompt": "A near-future night city with tall buildings, holographic billboards showing only abstract colorful shapes without any text, light rain, wet reflective streets: hover cars without wheels flying high in the air between towers, several floors above the street, glowing under-body light strips, nothing touching the ground. A single full-bleed widescreen illustration that fills the entire image edge to edge, no screen, no monitor frame, no bezel, no border, colorful, no text anywhere. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. ",
+  "source": null
+ },
+ {
+  "entity": "pod",
+  "name": "open",
+  "file": "refs/entities/pod/open.png",
+  "seed": 20261032,
+  "steps": 4,
+  "size": "832x1216",
+  "seconds": 44.2,
+  "prompt": "Edit this capsule pod into its open state, keeping the same base, size, colors and drawing style: the transparent glass canopy is split vertically down the middle into a left half and a right half; both halves have slid sideways away from each other and now stand beside the base on the left and on the right, each still a curved glass half-cylinder, leaving the middle completely open; the glowing white top of the base is exposed and empty; same dark room background, front view. Japanese anime background art and prop design sheet style, clean thin line art, flat cel shading with 1-2 shadow steps, no text, no letters, no numbers, no logos, no watermark, no people unless stated. ",
+  "source": "refs/entities/pod/closed.png"
  }
 ]

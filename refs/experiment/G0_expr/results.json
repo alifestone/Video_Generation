@@ -1,0 +1,82 @@
+[
+ {
+  "name": "04_expr_happy",
+  "file": "refs/experiment/G0_expr/04_expr_happy_s0.png",
+  "seed": 20261128,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Happy open-mouth smile, bright cheerful expression, eyes open and looking straight at the viewer. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 39.0
+ },
+ {
+  "name": "04_expr_happy",
+  "file": "refs/experiment/G0_expr/04_expr_happy_s1.png",
+  "seed": 20261138,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Happy open-mouth smile, bright cheerful expression, eyes open and looking straight at the viewer. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 23.3
+ },
+ {
+  "name": "04_expr_happy",
+  "file": "refs/experiment/G0_expr/04_expr_happy_s2.png",
+  "seed": 20261148,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Happy open-mouth smile, bright cheerful expression, eyes open and looking straight at the viewer. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 23.1
+ },
+ {
+  "name": "04_expr_happy",
+  "file": "refs/experiment/G0_expr/04_expr_happy_s3.png",
+  "seed": 20261158,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Happy open-mouth smile, bright cheerful expression, eyes open and looking straight at the viewer. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 23.2
+ },
+ {
+  "name": "05_expr_angry",
+  "file": "refs/experiment/G0_expr/05_expr_angry_s0.png",
+  "seed": 20261129,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Angry expression, furrowed eyebrows, eyes open and glaring straight at the viewer, mouth slightly open. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 30.0
+ },
+ {
+  "name": "05_expr_angry",
+  "file": "refs/experiment/G0_expr/05_expr_angry_s1.png",
+  "seed": 20261139,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Angry expression, furrowed eyebrows, eyes open and glaring straight at the viewer, mouth slightly open. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 23.2
+ },
+ {
+  "name": "05_expr_angry",
+  "file": "refs/experiment/G0_expr/05_expr_angry_s2.png",
+  "seed": 20261149,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Angry expression, furrowed eyebrows, eyes open and glaring straight at the viewer, mouth slightly open. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 23.2
+ },
+ {
+  "name": "05_expr_angry",
+  "file": "refs/experiment/G0_expr/05_expr_angry_s3.png",
+  "seed": 20261159,
+  "steps": 4,
+  "lightning": true,
+  "size": "832x1024",
+  "prompt": "Image 1 is a character reference sheet of the character. Close-up portrait from the chest up: only her head, shoulders and upper chest are in the image, the top of her head near the top edge, cut off at mid-chest; no arms crossed, no hands in the image. Angry expression, furrowed eyebrows, eyes open and glaring straight at the viewer, mouth slightly open. Single character only, no text, no letters, no captions, no symbols, no manga effect marks, no panel frames, plain pure white background, clean anime character-sheet illustration style identical to the reference. Keep the exact same character as the reference: same face with almond-shaped eyes and dark purple-grey irises, dark purple high ponytail with braids on the crown and a silver chain, small silver earrings, white sleeveless high-collar zip-up top. ",
+  "seconds": 23.2
+ }
+]

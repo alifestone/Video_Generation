@@ -32,3 +32,4 @@ lora/v*/samples/
 lora/v*/eval*/*.png
 # P3 淘汰的實體參考圖
 refs/entities_r0/
+refs/style_samples_r0/

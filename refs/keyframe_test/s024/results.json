@@ -1,0 +1,60 @@
+[
+ {
+  "step": "A",
+  "file": "refs/keyframe_test/s024/A_qwen_s0.png",
+  "seed": 20261124,
+  "refs": [
+   "refs/entities/street/frozen.png",
+   "refs/entities/drone/front.png"
+  ],
+  "prompt": "Image 1 is the character sheet, image 2 shows the shopping street, image 3 shows the small spherical white drone. Low-angle view looking up about 40 degrees from the street: the girl from image 1 hangs frozen in midair high above the street, facing the camera, full body, her body leaning far forward, both arms stretched forward toward the camera with open hands, legs trailing behind, eyes open, determined; the small drone from image 3 floats at her left shoulder (right side of the image). Behind her are the upper floors of the shop buildings from image 2 with holographic billboards, raindrops hanging still in the air, dark night sky. Keep the exact same character and outfit as the reference sheet in image 1: dark purple high ponytail with braids on the crown and a silver chain, white sleeveless high-collar zip-up crop top, white cargo mini skirt, black belt with a long black strap, one black thigh strap on her right thigh only, silver bracelets, white ankle socks, white chunky sneakers. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos. ",
+  "seconds": 93.1
+ },
+ {
+  "step": "B1_img2img",
+  "file": "refs/keyframe_test/s024/B1_img2img_s0.png",
+  "seed": 20261124,
+  "denoise": 0.45,
+  "canny": false,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, midair, from below, leaning forward, arms forward, reaching towards viewer, open hands, determined, shopping street, billboards, rain, night sky, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 18.1
+ },
+ {
+  "step": "B2_canny",
+  "file": "refs/keyframe_test/s024/B2_canny_s0.png",
+  "seed": 20261124,
+  "denoise": 0.6,
+  "canny": true,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, midair, from below, leaning forward, arms forward, reaching towards viewer, open hands, determined, shopping street, billboards, rain, night sky, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 15.0
+ },
+ {
+  "step": "A",
+  "file": "refs/keyframe_test/s024/A_qwen_s1.png",
+  "seed": 20261125,
+  "refs": [
+   "refs/entities/street/frozen.png",
+   "refs/entities/drone/front.png"
+  ],
+  "prompt": "Image 1 is the character sheet, image 2 shows the shopping street, image 3 shows the small spherical white drone. Low-angle view looking up about 40 degrees from the street: the girl from image 1 hangs frozen in midair high above the street, facing the camera, full body, her body leaning far forward, both arms stretched forward toward the camera with open hands, legs trailing behind, eyes open, determined; the small drone from image 3 floats at her left shoulder (right side of the image). Behind her are the upper floors of the shop buildings from image 2 with holographic billboards, raindrops hanging still in the air, dark night sky. Keep the exact same character and outfit as the reference sheet in image 1: dark purple high ponytail with braids on the crown and a silver chain, white sleeveless high-collar zip-up crop top, white cargo mini skirt, black belt with a long black strap, one black thigh strap on her right thigh only, silver bracelets, white ankle socks, white chunky sneakers. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos. ",
+  "seconds": 72.1
+ },
+ {
+  "step": "B1_img2img",
+  "file": "refs/keyframe_test/s024/B1_img2img_s1.png",
+  "seed": 20261125,
+  "denoise": 0.45,
+  "canny": false,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, midair, from below, leaning forward, arms forward, reaching towards viewer, open hands, determined, shopping street, billboards, rain, night sky, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 17.3
+ },
+ {
+  "step": "B2_canny",
+  "file": "refs/keyframe_test/s024/B2_canny_s1.png",
+  "seed": 20261125,
+  "denoise": 0.6,
+  "canny": true,
+  "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, midair, from below, leaning forward, arms forward, reaching towards viewer, open hands, determined, shopping street, billboards, rain, night sky, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+  "seconds": 14.2
+ }
+]

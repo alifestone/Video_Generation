@@ -52,3 +52,7 @@
 - 採用 A（只給整張角色表）。6 張 A 版複製到 `refs/` 作為正式參考圖：`01_full_front`、`02_side`、`03_back`、`04_expr_happy`、`05_expr_angry`、`06_action_point`。
 - 之後用 Qwen-Image-Edit-2511 產生參考圖時，預設只給整張角色表，不加裁切單格。
 - 04、05 保留半身構圖，不重出（04 為閉眼笑）。是否回 P0 重新生成參考圖，留到 P3 的 G0 審查風格樣張時再決定。
+
+## G0（2026-10-24）：重出 04、05
+
+P0 時留到 G0 決定的「04、05 是腰以上、04 閉眼」，G0 使用者選重出。用 `tools/g0_regen_expr.py`（同樣是模式 A，改用 Lightning 4 步，指定胸口以上、睜眼、不交叉手臂），每個表情 4 個 seed 放在 `G0_expr/`，使用者選 s3 取代 `refs/04_expr_happy.png`、`refs/05_expr_angry.png`（編髮只在頭頂、銀鏈垂下，最接近 style bible）。舊圖保留為 `G0_expr/old_*.png`。

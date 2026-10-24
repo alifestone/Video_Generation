@@ -14,7 +14,7 @@ from lint_plan import REF_RE, ROOT, Clock, load
 
 
 FIELD_ZH = {"style": "風格", "role": "角色設定", "notes": "備註", "refs": "參考圖", "shape": "形狀", "size": "大小", "color": "顏色",
-            "light": "光", "motion": "動態", "plot_functions": "劇情功能", "layout": "配置", "floor": "地面",
+            "light": "光", "visor": "面罩", "motion": "動態", "plot_functions": "劇情功能", "layout": "配置", "floor": "地面",
             "palette": "色調", "weather": "天氣", "variants": "版本", "extras": "路人", "opening": "開啟方式",
             "content": "內容", "off_state": "關機時", "segments": "分段", "count_rule": "倒數規則",
             "boundary": "邊界", "spread": "擴散", "realize": "做法", "platform": "平台",

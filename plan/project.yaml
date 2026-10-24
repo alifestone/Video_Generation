@@ -93,7 +93,7 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   build_freeze: shrinking_color_sphere   # 她的顏色撐住一個球形彩色圈（@luna_hold），每數一聲縮小，「1」時縮到她身上
   build_after_freeze: flashback_restored_things   # 凍住後閃回她恢復過的東西，全是灰的，最後回到她
   build_structure: claude_decides        # 鏡頭數交給 Claude：10 鏡（bar 37 快切 4 鏡、bar 38 定格 1 鏡、bar 39 閃回 4 鏡、bar 40 回到她 1 鏡）
-  # 2026-10-24 Final Chorus～Outro（Claude 代決：使用者授權「自行完成所有任務直到 P3 結束」，以下皆可改）
+  # 2026-10-24 Final Chorus～Outro（Claude 代決：使用者授權「自行完成所有任務直到 P3 結束」，以下皆可改；G0 使用者選「之後再審」，在做這些段落的關鍵幀前審）
   final_burst: palms_through_column      # 顏色從貼著光柱的掌心回到全身，灰色被頂開吹散；力量順光柱上天線（和 bar 22 的胸口衝擊波做出差異）
   full_broadcast_origin: antenna_top     # 全頻廣播從天線頂端發出（@full_broadcast），不是從她身上
   final_chorus_echo: restored_by_wave    # 波掃過控制室時 ECHO 恢復、飛回她肩旁
@@ -105,3 +105,10 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   dawn: post_chorus_end                  # Post-chorus 最後地平線開始天亮
   outro_transition: dissolve_time_skip   # 從塔上溶接回 CSFCCA 控制室，不拍回去的過程
   late_structure: 22_shots               # Final Chorus 11 鏡、Post-chorus 9 鏡、Outro 2 鏡
+  # 2026-10-24 G0（P3 審查，使用者逐題回答；使用者的意見見 lora/v2/eval、refs/style_samples、refs/entities 下的 recommend.md）
+  g0_lora: v2                            # luna_illustrious_v2（第 10 epoch）通過；kneel_land 改成使用者給的超級英雄落地姿勢（OpenPose＋輪廓線 ControlNet，refs/poses/）
+  keyframe_method: qwen_compose_sdxl_canny_post   # 關鍵幀＝A Qwen-Edit 用角色表＋refs/entities 合成構圖 → B2 Illustrious＋LoRA img2img（denoise 0.6）＋canny ControlNet → 後製（灰化、@broadcast_wave 等特效）；見 tools/p3_keyframe_test.py、refs/keyframe_test/
+  echo_visor: front_third                # ECHO 光帶嵌在黑色面罩裡，面罩只在正面約 1/3 圈（glossary drone.look.visor）
+  pod_open_ref: redo_from_closed         # 啟動艙開啟參考圖照 glossary 重做：玻璃罩兩半往兩側滑開
+  refs_04_05: regenerated_s3             # refs/04、05 重出成胸口以上、睜眼（refs/experiment/G0_expr/）
+  late_plot_review: later                # Final Chorus～Outro 的 Claude 代決與 s043–s074 待確認，留到做那些段落的關鍵幀前再審
