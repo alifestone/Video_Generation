@@ -1,0 +1,24 @@
+{
+ "pick": "keyframe.png = candidates/kf_B2_s6.png；last.png = candidates/last_paste_s6.png",
+ "keyframe": {
+  "A": {
+   "step": "A",
+   "file": "kf_A_s6.png",
+   "seed": 6,
+   "refs": [
+    "refs/entities/pod/closed.png",
+    "refs/entities/monitor_wall/frozen.png"
+   ],
+   "prompt": "Image 1 is the character sheet, image 2 shows the glass capsule pod, image 3 shows a wall of grey screens. Close medium shot cropped at the hips, eye level, straight-on front view: the girl from image 1 stands inside the transparent glass tube of the capsule from image 2, seen only from the waist up, the bottom edge of the frame cuts her at the hips and her thighs are not visible, her eyes closed, calm peaceful expression, arms relaxed at her sides, her head close to the top of the frame. The bright white top surface of the capsule base below the frame glows and softly lights her face from underneath. Behind the capsule is a wall of greyscale monitor screens, completely out of focus and blurred, dark room. Keep the exact same character and outfit as the reference sheet in image 1: dark purple high ponytail with braids on the crown and a silver chain, white sleeveless high-collar zip-up crop top, white cargo mini skirt, black belt with a long black strap, one black thigh strap on her right thigh only, silver bracelets, white ankle socks, white chunky sneakers. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos. "
+  },
+  "B2": {
+   "step": "B2",
+   "file": "kf_B2_s6.png",
+   "seed": 6,
+   "denoise": 0.6,
+   "canny": true,
+   "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, standing, closed eyes, facing viewer, calm, in glass tube, stasis pod, glass, white light from below, dark room, blurry background, screens in background, greyscale background, cold blue-black, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+  }
+ },
+ "last": "keyframe.png 原樣＋後製貼上 ECHO：從 refs/entities/drone/front.png 摳圖（洪水填充去白底），直徑＝畫面高 25%（192 px），中心在畫面寬 78%、高 22%；面罩只在正面（取自 G0 選定的參考圖）。Qwen 加無人機會把它複製到胸前，所以改用貼圖（tools/p4_keyframes.py paste_drone）。無光環。"
+}

@@ -112,3 +112,5 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   pod_open_ref: redo_from_closed         # 啟動艙開啟參考圖照 glossary 重做：玻璃罩兩半往兩側滑開
   refs_04_05: regenerated_s3             # refs/04、05 重出成胸口以上、睜眼（refs/experiment/G0_expr/）
   late_plot_review: later                # Final Chorus～Outro 的 Claude 代決與 s043–s074 待確認，留到做那些段落的關鍵幀前再審
+  # 2026-10-27 P4（p4 session）
+  s003_echo_entry_facing: left_then_turn_to_camera   # 使用者：ECHO 滑入時正面朝左（行進方向），不是朝前；last.png（停穩後朝鏡頭）OK。轉向時機＝減速最後約半拍、[2,3] 停穩時轉完（Claude 代決）

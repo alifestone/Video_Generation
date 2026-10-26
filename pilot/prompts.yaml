@@ -1,0 +1,32 @@
+# P4 試作：三個候選模型共用的動作描述（同關鍵幀、同 seed）。
+# 來源：plan/shots.yaml 的 motion.subject.text；只寫 realize 為 model 的部分，後製效果（光環、glow_pulse、螢幕亮起）不寫進 prompt。
+seed: 20261027
+negative: >
+  text, letters, watermark, subtitles, extra drone, duplicate drone, camera shake, zoom, cut, scene change,
+  blurry face, deformed hands, extra fingers, color shift, realistic, 3d render
+
+shots:
+  s002:
+    route: C        # 不進影片模型：Depthflow 視差＋後製
+    first: shots/s002/keyframe.png
+  s003:
+    route: A
+    first: shots/s003/keyframe.png
+    last: shots/s003/last.png          # 只給首尾幀模型（H3 FL2VA）
+    prompt: >
+      Anime cel-shaded shot, static camera. A girl with long dark purple hair stands inside a transparent glass stasis pod,
+      eyes closed, perfectly still, softly lit from below by white light; blurred grey monitor wall behind her.
+      A small white spherical hover drone with a black visor band and a glowing cyan light strip glides in horizontally
+      from beyond the right edge of the frame toward the upper right area, moving smoothly without propellers.
+      While gliding in, the drone faces left in its direction of travel, so its visor and cyan strip point left and we see it from the side.
+      As it decelerates in the last moment it rotates in place about 90 degrees to face the camera,
+      and it stops in the upper right foreground facing the viewer, then bobs gently up and down.
+      The girl does not move.
+  s004:
+    route: A
+    first: shots/s004/keyframe.png
+    last: shots/s004/last.png
+    prompt: >
+      Anime cel-shaded extreme close-up of a girl's eyes and eyebrows behind glass, static camera, lit from below.
+      Her eyes are closed and still at first, then she slowly opens her eyes fully within a quarter second
+      and looks straight into the camera with grey-violet eyes, holding still afterwards. Subtle breathing only.

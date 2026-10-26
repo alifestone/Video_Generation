@@ -1,0 +1,42 @@
+{
+ "pick": "keyframe.png = candidates/kf_B2_s2.png；last.png = candidates/last_inp_s12.png",
+ "keyframe": {
+  "A": {
+   "step": "A",
+   "file": "kf_A_s2.png",
+   "seed": 2,
+   "refs": [
+    "refs/04_expr_happy.png"
+   ],
+   "prompt": "Image 1 is the character sheet, image 2 shows the same girl's face as a reference for the face and eye style. Extreme close-up in a wide 16:9 frame, straight-on: only the girl's two eyes, eyebrows and the bridge of the nose fill the entire frame, cropped from the forehead bangs at the top to just below the eyes at the bottom. Both eyes are gently closed, long clear black eyelashes along the closed lids, calm peaceful face. The skin is lit by soft white light from below, and the top part of the image near the dark purple bangs is slightly darker. Seen through a pane of transparent glass with a very faint light reflection. Dark background. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos. "
+  },
+  "zoom": "A 以 (0.5,0.47) 為中心放大 1.45 倍裁切後再 B2",
+  "B2": {
+   "step": "B2",
+   "file": "kf_B2_s2.png",
+   "seed": 2,
+   "denoise": 0.6,
+   "canny": true,
+   "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, extreme close-up, close-up, eyes focus, closed eyes, long eyelashes, eyebrows, bangs, looking at viewer, light from below, dark background, glass reflection, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+  }
+ },
+ "last": {
+  "eyes_source": {
+   "step": "B2",
+   "file": "last_B2_s3.png",
+   "seed": 3,
+   "denoise": 0.6,
+   "canny": true,
+   "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, extreme close-up, close-up, eyes focus, open eyes, looking at viewer, grey eyes, purple-grey eyes, long eyelashes, eyebrows, bangs, looking at viewer, light from below, dark background, glass reflection, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+  },
+  "inpaint": {
+   "step": "eye_composite+inpaint",
+   "file": "last_inp_s12.png",
+   "seed": 12,
+   "denoise": 0.5,
+   "from_": "last_B2_s3.png eyes composited onto keyframe.png",
+   "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, extreme close-up, close-up, eyes focus, open eyes, looking at viewer, grey eyes, purple-grey eyes, long eyelashes, eyebrows, bangs, looking at viewer, light from below, dark background, glass reflection, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+  },
+  "note": "睜眼版（Qwen 改眼睛＋B2）的雙眼縮放 1.07 對位貼到 keyframe.png（羽化遮罩），再用 LoRA 在遮罩內 denoise 0.5 重繪融合（seed 12）；遮罩外與 keyframe 逐像素相同。"
+ }
+}

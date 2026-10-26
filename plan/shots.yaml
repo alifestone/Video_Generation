@@ -127,7 +127,7 @@ shots:
         placement: {x: center_right, y: upper, depth: fg}
         size: 直徑約畫面高的 1/4；停穩後中心約在畫面寬 78%、畫面高 22%，不和 @countdown_ring 重疊
         facing: to_camera
-        state: "[2,2] 從畫面右緣外滑入，[2,3] 停穩"
+        state: "[2,2] 從畫面右緣外滑入（面罩朝左、朝行進方向），減速時原地轉向，[2,3] 停穩時正面朝鏡頭"
       - ref: "@countdown_ring"
         placement: {x: center, y: upper, depth: fg}
         size: 外徑約畫面高的 1/2，圓心在 @luna 雙眼（畫面高約 30%）；[2,3] 才出現
@@ -141,7 +141,7 @@ shots:
       camera: {move: static, speed: slow, realize: none}
       subject:
         text: >
-          @drone 在 [2,2] 從畫面右緣外沿水平直線滑入、逐漸減速，[2,3] 停在畫面寬約 78%、畫面高約 22% 的前景，之後依 glossary 輕微上下浮動。
+          @drone 在 [2,2] 從畫面右緣外沿水平直線滑入、逐漸減速；滑入時面罩與光帶朝左（朝行進方向），鏡頭看到的是側面。減速的最後約半拍原地向鏡頭轉約 90°，[2,3] 停在畫面寬約 78%、畫面高約 22% 的前景時正好轉成正面朝鏡頭（＝last_frame），之後依 glossary 輕微上下浮動。
           [2,3] 時 @drone 的青色光帶 glow_pulse，@pod 正前方出現 @countdown_ring（3 段弧全亮），沒有可見的投影光束。@luna 保持閉眼不動。
         realize: model+post
     last_frame: >
