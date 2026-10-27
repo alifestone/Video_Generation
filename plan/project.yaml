@@ -114,3 +114,9 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   late_plot_review: later                # Final Chorus～Outro 的 Claude 代決與 s043–s074 待確認，留到做那些段落的關鍵幀前再審
   # 2026-10-27 P4（p4 session）
   s003_echo_entry_facing: left_then_turn_to_camera   # 使用者：ECHO 滑入時正面朝左（行進方向），不是朝前；last.png（停穩後朝鏡頭）OK。轉向時機＝減速最後約半拍、[2,3] 停穩時轉完（Claude 代決）
+  p4_main_i2v: per_shot_wan_flf_or_h3   # 使用者選：角色鏡頭（特寫、表情、身體動作）＝Wan2.2 I2V A14B Q8＋lightx2v 4 步＋首尾幀；物體入鏡／精準轉向或銜接＝MiniMax H3 FL2VA turbo 8 步
+  p4_accel_lora: production             # lightx2v 4 步、H3 turbo 8 步當正式設定（完整步數品質沒有更好，時間約 9 倍）
+  p4_anisora: dropped                   # 使用者同意刪除：ECHO 變形放大、眼睛重畫成大高光眼（角色漂移），不比 Wan 穩；模型與輸出已刪，轉檔腳本保留在 tools/
+  p4_wan_lora: not_needed               # 臉、髮色、服裝無漂移；眼睛顏色以尾幀拉回
+  p4_post: rife_esrgan                  # RIFE rife49 16→48→24fps；Real-ESRGAN anime 6B ×4 再縮到 1920×1080
+  p4_fun_control: deferred              # 手動姿勢＋Fun Control 未測（需另下載），留到第一個 B 路線段落前
