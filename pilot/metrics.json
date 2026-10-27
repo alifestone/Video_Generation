@@ -1,0 +1,1015 @@
+{
+  "wan22_lightx2v/s004": {
+    "combo": "wan22_lightx2v",
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 670.5,
+    "per_node_s": {
+      "vae:VAELoader": 0.3,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.3,
+      "neg:CLIPTextEncode": 3.0,
+      "pos:CLIPTextEncode": 0.5,
+      "i2v:WanImageToVideo": 17.5,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "l_high:LoraLoaderModelOnly": 0.0,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 307.4,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "l_low:LoraLoaderModelOnly": 0.0,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 309.5,
+      "dec:VAEDecode": 29.2,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 1.3
+    },
+    "peak": {
+      "comfy_rss_gb": 25.09,
+      "sys_used_gb": 22.52,
+      "swap_used_gb": 1.83,
+      "vram_gb": 10.24
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 4,
+      "cfg": 1.0,
+      "shift": 5.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": false,
+      "split_step": 2
+    },
+    "time": "2026-10-27 02:26:50",
+    "output": "pilot/wan22_lightx2v/s004.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "wan22_lightx2v/s003": {
+    "combo": "wan22_lightx2v",
+    "shot": "s003",
+    "status": "ok",
+    "error": null,
+    "total_s": 676.4,
+    "per_node_s": {
+      "vae:VAELoader": 0.0,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.3,
+      "neg:CLIPTextEncode": 3.0,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanImageToVideo": 17.3,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "l_high:LoraLoaderModelOnly": 0.0,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 312.7,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "l_low:LoraLoaderModelOnly": 0.0,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 311.8,
+      "dec:VAEDecode": 28.9,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 1.6
+    },
+    "peak": {
+      "comfy_rss_gb": 25.37,
+      "sys_used_gb": 20.73,
+      "swap_used_gb": 5.64,
+      "vram_gb": 10.24
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 4,
+      "cfg": 1.0,
+      "shift": 5.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": false,
+      "split_step": 2
+    },
+    "time": "2026-10-27 02:38:21",
+    "output": "pilot/wan22_lightx2v/s003.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "wan22_lightx2v_flf/s003": {
+    "combo": "wan22_lightx2v_flf",
+    "shot": "s003",
+    "status": "ok",
+    "error": null,
+    "total_s": 667.0,
+    "per_node_s": {
+      "vae:VAELoader": 0.0,
+      "img1:LoadImage": 0.0,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.3,
+      "neg:CLIPTextEncode": 2.7,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanFirstLastFrameToVideo": 17.3,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "l_high:LoraLoaderModelOnly": 0.0,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 306.8,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "l_low:LoraLoaderModelOnly": 0.0,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 308.1,
+      "dec:VAEDecode": 28.9,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 2.0
+    },
+    "peak": {
+      "comfy_rss_gb": 24.11,
+      "sys_used_gb": 19.99,
+      "swap_used_gb": 5.97,
+      "vram_gb": 10.24
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 4,
+      "cfg": 1.0,
+      "shift": 5.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": true,
+      "split_step": 2
+    },
+    "time": "2026-10-27 02:49:32",
+    "output": "pilot/wan22_lightx2v_flf/s003.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "h3_turbo/s004": {
+    "combo": "h3_turbo",
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 562.3,
+    "per_node_s": {
+      "avae:VAELoader": 0.0,
+      "img1:LoadImage": 0.0,
+      "img0:LoadImage": 0.0,
+      "vae:VAELoader": 0.1,
+      "clip:CLIPLoader": 0.9,
+      "cond:MiniMaxH3ImageToVideo": 17.9,
+      "unet:UNETLoader": 0.1,
+      "lora:LoraLoaderModelOnly": 0.0,
+      "sched:BasicScheduler": 0.0,
+      "samp:KSamplerSelect": 0.0,
+      "guider:BasicGuider": 0.0,
+      "noise:RandomNoise": 0.0,
+      "sca:SamplerCustomAdvanced": 486.2,
+      "adec:VAEDecodeAudio": 1.1,
+      "dec:VAEDecode": 50.5,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 5.4
+    },
+    "peak": {
+      "comfy_rss_gb": 26.01,
+      "sys_used_gb": 29.14,
+      "swap_used_gb": 10.5,
+      "vram_gb": 14.7
+    },
+    "params": {
+      "resolution": "1280x736",
+      "frames": 124,
+      "fps": 24,
+      "steps": 8,
+      "cfg": "BasicGuider(無 CFG)",
+      "shift": null,
+      "sampler": "res_multistep/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": true,
+      "split_step": null
+    },
+    "time": "2026-10-27 02:58:57",
+    "output": "pilot/h3_turbo/s004.mp4",
+    "frames_out": 124,
+    "sheet_frame_idx": [
+      0,
+      18,
+      35,
+      53,
+      70,
+      88,
+      105,
+      123
+    ]
+  },
+  "h3_turbo/s003": {
+    "combo": "h3_turbo",
+    "shot": "s003",
+    "status": "ok",
+    "error": null,
+    "total_s": 564.2,
+    "per_node_s": {
+      "avae:VAELoader": 0.0,
+      "img1:LoadImage": 0.0,
+      "img0:LoadImage": 0.0,
+      "vae:VAELoader": 0.1,
+      "clip:CLIPLoader": 1.4,
+      "cond:MiniMaxH3ImageToVideo": 18.2,
+      "unet:UNETLoader": 0.2,
+      "lora:LoraLoaderModelOnly": 0.0,
+      "sched:BasicScheduler": 0.0,
+      "samp:KSamplerSelect": 0.0,
+      "guider:BasicGuider": 0.0,
+      "noise:RandomNoise": 0.0,
+      "sca:SamplerCustomAdvanced": 489.5,
+      "adec:VAEDecodeAudio": 0.9,
+      "dec:VAEDecode": 50.3,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 3.4
+    },
+    "peak": {
+      "comfy_rss_gb": 23.55,
+      "sys_used_gb": 29.01,
+      "swap_used_gb": 9.86,
+      "vram_gb": 14.81
+    },
+    "params": {
+      "resolution": "1280x736",
+      "frames": 124,
+      "fps": 24,
+      "steps": 8,
+      "cfg": "BasicGuider(無 CFG)",
+      "shift": null,
+      "sampler": "res_multistep/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": true,
+      "split_step": null
+    },
+    "time": "2026-10-27 03:08:24",
+    "output": "pilot/h3_turbo/s003.mp4",
+    "frames_out": 124,
+    "sheet_frame_idx": [
+      0,
+      18,
+      35,
+      53,
+      70,
+      88,
+      105,
+      123
+    ]
+  },
+  "wan22_full/s004": {
+    "combo": "wan22_full",
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 5960.4,
+    "per_node_s": {
+      "vae:VAELoader": 0.1,
+      "img0:LoadImage": 0.1,
+      "clip:CLIPLoader": 0.3,
+      "neg:CLIPTextEncode": 2.7,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanImageToVideo": 17.2,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 2961.3,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 2946.2,
+      "dec:VAEDecode": 28.9,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 1.4
+    },
+    "peak": {
+      "comfy_rss_gb": 22.93,
+      "sys_used_gb": 20.27,
+      "swap_used_gb": 8.49,
+      "vram_gb": 10.32
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 20,
+      "cfg": 3.5,
+      "shift": 8.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": false,
+      "first_last": false,
+      "split_step": 10
+    },
+    "time": "2026-10-27 04:47:47",
+    "output": "pilot/wan22_full/s004.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "wan22_full/s003": {
+    "combo": "wan22_full",
+    "shot": "s003",
+    "status": "ok",
+    "error": null,
+    "total_s": 5947.3,
+    "per_node_s": {
+      "vae:VAELoader": 0.1,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.3,
+      "neg:CLIPTextEncode": 2.8,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanImageToVideo": 17.3,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 2943.7,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 2946.3,
+      "dec:VAEDecode": 29.2,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 6.9
+    },
+    "peak": {
+      "comfy_rss_gb": 24.66,
+      "sys_used_gb": 18.93,
+      "swap_used_gb": 6.8,
+      "vram_gb": 10.32
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 20,
+      "cfg": 3.5,
+      "shift": 8.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": false,
+      "first_last": false,
+      "split_step": 10
+    },
+    "time": "2026-10-27 06:26:57",
+    "output": "pilot/wan22_full/s003.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "h3_full/s004": {
+    "combo": "h3_full",
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 1258.7,
+    "per_node_s": {
+      "avae:VAELoader": 0.1,
+      "img1:LoadImage": 0.1,
+      "img0:LoadImage": 0.0,
+      "vae:VAELoader": 0.2,
+      "clip:CLIPLoader": 1.5,
+      "cond:MiniMaxH3ImageToVideo": 18.3,
+      "unet:UNETLoader": 0.3,
+      "sched:BasicScheduler": 0.0,
+      "samp:KSamplerSelect": 0.0,
+      "guider:BasicGuider": 0.0,
+      "noise:RandomNoise": 0.0,
+      "sca:SamplerCustomAdvanced": 1183.5,
+      "adec:VAEDecodeAudio": 1.0,
+      "dec:VAEDecode": 50.3,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 2.9
+    },
+    "peak": {
+      "comfy_rss_gb": 26.86,
+      "sys_used_gb": 28.52,
+      "swap_used_gb": 5.19,
+      "vram_gb": 14.9
+    },
+    "params": {
+      "resolution": "1280x736",
+      "frames": 124,
+      "fps": 24,
+      "steps": 20,
+      "cfg": "BasicGuider(無 CFG)",
+      "shift": null,
+      "sampler": "res_multistep/simple",
+      "seed": 20261027,
+      "lora": false,
+      "first_last": true,
+      "split_step": null
+    },
+    "time": "2026-10-27 06:47:59",
+    "output": "pilot/h3_full/s004.mp4",
+    "frames_out": 124,
+    "sheet_frame_idx": [
+      0,
+      18,
+      35,
+      53,
+      70,
+      88,
+      105,
+      123
+    ]
+  },
+  "h3_full/s003": {
+    "combo": "h3_full",
+    "shot": "s003",
+    "status": "ok",
+    "error": null,
+    "total_s": 1260.6,
+    "per_node_s": {
+      "avae:VAELoader": 0.0,
+      "img1:LoadImage": 0.0,
+      "img0:LoadImage": 0.0,
+      "vae:VAELoader": 0.0,
+      "clip:CLIPLoader": 0.5,
+      "cond:MiniMaxH3ImageToVideo": 18.0,
+      "unet:UNETLoader": 0.0,
+      "sched:BasicScheduler": 0.0,
+      "samp:KSamplerSelect": 0.0,
+      "guider:BasicGuider": 0.0,
+      "noise:RandomNoise": 0.0,
+      "sca:SamplerCustomAdvanced": 1188.8,
+      "adec:VAEDecodeAudio": 0.8,
+      "dec:VAEDecode": 50.3,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 2.0
+    },
+    "peak": {
+      "comfy_rss_gb": 27.18,
+      "sys_used_gb": 28.49,
+      "swap_used_gb": 4.92,
+      "vram_gb": 14.75
+    },
+    "params": {
+      "resolution": "1280x736",
+      "frames": 124,
+      "fps": 24,
+      "steps": 20,
+      "cfg": "BasicGuider(無 CFG)",
+      "shift": null,
+      "sampler": "res_multistep/simple",
+      "seed": 20261027,
+      "lora": false,
+      "first_last": true,
+      "split_step": null
+    },
+    "time": "2026-10-27 07:09:02",
+    "output": "pilot/h3_full/s003.mp4",
+    "frames_out": 124,
+    "sheet_frame_idx": [
+      0,
+      18,
+      35,
+      53,
+      70,
+      88,
+      105,
+      123
+    ]
+  },
+  "anisora/s004": {
+    "combo": "anisora",
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 5931.6,
+    "per_node_s": {
+      "vae:VAELoader": 0.2,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.3,
+      "neg:CLIPTextEncode": 2.7,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanImageToVideo": 17.2,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 2938.5,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 2939.3,
+      "dec:VAEDecode": 28.9,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 3.7
+    },
+    "peak": {
+      "comfy_rss_gb": 26.65,
+      "sys_used_gb": 17.04,
+      "swap_used_gb": 5.3,
+      "vram_gb": 10.32
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 20,
+      "cfg": 3.5,
+      "shift": 8.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": false,
+      "first_last": false,
+      "split_step": 10
+    },
+    "time": "2026-10-27 08:47:57",
+    "output": "pilot/anisora/s004.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "anisora/s003": {
+    "combo": "anisora",
+    "shot": "s003",
+    "status": "ok",
+    "error": null,
+    "total_s": 5941.5,
+    "per_node_s": {
+      "vae:VAELoader": 0.2,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.4,
+      "neg:CLIPTextEncode": 2.8,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanImageToVideo": 17.3,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 2942.5,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 2944.9,
+      "dec:VAEDecode": 29.0,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 3.6
+    },
+    "peak": {
+      "comfy_rss_gb": 26.7,
+      "sys_used_gb": 17.6,
+      "swap_used_gb": 5.25,
+      "vram_gb": 10.32
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 20,
+      "cfg": 3.5,
+      "shift": 8.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": false,
+      "first_last": false,
+      "split_step": 10
+    },
+    "time": "2026-10-27 10:27:01",
+    "output": "pilot/anisora/s003.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "anisora_lightx2v/s004": {
+    "combo": "anisora_lightx2v",
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 684.7,
+    "per_node_s": {
+      "vae:VAELoader": 0.1,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.3,
+      "neg:CLIPTextEncode": 2.8,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanImageToVideo": 17.3,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "l_high:LoraLoaderModelOnly": 0.0,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 311.8,
+      "u_low:UnetLoaderGGUF": 0.1,
+      "l_low:LoraLoaderModelOnly": 0.0,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 316.5,
+      "dec:VAEDecode": 29.0,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 6.0
+    },
+    "peak": {
+      "comfy_rss_gb": 25.73,
+      "sys_used_gb": 17.4,
+      "swap_used_gb": 7.33,
+      "vram_gb": 10.26
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 4,
+      "cfg": 1.0,
+      "shift": 5.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": false,
+      "split_step": 2
+    },
+    "time": "2026-10-27 10:38:28",
+    "output": "pilot/anisora_lightx2v/s004.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "wan22_lightx2v_flf/s004": {
+    "combo": "wan22_lightx2v_flf",
+    "prompt_variant": null,
+    "prompt_used": null,
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 670.3,
+    "per_node_s": {
+      "vae:VAELoader": 0.3,
+      "img1:LoadImage": 0.1,
+      "img0:LoadImage": 0.0,
+      "clip:CLIPLoader": 0.6,
+      "neg:CLIPTextEncode": 2.8,
+      "pos:CLIPTextEncode": 0.6,
+      "i2v:WanFirstLastFrameToVideo": 17.3,
+      "u_high:UnetLoaderGGUF": 0.1,
+      "l_high:LoraLoaderModelOnly": 0.0,
+      "ms_high:ModelSamplingSD3": 0.0,
+      "ks_high:KSamplerAdvanced": 307.0,
+      "u_low:UnetLoaderGGUF": 0.4,
+      "l_low:LoraLoaderModelOnly": 0.0,
+      "ms_low:ModelSamplingSD3": 0.0,
+      "ks_low:KSamplerAdvanced": 308.2,
+      "dec:VAEDecode": 29.0,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 2.4
+    },
+    "peak": {
+      "comfy_rss_gb": 26.79,
+      "sys_used_gb": 18.01,
+      "swap_used_gb": 6.06,
+      "vram_gb": 10.26
+    },
+    "params": {
+      "resolution": "1280x720",
+      "frames": 81,
+      "fps": 16,
+      "steps": 4,
+      "cfg": 1.0,
+      "shift": 5.0,
+      "sampler": "euler/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": true,
+      "split_step": 2
+    },
+    "time": "2026-10-27 10:51:38",
+    "output": "pilot/wan22_lightx2v_flf/s004.mp4",
+    "frames_out": 81,
+    "sheet_frame_idx": [
+      0,
+      11,
+      23,
+      34,
+      46,
+      57,
+      69,
+      80
+    ]
+  },
+  "h3_turbo_i2v/s004": {
+    "combo": "h3_turbo_i2v",
+    "prompt_variant": null,
+    "prompt_used": null,
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 511.7,
+    "per_node_s": {
+      "avae:VAELoader": 0.0,
+      "img0:LoadImage": 0.1,
+      "vae:VAELoader": 0.1,
+      "clip:CLIPLoader": 1.2,
+      "cond:MiniMaxH3ImageToVideo": 7.9,
+      "unet:UNETLoader": 0.3,
+      "lora:LoraLoaderModelOnly": 0.0,
+      "sched:BasicScheduler": 0.0,
+      "samp:KSamplerSelect": 0.0,
+      "guider:BasicGuider": 0.0,
+      "noise:RandomNoise": 0.0,
+      "sca:SamplerCustomAdvanced": 447.1,
+      "adec:VAEDecodeAudio": 1.0,
+      "dec:VAEDecode": 50.4,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 2.9
+    },
+    "peak": {
+      "comfy_rss_gb": 26.85,
+      "sys_used_gb": 28.5,
+      "swap_used_gb": 5.1,
+      "vram_gb": 14.66
+    },
+    "params": {
+      "resolution": "1280x736",
+      "frames": 124,
+      "fps": 24,
+      "steps": 8,
+      "cfg": "BasicGuider(無 CFG)",
+      "shift": null,
+      "sampler": "res_multistep/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": false,
+      "split_step": null
+    },
+    "time": "2026-10-27 11:00:12",
+    "output": "pilot/h3_turbo_i2v/s004.mp4",
+    "frames_out": 124,
+    "sheet_frame_idx": [
+      0,
+      18,
+      35,
+      53,
+      70,
+      88,
+      105,
+      123
+    ]
+  },
+  "h3_turbo_nofade/s004": {
+    "combo": "h3_turbo_nofade",
+    "prompt_variant": "nofade",
+    "prompt_used": "Anime cel-shaded extreme close-up of a girl's eyes and eyebrows behind glass, static camera, lit from below. Her eyes are closed and still at first, then she slowly opens her eyes fully within a quarter second and looks straight into the camera with grey-violet eyes, holding still afterwards. Subtle breathing only. The eyelids physically lift open from the top, the upper eyelid moving upward to reveal the eyes; no crossfade, no dissolve, no ghosting, no double exposure between closed and open eyes.",
+    "shot": "s004",
+    "status": "ok",
+    "error": null,
+    "total_s": 558.6,
+    "per_node_s": {
+      "avae:VAELoader": 0.0,
+      "img1:LoadImage": 0.0,
+      "img0:LoadImage": 0.0,
+      "vae:VAELoader": 0.1,
+      "clip:CLIPLoader": 0.7,
+      "cond:MiniMaxH3ImageToVideo": 17.6,
+      "unet:UNETLoader": 0.1,
+      "lora:LoraLoaderModelOnly": 0.0,
+      "sched:BasicScheduler": 0.0,
+      "samp:KSamplerSelect": 0.0,
+      "guider:BasicGuider": 0.0,
+      "noise:RandomNoise": 0.0,
+      "sca:SamplerCustomAdvanced": 486.7,
+      "adec:VAEDecodeAudio": 0.9,
+      "dec:VAEDecode": 50.3,
+      "vid:CreateVideo": 0.0,
+      "save:SaveVideo": 2.1
+    },
+    "peak": {
+      "comfy_rss_gb": 26.99,
+      "sys_used_gb": 28.49,
+      "swap_used_gb": 4.85,
+      "vram_gb": 14.71
+    },
+    "params": {
+      "resolution": "1280x736",
+      "frames": 124,
+      "fps": 24,
+      "steps": 8,
+      "cfg": "BasicGuider(無 CFG)",
+      "shift": null,
+      "sampler": "res_multistep/simple",
+      "seed": 20261027,
+      "lora": true,
+      "first_last": true,
+      "split_step": null
+    },
+    "time": "2026-10-27 11:09:57",
+    "output": "pilot/h3_turbo_nofade/s004.mp4",
+    "frames_out": 124,
+    "sheet_frame_idx": [
+      0,
+      18,
+      35,
+      53,
+      70,
+      88,
+      105,
+      123
+    ]
+  },
+  "post_tests": {
+    "rife_s003_s004": {
+      "tool": "ComfyUI-Frame-Interpolation RIFE VFI rife49.pth, multiplier 3, fast_mode, ensemble, fp32, 16→48fps 再隔幀抽成 24fps (81→241→121 幀)",
+      "s003": {
+        "total_s": 34.1,
+        "note": "含載入權重",
+        "comfy_rss_gb": 10.13,
+        "vram_poll_peak_gb": 0.95
+      },
+      "s004": {
+        "total_s": 8.1,
+        "vram_poll_peak_gb": 0.95
+      },
+      "note_vram": "1 秒輪詢 nvidia-smi，RIFE 約 8 秒內只量到 0.95GB，實際可能略高但很小",
+      "diff_series": {
+        "s003_src16": {
+          "mean": 1.952,
+          "max": 4.575,
+          "spikes": 0
+        },
+        "s003_rife24": {
+          "mean": 1.4015,
+          "max": 3.446,
+          "spikes": 0
+        },
+        "s004_src16": {
+          "mean": 2.07,
+          "max": 15.75,
+          "spikes": [
+            16,
+            18,
+            20,
+            22,
+            24
+          ]
+        },
+        "s004_rife24": {
+          "mean": 1.49,
+          "max": 12.43,
+          "spikes": [
+            24,
+            26,
+            27,
+            29,
+            30,
+            33,
+            36
+          ]
+        }
+      },
+      "outputs": [
+        "pilot/post_tests/rife_s003_24.mp4",
+        "pilot/post_tests/rife_s004_24.mp4",
+        "pilot/post_tests/rife_s003_48.mp4",
+        "pilot/post_tests/rife_s004_48.mp4"
+      ],
+      "sheets": [
+        "pilot/post_tests/rife_s003_echo_sheet.png",
+        "pilot/post_tests/rife_s004_open_sheet.png"
+      ]
+    },
+    "esrgan_vs_lanczos_h3_turbo_s003": {
+      "model": "RealESRGAN_x4plus_anime_6B fp16 整幀（未分塊）→ INTER_AREA 縮 1920x1080",
+      "per_frame_s_mean": 0.795,
+      "per_frame_s_first": 0.934,
+      "total_s": 98.6,
+      "frames": 124,
+      "peak_vram_torch_allocated_gb": 7.04,
+      "peak_vram_reserved_gb": 10.05,
+      "flicker": {
+        "esrgan": {
+          "luna_body": {
+            "diff_mean": 0.1328,
+            "p95": 0.3608,
+            "max": 0.7809,
+            "lum_std": 0.0281
+          },
+          "bg_right": {
+            "diff_mean": 0.0299,
+            "max": 0.2253
+          },
+          "bg_left": {
+            "diff_mean": 0.0296,
+            "max": 0.1635
+          }
+        },
+        "lanczos": {
+          "luna_body": {
+            "diff_mean": 0.1056,
+            "p95": 0.2777,
+            "max": 0.6361,
+            "lum_std": 0.0355
+          },
+          "bg_right": {
+            "diff_mean": 0.0286,
+            "max": 0.2768
+          },
+          "bg_left": {
+            "diff_mean": 0.0217,
+            "max": 0.182
+          }
+        }
+      },
+      "outputs": [
+        "pilot/post_tests/esrgan_s003_1080.mp4",
+        "pilot/post_tests/lanczos_s003_1080.mp4",
+        "pilot/post_tests/crop100_lanczos_left_esrgan_right.png"
+      ]
+    },
+    "s002_parallax": {
+      "method": "DepthAnythingV2 vitl（controlnet_aux，下載 1.3GB 權重）深度圖＋自寫 torch 反向取樣視差（tools/p4_parallax.py），未用 Depthflow",
+      "frames": 54,
+      "fps": 24,
+      "dur_s": 2.25,
+      "res": "1920x1080",
+      "zoom": "平均 5%（遠 4.3%、近 7.3%，smoothstep 緩入緩出）",
+      "diff_series": {
+        "mean": 0.92,
+        "max": 1.37,
+        "spikes": 0
+      },
+      "vs_uniform_zoom_phase_shift_px": {
+        "wall_left": [
+          2.24,
+          0.67
+        ],
+        "wall_right": [
+          -2.43,
+          0.73
+        ],
+        "pod": [
+          0.14,
+          0.89
+        ],
+        "floor": [
+          0.58,
+          2.81
+        ]
+      },
+      "outputs": [
+        "pilot/s002_parallax.mp4",
+        "pilot/post_tests/s002_depth.png",
+        "pilot/post_tests/s002_parallax_crops_first_left_last_right.png"
+      ]
+    }
+  }
+}

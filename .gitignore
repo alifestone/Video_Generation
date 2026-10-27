@@ -34,3 +34,4 @@ lora/v*/eval*/*.png
 refs/entities_r0/
 refs/style_samples_r0/
 pilot/*/
+pilot/*.mp4
