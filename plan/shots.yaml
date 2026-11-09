@@ -76,7 +76,7 @@ shots:
       subject:
         text: >
           @monitor_wall 的螢幕依 beat_events 由正中欄往左右兩側一欄一欄亮起；每一批在拍點的同一幀瞬間點亮（1 幀），上中下三層同時。
-          每面螢幕亮起時先顯示彩色的 @city 角落，維持 3 幀，接著用 6 幀由畫面左往右掃成灰階（@silence 的邊界帶掃過螢幕），在下一拍之前全部變灰。
+          每面螢幕亮起的那一幀就直接是灰階（frozen）的 @city 畫面，不先顯示彩色、沒有掃灰過程（2026-11-09 使用者）。
           主螢幕的 @signal_wave 整鏡延續 s001 結尾的微幅抖動（不超過主螢幕高 3%），不變灰。
         realize: post
     last_frame: >
@@ -91,7 +91,7 @@ shots:
       - at: [1, 3]
         event: 左右各第 2 欄亮起，共 6 面
       - at: [1, 4]
-        event: 左右各第 3 欄（最外側）亮起，共 6 面；本拍內變灰後，21 面全部是灰階
+        event: 左右各第 3 欄（最外側）亮起，共 6 面；21 面全部是灰階
     transition_in:
       type: match_cut
       note: >
@@ -101,7 +101,7 @@ shots:
     overlay: null
     status: proposed
     notes: >
-      螢幕灰白光約 #b0b4ba（中性）。螢幕內容用 7 張不同的 @city 畫面輪流使用，每張有彩色與 frozen 兩版。
+      螢幕灰白光約 #b0b4ba（中性）。螢幕內容用 7 張不同的 @city 畫面輪流使用，只用 frozen（灰階）版。
       @pod 底座白光在 s003 直接變亮（切點跳變，不在本鏡漸亮）。
 
   - id: s003

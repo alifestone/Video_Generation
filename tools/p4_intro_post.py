@@ -38,6 +38,8 @@ PLAN = dict(frames=[F0, F1], s002=S2, s003=S3, s004=S4, screen_beats=SCREEN_BEAT
 
 # ───────── ESRGAN ─────────
 _model = None
+GRAY_ON = True   # s002 螢幕亮起即灰階（False＝舊版：彩色 3 幀→6 幀左往右掃灰）
+
 def esrgan(rgb):  # uint8 HxWx3 → 1920x1080 uint8
     global _model
     if A.no_esrgan:
@@ -124,7 +126,8 @@ def build_s002():
             if kk < 0: continue
             x0, y0, x1, y1, col, gray = tiles[(r, c)]
             w = x1 - x0
-            if kk < 3: p = 0.0
+            if GRAY_ON: p = 1.0          # 2026-11-09 使用者：螢幕直接以灰階亮起，不先顯示彩色再掃灰
+            elif kk < 3: p = 0.0
             elif kk < 9: p = (kk - 3 + 1) / 6
             else: p = 1.0
             cx = int(round(p * w))

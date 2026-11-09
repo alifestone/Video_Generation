@@ -120,3 +120,5 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   p4_wan_lora: not_needed               # 臉、髮色、服裝無漂移；眼睛顏色以尾幀拉回
   p4_post: rife_esrgan                  # RIFE rife49 16→48→24fps；Real-ESRGAN anime 6B ×4 再縮到 1920×1080
   p4_fun_control: deferred              # 手動姿勢＋Fun Control 未測（需另下載），留到第一個 B 路線段落前
+  # 2026-11-09
+  s002_screens_light_up: gray_directly   # 使用者：監控螢幕逐拍亮起時直接是灰階，不先全彩再轉灰

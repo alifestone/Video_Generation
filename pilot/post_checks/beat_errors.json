@@ -4,35 +4,35 @@
   "measured": 67,
   "err": 0,
   "lum_prev": null,
-  "lum_first": 107.04208374023438,
-  "gray_done": 74,
+  "lum_first": 100.1551513671875,
+  "gray_done": null,
   "next_beat": 81
  },
  "s002_beat2": {
   "planned": 81,
   "measured": 81,
   "err": 0,
-  "lum_prev": 0.031749021261930466,
-  "lum_first": 100.23580169677734,
-  "gray_done": 88,
+  "lum_prev": 0.030678721144795418,
+  "lum_first": 93.06448364257812,
+  "gray_done": null,
   "next_beat": 94
  },
  "s002_beat3": {
   "planned": 94,
   "measured": 94,
   "err": 0,
-  "lum_prev": 0.7869829535484314,
-  "lum_first": 95.2085189819336,
-  "gray_done": 101,
+  "lum_prev": 0.7836105823516846,
+  "lum_first": 88.58805084228516,
+  "gray_done": null,
   "next_beat": 108
  },
  "s002_beat4": {
   "planned": 108,
   "measured": 108,
   "err": 0,
-  "lum_prev": 8.579610824584961,
-  "lum_first": 96.90608978271484,
-  "gray_done": 115,
+  "lum_prev": 8.5830078125,
+  "lum_first": 90.68468475341797,
+  "gray_done": null,
   "next_beat": 121
  },
  "s003_echo_in": {
