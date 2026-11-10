@@ -1,0 +1,3192 @@
+{
+ "meta": {
+  "fps": 24,
+  "n_frames": 3223
+ },
+ "items": [
+  {
+   "shot": "s001",
+   "kind": "subject",
+   "shot_start": 0,
+   "shot_end": 67,
+   "realize": "post",
+   "text": "@signal_wave 在 [0,4] 出現一個單一向上的窄尖峰，約 4 幀內回到近乎平線； 之後到本鏡結束只有不超過畫面高 3% 的微幅抖動。",
+   "start_frame": 0,
+   "end_frame": 67
+  },
+  {
+   "shot": "s001",
+   "kind": "post_only",
+   "shot_start": 0,
+   "shot_end": 67,
+   "start_frame": 0,
+   "end_frame": 67,
+   "keyframe": "shots/s001/keyframe.png",
+   "note": "沒有影片模型，只用關鍵幀＋後製"
+  },
+  {
+   "shot": "s001",
+   "kind": "transition_in",
+   "shot_start": 0,
+   "shot_end": 67,
+   "start_frame": 0,
+   "type": "fade_from_black",
+   "frames": 16,
+   "note": "從歌曲開頭到人聲「訊號」進來（0.68 s）淡入完成"
+  },
+  {
+   "shot": "s001",
+   "kind": "beat_event",
+   "shot_start": 0,
+   "shot_end": 67,
+   "start_frame": 53,
+   "at": [
+    0,
+    4
+   ],
+   "rel_frame": 53,
+   "event": "@signal_wave 跳出一個單一向上的窄尖峰（高約畫面高 1/3），同時對 @signal_wave 做 glow_pulse：亮度 1 幀內抬升到約 2 倍，再用 3 幀回落",
+   "sync": "鼓進入（2.22 s）",
+   "realize": "post"
+  },
+  {
+   "shot": "s002",
+   "kind": "camera",
+   "shot_start": 67,
+   "shot_end": 121,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 67,
+   "end_frame": 121,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s002",
+   "kind": "subject",
+   "shot_start": 67,
+   "shot_end": 121,
+   "realize": "post",
+   "text": "@monitor_wall 的螢幕依 beat_events 由正中欄往左右兩側一欄一欄亮起；每一批在拍點的同一幀瞬間點亮（1 幀），上中下三層同時。 每面螢幕亮起的那一幀就直接是灰階（frozen）的 @city 畫面，不先顯示彩色、沒有掃灰過程（2026-11-09 使用者）。 主螢幕的 @signal_wave 整鏡延續 s001 結尾的微幅抖動（不超過主螢幕高 3%），不變灰。",
+   "start_frame": 67,
+   "end_frame": 121
+  },
+  {
+   "shot": "s002",
+   "kind": "parallax",
+   "shot_start": 67,
+   "shot_end": 121,
+   "start_frame": 67,
+   "end_frame": 121,
+   "keyframe": "shots/s002/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s002",
+   "kind": "beat_event",
+   "shot_start": 67,
+   "shot_end": 121,
+   "start_frame": 67,
+   "at": [
+    1,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "正中欄的上層與下層 2 面亮起（正中欄 3 面全亮）",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s002",
+   "kind": "transition_in",
+   "shot_start": 67,
+   "shot_end": 121,
+   "start_frame": 67,
+   "type": "match_cut",
+   "frames": null,
+   "note": "s001 與 s002 的 @signal_wave 是同一條波形，中心都在畫面水平正中、畫面高約 45%； 兩鏡波形大小相差約 7 倍，接受（揭示式 match cut：從螢幕特寫直接切到整個房間）\n"
+  },
+  {
+   "shot": "s002",
+   "kind": "beat_event",
+   "shot_start": 67,
+   "shot_end": 121,
+   "start_frame": 81,
+   "at": [
+    1,
+    2
+   ],
+   "rel_frame": 14,
+   "event": "左右各第 1 欄亮起，共 6 面",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s002",
+   "kind": "beat_event",
+   "shot_start": 67,
+   "shot_end": 121,
+   "start_frame": 94,
+   "at": [
+    1,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "左右各第 2 欄亮起，共 6 面",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s002",
+   "kind": "beat_event",
+   "shot_start": 67,
+   "shot_end": 121,
+   "start_frame": 108,
+   "at": [
+    1,
+    4
+   ],
+   "rel_frame": 41,
+   "event": "左右各第 3 欄（最外側）亮起，共 6 面；21 面全部是灰階",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s003",
+   "kind": "subject",
+   "shot_start": 121,
+   "shot_end": 175,
+   "realize": "model+post",
+   "text": "@drone 在 [2,2] 從畫面右緣外沿水平直線滑入、逐漸減速；滑入時面罩與光帶朝左（朝行進方向），鏡頭看到的是側面。減速的最後約半拍原地向鏡頭轉約 90°，[2,3] 停在畫面寬約 78%、畫面高約 22% 的前景時正好轉成正面朝鏡頭（＝last_frame），之後依 glossary 輕微上下浮動。 [2,3] 時 @drone 的青色光帶 glow_pulse，@pod 正前方出現 @countdown_ring（3 段弧全亮），沒有可見的投影光束。@luna 保持閉眼不動。",
+   "start_frame": 121,
+   "end_frame": 175
+  },
+  {
+   "shot": "s003",
+   "kind": "beat_event",
+   "shot_start": 121,
+   "shot_end": 175,
+   "start_frame": 135,
+   "at": [
+    2,
+    2
+   ],
+   "rel_frame": 14,
+   "event": "@drone 從畫面右緣外開始滑入",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s003",
+   "kind": "beat_event",
+   "shot_start": 121,
+   "shot_end": 175,
+   "start_frame": 148,
+   "at": [
+    2,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "@drone 停穩，光帶 glow_pulse；@countdown_ring 出現，3 段弧同時在 4 幀內從無到全亮",
+   "sync": "人聲「倒數開始」唱完",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s004",
+   "kind": "subject",
+   "shot_start": 175,
+   "shot_end": 230,
+   "realize": "model+post",
+   "text": "@luna 在 [3,2.75]（人聲「啟」）開始睜眼，約 6 幀內完全睜開，之後眼神直視鏡頭不動。 玻璃上的反光與瞳孔裡的 @countdown_ring 倒影由後製疊。",
+   "start_frame": 175,
+   "end_frame": 230
+  },
+  {
+   "shot": "s004",
+   "kind": "beat_event",
+   "shot_start": 175,
+   "shot_end": 230,
+   "start_frame": 199,
+   "at": [
+    3,
+    2.75
+   ],
+   "rel_frame": 24,
+   "event": "@luna 開始睜眼",
+   "sync": "人聲「啟」約 8.30 s（人聲分軌＋faster-whisper 量得；P5 以 onset 定幀）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s005",
+   "kind": "subject",
+   "shot_start": 230,
+   "shot_end": 284,
+   "realize": "model+post",
+   "text": "@countdown_ring 的 3 段弧依 beat_events 逐一熄滅：每段在 2 幀內淡成深灰，熄滅的深灰弧留在畫面上； 每熄一段，@luna 臉上的青光減弱 1/3，全熄時歸零。@luna 只有呼吸與極輕微的眨眼，不說話、不轉頭。 [4,4] 起 @pod 底座白光增強：前 3 幀緩慢、之後急升，到本鏡最後一個完整畫面時 @luna 的白衣接近純白、仍保留皺褶。",
+   "start_frame": 230,
+   "end_frame": 284
+  },
+  {
+   "shot": "s005",
+   "kind": "beat_event",
+   "shot_start": 230,
+   "shot_end": 284,
+   "start_frame": 230,
+   "at": [
+    4,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "@countdown_ring 第 1 段弧（中心 60°，畫面右上）2 幀內淡成深灰；@luna 臉上的青光減弱 1/3",
+   "sync": "人聲「3」約 9.50 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s005",
+   "kind": "beat_event",
+   "shot_start": 230,
+   "shot_end": 284,
+   "start_frame": 243,
+   "at": [
+    4,
+    2
+   ],
+   "rel_frame": 13,
+   "event": "@countdown_ring 第 2 段弧（中心 180°，畫面左）2 幀內淡成深灰；青光再減 1/3",
+   "sync": "人聲「2」約 10.04 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s005",
+   "kind": "beat_event",
+   "shot_start": 230,
+   "shot_end": 284,
+   "start_frame": 257,
+   "at": [
+    4,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "@countdown_ring 第 3 段弧（中心 300°，畫面右下）2 幀內淡成深灰；青光歸零",
+   "sync": "人聲「1」約 10.54 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s005",
+   "kind": "beat_event",
+   "shot_start": 230,
+   "shot_end": 284,
+   "start_frame": 270,
+   "at": [
+    4,
+    4
+   ],
+   "rel_frame": 40,
+   "event": "@pod 底座白光開始增強（前 3 幀緩、之後急升），為進入 Hook 蓄力",
+   "sync": "人聲「LIVE」約 11.22 s（「AI」約 11.76 s 落在 bar 5 正拍）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s006",
+   "kind": "subject",
+   "shot_start": 284,
+   "shot_end": 339,
+   "realize": "model+post",
+   "text": "鏡頭和平台同速往上射，所以 @luna 與 @drone 在畫面中的位置不變； 豎井牆面與燈環從畫面上方的消失點往外、往下掠過鏡頭，一圈燈環掠過時把青光由上往下掃過 @luna 全身。 平台加速：本鏡開頭每秒約 3 圈掠過（約 18 m/s），本鏡結尾每秒約 6 圈（約 36 m/s）。紫色編髮與銀鏈整鏡被氣流壓向下方、髮尾抖動； @luna 身體不動，只有眨眼；@drone 依 glossary 不動地懸著，沒有拖尾。",
+   "start_frame": 284,
+   "end_frame": 339
+  },
+  {
+   "shot": "s006",
+   "kind": "beat_event",
+   "shot_start": 284,
+   "shot_end": 339,
+   "start_frame": 284,
+   "at": [
+    5,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "對整個畫面做 shake 4 幀（平台發射的震動）",
+   "sync": "閃白結束後的第一幀；bar 5 正拍，能量從 3 升到 8",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s006",
+   "kind": "transition_in",
+   "shot_start": 284,
+   "shot_end": 339,
+   "start_frame": 284,
+   "type": "flash_white",
+   "frames": 2,
+   "note": "s005 最後 2 幀變純白（decisions.hook_transition_in）；@pod 玻璃罩打開、平台脫離底座的過程藏在閃白裡省略，不拍"
+  },
+  {
+   "shot": "s006",
+   "kind": "beat_event",
+   "shot_start": 284,
+   "shot_end": 339,
+   "start_frame": 334,
+   "at": [
+    5,
+    4.63
+   ],
+   "rel_frame": 50,
+   "event": "畫面內所有燈環 glow_pulse：以青色 #29d3f5 色相鍵控出燈環，只提亮燈環本身（@drone 光帶與 @luna 身上的青光不動），1 幀內抬升到約 2 倍、3 幀回落",
+   "sync": "人聲「LIVE」13.90 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s007",
+   "kind": "subject",
+   "shot_start": 339,
+   "shot_end": 393,
+   "realize": "model+post",
+   "text": "平台載著 @luna 與 @drone 沿豎井中軸筆直往上、朝鏡頭衝來，本鏡內開始減速（由約 36 m/s 降到約 25 m/s）， 畫面中平台圓盤由畫面高 6% 放大到 20%；平台白光照亮它經過的那一段牆面，燈環本身亮度與顏色不變。 @luna 整鏡仰頭直視鏡頭，頭髮被氣流壓向下方；@drone 跟在平台右側同速上升。",
+   "start_frame": 339,
+   "end_frame": 393
+  },
+  {
+   "shot": "s007",
+   "kind": "beat_event",
+   "shot_start": 339,
+   "shot_end": 393,
+   "start_frame": 372,
+   "at": [
+    6,
+    3.43
+   ],
+   "rel_frame": 33,
+   "event": "畫面內看得到的燈環 glow_pulse（被平台擋住的不管）：青色色相鍵控，1 幀內抬升到約 2 倍、3 幀回落",
+   "sync": "人聲「AI」15.48 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s008",
+   "kind": "subject",
+   "shot_start": 393,
+   "shot_end": 502,
+   "realize": "model+post",
+   "text": "[7,1]–[8,2] 鏡頭不動。[7,2.37] 艙口接縫透出一條青光（@echo_beam 從下方照在鋼板背面），[7,2.62] 兩片鋼板往接縫兩側滑進地面下、5 幀內全開， 豎井裡的白光從艙口往上照；鋼板與燈環仍是灰色。[7,3] 平台衝到與樓頂齊平並急停，@luna 被慣性帶出艙口，往前上方躍起，@drone 同時衝出； 她在 [7,4] 左右到最高點（腳離地約 1.6 m），[8,1] 落在艙口前方約 2.5 m 處、單膝著地，[8,2]–[8,3] 站起。 她身體碰到的雨滴依 @restore_touch 變回透明水珠、映出白光與青光並往下落，每一滴在碰到後約 12 幀於 6 幀內退回灰色、停在新的位置； 落地時膝蓋與手掌碰到的地面同樣短暫恢復原色。紫色編髮在落地後垂下。 [8,2] 起鏡頭一邊升高一邊往前推（升高約 5 m、前推約 3 m），到本鏡結束時停在 @luna 後上方，變成俯角，露出整座 @city。",
+   "start_frame": 393,
+   "end_frame": 502
+  },
+  {
+   "shot": "s008",
+   "kind": "beat_event",
+   "shot_start": 393,
+   "shot_end": 502,
+   "start_frame": 412,
+   "at": [
+    7,
+    2.37
+   ],
+   "rel_frame": 19,
+   "event": "艙口接縫透出 @echo_beam 的青光（6 幀，依 glossary）；整個畫面 shake 3 幀",
+   "sync": "人聲「Li」17.15 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s008",
+   "kind": "beat_event",
+   "shot_start": 393,
+   "shot_end": 502,
+   "start_frame": 415,
+   "at": [
+    7,
+    2.62
+   ],
+   "rel_frame": 22,
+   "event": "艙口兩片鋼板往接縫兩側滑進地面下，5 幀內全開，白光從艙口往上照",
+   "sync": "人聲「Li」17.29 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s008",
+   "kind": "beat_event",
+   "shot_start": 393,
+   "shot_end": 502,
+   "start_frame": 420,
+   "at": [
+    7,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "平台與樓頂齊平急停，@luna 躍出艙口、@drone 同時衝出；整個畫面 shake 2 幀",
+   "sync": "人聲「Live」17.50 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s008",
+   "kind": "beat_event",
+   "shot_start": 393,
+   "shot_end": 502,
+   "start_frame": 425,
+   "at": [
+    7,
+    3.39
+   ],
+   "rel_frame": 32,
+   "event": "@luna 在半空上升中，穿過的雨滴依 @restore_touch 恢復（後製把恢復中的水珠提亮到約 2 倍）",
+   "sync": "人聲「AI」17.72 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s008",
+   "kind": "beat_event",
+   "shot_start": 393,
+   "shot_end": 502,
+   "start_frame": 447,
+   "at": [
+    8,
+    1
+   ],
+   "rel_frame": 54,
+   "event": "@luna 單膝落地；整個畫面 shake 3 幀",
+   "sync": "bar 8 正拍，人聲幾乎停止",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s008",
+   "kind": "beat_event",
+   "shot_start": 393,
+   "shot_end": 502,
+   "start_frame": 461,
+   "at": [
+    8,
+    2
+   ],
+   "rel_frame": 68,
+   "event": "@luna 開始站起；鏡頭開始 crane_up 並同時 push_in，直到本鏡結束",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s009",
+   "kind": "subject",
+   "shot_start": 502,
+   "shot_end": 556,
+   "realize": "model+post",
+   "text": "@luna 以一般步行速度往街尾走，本鏡內走約 3 m（約每秒 1.3 m），在畫面中由畫面高 40% 縮到約 23%；@drone 在她 char_left 肩旁同速滑行。 其他東西全部不動。",
+   "start_frame": 502,
+   "end_frame": 556
+  },
+  {
+   "shot": "s010",
+   "kind": "subject",
+   "shot_start": 556,
+   "shot_end": 610,
+   "realize": "model+post",
+   "text": "@luna 往前一步（約 0.7 m），[10,1.71] char_right 腳踩進水窪：整個水窪依 @restore_touch 恢復——水花濺起、漣漪擴散到整個水窪，水花與水面映出 @luna 的紫髮、白衣與 @drone 的青光； 恢復維持 24 幀，接著在 6 幀內退回灰色（共 30 幀），水花停在半空、漣漪停住。她因為走近，在畫面中由畫面高 60% 變成約 78%。她踩進去後停步，[10,2.5] 起低頭看水窪，表情從平靜變成驚訝。",
+   "start_frame": 556,
+   "end_frame": 610
+  },
+  {
+   "shot": "s010",
+   "kind": "beat_event",
+   "shot_start": 556,
+   "shot_end": 610,
+   "start_frame": 566,
+   "at": [
+    10,
+    1.71
+   ],
+   "rel_frame": 10,
+   "event": "@luna 的 char_right 腳踩進水窪，水窪依 @restore_touch 恢復",
+   "sync": "人聲「光」23.56 s（「等著第一束光出現」）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s010",
+   "kind": "beat_event",
+   "shot_start": 556,
+   "shot_end": 610,
+   "start_frame": 576,
+   "at": [
+    10,
+    2.5
+   ],
+   "rel_frame": 20,
+   "event": "@luna 低頭看水窪",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s011",
+   "kind": "subject",
+   "shot_start": 610,
+   "shot_end": 665,
+   "realize": "model+post",
+   "text": "[11,2] 起 @luna 的 char_right 手慢慢往上伸，[11,4.18] 食指指尖輕碰 @balloon 底部：@balloon 依 @restore_touch 在 2 幀內變回紅色， 並以約每秒 0.5 m 往上飄（本鏡剩下約 10 幀，只上升約 20 cm）。她的手停在半空，表情專注。",
+   "start_frame": 610,
+   "end_frame": 665
+  },
+  {
+   "shot": "s011",
+   "kind": "beat_event",
+   "shot_start": 610,
+   "shot_end": 665,
+   "start_frame": 624,
+   "at": [
+    11,
+    2
+   ],
+   "rel_frame": 14,
+   "event": "@luna 的 char_right 手開始往上伸",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s011",
+   "kind": "beat_event",
+   "shot_start": 610,
+   "shot_end": 665,
+   "start_frame": 653,
+   "at": [
+    11,
+    4.18
+   ],
+   "rel_frame": 43,
+   "event": "@luna 指尖碰到 @balloon，@balloon 變回紅色、開始往上飄",
+   "sync": "人聲「指尖」27.22 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s012",
+   "kind": "subject",
+   "shot_start": 665,
+   "shot_end": 719,
+   "realize": "model+post",
+   "text": "@balloon 整鏡以約每秒 0.5 m 往上飄，約 [12,3.5] 飛出畫面上緣。@luna 往前半步，[12,2.5] 用 char_right 手輕拍 @balloon_child 的肩膀：小孩依 @restore_touch 恢復黃色雨衣， 接著往畫面右跑 3 步、手伸向 @balloon，本鏡結束時仍在奔跑中（在畫面寬約 70%）。@luna 拍完後停步看著小孩，表情驚喜。小孩不回頭。",
+   "start_frame": 665,
+   "end_frame": 719
+  },
+  {
+   "shot": "s012",
+   "kind": "beat_event",
+   "shot_start": 665,
+   "shot_end": 719,
+   "start_frame": 685,
+   "at": [
+    12,
+    2.5
+   ],
+   "rel_frame": 20,
+   "event": "@luna 輕拍 @balloon_child 肩膀，小孩恢復並開始跑",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s013",
+   "kind": "subject",
+   "shot_start": 719,
+   "shot_end": 773,
+   "realize": "model+post",
+   "text": "[13,1] @balloon_child 與 @balloon 同時依 @restore_touch 在 6 幀內退回灰色：小孩停在奔跑姿勢、@balloon 停在半空。 @luna 的笑容消失；[13,2] 起她慢慢舉起 char_right 手、低頭看掌心，直到本鏡結束。",
+   "start_frame": 719,
+   "end_frame": 773
+  },
+  {
+   "shot": "s013",
+   "kind": "beat_event",
+   "shot_start": 719,
+   "shot_end": 773,
+   "start_frame": 719,
+   "at": [
+    13,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "@balloon_child 與 @balloon 在 6 幀內退回灰色、定格",
+   "sync": "bar 13 正拍",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s013",
+   "kind": "beat_event",
+   "shot_start": 719,
+   "shot_end": 773,
+   "start_frame": 732,
+   "at": [
+    13,
+    2
+   ],
+   "rel_frame": 13,
+   "event": "@luna 舉起 char_right 手、低頭看掌心",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s013",
+   "kind": "beat_event",
+   "shot_start": 719,
+   "shot_end": 773,
+   "start_frame": 768,
+   "at": [
+    13,
+    4.62
+   ],
+   "rel_frame": 49,
+   "event": "@luna 的手指輕輕握起（表示她明白這力量只能撐一下）",
+   "sync": "人聲「時間」32.00 s（「只有時間不停往前」）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s014",
+   "kind": "subject",
+   "shot_start": 773,
+   "shot_end": 828,
+   "realize": "post",
+   "text": "灰彩交界從畫面寬約 35% 往右推進到約 52%（界線在那一帶與視線約成直角、橫向推進，實際約 68 m，每秒約 30 m）：被掃過的大樓在 @silence 邊界帶通過時顏色退成灰、霓虹停住、雨滴停在半空。 @luna 的頭與肩膀不動。",
+   "start_frame": 773,
+   "end_frame": 828
+  },
+  {
+   "shot": "s014",
+   "kind": "parallax",
+   "shot_start": 773,
+   "shot_end": 828,
+   "start_frame": 773,
+   "end_frame": 828,
+   "keyframe": "shots/s014/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s014",
+   "kind": "beat_event",
+   "shot_start": 773,
+   "shot_end": 828,
+   "start_frame": 810,
+   "at": [
+    14,
+    3.68
+   ],
+   "rel_frame": 37,
+   "event": "推進中的界線開始掃過一面寬約 12 m 的大型全息看板（在畫面寬約 40%、寬約畫面寬 3%），由左往右約 10 幀掃完、退成灰色",
+   "sync": "人聲「把腦海裡」33.74 s",
+   "realize": "post"
+  },
+  {
+   "shot": "s015",
+   "kind": "subject",
+   "shot_start": 828,
+   "shot_end": 882,
+   "realize": "model+post",
+   "text": "[15,1.5] @drone 光帶 glow_pulse，同一幀 @tower_hologram 開始在 4 幀內由下往上掃出，之後表面掃描線持續往上移動；青光照亮 @luna 的臉。 @luna 看著 @tower_hologram，[15,3] 起表情轉為堅定。[15,4] @tower_hologram 在 4 幀內由上往下收掉，@drone 的光帶轉向畫面右（街尾方向），@luna 的視線跟著轉向畫面右遠處。",
+   "start_frame": 828,
+   "end_frame": 882
+  },
+  {
+   "shot": "s015",
+   "kind": "beat_event",
+   "shot_start": 828,
+   "shot_end": 882,
+   "start_frame": 834,
+   "at": [
+    15,
+    1.5
+   ],
+   "rel_frame": 6,
+   "event": "@drone 光帶 glow_pulse，@tower_hologram 4 幀內出現",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s015",
+   "kind": "beat_event",
+   "shot_start": 828,
+   "shot_end": 882,
+   "start_frame": 868,
+   "at": [
+    15,
+    4
+   ],
+   "rel_frame": 40,
+   "event": "@tower_hologram 4 幀內收掉；@drone 光帶與 @luna 視線轉向畫面右",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s017",
+   "kind": "subject",
+   "shot_start": 936,
+   "shot_end": 990,
+   "realize": "model+post",
+   "text": "鏡頭跟著她往畫面右平移，同時升高約 7 m（跟著她一路上到第 3 台車、也就是車道的高度）。[17,1] 起她在地面上的每一步也踩出半徑 3 m 的區塊（只恢復圓內的路面與雨）。@luna 在 [17,1.5] 起跳、[17,2] 落在第 1 台車頂， [17,2.5] 起跳、[17,3] 落在第 2 台，[17,3.5] 起跳、[17,4] 落在第 3 台，之後在第 3 台車頂上繼續跑。 每次落在車頂，依 @restore_touch.footstep_patch 那台車整台變回原色（依序珍珠白、酒紅、深藍）、車底燈帶亮起、車身被踩得一沉再浮回，半徑 3 m 內的雨落下； 從落地起 28 幀後退回灰色、停住。@drone 同速跟飛。",
+   "start_frame": 936,
+   "end_frame": 990
+  },
+  {
+   "shot": "s017",
+   "kind": "transition_in",
+   "shot_start": 936,
+   "shot_end": 990,
+   "start_frame": 936,
+   "type": "cut_on_action",
+   "frames": null,
+   "note": "s016 結尾她跨出第一步，本鏡從同一個奔跑動作的下一步開始（從背後切到側面）"
+  },
+  {
+   "shot": "s017",
+   "kind": "beat_event",
+   "shot_start": 936,
+   "shot_end": 990,
+   "start_frame": 950,
+   "at": [
+    17,
+    2
+   ],
+   "rel_frame": 14,
+   "event": "落在第 1 台車頂，半徑 3 m 區塊恢復",
+   "sync": "人聲「Prompt」[17,2.16]",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s017",
+   "kind": "beat_event",
+   "shot_start": 936,
+   "shot_end": 990,
+   "start_frame": 963,
+   "at": [
+    17,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "落在第 2 台車頂，半徑 3 m 區塊恢復",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s017",
+   "kind": "beat_event",
+   "shot_start": 936,
+   "shot_end": 990,
+   "start_frame": 977,
+   "at": [
+    17,
+    4
+   ],
+   "rel_frame": 41,
+   "event": "落在第 3 台車頂，半徑 3 m 區塊恢復",
+   "sync": "人聲「鏡頭」[17,3.91]",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s018",
+   "kind": "subject",
+   "shot_start": 990,
+   "shot_end": 1045,
+   "realize": "model+post",
+   "text": "鏡頭與她同速往畫面右平移。@luna 每半拍落地一步（本鏡約 8 步），[18,2] 與 [18,3] 跳過約 3 m 的車間空隙，[18,3.5] 大步起跳、[18,4.26] 落在一台酒紅色車頂上（不是 s017 那台）。 每一步依 @restore_touch.footstep_patch 恢復半徑約 3 m：圓內的車整台變回原色、車底燈帶亮起、車身一沉再浮回、雨落下；從落地起 28 幀後退回。 所以她身後一路拖著 3–4 台恢復中的車，最舊的一台一台變回灰色。[18,4] 起她的髮尾與指尖依 @luna_fade 開始變灰（本鏡的景別下還看不出來）。",
+   "start_frame": 990,
+   "end_frame": 1045
+  },
+  {
+   "shot": "s018",
+   "kind": "transition_in",
+   "shot_start": 990,
+   "shot_end": 1045,
+   "start_frame": 990,
+   "type": "cut_on_action",
+   "frames": null,
+   "note": "s017 末幀她在深藍車頂上奔跑，本鏡接同一台車上的下一步（同一高度、同一側拍方向）"
+  },
+  {
+   "shot": "s018",
+   "kind": "beat_event",
+   "shot_start": 990,
+   "shot_end": 1045,
+   "start_frame": 1004,
+   "at": [
+    18,
+    2
+   ],
+   "rel_frame": 14,
+   "event": "跳過一個車間空隙",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s018",
+   "kind": "beat_event",
+   "shot_start": 990,
+   "shot_end": 1045,
+   "start_frame": 1018,
+   "at": [
+    18,
+    3
+   ],
+   "rel_frame": 28,
+   "event": "跳過一個車間空隙",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s018",
+   "kind": "beat_event",
+   "shot_start": 990,
+   "shot_end": 1045,
+   "start_frame": 1031,
+   "at": [
+    18,
+    4
+   ],
+   "rel_frame": 41,
+   "event": "@luna_fade 開始（髮尾與指尖，本鏡看不出）",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s018",
+   "kind": "beat_event",
+   "shot_start": 990,
+   "shot_end": 1045,
+   "start_frame": 1035,
+   "at": [
+    18,
+    4.26
+   ],
+   "rel_frame": 45,
+   "event": "大步落在酒紅色車頂，那台車整台恢復、被踩得一沉再浮回，半徑 3 m 內一起恢復",
+   "sync": "人聲「宇宙」43.12 s（「每一次生成都是新的宇宙」）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s019",
+   "kind": "subject",
+   "shot_start": 1045,
+   "shot_end": 1072,
+   "realize": "model+post",
+   "text": "手臂隨奔跑前後完整擺動 2 次（2 拍＝2 個步幅循環），手大致保持在畫面中央。灰色依 @luna_fade 在 2 拍內等速從最末一節退到最末兩節。",
+   "start_frame": 1045,
+   "end_frame": 1072
+  },
+  {
+   "shot": "s019",
+   "kind": "beat_event",
+   "shot_start": 1045,
+   "shot_end": 1072,
+   "start_frame": 1046,
+   "at": [
+    19,
+    1.11
+   ],
+   "rel_frame": 1,
+   "event": "只是歌詞對點，灰色照等速推進（不另加動作）",
+   "sync": "人聲「時間」43.60 s（「時間正在倒數」）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s020",
+   "kind": "subject",
+   "shot_start": 1072,
+   "shot_end": 1099,
+   "realize": "model+post",
+   "text": "鏡頭與她同速往後退，她在畫面中的大小不變。她身後的 3 台車依 beat_events 由遠到近一台一台在原地 6 幀內退回灰色（footstep_patch 的計時退回，沒有邊界帶）； 她每一步仍踩出新的區塊，但半徑只剩約 2 m。@luna 咬緊牙關，視線越過鏡頭看向前方（@signal_tower 的方向）。",
+   "start_frame": 1072,
+   "end_frame": 1099
+  },
+  {
+   "shot": "s020",
+   "kind": "beat_event",
+   "shot_start": 1072,
+   "shot_end": 1099,
+   "start_frame": 1072,
+   "at": [
+    19,
+    3
+   ],
+   "rel_frame": 0,
+   "event": "最遠的一台在 6 幀內退回灰色",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s020",
+   "kind": "beat_event",
+   "shot_start": 1072,
+   "shot_end": 1099,
+   "start_frame": 1079,
+   "at": [
+    19,
+    3.5
+   ],
+   "rel_frame": 7,
+   "event": "中間的一台退回灰色",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s020",
+   "kind": "beat_event",
+   "shot_start": 1072,
+   "shot_end": 1099,
+   "start_frame": 1086,
+   "at": [
+    19,
+    4.02
+   ],
+   "rel_frame": 14,
+   "event": "最近的一台退回灰色",
+   "sync": "人聲「停留」45.24 s（「沒有人可以停留」）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s021",
+   "kind": "subject",
+   "shot_start": 1099,
+   "shot_end": 1126,
+   "realize": "post",
+   "text": "左右兩條交界同時往塔推進，本鏡 2 拍內各推進約畫面寬 19%：被掃過的樓群顏色退成灰、霓虹停住、雨停在半空。@signal_tower 仍在彩色區內。",
+   "start_frame": 1099,
+   "end_frame": 1126
+  },
+  {
+   "shot": "s021",
+   "kind": "parallax",
+   "shot_start": 1099,
+   "shot_end": 1126,
+   "start_frame": 1099,
+   "end_frame": 1126,
+   "keyframe": "shots/s021/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s021",
+   "kind": "beat_event",
+   "shot_start": 1099,
+   "shot_end": 1126,
+   "start_frame": 1099,
+   "at": [
+    20,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "兩條交界開始快速推進",
+   "sync": "人聲「這一刻」45.80 s",
+   "realize": "post"
+  },
+  {
+   "shot": "s022",
+   "kind": "subject",
+   "shot_start": 1126,
+   "shot_end": 1154,
+   "realize": "model+post",
+   "text": "[20,3.09] 她踩著車頭邊緣起跳（腳下只恢復半徑約 1 m 的小區塊），往前上方縱身飛出，遠離鏡頭；@drone 跟著飛。 [20,4] 起後製做 speed_ramp：6 幀內線性從 1 倍降到 0.4 倍，之後維持 0.4 倍到本鏡結束；beat_events 與區塊計時都以輸出時間計。她在 [20,4.11] 前後過最高點。 她身上的灰色依 @luna_fade 在本鏡內擴到馬尾下 1/3、雙手到手腕。[20,4] 起，下方街道升起一道 @silence 的邊界帶（surge），往上朝她湧來，末幀在她下方畫面高約 75%。",
+   "start_frame": 1126,
+   "end_frame": 1154
+  },
+  {
+   "shot": "s022",
+   "kind": "beat_event",
+   "shot_start": 1126,
+   "shot_end": 1154,
+   "start_frame": 1128,
+   "at": [
+    20,
+    3.09
+   ],
+   "rel_frame": 2,
+   "event": "起跳",
+   "sync": "人聲「決定」46.98 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s022",
+   "kind": "post_effect",
+   "shot_start": 1126,
+   "shot_end": 1154,
+   "effect": "speed_ramp",
+   "start_frame": 1140,
+   "params": {
+    "from": 1.0,
+    "to": 0.4,
+    "at": [
+     20,
+     4
+    ],
+    "ramp_frames": 6,
+    "curve": "linear",
+    "hold_until": [
+     21,
+     1
+    ],
+    "hold_until_frame": 1154
+   }
+  },
+  {
+   "shot": "s022",
+   "kind": "beat_event",
+   "shot_start": 1126,
+   "shot_end": 1154,
+   "start_frame": 1140,
+   "at": [
+    20,
+    4
+   ],
+   "rel_frame": 14,
+   "event": "開始 speed_ramp（6 幀內 1 倍 → 0.4 倍）；下方升起 @silence 的 surge",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s022",
+   "kind": "beat_event",
+   "shot_start": 1126,
+   "shot_end": 1154,
+   "start_frame": 1142,
+   "at": [
+    20,
+    4.11
+   ],
+   "rel_frame": 16,
+   "event": "她在半空最高點附近",
+   "sync": "人聲「所有」47.56 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s023",
+   "kind": "camera",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 1154,
+   "end_frame": 1208,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s023",
+   "kind": "subject",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "realize": "post",
+   "text": "[21,1]–[21,2]：鏡頭靜止；她的圖層由後製做往畫面右的緩慢位移（接 s022 的 0.4 倍慢動作），在 [21,2] 減速到停住。 surge 由下往上升：[21,1.5] 碰到她身體下緣，[21,1.5]–[21,1.75] 掃過她的軀幹與雙腿（身體幾乎水平，所以整段軀幹與腿同時被蓋過、變灰）； 同時 @luna_fade 從手腕沿手臂往肩膀、從馬尾往頭部推進；[21,2] 手臂與頭部全灰，和軀幹的灰在雙肩與脖子會合，全身灰色、定住。 surge 在 [21,1.8] 掃過 @drone，它變灰、停在半空；surge 掃過她們之後繼續往上，在畫面上緣外消失。 [21,2]–[22,1]：畫面裡沒有任何東西在動，只有鏡頭由後製緩慢推近約 8%（只在這 3 拍內推）。",
+   "start_frame": 1154,
+   "end_frame": 1208
+  },
+  {
+   "shot": "s023",
+   "kind": "parallax",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "start_frame": 1154,
+   "end_frame": 1208,
+   "keyframe": "shots/s023/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s023",
+   "kind": "transition_in",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "start_frame": 1154,
+   "type": "cut_on_action",
+   "frames": null,
+   "note": "s022 末幀她從背後看在半空往前撲，本鏡從側面接同一個姿勢（換成側拍，她朝畫面右＝街尾）"
+  },
+  {
+   "shot": "s023",
+   "kind": "beat_event",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "start_frame": 1160,
+   "at": [
+    21,
+    1.5
+   ],
+   "rel_frame": 6,
+   "event": "surge 碰到她身體下緣",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s023",
+   "kind": "beat_event",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "start_frame": 1164,
+   "at": [
+    21,
+    1.8
+   ],
+   "rel_frame": 10,
+   "event": "surge 掃過 @drone，它變灰定住",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s023",
+   "kind": "beat_event",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "start_frame": 1167,
+   "at": [
+    21,
+    2
+   ],
+   "rel_frame": 13,
+   "event": "灰色在雙肩與脖子會合，全身定住；鏡頭開始推近",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s023",
+   "kind": "beat_event",
+   "shot_start": 1154,
+   "shot_end": 1208,
+   "start_frame": 1170,
+   "at": [
+    21,
+    2.21
+   ],
+   "rel_frame": 16,
+   "event": "全畫面靜止",
+   "sync": "人聲「LIVE」48.75 s",
+   "realize": "post"
+  },
+  {
+   "shot": "s024",
+   "kind": "subject",
+   "shot_start": 1208,
+   "shot_end": 1262,
+   "realize": "model+post",
+   "text": "[22,1] drop：顏色從她胸口正中炸開，4 幀內由胸口往外恢復全身（包括原本褪色的馬尾下 1/3 與雙手，見 @luna_fade.end）； 同時 @broadcast_wave 從她胸口發出，2 幀後掃過 @drone、4 幀後掃過鏡頭，之後在背景往遠處推：被掃過的樓面、看板與雨依序恢復顏色，雨開始往下落。 [22,1]–[22,2] 她把雙臂從前伸用力往兩側張開、胸口往前挺、抬頭，表情堅定、嘴巴閉著。她從 [22,1] 起接著 s022 的下墜往下掉（恢復後動作從停住的地方接著進行）， 鏡頭往下搖約 35° 跟著她；[22,4] 起她把雙腿收到身體下方準備落地，本鏡結束時離地約 2 m。 以上時間點都是輸出時間：模型以 1 倍速產生約 1 秒的動作（張臂約 0.2 秒），後製套 speed_ramp 放慢後落在這些時間點。",
+   "start_frame": 1208,
+   "end_frame": 1262
+  },
+  {
+   "shot": "s024",
+   "kind": "post_effect",
+   "shot_start": 1208,
+   "shot_end": 1262,
+   "effect": "flash_frames",
+   "start_frame": 1208,
+   "params": {
+    "at": [
+     22,
+     1
+    ],
+    "frames": 2,
+    "color": "#f4f8ff",
+    "opacity": 0.6
+   }
+  },
+  {
+   "shot": "s024",
+   "kind": "post_effect",
+   "shot_start": 1208,
+   "shot_end": 1262,
+   "effect": "shake",
+   "start_frame": 1208,
+   "params": {
+    "at": [
+     22,
+     1
+    ],
+    "frames": 8,
+    "amplitude": "畫面寬 1%",
+    "decay": "linear"
+   }
+  },
+  {
+   "shot": "s024",
+   "kind": "beat_event",
+   "shot_start": 1208,
+   "shot_end": 1262,
+   "start_frame": 1208,
+   "at": [
+    22,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "顏色從胸口炸開，@broadcast_wave 發出",
+   "sync": "drop 50.33 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s024",
+   "kind": "beat_event",
+   "shot_start": 1208,
+   "shot_end": 1262,
+   "start_frame": 1234,
+   "at": [
+    22,
+    2.89
+   ],
+   "rel_frame": 26,
+   "event": "雙臂已完全張開，下墜中",
+   "sync": "人聲「現在」51.40 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s024",
+   "kind": "post_effect",
+   "shot_start": 1208,
+   "shot_end": 1262,
+   "effect": "speed_ramp",
+   "start_frame": 1255,
+   "params": {
+    "from": 0.4,
+    "to": 1.0,
+    "at": [
+     22,
+     4.5
+    ],
+    "ramp_frames": 6,
+    "curve": "linear"
+   }
+  },
+  {
+   "shot": "s025",
+   "kind": "subject",
+   "shot_start": 1262,
+   "shot_end": 1316,
+   "realize": "post",
+   "text": "@broadcast_wave 的光環繼續往外擴、越來越慢，[23,3] 停在半徑約 150 m，波前在 6 幀內淡掉，留下和 @silence 一樣的 1 m 漸層邊界；被掃過的屋頂與看板依序變回彩色。 [23,1.3] 她雙腳落在街道正中、深蹲著地，[23,3] 站起。@drone 停到她左肩旁。圓內 @hovercar 的燈帶亮起、車身輕微上下浮動。",
+   "start_frame": 1262,
+   "end_frame": 1316
+  },
+  {
+   "shot": "s025",
+   "kind": "post_only",
+   "shot_start": 1262,
+   "shot_end": 1316,
+   "start_frame": 1262,
+   "end_frame": 1316,
+   "keyframe": "shots/s025/keyframe.png",
+   "note": "沒有影片模型，只用關鍵幀＋後製"
+  },
+  {
+   "shot": "s025",
+   "kind": "beat_event",
+   "shot_start": 1262,
+   "shot_end": 1316,
+   "start_frame": 1266,
+   "at": [
+    23,
+    1.3
+   ],
+   "rel_frame": 4,
+   "event": "她落地",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s025",
+   "kind": "beat_event",
+   "shot_start": 1262,
+   "shot_end": 1316,
+   "start_frame": 1287,
+   "at": [
+    23,
+    2.82
+   ],
+   "rel_frame": 25,
+   "event": "光環接近停止",
+   "sync": "人聲「讓想像」53.62 s",
+   "realize": "post"
+  },
+  {
+   "shot": "s025",
+   "kind": "beat_event",
+   "shot_start": 1262,
+   "shot_end": 1316,
+   "start_frame": 1289,
+   "at": [
+    23,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "光環停在半徑約 150 m，6 幀內淡掉",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s026",
+   "kind": "subject",
+   "shot_start": 1316,
+   "shot_end": 1371,
+   "realize": "model+post",
+   "text": "鏡頭繞著她往左轉約 90°。雨持續落下、路人照原本的方向走、@hovercar 輕微上下浮動。 [24,2.39] 起，兩側全息看板上的色塊與光帶從看板邊框裡流出來，在街道上空約 8–15 m 處流動、交錯，形狀是發光的細長帶狀與方塊（沒有文字或可辨認的圖形）。 她抬頭看著頭頂流動的光，嘴角微揚。",
+   "start_frame": 1316,
+   "end_frame": 1371
+  },
+  {
+   "shot": "s026",
+   "kind": "beat_event",
+   "shot_start": 1316,
+   "shot_end": 1371,
+   "start_frame": 1335,
+   "at": [
+    24,
+    2.39
+   ],
+   "rel_frame": 19,
+   "event": "看板的影像流出邊框",
+   "sync": "人聲「畫面」55.64 s（「穿越畫面之外」）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s026",
+   "kind": "beat_event",
+   "shot_start": 1316,
+   "shot_end": 1371,
+   "start_frame": 1368,
+   "at": [
+    24,
+    4.79
+   ],
+   "rel_frame": 52,
+   "event": "光帶佈滿街道上空",
+   "sync": "人聲「之外」57.00 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s027",
+   "kind": "subject",
+   "shot_start": 1371,
+   "shot_end": 1425,
+   "realize": "model+post",
+   "text": "[25,1]–[25,3] 她靜靜看著街尾的塔。[25,3] 起前方的灰彩交界以每秒約 15 m 往鏡頭推進：被掃過的店面變灰、雨停在半空、路人定住（@silence 的邊界帶）。 [25,4.05] 她身體前傾，往街尾（迎著灰色）起跑，@drone 跟上。",
+   "start_frame": 1371,
+   "end_frame": 1425
+  },
+  {
+   "shot": "s027",
+   "kind": "beat_event",
+   "shot_start": 1371,
+   "shot_end": 1425,
+   "start_frame": 1392,
+   "at": [
+    25,
+    2.56
+   ],
+   "rel_frame": 21,
+   "event": "她看著塔",
+   "sync": "人聲「LIVE」58.00 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s027",
+   "kind": "beat_event",
+   "shot_start": 1371,
+   "shot_end": 1425,
+   "start_frame": 1398,
+   "at": [
+    25,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "灰彩交界開始往鏡頭推進",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s027",
+   "kind": "beat_event",
+   "shot_start": 1371,
+   "shot_end": 1425,
+   "start_frame": 1412,
+   "at": [
+    25,
+    4.05
+   ],
+   "rel_frame": 41,
+   "event": "起跑",
+   "sync": "人聲「AI」58.85 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s028",
+   "kind": "subject",
+   "shot_start": 1425,
+   "shot_end": 1480,
+   "realize": "model+post",
+   "text": "[26,1]–[26,2.37] 她再跑兩步、在塔身前約 6 m 雙腳併攏停下，每一步都在灰色廣場上踩出半徑約 3 m 的彩色區塊（28 幀後退回）。[26,2.37] 她抬頭看塔。 [26,3] 起鏡頭沿塔身往上搖到觀景台：一層層洋紅燈帶、肋上的青色線與維修平台往下滑出畫面，最後停在巨大的圓盤觀景台底面與 6 根往外斜伸的支撐斜樑。 整鏡塔身上的灰彩交界以每秒約 5 m 往上爬（從約 5 m 到約 16 m），被掃過的燈帶與青色線變灰但仍亮著。",
+   "start_frame": 1425,
+   "end_frame": 1480
+  },
+  {
+   "shot": "s028",
+   "kind": "beat_event",
+   "shot_start": 1425,
+   "shot_end": 1480,
+   "start_frame": 1444,
+   "at": [
+    26,
+    2.37
+   ],
+   "rel_frame": 19,
+   "event": "她停下、抬頭",
+   "sync": "人聲「讓世界」60.16 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s028",
+   "kind": "beat_event",
+   "shot_start": 1425,
+   "shot_end": 1480,
+   "start_frame": 1452,
+   "at": [
+    26,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "鏡頭開始往上搖",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s028",
+   "kind": "beat_event",
+   "shot_start": 1425,
+   "shot_end": 1480,
+   "start_frame": 1479,
+   "at": [
+    26,
+    4.98
+   ],
+   "rel_frame": 54,
+   "event": "鏡頭停在觀景台",
+   "sync": "人聲「打開」61.64 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s029",
+   "kind": "subject",
+   "shot_start": 1480,
+   "shot_end": 1534,
+   "realize": "model+post",
+   "text": "[27,1]–[27,2] 她衝到肋前。[27,2.05] 起跳，char_right 腳蹬在肋的右側面，往左上躍到離地約 8 m 的左側平台；[27,3] 從左側平台蹬肋往右上，落到約 16 m 的右側平台； [27,4] 再往左上，落到約 24 m 的左側平台。三個落點都在灰色範圍內，每次蹬到肋或落到平台都踩出半徑約 3 m 的恢復區塊（28 幀後退回）。鏡頭跟著她往上升約 24 m。 灰彩交界整鏡以每秒約 5 m 往上爬（從約 16 m 到約 28 m）；她在 [27,3] 落到 16 m 時與交界幾乎同高，之後交界又爬到她上方，本鏡結束時交界在她腳下平台上方約 4 m。",
+   "start_frame": 1480,
+   "end_frame": 1534
+  },
+  {
+   "shot": "s029",
+   "kind": "beat_event",
+   "shot_start": 1480,
+   "shot_end": 1534,
+   "start_frame": 1494,
+   "at": [
+    27,
+    2.05
+   ],
+   "rel_frame": 14,
+   "event": "第一次蹬跳",
+   "sync": "人聲「沒有」62.24 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s029",
+   "kind": "beat_event",
+   "shot_start": 1480,
+   "shot_end": 1534,
+   "start_frame": 1507,
+   "at": [
+    27,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "第二次蹬跳",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s029",
+   "kind": "beat_event",
+   "shot_start": 1480,
+   "shot_end": 1534,
+   "start_frame": 1520,
+   "at": [
+    27,
+    4
+   ],
+   "rel_frame": 40,
+   "event": "第三次蹬跳（仍在灰色範圍內）",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s030",
+   "kind": "subject",
+   "shot_start": 1534,
+   "shot_end": 1643,
+   "realize": "model+post",
+   "text": "鏡頭緩慢升高約 20 m。@luna 沿肋左右蹬跳往上，每拍一次、每次約 8 m，從約 24 m 爬到約 88 m；[28,1.72] 她在第一次蹬跳中越過灰彩交界，之後兩者距離越拉越大 （落在灰色以上的平台不再有恢復區塊）。塔身的灰彩交界以每秒約 5 m 往上爬（從約 28 m 到約 50 m），被掃過的洋紅燈帶一圈圈變灰。 遠方左下那塊彩色街區被邊界以每秒約 15 m 從外往內吞回，越縮越小，[30,1] 消失。",
+   "start_frame": 1534,
+   "end_frame": 1643
+  },
+  {
+   "shot": "s030",
+   "kind": "beat_event",
+   "shot_start": 1534,
+   "shot_end": 1643,
+   "start_frame": 1544,
+   "at": [
+    28,
+    1.72
+   ],
+   "rel_frame": 10,
+   "event": "她越過灰彩交界",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s030",
+   "kind": "beat_event",
+   "shot_start": 1534,
+   "shot_end": 1643,
+   "start_frame": 1546,
+   "at": [
+    28,
+    1.89
+   ],
+   "rel_frame": 12,
+   "event": "她與灰彩交界的距離拉開",
+   "sync": "人聲「你」64.42 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s030",
+   "kind": "beat_event",
+   "shot_start": 1534,
+   "shot_end": 1643,
+   "start_frame": 1587,
+   "at": [
+    28,
+    4.89
+   ],
+   "rel_frame": 53,
+   "event": "遠方彩色街區縮到約畫面寬 3%（直徑約 70 m）",
+   "sync": "人聲「創造」66.12 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s031",
+   "kind": "subject",
+   "shot_start": 1643,
+   "shot_end": 1697,
+   "realize": "model+post",
+   "text": "她每拍蹬跳一次、左右交替往上：[30,1] 起跳落到 96 m（右側），[30,1.82] 落到 104 m（左側），[30,2.85] 落到 112 m（右側），[30,3.89] 落到 120 m（左側）、正好在鏡頭前約 2 m，抓住平台邊緣停住，抬頭看向上方。 她在畫面中越來越大。@drone 跟著往上。下方的灰彩交界持續往上爬，但在畫面中仍很遠。",
+   "start_frame": 1643,
+   "end_frame": 1697
+  },
+  {
+   "shot": "s031",
+   "kind": "beat_event",
+   "shot_start": 1643,
+   "shot_end": 1697,
+   "start_frame": 1654,
+   "at": [
+    30,
+    1.82
+   ],
+   "rel_frame": 11,
+   "event": "落到 104 m",
+   "sync": "人聲「讓聲音」68.90 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s031",
+   "kind": "beat_event",
+   "shot_start": 1643,
+   "shot_end": 1697,
+   "start_frame": 1668,
+   "at": [
+    30,
+    2.85
+   ],
+   "rel_frame": 25,
+   "event": "落到 112 m",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s031",
+   "kind": "beat_event",
+   "shot_start": 1643,
+   "shot_end": 1697,
+   "start_frame": 1682,
+   "at": [
+    30,
+    3.89
+   ],
+   "rel_frame": 39,
+   "event": "落到 120 m，衝到鏡頭前",
+   "sync": "人聲「讓故事」70.08 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s033",
+   "kind": "transition_in",
+   "shot_start": 1751,
+   "shot_end": 1778,
+   "start_frame": 1751,
+   "type": "cut_on_action",
+   "frames": null,
+   "note": "s032 末幀她站在斜樑根部，本鏡從她沿斜樑衝出的第一步開始（換成側拍）"
+  },
+  {
+   "shot": "s035",
+   "kind": "subject",
+   "shot_start": 1806,
+   "shot_end": 1833,
+   "realize": "model+post",
+   "text": "[33,1]–[33,1.5] 她站起來；同時 @drone 從她肩旁往前飛約 0.7 m 到窗前，[33,1.5] 從光帶射出 @echo_beam 照在窗框右側的鎖點上（6 幀）。 那片窗在 6 幀內往畫面右滑進相鄰那片窗的後面，留出寬約 3 m 的開口。@drone 回到她左肩旁；[33,2.5] 她身體前傾、往開口衝出第一步。",
+   "start_frame": 1806,
+   "end_frame": 1833
+  },
+  {
+   "shot": "s035",
+   "kind": "beat_event",
+   "shot_start": 1806,
+   "shot_end": 1833,
+   "start_frame": 1812,
+   "at": [
+    33,
+    1.5
+   ],
+   "rel_frame": 6,
+   "event": "@echo_beam 照到鎖點，窗開始滑開",
+   "sync": "人聲「CSFCCA」75.34–76.34 s 之間",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s035",
+   "kind": "beat_event",
+   "shot_start": 1806,
+   "shot_end": 1833,
+   "start_frame": 1826,
+   "at": [
+    33,
+    2.5
+   ],
+   "rel_frame": 20,
+   "event": "她往開口衝",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s036",
+   "kind": "transition_in",
+   "shot_start": 1833,
+   "shot_end": 1860,
+   "start_frame": 1833,
+   "type": "cut_on_action",
+   "frames": null,
+   "note": "s035 末幀她往開口衝，本鏡從室內反打她穿過窗口"
+  },
+  {
+   "shot": "s037",
+   "kind": "subject",
+   "shot_start": 1860,
+   "shot_end": 1887,
+   "realize": "model+post",
+   "text": "[34,1.4] 她雙腳落在主控台遠側桌緣前的地板上，[34,1.6] 雙掌拍在桌面邊緣。拍下的那一幀起，桌面從她雙掌的位置亮起： 青色同心圓光紋與放射狀短線在 6 幀內擴散到整個桌面，桌緣亮起一圈洋紅細線（@signal_tower.look.interior_online.main_console），青光由下往上照亮她的臉。光柱仍不亮。 [34,2.5] 她雙掌一撐離開桌面，身體往她的 char_right（畫面左）轉，看向身後的副控台。@drone 跟著她轉。",
+   "start_frame": 1860,
+   "end_frame": 1887
+  },
+  {
+   "shot": "s037",
+   "kind": "beat_event",
+   "shot_start": 1860,
+   "shot_end": 1887,
+   "start_frame": 1868,
+   "at": [
+    34,
+    1.6
+   ],
+   "rel_frame": 8,
+   "event": "雙掌拍下，桌面光紋從掌下擴散（6 幀內鋪滿）",
+   "sync": "人聲「Create」77.82 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s037",
+   "kind": "beat_event",
+   "shot_start": 1860,
+   "shot_end": 1887,
+   "start_frame": 1880,
+   "at": [
+    34,
+    2.5
+   ],
+   "rel_frame": 20,
+   "event": "她撐離桌面、轉向身後的副控台",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s038",
+   "kind": "subject",
+   "shot_start": 1887,
+   "shot_end": 1901,
+   "realize": "model+post",
+   "text": "[34,3.35] 她把推桿往前（往機櫃方向）一推到底，同時抬頭。推到底的那一幀，副控台桌板亮起青色方塊、直槽亮起洋紅細線； 她面前這排機櫃從最靠近她的那台起每 1 幀亮一台（每台正面 3 條青色燈條、頂緣一條洋紅細線，@signal_tower.look.interior_online.cabinets），4 幀後整排亮著； 同時其他排從這排往兩側每 1.5 幀各多亮一排，約 8 幀後（[34,3.95]）12 排全部亮著（本鏡畫面只看得到這排與右後方相鄰的一排）。",
+   "start_frame": 1887,
+   "end_frame": 1901
+  },
+  {
+   "shot": "s038",
+   "kind": "beat_event",
+   "shot_start": 1887,
+   "shot_end": 1901,
+   "start_frame": 1892,
+   "at": [
+    34,
+    3.35
+   ],
+   "rel_frame": 5,
+   "event": "推桿推到底，桌板與機櫃開始依序亮起",
+   "sync": "人聲「Make」onset 78.82 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s039",
+   "kind": "camera",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 1901,
+   "end_frame": 1968,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s039",
+   "kind": "subject",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "realize": "model+post",
+   "text": "[34,4.1] 她放開推桿，char_left 手掌拍在副控台桌板上（桌板青色方塊做 glow_pulse）。[34,4.5]–[35,1] 她挺直身體，雙臂往兩側斜下約 45° 張開、掌心朝前，面向入口窗那半圈窗。 從 [35,1.07] 起，窗從入口窗兩側往外一片接一片生成 @window_feed，一個人聲一片（見 beat_events），每片 4 幀由下往上掃出。 [35,2]–[35,4.5] 她雙臂半張，往後退三步（約 1.8 m）回到主控台遠側的桌緣前，頭跟著新生成的窗左右轉。@drone 一直在她左肩旁。",
+   "start_frame": 1901,
+   "end_frame": 1968
+  },
+  {
+   "shot": "s039",
+   "kind": "beat_event",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "start_frame": 1902,
+   "at": [
+    34,
+    4.1
+   ],
+   "rel_frame": 1,
+   "event": "她拍副控台桌板",
+   "sync": "人聲「Show」onset 79.24 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s039",
+   "kind": "beat_event",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "start_frame": 1915,
+   "at": [
+    35,
+    1.07
+   ],
+   "rel_frame": 14,
+   "event": "入口窗畫面左側相鄰的第 1 片窗生成",
+   "sync": "人聲「world」79.80 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s039",
+   "kind": "beat_event",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "start_frame": 1929,
+   "at": [
+    35,
+    2.07
+   ],
+   "rel_frame": 28,
+   "event": "入口窗畫面右側相鄰的第 1 片窗生成",
+   "sync": "人聲「world」80.36 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s039",
+   "kind": "beat_event",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "start_frame": 1942,
+   "at": [
+    35,
+    3.05
+   ],
+   "rel_frame": 41,
+   "event": "入口窗畫面左側第 2 片生成",
+   "sync": "人聲「w」80.92 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s039",
+   "kind": "beat_event",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "start_frame": 1946,
+   "at": [
+    35,
+    3.35
+   ],
+   "rel_frame": 45,
+   "event": "入口窗畫面右側第 2 片生成",
+   "sync": "人聲「w」81.08 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s039",
+   "kind": "beat_event",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "start_frame": 1949,
+   "at": [
+    35,
+    3.6
+   ],
+   "rel_frame": 48,
+   "event": "入口窗畫面左側第 3 片生成",
+   "sync": "人聲「w」81.24 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s039",
+   "kind": "beat_event",
+   "shot_start": 1901,
+   "shot_end": 1968,
+   "start_frame": 1953,
+   "at": [
+    35,
+    3.87
+   ],
+   "rel_frame": 52,
+   "event": "入口窗畫面右側第 3 片生成；其餘 31 片（左側 15、右側 16）從這 6 片往兩側接連生成，每側每 0.5 幀開始一片，約 8 幀後全部開始、[35,4.8] 前全部掃完（含鏡頭背後看不到的窗）",
+   "sync": "人聲「world」81.38 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s040",
+   "kind": "subject",
+   "shot_start": 1968,
+   "shot_end": 1989,
+   "realize": "model+post",
+   "text": "[36,1] 她抬起 char_left 手（畫面右），手掌攤開朝插座輕輕一揮；@drone 從她肩旁沿桌面上方約 40 cm 滑行到插座正上方（約 2 m，6 幀，[36,1.45] 到達）， [36,1.5] 起垂直下降 4 幀，[36,1.8] 球體下半落進碗形座裡。落進的那一幀插座環亮成青色；[36,2] 光柱下端管口透出一圈青白光（只有管口最下緣約 10 cm 亮，光柱本體仍是透明）。她看著 @drone 笑。",
+   "start_frame": 1968,
+   "end_frame": 1989
+  },
+  {
+   "shot": "s040",
+   "kind": "beat_event",
+   "shot_start": 1968,
+   "shot_end": 1989,
+   "start_frame": 1968,
+   "at": [
+    36,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "她手掌一揮，@drone 滑向插座",
+   "sync": "人聲「Dream」onset 81.96 s（早 [36,1] 約 1 幀）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s040",
+   "kind": "beat_event",
+   "shot_start": 1968,
+   "shot_end": 1989,
+   "start_frame": 1975,
+   "at": [
+    36,
+    1.5
+   ],
+   "rel_frame": 7,
+   "event": "@drone 開始垂直下降",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s040",
+   "kind": "beat_event",
+   "shot_start": 1968,
+   "shot_end": 1989,
+   "start_frame": 1979,
+   "at": [
+    36,
+    1.8
+   ],
+   "rel_frame": 11,
+   "event": "@drone 落進插座，插座環亮起",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s040",
+   "kind": "beat_event",
+   "shot_start": 1968,
+   "shot_end": 1989,
+   "start_frame": 1982,
+   "at": [
+    36,
+    2
+   ],
+   "rel_frame": 14,
+   "event": "光柱下端管口透出青白光",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s041",
+   "kind": "subject",
+   "shot_start": 1989,
+   "shot_end": 2009,
+   "realize": "model+post",
+   "text": "[36,2.55] 她的 char_right 拳往下捶在桌面上（桌面光紋做 glow_pulse）。同一幀起光柱由下往上一段段亮起，每段在 2 幀內從透明變成青白色的發光柱體（見 beat_events）； @drone 從插座升進管內，跟在亮光的上緣往上，[36,3.8] 停在光柱頂端、頂端套環正下方，頂端套環亮成一圈青色。她一路仰頭看著它往上。",
+   "start_frame": 1989,
+   "end_frame": 2009
+  },
+  {
+   "shot": "s041",
+   "kind": "beat_event",
+   "shot_start": 1989,
+   "shot_end": 2009,
+   "start_frame": 1989,
+   "at": [
+    36,
+    2.55
+   ],
+   "rel_frame": 0,
+   "event": "她捶桌；光柱第 1 段亮起，@drone 開始往上升",
+   "sync": "人聲「Build」onset 82.89 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s041",
+   "kind": "beat_event",
+   "shot_start": 1989,
+   "shot_end": 2009,
+   "start_frame": 1994,
+   "at": [
+    36,
+    2.9
+   ],
+   "rel_frame": 5,
+   "event": "第 2 段亮起",
+   "sync": "人聲「it」83.10 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s041",
+   "kind": "beat_event",
+   "shot_start": 1989,
+   "shot_end": 2009,
+   "start_frame": 1998,
+   "at": [
+    36,
+    3.2
+   ],
+   "rel_frame": 9,
+   "event": "第 3 段亮起",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s041",
+   "kind": "beat_event",
+   "shot_start": 1989,
+   "shot_end": 2009,
+   "start_frame": 2002,
+   "at": [
+    36,
+    3.5
+   ],
+   "rel_frame": 13,
+   "event": "第 4 段亮起",
+   "sync": "人聲 onset 83.45 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s041",
+   "kind": "beat_event",
+   "shot_start": 1989,
+   "shot_end": 2009,
+   "start_frame": 2006,
+   "at": [
+    36,
+    3.8
+   ],
+   "rel_frame": 17,
+   "event": "第 5 段亮起；@drone 停在頂端，頂端套環亮起",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s042",
+   "kind": "camera",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2009,
+   "end_frame": 2023,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s042",
+   "kind": "subject",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "realize": "post",
+   "text": "燈帶由下往上一圈接一圈 glow_pulse（@signal_tower.look.bands_online，以光暈表現）：132 m → 144 m → 觀景台下圈 → 觀景台上圈；接著天線正面的青色細線由下往上亮到頂（約 5 幀，沿天線加青色光暈）， 頂端警示燈 glow_pulse 一次（時間見 beat_events）。灰色範圍內的燈帶不動。灰色與彩色的交界在本鏡內由後製從畫面高約 91% 緩慢升到約 89%。之後細線保持亮著。",
+   "start_frame": 2009,
+   "end_frame": 2023
+  },
+  {
+   "shot": "s042",
+   "kind": "parallax",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "start_frame": 2009,
+   "end_frame": 2023,
+   "keyframe": "shots/s042/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s042",
+   "kind": "beat_event",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "start_frame": 2009,
+   "at": [
+    36,
+    4
+   ],
+   "rel_frame": 0,
+   "event": "132 m 那圈燈帶 glow_pulse（光暈 1 幀內放大到約 2 倍、3 幀回落）",
+   "sync": "人聲「Let」83.73 s",
+   "realize": "post"
+  },
+  {
+   "shot": "s042",
+   "kind": "beat_event",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "start_frame": 2010,
+   "at": [
+    36,
+    4.1
+   ],
+   "rel_frame": 1,
+   "event": "144 m 那圈 glow_pulse",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s042",
+   "kind": "beat_event",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "start_frame": 2012,
+   "at": [
+    36,
+    4.2
+   ],
+   "rel_frame": 3,
+   "event": "觀景台下圈 glow_pulse",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s042",
+   "kind": "beat_event",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "start_frame": 2013,
+   "at": [
+    36,
+    4.3
+   ],
+   "rel_frame": 4,
+   "event": "觀景台上圈 glow_pulse；天線青色細線從天線底部（離地 180 m）開始往上亮",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s042",
+   "kind": "beat_event",
+   "shot_start": 2009,
+   "shot_end": 2023,
+   "start_frame": 2018,
+   "at": [
+    36,
+    4.65
+   ],
+   "rel_frame": 9,
+   "event": "細線亮到頂端；警示燈 glow_pulse（光暈 1 幀內放大到約 3 倍、3 幀回落，燈本體不過曝），回落在鏡頭結尾 [37,1] 前完成",
+   "sync": "人聲「unfold」onset 84.05 s（[36,4.6]）之後約 1 幀",
+   "realize": "post"
+  },
+  {
+   "shot": "s044",
+   "kind": "subject",
+   "shot_start": 2036,
+   "shot_end": 2043,
+   "realize": "post",
+   "text": "[37,2] 起灰色以一道往上湧的顆粒霧帶沿塔身暴衝（@silence.spread 的 Build 段）：經過的燈帶與肋上的青色線一圈圈變灰（仍亮著，只是沒有顏色）。 [37,2.1] 霧帶碰到觀景台底面，從那一幀起全景窗的彩色光與天線青色細線在 2 幀內線性淡到全暗（廣播系統斷電，@signal_tower.look.state_build）；塔外燈帶是另外的電源，只變灰、不熄； 霧帶繼續往上吞過觀景台、細頸與天線，[37,2.45] 到達天線頂端，警示燈變成灰白色、仍亮著。",
+   "start_frame": 2036,
+   "end_frame": 2043
+  },
+  {
+   "shot": "s044",
+   "kind": "parallax",
+   "shot_start": 2036,
+   "shot_end": 2043,
+   "start_frame": 2036,
+   "end_frame": 2043,
+   "keyframe": "shots/s044/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s044",
+   "kind": "beat_event",
+   "shot_start": 2036,
+   "shot_end": 2043,
+   "start_frame": 2036,
+   "at": [
+    37,
+    2
+   ],
+   "rel_frame": 0,
+   "event": "灰色開始暴衝",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s044",
+   "kind": "beat_event",
+   "shot_start": 2036,
+   "shot_end": 2043,
+   "start_frame": 2038,
+   "at": [
+    37,
+    2.1
+   ],
+   "rel_frame": 2,
+   "event": "霧帶碰到觀景台，全景窗與天線細線熄滅",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s045",
+   "kind": "subject",
+   "shot_start": 2043,
+   "shot_end": 2050,
+   "realize": "model+post",
+   "text": "[37,2.55] 她起跳，[37,2.9] 雙腳落在主控台桌面上、光柱旁，雙手往光柱伸去。同時灰色從四邊往中央淹進來，[37,3] 停在地板上離中心約 3.3 m 處（@luna_hold 的邊界，球半徑約 4 m）。 @drone 在管內往下掉（本鏡內約 1 m）。",
+   "start_frame": 2043,
+   "end_frame": 2050
+  },
+  {
+   "shot": "s045",
+   "kind": "beat_event",
+   "shot_start": 2043,
+   "shot_end": 2050,
+   "start_frame": 2044,
+   "at": [
+    37,
+    2.55
+   ],
+   "rel_frame": 1,
+   "event": "她起跳",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s045",
+   "kind": "beat_event",
+   "shot_start": 2043,
+   "shot_end": 2050,
+   "start_frame": 2048,
+   "at": [
+    37,
+    2.9
+   ],
+   "rel_frame": 5,
+   "event": "她落在主控台桌面上",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s046",
+   "kind": "subject",
+   "shot_start": 2050,
+   "shot_end": 2078,
+   "realize": "model+post",
+   "text": "[37,3.05]「3」：她雙掌一壓，一道約 2 幀的紫與洋紅色光從掌心流進光柱第 1 段（她手下方那段，離地 1.3–2.3 m），那一段接著在 2 幀內亮成青白色；@luna_hold 在 3 幀內縮到半徑約 3 m。 [37,3.85]「2」：同樣的色光流進第 2 段，第 2 段亮起；@luna_hold 縮到半徑約 2.2 m（地板上的交界退到主控台腳邊）。 [37,3.9] @drone 從管內落下、撞到她腳邊的插座，往畫面右下彈出，[37,4.4] 落在主控台外側的地板上，落地那一刻越過 @luna_hold 的邊界，2 幀內變灰、定住。 [37,4.6]「1」：色光流進第 3 段，第 3 段亮起；@luna_hold 在 3 幀內縮到她身上，她全身由外往內變灰，[37,4.85] 完全定住（雙手仍按著光柱、抬頭看著光柱上段、嘴唇閉著）；已亮的 3 段光柱變成灰白色、仍亮著。",
+   "start_frame": 2050,
+   "end_frame": 2078
+  },
+  {
+   "shot": "s046",
+   "kind": "beat_event",
+   "shot_start": 2050,
+   "shot_end": 2078,
+   "start_frame": 2051,
+   "at": [
+    37,
+    3.05
+   ],
+   "rel_frame": 1,
+   "event": "第 1 段光柱亮起；@luna_hold 縮到 3 m",
+   "sync": "人聲「3」約 85.40 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s046",
+   "kind": "beat_event",
+   "shot_start": 2050,
+   "shot_end": 2078,
+   "start_frame": 2061,
+   "at": [
+    37,
+    3.85
+   ],
+   "rel_frame": 11,
+   "event": "第 2 段亮起；@luna_hold 縮到 2.2 m",
+   "sync": "人聲「2」約 85.88 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s046",
+   "kind": "beat_event",
+   "shot_start": 2050,
+   "shot_end": 2078,
+   "start_frame": 2062,
+   "at": [
+    37,
+    3.9
+   ],
+   "rel_frame": 12,
+   "event": "@drone 撞到插座彈出",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s046",
+   "kind": "beat_event",
+   "shot_start": 2050,
+   "shot_end": 2078,
+   "start_frame": 2069,
+   "at": [
+    37,
+    4.4
+   ],
+   "rel_frame": 19,
+   "event": "@drone 落地、被凍",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s046",
+   "kind": "beat_event",
+   "shot_start": 2050,
+   "shot_end": 2078,
+   "start_frame": 2072,
+   "at": [
+    37,
+    4.6
+   ],
+   "rel_frame": 22,
+   "event": "第 3 段亮起；@luna_hold 縮到她身上",
+   "sync": "人聲「1」約 86.32 s",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s046",
+   "kind": "beat_event",
+   "shot_start": 2050,
+   "shot_end": 2078,
+   "start_frame": 2076,
+   "at": [
+    37,
+    4.85
+   ],
+   "rel_frame": 26,
+   "event": "她完全定住",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s047",
+   "kind": "post_only",
+   "shot_start": 2078,
+   "shot_end": 2119,
+   "start_frame": 2078,
+   "end_frame": 2119,
+   "keyframe": "shots/s047/keyframe.png",
+   "note": "沒有影片模型，只用關鍵幀＋後製"
+  },
+  {
+   "shot": "s047",
+   "kind": "post_effect",
+   "shot_start": 2078,
+   "shot_end": 2119,
+   "effect": "freeze",
+   "start_frame": 2078,
+   "params": {
+    "note": "整鏡就是一張靜止圖，不加視差"
+   }
+  },
+  {
+   "shot": "s048",
+   "kind": "camera",
+   "shot_start": 2119,
+   "shot_end": 2133,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2119,
+   "end_frame": 2133,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s048",
+   "kind": "parallax",
+   "shot_start": 2119,
+   "shot_end": 2133,
+   "start_frame": 2119,
+   "end_frame": 2133,
+   "keyframe": "shots/s048/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s049",
+   "kind": "camera",
+   "shot_start": 2133,
+   "shot_end": 2146,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2133,
+   "end_frame": 2146,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s049",
+   "kind": "parallax",
+   "shot_start": 2133,
+   "shot_end": 2146,
+   "start_frame": 2133,
+   "end_frame": 2146,
+   "keyframe": "shots/s049/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s050",
+   "kind": "camera",
+   "shot_start": 2146,
+   "shot_end": 2160,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2146,
+   "end_frame": 2160,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s050",
+   "kind": "parallax",
+   "shot_start": 2146,
+   "shot_end": 2160,
+   "start_frame": 2146,
+   "end_frame": 2160,
+   "keyframe": "shots/s050/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s051",
+   "kind": "camera",
+   "shot_start": 2160,
+   "shot_end": 2172,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2160,
+   "end_frame": 2172,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s051",
+   "kind": "parallax",
+   "shot_start": 2160,
+   "shot_end": 2172,
+   "start_frame": 2160,
+   "end_frame": 2172,
+   "keyframe": "shots/s051/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s052",
+   "kind": "camera",
+   "shot_start": 2172,
+   "shot_end": 2227,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2172,
+   "end_frame": 2227,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s052",
+   "kind": "parallax",
+   "shot_start": 2172,
+   "shot_end": 2227,
+   "start_frame": 2172,
+   "end_frame": 2227,
+   "keyframe": "shots/s052/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s053",
+   "kind": "subject",
+   "shot_start": 2227,
+   "shot_end": 2281,
+   "realize": "model+post",
+   "text": "[41,1] 她掌心貼著光柱的地方先亮回原本的膚色，顏色從兩手沿手臂往肩膀、胸口、全身與頭髮漫開，[41,3] 全身恢復； 顏色經過的地方，表面那層灰色被往外頂開，變成細小的灰色顆粒，在 8 幀內往外飄散、消失。 光柱：[41,1] 下面 3 段在 2 幀內從灰白變回青白；[41,1.5] 第 4 段、[41,2] 第 5 段各在 2 幀內亮起，[41,2] 頂端套環亮起。[41,3] 起她下巴抬高、眼神堅定。",
+   "start_frame": 2227,
+   "end_frame": 2281
+  },
+  {
+   "shot": "s053",
+   "kind": "beat_event",
+   "shot_start": 2227,
+   "shot_end": 2281,
+   "start_frame": 2227,
+   "at": [
+    41,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "掌心先恢復顏色；下面 3 段光柱變回青白",
+   "sync": "bar 41 正拍（Final Chorus 進入）",
+   "realize": "model+post"
+  },
+  {
+   "shot": "s053",
+   "kind": "beat_event",
+   "shot_start": 2227,
+   "shot_end": 2281,
+   "start_frame": 2240,
+   "at": [
+    41,
+    2
+   ],
+   "rel_frame": 13,
+   "event": "光柱 5 段全亮，頂端套環亮起",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s053",
+   "kind": "beat_event",
+   "shot_start": 2227,
+   "shot_end": 2281,
+   "start_frame": 2254,
+   "at": [
+    41,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "她全身恢復彩色",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s054",
+   "kind": "camera",
+   "shot_start": 2281,
+   "shot_end": 2335,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2281,
+   "end_frame": 2335,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s054",
+   "kind": "subject",
+   "shot_start": 2281,
+   "shot_end": 2335,
+   "realize": "post",
+   "text": "[42,1]–[42,2] 光柱的光從觀景台頂部沿天線往上衝，天線正面的細線由下往上亮成青色（不是灰色）；[42,2]–[42,3.06] 細線保持亮著，頂端警示燈的光暈慢慢變大到約 2 倍（蓄力）； [42,3.06] 人聲「LIVE」，天線頂端射出 @full_broadcast：整個畫面閃白 2 幀，接著一顆以天線頂端為球心的球往外擴大， 球面經過的塔身由上往下恢復顏色（天線、細頸、觀景台上圈燈帶……），[43,1] 球的下緣碰到觀景台頂面。",
+   "start_frame": 2281,
+   "end_frame": 2335
+  },
+  {
+   "shot": "s054",
+   "kind": "parallax",
+   "shot_start": 2281,
+   "shot_end": 2335,
+   "start_frame": 2281,
+   "end_frame": 2335,
+   "keyframe": "shots/s054/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s054",
+   "kind": "beat_event",
+   "shot_start": 2281,
+   "shot_end": 2335,
+   "start_frame": 2281,
+   "at": [
+    42,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "光沿天線往上衝",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s054",
+   "kind": "post_effect",
+   "shot_start": 2281,
+   "shot_end": 2335,
+   "effect": "flash_frames",
+   "start_frame": 2309,
+   "params": {
+    "at": [
+     42,
+     3.06
+    ],
+    "frames": 2
+   }
+  },
+  {
+   "shot": "s054",
+   "kind": "beat_event",
+   "shot_start": 2281,
+   "shot_end": 2335,
+   "start_frame": 2309,
+   "at": [
+    42,
+    3.06
+   ],
+   "rel_frame": 28,
+   "event": "@full_broadcast 從天線頂端發出（flash_frames 2 幀）",
+   "sync": "人聲「LIVE」96.20 s",
+   "realize": "post"
+  },
+  {
+   "shot": "s055",
+   "kind": "subject",
+   "shot_start": 2335,
+   "shot_end": 2389,
+   "realize": "model+post",
+   "text": "[43,1] @full_broadcast 的波前從天花板往下掃過整個房間（4 幀），經過的地方恢復顏色、廣播系統重新通電：主控台、副控台、機櫃燈條、插座環、頂端套環亮回來， 沿窗的白色指示燈恢復白色；全景窗不再顯示窗上影像，透明地看得到外面。窗外遠處的 @city 這時仍是灰色（地面要到 [43,4] 才開始被波掃到）。 [43,1.2] 波前掃過 @drone，它恢復白色、光帶亮起，從地板浮起，[43,1.5]–[43,3] 沿弧線飛上來，停在她 char_left 肩旁。 [43,1.5] 她放開光柱，轉頭看著飛上來的 @drone，笑出來；[43,3] 起她轉身面向畫面右（入口窗的方向）。",
+   "start_frame": 2335,
+   "end_frame": 2389
+  },
+  {
+   "shot": "s055",
+   "kind": "beat_event",
+   "shot_start": 2335,
+   "shot_end": 2389,
+   "start_frame": 2335,
+   "at": [
+    43,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "波前掃過房間",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s055",
+   "kind": "beat_event",
+   "shot_start": 2335,
+   "shot_end": 2389,
+   "start_frame": 2338,
+   "at": [
+    43,
+    1.2
+   ],
+   "rel_frame": 3,
+   "event": "@drone 恢復",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s055",
+   "kind": "beat_event",
+   "shot_start": 2335,
+   "shot_end": 2389,
+   "start_frame": 2362,
+   "at": [
+    43,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "@drone 回到她肩旁；她轉向入口窗",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s056",
+   "kind": "subject",
+   "shot_start": 2389,
+   "shot_end": 2443,
+   "realize": "post",
+   "text": "地面上的恢復圓以塔為圓心往外擴大，[45,1] 直徑擴到約畫面寬 100%（碰到畫面左右兩緣）；光環掃過的地方由灰變成彩色，之後不再退回。",
+   "start_frame": 2389,
+   "end_frame": 2443
+  },
+  {
+   "shot": "s056",
+   "kind": "post_only",
+   "shot_start": 2389,
+   "shot_end": 2443,
+   "start_frame": 2389,
+   "end_frame": 2443,
+   "keyframe": "shots/s056/keyframe.png",
+   "note": "沒有影片模型，只用關鍵幀＋後製"
+  },
+  {
+   "shot": "s057",
+   "kind": "subject",
+   "shot_start": 2443,
+   "shot_end": 2497,
+   "realize": "model+post",
+   "text": "光環沿街道往鏡頭推過來，[45,4] 掃過鏡頭；經過的地方恢復顏色與動態：雨重新落下、路人繼續走、@hovercar 車底燈帶亮回顏色並往街尾方向緩緩前進、看板亮回彩色影像。",
+   "start_frame": 2443,
+   "end_frame": 2497
+  },
+  {
+   "shot": "s057",
+   "kind": "beat_event",
+   "shot_start": 2443,
+   "shot_end": 2497,
+   "start_frame": 2484,
+   "at": [
+    45,
+    4
+   ],
+   "rel_frame": 41,
+   "event": "光環掃過鏡頭",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s064",
+   "kind": "camera",
+   "shot_start": 2725,
+   "shot_end": 2779,
+   "move": "orbit_right",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2725,
+   "end_frame": 2779,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s064",
+   "kind": "subject",
+   "shot_start": 2725,
+   "shot_end": 2779,
+   "realize": "post",
+   "text": "每一拍 @signal_tower 的洋紅分層燈帶（含觀景台上下兩圈）同時 glow_pulse 一次（光暈 1 幀內放大到約 1.5 倍、3 幀回落），每拍一次；肋線、天線與警示燈不變。",
+   "start_frame": 2725,
+   "end_frame": 2779
+  },
+  {
+   "shot": "s064",
+   "kind": "parallax",
+   "shot_start": 2725,
+   "shot_end": 2779,
+   "start_frame": 2725,
+   "end_frame": 2779,
+   "keyframe": "shots/s064/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "orbit_right",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s064",
+   "kind": "beat_event",
+   "shot_start": 2725,
+   "shot_end": 2779,
+   "start_frame": 2725,
+   "at": [
+    50,
+    1
+   ],
+   "rel_frame": 0,
+   "event": "燈帶 glow_pulse",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s064",
+   "kind": "beat_event",
+   "shot_start": 2725,
+   "shot_end": 2779,
+   "start_frame": 2738,
+   "at": [
+    50,
+    2
+   ],
+   "rel_frame": 13,
+   "event": "燈帶 glow_pulse",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s064",
+   "kind": "beat_event",
+   "shot_start": 2725,
+   "shot_end": 2779,
+   "start_frame": 2752,
+   "at": [
+    50,
+    3
+   ],
+   "rel_frame": 27,
+   "event": "燈帶 glow_pulse",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s064",
+   "kind": "beat_event",
+   "shot_start": 2725,
+   "shot_end": 2779,
+   "start_frame": 2765,
+   "at": [
+    50,
+    4
+   ],
+   "rel_frame": 40,
+   "event": "燈帶 glow_pulse",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s067",
+   "kind": "camera",
+   "shot_start": 2886,
+   "shot_end": 2940,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2886,
+   "end_frame": 2940,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s067",
+   "kind": "subject",
+   "shot_start": 2886,
+   "shot_end": 2940,
+   "realize": "post",
+   "text": "[53,2.2] 人聲「LIVE AI」：全城的燈同時 glow_pulse 一次（光暈 1 幀內放大到約 2 倍、4 幀回落），同時整個畫面閃白 2 幀；[53,4] 再一次較小的 glow_pulse（約 1.5 倍）。 「全城的燈」用亮度閾值遮罩選出（塔的燈帶與線、看板、街燈、大樓窗光、車底燈帶都算）。",
+   "start_frame": 2886,
+   "end_frame": 2940
+  },
+  {
+   "shot": "s067",
+   "kind": "parallax",
+   "shot_start": 2886,
+   "shot_end": 2940,
+   "start_frame": 2886,
+   "end_frame": 2940,
+   "keyframe": "shots/s067/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s067",
+   "kind": "post_effect",
+   "shot_start": 2886,
+   "shot_end": 2940,
+   "effect": "flash_frames",
+   "start_frame": 2903,
+   "params": {
+    "at": [
+     53,
+     2.2
+    ],
+    "frames": 2
+   }
+  },
+  {
+   "shot": "s067",
+   "kind": "beat_event",
+   "shot_start": 2886,
+   "shot_end": 2940,
+   "start_frame": 2903,
+   "at": [
+    53,
+    2.2
+   ],
+   "rel_frame": 17,
+   "event": "全城 glow_pulse＋flash_frames 2 幀",
+   "sync": "人聲「LIVE AI」120.92 s",
+   "realize": "post"
+  },
+  {
+   "shot": "s067",
+   "kind": "beat_event",
+   "shot_start": 2886,
+   "shot_end": 2940,
+   "start_frame": 2927,
+   "at": [
+    53,
+    4
+   ],
+   "rel_frame": 41,
+   "event": "全城較小的 glow_pulse",
+   "sync": null,
+   "realize": "post"
+  },
+  {
+   "shot": "s068",
+   "kind": "camera",
+   "shot_start": 2940,
+   "shot_end": 2967,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2940,
+   "end_frame": 2967,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s068",
+   "kind": "subject",
+   "shot_start": 2940,
+   "shot_end": 2967,
+   "realize": "post",
+   "text": "雨往下落（後製加雨層）。",
+   "start_frame": 2940,
+   "end_frame": 2967
+  },
+  {
+   "shot": "s068",
+   "kind": "parallax",
+   "shot_start": 2940,
+   "shot_end": 2967,
+   "start_frame": 2940,
+   "end_frame": 2967,
+   "keyframe": "shots/s068/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s069",
+   "kind": "camera",
+   "shot_start": 2967,
+   "shot_end": 2994,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2967,
+   "end_frame": 2994,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s069",
+   "kind": "subject",
+   "shot_start": 2967,
+   "shot_end": 2994,
+   "realize": "post",
+   "text": "水面的漣漪擴散（後製）。",
+   "start_frame": 2967,
+   "end_frame": 2994
+  },
+  {
+   "shot": "s069",
+   "kind": "parallax",
+   "shot_start": 2967,
+   "shot_end": 2994,
+   "start_frame": 2967,
+   "end_frame": 2994,
+   "keyframe": "shots/s069/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s070",
+   "kind": "camera",
+   "shot_start": 2994,
+   "shot_end": 3021,
+   "move": "tilt_up",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 2994,
+   "end_frame": 3021,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s070",
+   "kind": "subject",
+   "shot_start": 2994,
+   "shot_end": 3021,
+   "realize": "post",
+   "text": "氣球緩緩往上飄、飄出畫面上緣（後製）。",
+   "start_frame": 2994,
+   "end_frame": 3021
+  },
+  {
+   "shot": "s070",
+   "kind": "parallax",
+   "shot_start": 2994,
+   "shot_end": 3021,
+   "start_frame": 2994,
+   "end_frame": 3021,
+   "keyframe": "shots/s070/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "tilt_up",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s071",
+   "kind": "camera",
+   "shot_start": 3021,
+   "shot_end": 3048,
+   "move": "push_in",
+   "speed": "slow",
+   "realize": "post",
+   "start_frame": 3021,
+   "end_frame": 3048,
+   "note": "運鏡由後製做（push_in 等＝裁切縮放／視差）"
+  },
+  {
+   "shot": "s071",
+   "kind": "subject",
+   "shot_start": 3021,
+   "shot_end": 3048,
+   "realize": "post",
+   "text": "4 台車沿車道往畫面右上方緩緩前進約 5 m（後製以分層平移做出）。",
+   "start_frame": 3021,
+   "end_frame": 3048
+  },
+  {
+   "shot": "s071",
+   "kind": "parallax",
+   "shot_start": 3021,
+   "shot_end": 3048,
+   "start_frame": 3021,
+   "end_frame": 3048,
+   "keyframe": "shots/s071/keyframe.png",
+   "tool": "tools/p4_parallax.py",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "note": "Depthflow 視差；沒有影片模型"
+  },
+  {
+   "shot": "s072",
+   "kind": "subject",
+   "shot_start": 3048,
+   "shot_end": 3102,
+   "realize": "model+post",
+   "text": "她輕輕吸一口氣、閉一下眼再睜開；地平線那條暖金色的亮度從約 30% 升到約 60%（後製調色）。",
+   "start_frame": 3048,
+   "end_frame": 3102
+  },
+  {
+   "shot": "s073",
+   "kind": "subject",
+   "shot_start": 3102,
+   "shot_end": 3156,
+   "realize": "model+post",
+   "text": "[57,2]–[57,4] 那面螢幕裡的灰色從左下往右上擴散，吞掉右上角剩下的彩色（後製）；[57,2.5] 她察覺，慢慢轉頭看向那面螢幕。其他螢幕維持彩色。",
+   "start_frame": 3102,
+   "end_frame": 3156
+  },
+  {
+   "shot": "s073",
+   "kind": "transition_in",
+   "shot_start": 3102,
+   "shot_end": 3156,
+   "start_frame": 3102,
+   "type": "dissolve",
+   "frames": null,
+   "note": "溶接疊在本鏡第一拍（[57,1]–[57,2]）：從塔上的黎明溶接回 @hq_control（時間與地點都跳過）"
+  },
+  {
+   "shot": "s073",
+   "kind": "beat_event",
+   "shot_start": 3102,
+   "shot_end": 3156,
+   "start_frame": 3115,
+   "at": [
+    57,
+    2
+   ],
+   "rel_frame": 13,
+   "event": "灰色開始吞掉剩下的彩色",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s073",
+   "kind": "beat_event",
+   "shot_start": 3102,
+   "shot_end": 3156,
+   "start_frame": 3122,
+   "at": [
+    57,
+    2.5
+   ],
+   "rel_frame": 20,
+   "event": "她轉頭看向灰色螢幕",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s073",
+   "kind": "beat_event",
+   "shot_start": 3102,
+   "shot_end": 3156,
+   "start_frame": 3142,
+   "at": [
+    57,
+    4
+   ],
+   "rel_frame": 40,
+   "event": "那面螢幕全灰",
+   "sync": null,
+   "realize": "model+post"
+  },
+  {
+   "shot": "s074",
+   "kind": "post_effect",
+   "shot_start": 3156,
+   "shot_end": 3223,
+   "effect": "fade_to_black",
+   "start_frame": 3156,
+   "params": {
+    "note": "最後約 1 秒（約 133.3–134.3 s）畫面與字標一起淡到純黑 #000000"
+   }
+  },
+  {
+   "shot": "s074",
+   "kind": "overlay",
+   "shot_start": 3156,
+   "shot_end": 3223,
+   "start_frame": 3156,
+   "end_frame": 3223,
+   "overlay": {
+    "zone": "畫面下 1/4 置中（壓在她胸口的白衣上，不壓到臉）",
+    "content": "CSFCCA／LIVE AI 官方字標，兩行（CSFCCA 在上、LIVE AI 在下），白色加淡白光暈；[58,1] 起 6 幀淡入，最後和畫面一起淡出（後製）"
+   }
+  }
+ ]
+}

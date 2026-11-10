@@ -1,0 +1,68 @@
+# P5 鏡頭清單：Claude 代決事項（精度層級；劇情與設定層級的已問使用者）
+# 2026-11-10，p5 session（Claude Opus 5.5）
+
+user_decisions:
+  - id: U1
+    topic: s003 ECHO 滑入＋轉身只有 13 幀（P4 已知問題 #5）
+    answer: 保留現狀：正常速度生成，後製加速 4–6 倍對拍；beat_events 不改
+  - id: U2
+    topic: animatic 每鏡畫面
+    answer: 每鏡用 Illustrious＋LUNA LoRA 快速出一張草圖（不是正式關鍵幀）；s002–s004 用 P4 正式關鍵幀
+
+claude_decisions:
+  - id: D01
+    topic: 模型分配規則
+    decision: >-
+      路線 C → parallax；俯拍正射或刻意完全靜止的 C 鏡（s025、s047、s056）與 s001 → post_only。
+      路線 A 角色鏡（臉、表情、身體動作）→ wan_flf；物體入鏡、精準定位、大幅首尾銜接且無臉部細部動作 → h3_fl2va。
+      路線 B → wan_flf＋OpenPose 姿勢關鍵幀（Fun Control 待第一個 B 段落前測）。
+    reason: P4 決定（per_shot_wan_flf_or_h3）；H3 眼瞼細部會溶接，所以有眨眼、睜眼、閉眼的鏡頭（s004、s072、s074）一律 Wan。
+    result: wan_flf 45、h3_fl2va 7（s003、s007、s028、s030、s035、s040、s055）、parallax 18、post_only 4（s001、s025、s047、s056）
+  - id: D02
+    topic: hero 等級
+    decision: 12 鏡 hero：s004 睜眼、s008 樓頂躍出揭示、s010 水窪（發現能力）、s011 氣球、s022 縱身一躍、s024 drop 胸口爆色、s029 開始攀塔、s039 窗影像生成、s046 倒數凍結、s053 掌心回色、s063 站上矮牆舉拳、s074 最後一格
+    reason: 每段落 1–2 個劇情轉折或記憶點；hero 在 P7 最多 8 個 seed（normal 4 個），算力優先。
+  - id: D03
+    topic: prompt 格式
+    decision: >-
+      關鍵幀＝Danbooru tag（lunacsf＋依構圖服裝 tag，同 p3_lora_gen.prompt_outfit）；影片＝Wan 與 H3 共用英文自然語言（同 P4 pilot/prompts.yaml）。
+      frozen 灰色一律後製去飽和，tag 不寫 greyscale；後製特效不寫進任何 prompt。
+    reason: G0 定的關鍵幀方法；P4 證明同一份影片 prompt 兩模型都可用。
+  - id: D04
+    topic: 超過單次生成上限的鏡頭
+    decision: s008（Wan，依劇本 notes 從 [8,2] 拆）、s030（H3，從 [29,1] 拆）各拆兩次生成，中間幀另出 shots/sNNN/mid.png；s063 單次可涵蓋，不拆；s017 若一次不到位再從 [17,3] 拆。
+    reason: Wan 16fps 單次 81 幀（約 5 s）、H3 試作值 124 幀；以 tools/p5_shotlist.py 計算的生成長度為準。
+  - id: D09
+    topic: handle 與首尾幀
+    decision: 有關鍵幀釘住的一端不加 handle（頭端一律 0；有末幀的尾端 0）；只用首幀生成的鏡頭尾端加 0.4 s。對拍用整支 0.9–1.1 倍變速或後製重定時。
+    reason: 關鍵幀依 plan/README.md 是本鏡第一／最後一個完整畫面，加 handle 會讓首尾幀落在被裁掉的區段。
+  - id: D05
+    topic: lint F4（拍點間距不到 1 拍卻有動作）s008、s037、s040、s073
+    decision: 不改 beat_events；prompt 把相鄰動作寫成一氣呵成的連續動作，生成 1 倍速後在 P9 以 0.9–1.1 倍變速（或後製重定時）對點。
+    reason: >-
+      s008 艙門全開→躍出是機械因果（平台衝到頂把她帶出），s037 落地→拍桌→轉身、s040 揮手→滑行→落座、s073 察覺→轉頭都屬一個連續動作；
+      和 s003 同類，使用者對 s003 選了保留時序、後製對拍，這裡沿用同一原則。lint 保留這 4 筆 WARN 當提醒。
+  - id: D06
+    topic: lint 其他 WARN（已修 shots.yaml）
+    decision: >-
+      比喻詞 4 處改成直接描述（s017 兩處「像台階」→「由低到高排成一列」；s026「像光做的絲帶」→「發光的細長帶狀與方塊」；s064「像心跳」→「每拍一次」）；
+      s008 @drone facing 改成依階段 dict；s066 補 last_frame（轉頭看 @drone、笑），關鍵幀補 last、走首尾幀。
+    reason: p4 交接的 9 個 WARN（實測 10 個，多了 s008 F2）；只改措辭與欄位，不改劇情。
+  - id: D07
+    topic: 只用首幀生成的鏡頭
+    decision: variation small 的模型鏡（s006、s018、s020、s043、s059–s062、s065、s072）只給首幀；s019、s057 首尾幀同構圖，尾幀可沿用首幀。
+    reason: 劇本 notes 已說明首尾等價；省一張關鍵幀。
+  - id: D08
+    topic: 草圖 prompt 範圍
+    decision: animatic 草圖只用 keyframe.first；文字 Illustrious 畫不出 hover car、艙、ECHO 等（G0 已知），草圖只看構圖與段落起伏，不當關鍵幀候選。
+  - id: D10
+    topic: 首尾幀鏡頭的生成長度與重定時
+    decision: >-
+      生成幀數取最接近的合法值（Wan 4k+1、H3 4 的倍數），差額以整支變速補（jobs_video.json retime.speed）。
+      28 幀短鏡（s022、s034、s046）的 ×0.889 超出 0.9–1.1，接受：上限放寬到 ±12.5%。
+    reason: 短鏡 4 幀粒度造成的誤差，整支均勻變速肉眼看不出；P4 s003 用 4–6 倍重定時仍可接受。
+  - id: D11
+    topic: animatic 草圖品質
+    decision: >-
+      草圖只當節奏與構圖參考。兩次換 seed 後仍然弱的環境鏡（s008、s030、s042、s044、s048、s054、s060、s064、s067、s068）保留，
+      s011 LUNA 被畫成黃雨衣也保留；這些鏡頭在 P6 用 Qwen 合成＋ControlNet 出正式關鍵幀。

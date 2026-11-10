@@ -1,0 +1,1401 @@
+# P5 prompt 正本（Claude Opus 5.5 撰寫）。tools/p5_shotlist.py 讀這份＋shots.yaml＋timeline.json 產生 shotlist.json。
+#
+# 慣例（Claude 代決，理由見 plan/review/p5_decisions.yaml）：
+# - keyframe.first / last：Illustrious＋LUNA LoRA v2 的 Danbooru tag 全文。有 @luna 的鏡頭以
+#   「lunacsf, 1girl, solo, grey eyes, dark purple hair」開頭＋依構圖的服裝 tag（同 tools/p3_lora_gen.prompt_outfit），
+#   結尾接 QUALITY。沒有 @luna 的鏡頭用 no humans、不掛 LoRA。
+#   正式關鍵幀（P6）照 G0 決定的方法：Qwen-Edit 合成（角色表＋refs/entities）→ Illustrious img2img＋canny → 後製；
+#   這裡的 tag 是 img2img 階段與 P5 草圖用的。灰色（frozen）一律後製去飽和，tag 不寫 greyscale/monochrome（會連 LUNA 一起變灰）。
+#   後製合成的特效（@countdown_ring、@echo_beam、@broadcast_wave、glow_pulse、@tower_hologram…）不寫進 tag。
+# - keyframe.last：只在 variation 為 medium/large 且影片走首尾幀模型時寫。
+# - video：Wan2.2 與 H3 共用英文自然語言格式（P4 試作同一份 prompt 兩個模型都可用）：
+#   「Anime cel-shaded shot, <景別>, <運鏡>.」＋畫面＋動作（時間用「in the first half / at the end」等相對說法）。
+#   只寫 realize 含 model 的部分；後製效果不寫。被凍住的灰色世界寫成 grey, frozen, perfectly still。
+# - model：wan_flf（Wan2.2 I2V A14B Q8＋lightx2v 4 步＋首尾幀，16fps）、h3_fl2va（MiniMax H3 FL2VA turbo 8 步，24fps）、
+#   parallax（路線 C，tools/p4_parallax.py＋後製）、post_only（靜態關鍵幀＋後製，不進影片模型也不做深度視差）。
+#   路線 B 一律先標 wan_flf（首尾幀用 OpenPose＋ControlNet 出姿勢關鍵幀）；Fun Control 待第一個 B 段落前測試（p4_fun_control: deferred）。
+# - tier：hero＝該段落的記憶點／劇情轉折，P7 seed 預算加倍（最多 8 次）；其餘 normal（最多 4 次）。
+
+defaults:
+  quality: "masterpiece, best quality, anime screencap, clean lineart, cel shading"
+  illustrious_negative: >-
+    lowres, bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra digits, text, watermark, signature, logo,
+    letters, username, green eyes, aqua eyes, blue eyes, two thigh straps, thighhighs, kneehighs, jacket, hat, glasses, chibi, 3d,
+    realistic, photo, blurry, multiple girls
+  video_negative: >-
+    text, letters, watermark, subtitles, extra drone, duplicate drone, camera shake, cut, scene change,
+    blurry face, deformed hands, extra fingers, color shift, realistic, 3d render
+
+shots:
+  # ---------------- Intro ----------------
+  s001:
+    tier: normal
+    model: post_only
+    keyframe:
+      first: >-
+        no humans, black background, glowing cyan line, horizontal line, thin waveform, monitor screen, close-up,
+        dark, simple background, minimalism, masterpiece, best quality, anime screencap
+      last: null
+    video: null
+    notes: "@signal_wave 尖峰與微抖全部後製；關鍵幀只要黑底＋平線位置（畫面高 45%）。"
+
+  s002:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: "（沿用 P4 正式關鍵幀 shots/s002/keyframe.png）"
+      last: null
+    video: null
+    notes: "P4 已完成並放行（tools/p4_parallax.py＋逐拍亮螢幕；2026-11-09 改為直接灰階亮起）。"
+
+  s003:
+    tier: normal
+    model: h3_fl2va
+    keyframe:
+      first: "（沿用 P4 正式關鍵幀 shots/s003/keyframe.png）"
+      last: "（沿用 shots/s003/last.png）"
+    video: >-
+      Anime cel-shaded shot, medium shot, static camera. A girl with long dark purple hair stands inside a transparent glass stasis pod,
+      eyes closed, mouth closed, perfectly still, softly lit from below by white light; blurred grey monitor wall behind her.
+      A small white spherical hover drone with a black visor band and a glowing cyan light strip glides in horizontally
+      from beyond the right edge of the frame toward the upper right area, moving smoothly without propellers.
+      While gliding in, the drone faces left in its direction of travel, so its visor and cyan strip point left and we see it from the side.
+      As it decelerates in the last moment it rotates in place about 90 degrees to face the camera,
+      and it stops in the upper right foreground facing the viewer, then bobs gently up and down.
+      The girl does not move.
+    notes: >-
+      沿用 P4 選定組合（H3 turbo）。使用者 2026-11-10 選「保留現狀」：正常速度生成、後製加速 4–6 倍對拍（P4 已知問題 #5 結案）。
+      prompt 加 mouth closed（P4 H3 版嘴巴後段微張）。
+
+  s004:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: "（沿用 P4 正式關鍵幀 shots/s004/keyframe.png）"
+      last: "（沿用 shots/s004/last.png）"
+    video: >-
+      Anime cel-shaded extreme close-up of a girl's eyes and eyebrows behind glass, static camera, lit from below.
+      Her eyes are closed and still at first, then she slowly opens her eyes fully within a quarter second
+      and looks straight into the camera with grey-violet eyes, holding still afterwards. Subtle breathing only.
+    notes: "沿用 P4 選定組合（Wan lightx2v FLF）。眼瞼細部動作不派給 H3。"
+
+  s005:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white shirt, sleeveless, portrait, looking at viewer, closed mouth, serious, determined, standing inside glass capsule,
+        glass reflection, lit from below, white light, dark room, blurry background, monitor wall, depth of field,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white shirt, sleeveless, portrait, looking at viewer, closed mouth, determined, standing inside glass capsule,
+        strong white light from below, bright, glowing white clothes, dark background,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium close-up, static camera. A girl with dark purple hair stands inside a glass stasis pod, eyes open,
+      looking straight into the camera with a firm gaze, mouth closed. She only breathes softly and blinks once very lightly;
+      she does not speak and does not turn her head. Near the end the white light from the floor below grows quickly brighter,
+      lighting her white clothes almost pure white while the folds stay visible and her face stays readable.
+    notes: "光環熄滅與臉上青光由後製；首幀不畫光環（後製疊前景環）。白光急升由模型生成、後製再補強。"
+
+  # ---------------- Hook ----------------
+  s006:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain,
+        white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap,
+        cowboy shot, from below, looking up, clenched hands, arms at sides, standing on glowing platform, lit from below,
+        hair blown downward, wind, vertical shaft, dark tunnel, cyan ring lights, concentric rings, vanishing point,
+        white spherical robot, floating robot, cyan glowing stripe, wide angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded medium long shot from a low angle, the camera rises together with the platform so the girl and the drone
+      stay in the same place in the frame. A girl with dark purple hair stands on a glowing white circular platform shooting up a
+      dark vertical shaft, looking up with a determined face, fists lightly clenched, her braided hair and silver hair chain pressed
+      downward by the rushing air, the hair tips fluttering. Cyan ring lights on the black shaft wall stream outward and downward
+      from the vanishing point above and rush past the camera, each ring sweeping cyan light down over her body; the rings pass
+      faster and faster. A small white spherical drone hovers beside her shoulder at the right, perfectly steady. She only blinks.
+    notes: "variation small：只用首幀（Wan I2V 首幀模式＋lightx2v；首尾幀等價，尾幀可用首幀）。shake 與燈環 glow_pulse 後製。"
+
+  s007:
+    tier: normal
+    model: h3_fl2va
+    keyframe:
+      first: >-
+        no humans, top-down view, from above, looking down a vertical shaft, dark tunnel, concentric circles, cyan ring lights,
+        vanishing point, deep perspective, small glowing white disc at the bottom, tiny figure, darkness, symmetrical,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain,
+        white crop top, sleeveless, high collar, white skirt, full body, from above, looking up, looking at viewer, arms at sides,
+        standing on glowing platform, white circular platform, vertical shaft, concentric circles, cyan ring lights, dark tunnel,
+        hair blown downward, lit from below, white spherical robot, small,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot, static camera looking straight down a dark vertical shaft lined with concentric cyan ring lights.
+      A glowing white circular platform carrying a girl in white and a small white spherical drone rises straight up the center of
+      the shaft toward the camera, slowing down slightly; the platform grows from a small dot to about one fifth of the frame
+      height and lights up the section of wall it passes. The girl looks straight up into the camera the whole time, her hair
+      pressed downward by the air; the drone rises at the platform's right edge. The ring lights keep the same brightness and color.
+    notes: "以首尾幀銜接大幅縮放（平台 6%→20%），屬物體入鏡＋首尾銜接 → H3。人物很小，不涉及臉部細部動作。"
+
+  s008:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        no humans, rooftop, night, rain, raindrops suspended in air, frozen time, circular hatch, closed hatch, glowing ring on floor,
+        low wall, cityscape, skyscrapers, floating cars, holographic billboards, distant neon, tower silhouette on horizon,
+        eye level, wide shot, overcast, masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, from above, full body, standing,
+        rooftop, open hatch, glowing platform, night, rain, raindrops suspended in air, cityscape, vast city, skyscrapers,
+        floating cars, distant neon lights, magenta and cyan neon, tower silhouette on horizon, high angle, wide shot,
+        white spherical robot, floating robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot on a grey rooftop at night where the rain is frozen in mid-air. Camera static at first.
+      The two steel halves of a round floor hatch slide sideways into the floor and white light shines up from the shaft.
+      A girl with dark purple hair is flung up out of the hatch by the stopping platform, flies forward away from the camera
+      toward the city together with a small white spherical drone, lands about two meters ahead on one knee with one palm on the
+      ground, then stands up and looks into the distance. After she stands, the camera rises about five meters and pushes forward,
+      ending high behind her and looking down over her shoulder at the vast grey city, with a band of colorful neon districts on
+      the horizon and a black tower silhouette in the center. The frozen raindrops and the grey city do not move.
+    notes: >-
+      路線 B（OpenPose 關鍵姿勢：躍起最高點、單膝落地、站立）。2 小節約 4.5 s，加 handle 超過 Wan 81 幀上限，
+      依 notes 預案從 [8,2] 拆成兩次生成（上：static 躍出落地，首尾幀＝first＋落地姿勢；下：crane_up 揭示，首尾幀＝站立姿勢＋last），剪接處 cut 在站起完成點。
+      雨滴恢復與 @echo_beam 青光後製。
+
+  # ---------------- Verse ----------------
+  s009:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, walking,
+        arms at sides, shopping street, night, rain, raindrops suspended in air, wet stone pavement, puddles, shop windows,
+        holographic billboards, floating cars above street, pedestrians standing still, one-point perspective,
+        distant neon lights, tower silhouette in distance, white spherical robot, floating robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, from behind, full body, small figure,
+        walking away, shopping street, night, raindrops suspended in air, wet stone pavement, puddles, shop windows,
+        holographic billboards, floating cars above street, pedestrians standing still, one-point perspective,
+        distant neon lights, tower silhouette in distance, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot, static camera at eye level in the middle of a grey, frozen shopping street at night.
+      A girl with a dark purple ponytail walks away from the camera at a normal walking pace toward the far end of the street,
+      shrinking from about two fifths to one quarter of the frame height, arms at her sides; a small white spherical drone glides
+      beside her left shoulder at the same speed. Everything else is perfectly still: the raindrops hang motionless in the air,
+      the floating cars and the statue-like pedestrians do not move.
+
+  s010:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, walking towards viewer, puddle in foreground, wet stone pavement, reflection, shopping street, night,
+        raindrops suspended in air, blurry background, white spherical robot, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, standing in puddle, looking down, surprised, open mouth, water splash frozen in air, ripples,
+        wet stone pavement, shopping street, night, raindrops suspended in air, blurry background, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded full shot from a low angle near the wet stone pavement, static camera. A girl with a dark purple ponytail
+      walks one step toward the camera and her right foot steps into a large puddle in the foreground: water splashes up and
+      ripples spread across the whole puddle. She stops, looks down at the puddle and her calm face turns surprised.
+      A small white spherical drone stops beside her left shoulder and bobs gently. The grey street behind is out of focus
+      and the raindrops hang motionless in the air.
+    notes: "第一次發現能力，hero。水窪恢復與退回灰色後製；水花由模型生成。"
+
+  s011:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain,
+        white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view,
+        looking up, balloon floating in air, balloon string, arms at sides, shopping street, night, raindrops suspended in air,
+        blurry foreground, child's yellow raincoat hood out of focus, white spherical robot partially hidden behind shoulder,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain,
+        white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view,
+        reaching up, arm up, index finger, red balloon floating above, balloon string, focused, shopping street, night,
+        raindrops suspended in air, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot from a slightly low angle, static camera. A girl with a dark purple ponytail, seen in
+      three-quarter view, looks up at a balloon hanging still in the air at the upper right. She slowly raises her right hand and
+      near the end gently touches the bottom of the balloon with her index fingertip; the balloon then starts to float upward
+      slowly, rising only a little. Her hand stays in the air, her face focused. The grey child in the blurry foreground, the
+      drone behind her shoulder and the raindrops in the air stay perfectly still.
+    notes: "路線 B（姿勢：手放下→手伸到氣球底部）。@balloon 變紅後製；首尾幀的氣球都畫成可辨識的氣球形，顏色後製處理。"
+
+  s012:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt,
+        single thigh strap, white sneakers, full body, from side, profile, child, yellow raincoat, hood up, running pose,
+        one foot off ground, reaching up, red balloon in air, shopping street, storefront, night, raindrops suspended in air,
+        eye level, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt,
+        single thigh strap, white sneakers, full body, from side, profile, smile, watching, child running away, yellow raincoat,
+        hood up, reaching up, shopping street, storefront, night, raindrops suspended in air, eye level, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded full shot, static side view of a grey frozen shopping street. A red balloon keeps floating slowly upward and
+      leaves the top of the frame. A small child in a hooded raincoat is frozen mid-run facing right. The girl with the dark
+      purple ponytail steps half a step forward and gently pats the child's shoulder with her near hand; the child starts moving
+      again and runs three steps to the right, reaching up after the balloon, still running at the end, never looking back.
+      The girl stops and watches the child, smiling slightly. The drone hovers by her shoulder.
+    notes: "路線 B（拍肩）。小孩雨衣恢復黃色由後製；關鍵幀的小孩可畫黃雨衣，後製去飽和成灰。小孩不畫清楚五官（帽子遮臉）。"
+
+  s013:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain,
+        white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, three-quarter view,
+        looking to the side, light smile, blurry background, child in yellow raincoat running in background, red balloon,
+        shopping street, night, raindrops suspended in air, depth of field,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain,
+        white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, three-quarter view,
+        looking at own hand, palm up, hand raised to chest, confused, serious, frown, blurry background, shopping street, night,
+        raindrops suspended in air, depth of field,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot, static camera. A girl with a dark purple ponytail in three-quarter view watches a child
+      running in the blurry background; the child and the balloon stop moving and freeze in place. Her smile fades, and from
+      the second beat she slowly raises her right hand in front of her chest and looks down at her palm, puzzled and serious,
+      until the end of the shot.
+    notes: "背景小孩與氣球退回灰色由後製（遮罩去飽和）；模型只負責背景停住與她的表情、抬手。"
+
+  s014:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, cityscape, telephoto, compressed perspective, skyscrapers crowded together, night, rain, neon lights,
+        magenta neon, cyan neon, amber lights, holographic billboards, tall tower with disc observation deck and antenna in background,
+        blurry foreground, out of focus shoulder and back of head at left edge, purple hair, street canyon,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: >-
+      路線 C：一張彩色版關鍵幀；frozen 版由後製去飽和（雨滴定格另做），沿斜界線移動的遮罩把灰彩交界從 35% 推到 52%；
+      前景肩膀分層做輕微視差。前景肩膀與後腦在 P6 用 Qwen 合成，不靠 tag。
+
+  s015:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white shirt, sleeveless, portrait, three-quarter view, looking forward, serious, white spherical robot floating in front of her,
+        cyan glowing stripe, shopping street, night, blurry background, raindrops suspended in air,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white shirt, sleeveless, portrait, looking to the side, looking afar, determined, white spherical robot facing right,
+        shopping street, night, blurry background,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium close-up, static camera. A girl with a dark purple ponytail in three-quarter view looks at a small
+      white spherical drone floating in front of her face at the right. Her expression changes from grave to determined.
+      Near the end the drone slowly turns its cyan light strip toward the right of the frame, and she turns her head to follow,
+      looking far into the distance on the right with a firm gaze. The grey street behind is blurred and still.
+    notes: "@tower_hologram 與臉上青光後製；表情、轉頭、@drone 轉向由模型。轉頭有末幀（lint 未列 WARN）。"
+
+  s016:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, standing,
+        clenched hands, shopping street, night, raindrops suspended in air, wet stone pavement, puddles, floating cars,
+        pedestrians standing still, one-point perspective, distant neon lights, tower silhouette in distance,
+        white spherical robot, floating robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt,
+        single thigh strap, white socks, white sneakers, from behind, full body, running, leaning forward, mid-stride,
+        shopping street, night, raindrops suspended in air, wet stone pavement, one-point perspective, distant neon lights,
+        tower silhouette in distance, white spherical robot, floating robot, motion lines,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot, the camera slowly pushes in. A girl with a dark purple ponytail stands with her back to the
+      camera in the middle of a grey frozen shopping street, fists clenched, looking toward the far end where a black tower
+      silhouette rises above distant neon. At the very end she leans forward and takes the first running step, and the small
+      white spherical drone at her left shoulder shoots forward with her. The raindrops and the street stay perfectly still.
+
+  # ---------------- Prechorus ----------------
+  s017:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from side, profile, running, leaning forward, floating cars in air like stairs, hover cars without wheels,
+        shopping street, storefront, night, raindrops suspended in air, eye level, white spherical robot, motion lines,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, midriff, white skirt, cargo skirt, single thigh strap, white sneakers, full body, from side, profile, running on car roof,
+        dark blue hover car, glowing underglow, floating cars below, building facade, holographic billboards, night,
+        raindrops suspended in air, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from the side, the camera tracks right with the girl and rises about seven meters.
+      A girl with a dark purple ponytail sprints to the right, then makes three jumps on the beat, landing on the roofs of three
+      wheel-less hover cars floating in mid-air like a staircase, each higher than the last; each car sinks slightly under her
+      landing and floats back up. She keeps running on the third, highest car. A small white spherical drone flies beside her at
+      the same speed. The street and the raindrops hanging in the air stay perfectly still.
+    notes: "路線 B（OpenPose：起跳、落地各 3 組）。車的恢復／退回、腳步區塊由後製調色。若一次生成不到位，依 notes 從 [17,3] 拆兩次。"
+
+  s018:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from side, profile, running, running on car roofs, row of floating hover cars, glowing underglow,
+        holographic billboards, building facade, night, raindrops suspended in air, white spherical robot, motion lines,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded long shot from the side at roof height, the camera tracks right at the same speed as the girl, so she stays
+      in place in the frame. A girl with a dark purple ponytail sprints across the roofs of a row of hover cars hanging in mid-air,
+      one step every half beat, leaping over the gaps between cars, and makes a long jump near the end onto a wine-red car.
+      Each car sinks a little under her step and floats back. A small white spherical drone flies beside her.
+      The raindrops in the air and the street far below stay still.
+    notes: "variation small：Wan 首幀模式（不給尾幀）。路線 B（跨步、跳躍循環）。"
+
+  s019:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        1girl, close-up, hand focus, half-clenched hand, swinging arm, running, bracelet, motion blur background, blurry background,
+        night, car roof at bottom edge, fingertips, from side,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        1girl, close-up, hand focus, half-clenched hand, swinging arm, running, bracelet, motion blur background, blurry background,
+        night, car roof at bottom edge, fingertips, from side,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded insert shot, close-up of a running girl's half-clenched right hand, the camera tracks with her so the hand
+      stays near the center of the frame. The arm swings fully back and forth twice in rhythm with her running stride.
+      Blurred grey street in the background, the corner of a colored car roof at the bottom edge.
+    notes: "手特寫不用 lunacsf（LoRA 只對全身／臉）；指尖變灰由後製追蹤遮罩。首尾幀同相位（尾幀＝首幀即可）。"
+
+  s020:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot,
+        running towards viewer, clenched teeth, determined, hair flowing, floating cars behind her, hover cars, night,
+        raindrops suspended in air, white spherical robot, motion lines,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded medium long shot, the camera moves backward at the same speed as the girl running toward it, so her size
+      stays the same. A girl with a dark purple ponytail sprints across hover car roofs toward the camera, teeth clenched, strained
+      but determined, looking past the camera into the distance; her ponytail swings out behind her shoulder with each stride.
+      A small white spherical drone flies at her left shoulder. The hover cars behind her bob slightly; the rain in the air is still.
+    notes: "variation small：首幀模式。髮尾、指尖灰與車退回由後製。"
+
+  s021:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, cityscape, telephoto, tall tower with disc observation deck and antenna in center, black tower, magenta ring lights,
+        cyan lines, neon lights, holographic billboards, night, rain, skyscrapers on both sides, compressed perspective,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "路線 C（同 s014）：一張彩色遠景，後製去飽和版＋兩條往中間移動的遮罩。"
+
+  s022:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, from below,
+        standing on car roof edge, leaning forward, about to jump, night sky, distant city, tall tower with disc deck in distance,
+        small colorful district around tower, raindrops suspended in air, white spherical robot, low angle, car roof in foreground,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        from behind, full body, midair, jumping, leaping, arms outstretched forward, legs extended back, night sky, distant city,
+        tall tower with disc deck in distance, raindrops suspended in air, white spherical robot, low angle, car roof in foreground,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from a low angle on top of a hover car roof, static camera. A girl with a dark purple ponytail,
+      seen from behind, pushes off the front edge of the car roof and leaps far forward and upward into the night air toward a
+      distant tower, body leaning forward, both arms reaching ahead, legs stretched back, flying away from the camera and
+      reaching the top of her arc; a small white spherical drone flies with her. The raindrops hanging in the air stay still.
+    notes: "路線 B。speed_ramp 0.4 倍、@luna_fade、surge 顆粒霧都後製；模型以 1 倍速生成起跳到過頂點。"
+
+  # ---------------- Chorus 1 ----------------
+  s023:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, white sneakers, full body, from side, profile, midair, flying horizontally,
+        arms outstretched forward, legs extended back, hair flowing back, frozen, building facade, holographic billboards,
+        raindrops suspended in air, night, white spherical robot, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "路線 C：全彩版與全灰版兩張（灰版＝後製去飽和），surge 與 @luna_fade 遮罩過渡、人物圖層位移、[21,2] 後推近 8% 全部後製。"
+
+  s024:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, midair, facing viewer, leaning forward, arms reaching forward, eyes open, frozen, building facade,
+        holographic billboards, raindrops suspended in air, night sky, white spherical robot, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, midair, falling, arms spread wide, outstretched arms, chest out, head up, determined, closed mouth, legs tucked,
+        shop windows, holographic billboards, magenta and cyan neon, amber lights, rain, night, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot from a low angle. A girl with dark purple hair hangs in mid-air facing the camera, leaning
+      forward with both arms reaching ahead. Suddenly she throws her arms wide open to both sides, pushes her chest forward and
+      lifts her head, determined, mouth closed, and starts falling; the camera tilts down about thirty-five degrees to follow her.
+      Near the end she tucks her legs under her body, ready to land. A small white spherical drone falls with her at her left
+      shoulder. Behind her, shop windows and holographic billboards glow in magenta, cyan and amber, and the rain falls.
+    notes: "drop。模型畫彩色版、1 倍速約 1 秒動作；全灰首幀、由胸口恢復、@broadcast_wave、背景恢復、speed_ramp 全部後製。"
+
+  s025:
+    tier: normal
+    model: post_only
+    keyframe:
+      first: >-
+        no humans, aerial view, top-down view, from above, city blocks, rooftops, straight street crossing the frame, night,
+        neon lights, holographic billboards, hover cars, dense buildings, rain,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "俯拍正射、無透視位移，不需深度視差 → post_only：彩色版＋去飽和版、圓形遮罩擴大、光環合成、人物小圖層落地。"
+
+  s026:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, looking up, looking to the side, light smile, shopping street, wet stone pavement, puddles, reflection,
+        holographic billboards, magenta and cyan neon, amber lights, floating hover cars with glowing underglow, rain, night,
+        pedestrians from behind, white spherical robot, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, three-quarter view, looking up, smile, shopping street, holographic billboards, neon lights, rain,
+        night, white spherical robot, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from a low angle, the camera slowly orbits left about ninety degrees around the girl.
+      A girl with a dark purple ponytail stands in the middle of a wet stone shopping street, looking up and around at the
+      street that has come back to life, a small smile on her lips. Rain falls, pedestrians walk on in their own directions,
+      hover cars with glowing underglow bob gently overhead, holographic billboards glow magenta, cyan and amber.
+      A small white spherical drone bobs at her left shoulder.
+    notes: "看板光帶流出由後製（camera solve 後 3D 擺放），模型只畫恢復後的街道與她。"
+
+  s027:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, black belt, single thigh strap, from behind, cowboy shot, standing, looking afar,
+        shopping street, one-point perspective, neon lights, holographic billboards, rain, night, pedestrians,
+        tall tower with disc deck at end of street, magenta ring lights, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt,
+        single thigh strap, white sneakers, from behind, full body, running, leaning forward, shopping street, one-point perspective,
+        neon lights, rain, night, tall tower at end of street, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from behind the girl at shoulder height, static camera. A girl with a dark purple ponytail stands
+      in the colorful rainy street looking at the tall tower at the far end. In the last beat she leans forward and starts running
+      toward the tower, taking two strides away from the camera; a small white spherical drone follows at her left shoulder.
+      Pedestrians walk and rain falls around her.
+    notes: "灰彩交界往鏡頭推進由後製遮罩；模型片段只畫彩色。"
+
+  s028:
+    tier: normal
+    model: h3_fl2va
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        from behind, full body, running, from below, giant tower base, black matte tower, structural ribs, cyan glowing lines,
+        magenta horizontal ring lights, metal grate maintenance platforms, circular plaza, wet stone pavement, puddles, night,
+        raindrops suspended in air, white spherical robot, low angle, looking up,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        no humans, from below, looking up, extreme low angle, giant tower, disc observation deck underside, diagonal support beams,
+        magenta ring lights, cyan glowing lines, thin antenna, white warning light, night sky, structural ribs,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot at the base of a giant black tower at night. A girl with a dark purple ponytail runs two more steps
+      across the plaza away from the camera and stops about six meters in front of the tower, feet together, and looks up.
+      Then the camera tilts up along the tower: layer after layer of magenta ring lights, cyan lines on the structural ribs and
+      metal maintenance platforms slide down out of frame, until the camera stops almost vertical on the huge disc-shaped
+      observation deck underside with diagonal support beams and a thin antenna with a white light above it.
+    notes: "大幅 tilt_up 以首尾幀銜接（首幀人物、尾幀只剩塔），人物無臉部細部 → H3。塔身灰彩交界與腳步區塊後製。"
+
+  s029:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, leaning forward,
+        arms back, about to jump, giant tower, structural rib, cyan glowing line, metal grate platforms on alternating sides,
+        circular plaza, night, raindrops suspended in air, white spherical robot, from below,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        from behind, full body, crouching, on metal grate platform, high up on tower, structural rib, cyan glowing line,
+        magenta ring lights above, night, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded full shot, the camera cranes up fast along a structural rib of a giant black tower. A girl with a dark purple
+      ponytail dashes to the rib and kick-jumps upward, pushing off the rib to leap left onto a metal maintenance platform eight
+      meters up, then off the rib to the right onto the next platform, then left again to a third, rising about eight meters with
+      each beat-timed jump, and crouches on the last platform ready for the next jump. A small white spherical drone flies up
+      beside her. Superhuman, agile, clean movement.
+    notes: "路線 B（OpenPose 三次左右交替蹬跳）。灰彩交界上爬與恢復區塊後製。"
+
+  s030:
+    tier: normal
+    model: h3_fl2va
+    keyframe:
+      first: >-
+        no humans, extreme long shot, giant black tower from the side, structural ribs, cyan glowing lines, magenta ring lights,
+        tiny figure climbing the tower, vast city below at night, sprawling city, distant street, small colorful district far away,
+        eye level, aerial view,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        no humans, extreme long shot, giant black tower from the side, structural ribs, cyan glowing lines, magenta ring lights,
+        tiny figure high on the tower, vast city below at night, sprawling city, eye level, aerial view,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded extreme long shot from the side of a giant black tower, the camera slowly rises. A tiny figure of a girl
+      climbs the tower's structural rib with superhuman kick-jumps, one jump per beat, zigzagging left and right and rising steadily
+      from the lower part of the frame to its middle; a tiny white dot of a drone follows her. The vast city behind is still.
+    notes: "人物極小、只需首尾位置準確 → H3。2 小節超過 H3 單次 124 幀，從 [29,1] 拆兩次生成，中間幀 shots/s030/mid.png（p5_decisions D04）。灰彩交界上爬、遠方街區被吞回由後製。"
+
+  s031:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, white sneakers, full body, from above, high angle, looking up, looking at viewer,
+        crouching on metal grate platform, giant tower, structural rib, magenta ring lights, cyan glowing lines, vertigo,
+        city far below, night, white spherical robot, deep perspective,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, upper body, from above, high angle, looking up, focused, grabbing ledge,
+        metal grate platform, giant tower, city far below, night, white spherical robot, deep perspective,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot, static camera high on a tower looking straight down along a structural rib. A girl with a dark
+      purple ponytail kick-jumps up toward the camera four times, alternating left and right between metal maintenance platforms,
+      growing larger with each jump, and on the last one lands just below the camera, grabs the platform edge and stops, looking
+      up past the camera with a focused face. A small white spherical drone rises beside her. The city lies far below.
+    notes: "路線 B（四次蹬跳）。"
+
+  s032:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        from behind, full body, crouching, metal grate platform, from below, giant disc observation deck underside above,
+        diagonal support beams, magenta ring lights, structural rib, cyan glowing line, night sky, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        from behind, full body, standing, looking up, at the root of a diagonal support beam, giant disc observation deck underside,
+        magenta ring lights, night sky, from below, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from below, the camera slowly tilts up. A girl with a dark purple ponytail kick-jumps three more
+      times up the tower's rib, left and right, and lands standing at the root of a huge diagonal support beam under the disc-shaped
+      observation deck; at the end she looks up at the beam stretching outward to the deck's edge with its magenta ring light.
+      A small white spherical drone follows at her left shoulder.
+    notes: "路線 B（三次對拍蹬跳）。"
+
+  s033:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot, from side, profile,
+        running up a diagonal steel beam, leaning forward, cyan glowing line on beam, dark underside of observation deck above,
+        city far below, night, white spherical robot, motion lines,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, cowboy shot, from side, crouching, arms back, about to jump, end of steel beam,
+        edge of observation deck above, magenta ring light, city far below, night, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot from the side, the camera tracks with the girl so she stays in place. A girl with a dark purple
+      ponytail sprints up a black diagonal support beam with a cyan line toward the upper right; halfway through she reaches the end
+      of the beam just under the edge of the observation deck, crouches low and swings her arms back, ready to jump.
+      A small white spherical drone follows behind her head. The city far below is still.
+
+  s034:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, upper body,
+        from above, looking up, looking at viewer, hands gripping railing, climbing over wall, head peeking over metal parapet,
+        metal walkway floor in foreground, city far below, night, white spherical robot, high angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, white sneakers, full body, from above, crouching, one hand on ground, looking up,
+        metal walkway, metal parapet behind her, night sky, city far below, white spherical robot, high angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot, static camera on a high walkway looking down past a metal parapet. A girl with a dark purple
+      ponytail, both hands gripping the top of the parapet, pushes herself up and vaults over it in one motion, landing crouched on
+      the metal walkway with one hand on the floor, looking up past the camera. A small white spherical drone flies up from beyond
+      the parapet and stops at her left shoulder. The grey city lies far below.
+    notes: "路線 B（翻牆）。"
+
+  s035:
+    tier: normal
+    model: h3_fl2va
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, white sneakers, full body, three-quarter view, crouching, one hand on ground,
+        metal walkway, tall dark glass panoramic window, dark room behind glass, city lights reflected on glass, night,
+        white spherical robot, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt,
+        single thigh strap, white sneakers, full body, three-quarter view, running, leaning forward, open window, dark room,
+        metal walkway, night, white spherical robot, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot, static camera on an outdoor walkway at forty-five degrees to a wall of tall dark glass windows.
+      A girl with a dark purple ponytail rises from a crouch to stand facing the window. At the same time a small white spherical
+      drone flies forward from her shoulder to the window frame, pauses, and the four-meter glass pane slides smoothly to the right
+      behind the neighboring pane, leaving a wide opening into a dark control room. The drone returns to her left shoulder and she
+      leans forward and dashes toward the opening.
+    notes: "窗滑開＋@drone 精準定位屬物體動作 → H3；全身動作、無臉部細部。@echo_beam 後製。"
+
+  s036:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        full body, silhouette, diving through window, midair, horizontal, arms reaching forward, dark control room, open window,
+        night sky, distant city lights, consoles in foreground, dim floor lights, white spherical robot, low angle, backlighting,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, white sneakers, full body, crouching, one hand on ground, looking up, rim light,
+        backlighting, dark control room, open window behind her, night sky, white spherical robot, cyan glowing stripe, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot inside a dark control room, static low camera facing an open window. A girl with a dark purple
+      ponytail, already airborne and nearly horizontal, dives in through the window toward the camera, lands on her hands, rolls
+      forward once and comes up crouched on the floor three meters from the camera, one hand on the floor, looking up past the
+      camera into the room. A small white spherical drone flies in after her and stops at her left shoulder, its cyan strip the
+      brightest light in the room.
+    notes: "路線 B（魚躍、前滾翻）。"
+
+  # ---------------- Bridge ----------------
+  s037:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot, midair, jumping,
+        arms raised overhead, palms down, leaning forward, excited, smile, dark control room, dark glass console table in foreground,
+        transparent glass pillar, rows of dark server cabinets, open window at end of aisle, night, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cowboy shot, standing, turning around, looking back, three-quarter view,
+        smile, dark control room, console table in foreground, transparent glass pillar, rows of dark server cabinets, night,
+        white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium long shot, static camera looking slightly down over a dark glass console table in a dark control room.
+      A girl with a dark purple ponytail leaps in from above with both arms raised, lands quickly on the floor at the far edge of the
+      console and immediately slaps both palms down on the table edge, grinning with excitement. A beat later she pushes off the
+      table and turns quickly to her right, looking back over her shoulder at the consoles behind her. A small white spherical drone
+      turns with her at her left shoulder. The console, the glass pillar and the cabinets stay unlit.
+    notes: >-
+      路線 B（落地拍桌）。lint WARN（拍點間距＜1 拍有位移）：落地 [34,1.4]→拍桌 [34,1.6] 只差 0.2 拍，prompt 寫成「落地後立刻拍桌」一氣呵成，
+      生成 1 倍速後依 beat_events 以 0.9–1.1 倍變速對點（Claude 代決）。桌面光紋、洋紅細線、臉上青光全部後製。
+
+  s038:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, looking down, hand on lever,
+        control panel, row of dark server cabinets behind, dark control room, cyan light from the side, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, looking up, smug, smile, hand on lever,
+        control panel, row of server cabinets, dark control room, cyan light, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot, static camera at chest height, side view. A girl with a dark purple ponytail stands in profile
+      at a small control panel, looking down, her right hand gripping a lever in a straight slot. Halfway through she pushes the lever
+      all the way forward in one firm motion and lifts her head with a proud smile, looking at the row of dark server cabinets behind
+      the panel. A small white spherical drone is half hidden behind her head. The cabinets stay unlit.
+    notes: "推桿＝一般手部動作（A）。桌板、機櫃燈條、臉上光全部後製。"
+
+  s039:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        from behind, from above, full body, small figure, standing at control panel, wide shot, large circular control room,
+        radial rows of server cabinets with cyan light strips, glowing cyan console in center, transparent glass pillar,
+        curved panoramic windows, dark glass, distant grey city through windows, open window in center, night, white spherical robot,
+        high angle, masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        from behind, from above, full body, small figure, standing, looking up, wide shot, large circular control room,
+        radial rows of server cabinets with cyan light strips, glowing cyan console, transparent glass pillar,
+        curved panoramic windows, night, white spherical robot, high angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from high above, static camera overlooking a large round control room lit by cyan cabinet lights.
+      A small girl with a dark purple ponytail, seen from behind, lets go of a lever and slaps her left palm on the panel, then
+      straightens up and opens both arms diagonally downward, palms forward, facing the curved wall of dark windows. Then she
+      walks backward three steps with her arms half open to the edge of the central console, turning her head left and right as if
+      watching something appear on the windows, and finally lowers her arms and looks up. A small white spherical drone stays at her
+      left shoulder. The windows stay dark.
+    notes: "路線 B（拍桌、張臂）。@window_feed 逐片生成、照進房間的彩色光、推近 5% 全部後製（鏡頭靜止，貼圖不追蹤）。"
+
+  s040:
+    tier: normal
+    model: h3_fl2va
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white crop top, sleeveless, upper body, leaning forward, forearms on table, looking down, lit from below, cyan light,
+        glowing cyan console table with concentric patterns, bowl-shaped socket, transparent glass pillar, white spherical robot,
+        blurry colorful windows in background, from above,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white crop top, sleeveless, upper body, leaning forward, forearms on table, smile, looking down, lit from below, cyan light,
+        glowing cyan console table, white spherical robot sitting in bowl-shaped socket, transparent glass pillar,
+        blurry colorful windows in background, from above,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot from slightly above, static camera over a glowing cyan console table. A girl with a dark purple
+      ponytail leans on the far edge with her forearms and quickly waves her left hand, palm open, toward a bowl-shaped socket in the
+      middle of the table. A small white spherical drone glides from her shoulder low over the table to directly above the socket,
+      then sinks straight down so its lower half settles into the bowl, facing the camera. She watches it and smiles.
+      Blurred colorful windows behind her.
+    notes: >-
+      @drone 滑行＋下降需精準定位 → H3；她只有揮手與微笑。lint WARN（拍點間距＜1 拍有位移）：揮手 [36,1]→到位 [36,1.45]→落座 [36,1.8]，
+      prompt 寫成連續快速動作，生成後以變速對 beat_events（Claude 代決）。插座環、管口光由後製。
+
+  s041:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white crop top, sleeveless, upper body, from below, looking up, clenched hand raised, transparent glass pillar with dark segment rings,
+        dark ceiling, glowing cyan console edge in foreground, white spherical robot in socket at pillar base, colorful light on ceiling,
+        low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white crop top, sleeveless, upper body, from below, looking up, fist on table, glowing pillar of light, cyan glow,
+        dark ceiling, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium long shot from a low angle, static camera. A girl with a dark purple ponytail stands behind a glowing
+      console, her right fist raised by her shoulder; she brings the fist down onto the table with a firm punch and then keeps
+      looking up, following something rising inside the tall transparent pillar beside her, her gaze slowly climbing to the top.
+      The pillar itself stays unlit.
+    notes: "光柱逐段亮起、光照、@drone 管內上升全部後製（用 P3 參考圖合成）；模型只畫捶桌與仰頭。末幀當後製參考。"
+
+  s042:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, extreme long shot, tall black tower at night, disc observation deck, panoramic windows with colorful light,
+        magenta ring lights, cyan lines on structural ribs, thin antenna, white warning light on top, horizon, city lights below,
+        night sky, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "路線 C：一張靜態圖＋視差；燈帶逐圈 glow_pulse、天線細線亮起、警示燈、交界上升全部後製。s044 沿用同一張。"
+
+  # ---------------- Build ----------------
+  s043:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white shirt, sleeveless, portrait, from below, three-quarter view, looking up, smile, sparkling eyes, victorious,
+        cyan light on face, blurry glowing pillar in foreground, blurry colorful windows in background, bokeh,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded medium close-up from a low angle, the camera slowly pushes in. A girl with a dark purple ponytail looks up
+      to the upper left at the top of a glowing pillar, eyes shining; her smile slowly grows into a victorious grin. Blurred bright
+      pillar at the left edge lights the left side of her face cyan-white; blurred colorful window lights behind her.
+    notes: "variation small：首幀模式。半拍長（約 0.56 s），生成後只取前段。"
+
+  s044:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: "（沿用 s042 關鍵幀，推近 3% 的裁切）"
+      last: null
+    video: null
+    notes: "同 s042 靜態圖；灰色顆粒霧暴衝、全景窗與天線熄滅全部後製。"
+
+  s045:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        full body, small figure, from above, high angle, knees bent, arms back, about to jump, dark circular control room,
+        unlit console, unlit transparent pillar, dark server cabinets, dark windows, white sphere inside pillar,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        full body, small figure, from above, high angle, standing on console table, reaching for pillar, arms outstretched,
+        dark circular control room, unlit transparent pillar, dark server cabinets, dark windows,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from high above, static camera, a completely dark round control room. A girl with a dark purple
+      ponytail bends her knees and jumps up onto the central console table, landing next to the tall unlit glass pillar, and reaches
+      both hands toward it. Inside the upper part of the pillar a small white sphere drops slowly downward.
+    notes: "路線 B（跳上主控台）。生成約 1 秒、後製 speed_ramp 壓進 7 幀；灰色淹進與 @luna_hold 邊界後製。"
+
+  s046:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, three-quarter view, standing on console table, hands on glass pillar, palms flat, spread fingers,
+        looking up, closed mouth, tall unlit transparent pillar, white sphere falling inside pillar, dark control room, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, three-quarter view, standing on console table, hands on glass pillar, palms flat, spread fingers,
+        looking up, closed mouth, still, frozen, white sphere robot lying on floor, dark control room, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from a low angle, static camera. In a dark control room a girl with a dark purple ponytail stands on
+      the console table with both hands pressed flat on a tall glass pillar, fingers spread, looking up at it, lips closed; she presses
+      firmly twice, in rhythm. Inside the pillar a small white spherical drone falls down, hits the socket at her feet, bounces out to
+      the lower right and lands on the floor outside the console, where it stops dead. Near the end the girl becomes completely still.
+    notes: "路線 B（姿勢圖固定五指張開貼平）。光柱分段亮、掌心色光、@luna_hold 縮小、變灰全部後製；模型畫彩色暗室。她不對嘴。"
+
+  s047:
+    tier: normal
+    model: post_only
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers,
+        full body, small figure, from above, high angle, standing on console table, hands on pillar, looking up,
+        large circular control room, radial rows of server cabinets, glass pillar with lower part glowing, white sphere on floor,
+        dark windows, distant city, open window, dim floor lights, wide shot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "刻意完全靜止 3 拍、不加視差（shots notes）→ post_only：整張去飽和、光柱下 3 段亮度保留。"
+
+  s048:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, rooftop, open circular hatch in floor, glowing ring around hatch, glowing platform flush with floor,
+        raindrops suspended in air, frozen time, a line of raindrops lower than others, distant cityscape, night, low angle,
+        close to ground, masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "閃回 1/4：靜態圖去飽和＋視差推近。"
+
+  s049:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, puddle, frozen water splash, water crown suspended in air, frozen ripples, wet stone pavement, close to ground,
+        blurry shop windows in background, shopping street, night, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "閃回 2/4：水花形狀照 s010 末幀（P6 以 s010 末幀為參考合成）。"
+
+  s050:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        child, solo, yellow raincoat, hood up, face hidden, running, one foot off ground, reaching up, from side, profile,
+        balloon floating in air, balloon string, shopping street, blurry background, raindrops suspended in air, frozen time,
+        night, from below, masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "閃回 3/4：位置照 s013 末幀；去飽和。"
+
+  s051:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, from below, looking up, row of floating hover cars in the air, wheel-less cars, glowing underglow,
+        cars arranged diagonally like stairs, shopping street, holographic billboards, raindrops suspended in air, frozen time,
+        night, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "閃回 4/4：4 台車＝s017 的 3 台台階車＋車道下一台；去飽和。"
+
+  s052:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white shirt, sleeveless, portrait, from below, three-quarter view, looking up, closed mouth, slight frown, hands on glowing pillar,
+        hands at bottom right corner, frozen, dark ceiling,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "凍住的她：整張去飽和（光柱保留灰白亮度）＋視差推近。"
+
+  # ---------------- Final Chorus（劇情 Claude 代決、status proposed；做關鍵幀前先請使用者審） ----------------
+  s053:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, hands on glowing pillar,
+        palms flat, looking up, closed mouth, glowing cyan-white pillar of light, dark ceiling, server cabinets, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, hands on glowing pillar,
+        palms flat, looking up, chin up, determined, glowing cyan-white pillar of light, light on face, dark ceiling, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot from a low angle, the camera slowly pushes in. A girl with a dark purple ponytail stands with both
+      palms pressed flat against a tall glowing cyan-white pillar of light, looking up along it. She stays in place without letting go;
+      her shoulders and hair stir as if a surge of power flows from her hands up into the pillar, and in the second half she lifts her
+      chin with a resolute gaze. The pillar's light brightens upward.
+    notes: "模型生成全彩片段；開頭全灰、灰→彩由掌心擴散、灰色顆粒飄散由後製（去色後遮罩還原）。和 s024 做出差異：不張臂、不放手。"
+
+  s054:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, extreme long shot, entire tall tower at night, from below, disc observation deck, faint cyan-white light from windows,
+        ring lights, structural ribs, thin antenna, warning light, city around tower base, night sky,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "路線 C：全灰塔靜態圖（去飽和，窗光保留青白）；天線亮起、蓄力、閃白、@full_broadcast 球面、塔身恢復全部後製。"
+
+  s055:
+    tier: normal
+    model: h3_fl2va
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, three-quarter view, standing on console table, hands on glowing pillar, looking up,
+        glowing cyan-white pillar, white sphere robot lying on floor, control room, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, from side, profile,
+        standing on console table, smile, glowing pillar, control room with cyan cabinet lights, transparent windows,
+        white spherical robot behind her head, cyan glowing stripe, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot from a low angle, static camera. The control room lights come back on all at once: consoles,
+      cabinet light strips and rings glow cyan. A small white spherical drone lying on the floor at the lower right lights up its
+      cyan strip, rises and flies up in an arc to hover at the shoulder of the girl standing on the console. The girl with the dark
+      purple ponytail lets go of the glowing pillar, turns her head to the drone and laughs, then turns her body to face the right
+      of the frame.
+    notes: "@drone 弧線飛到她 char_left 肩旁（遠側）需首尾精準 → H3；她的動作是轉頭轉身與笑，沒有眼瞼細部。波前掃過的恢復由後製（模型片段整段彩色）。"
+
+  s056:
+    tier: normal
+    model: post_only
+    keyframe:
+      first: >-
+        no humans, aerial view, top-down view, from directly above, city at night, tall tower in center seen from above,
+        radial streets, neon lights, holographic billboards, street lights, dense city blocks,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "俯拍正射 → post_only：全灰（去飽和）與全彩兩版、圓形遮罩擴大、光環合成（可見寬度≥畫面寬 0.5%）。"
+
+  s057:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        no humans, shopping street, one-point perspective, eye level, night, rain, neon lights, holographic billboards,
+        floating hover cars with glowing underglow, pedestrians walking, umbrellas, wet stone pavement, reflections,
+        tall tower with magenta lights at end of street,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        no humans, shopping street, one-point perspective, eye level, night, rain, neon lights, holographic billboards,
+        floating hover cars with glowing underglow, pedestrians walking, umbrellas, wet stone pavement, reflections,
+        tall tower with magenta lights at end of street,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot, static camera in the middle of a colorful shopping street at night, one-point perspective toward a
+      glowing tower at the far end. Rain falls through the neon light, pedestrians walk along, hover cars with glowing underglow
+      glide slowly along the elevated lane toward the far end of the street, holographic billboards play colorful images.
+    notes: "P6 出彩色恢復後街景；灰色靜止版＝首幀去色凍結；光環與交界推近由後製。首尾幀同構圖（尾幀可沿用首幀）。"
+
+  s058:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, standing, wind, hair blowing,
+        outdoor walkway, open window to bright control room at left, metal parapet at right, colorful city at night below,
+        white spherical robot, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, hands on railing, looking down, smile,
+        wind, hair blowing, metal parapet, colorful city at night below, neon lights, white spherical robot, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot, static camera at eye level on a high outdoor walkway. A girl with a dark purple ponytail in
+      profile steps forward to the metal parapet, rests both hands on its top edge and looks down at the colorful city below, a
+      smile forming. The wind blows her ponytail. A small white spherical drone hovers behind her head.
+
+  s059:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        no humans, from below, giant holographic billboard on skyscraper wall, semi-transparent screen, glowing cyan frame,
+        widescreen film image with black bars, silhouette of a person walking toward sunrise on horizon, backlighting, lens flare,
+        night sky, city lights,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded insert shot from a low angle, the camera slowly pushes in toward a giant semi-transparent holographic billboard
+      with a glowing cyan frame on a skyscraper at night. Inside the billboard a widescreen film plays: a silhouetted figure walks
+      slowly toward a sunrise on the horizon, and the sunlight grows brighter with lens flare. No text anywhere.
+    notes: "首幀模式（variation small）。看板內影像由模型畫（billboard_media.realize）。"
+
+  s060:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        no humans, giant holographic billboard, semi-transparent screen, glowing magenta frame, silhouette of a guitarist,
+        concentric colorful rings, colorful sound wave bars, night, city lights, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded insert shot, static camera facing a giant semi-transparent holographic billboard with a glowing magenta frame.
+      Inside it a silhouetted guitarist plays; colorful concentric rings expand outward around him and colorful sound-wave bars rise
+      and fall to the beat. No text, numbers or scales.
+    notes: "首幀模式。"
+
+  s061:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        no humans, from above, giant holographic billboard, semi-transparent screen, glowing cyan frame, hand-drawn style round fox-like
+        creature, pastel meadow, flowers, flat colors, clear lines, night, city lights,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded insert shot from slightly above, static camera on a giant semi-transparent holographic billboard with a
+      glowing cyan frame. Inside it a round, hand-drawn fox-like little creature bounces once on a pastel meadow, and the flowers
+      sway together as it lands. No text.
+    notes: "首幀模式。"
+
+  s062:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        from behind, upper body, over the shoulder, hands on railing, metal parapet, looking down at city, from above, high angle,
+        vast colorful city at night, holographic billboards, neon lights, hover cars with glowing underglow, light rain,
+        white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded long shot from above and behind the girl, the camera slowly pushes in over her right shoulder. A girl with a
+      dark purple ponytail rests her hands on the parapet, looking down at the vast colorful city at night; the billboards play
+      moving images, street lights and hover car underglow stream along the roads, light rain glitters. The wind moves her ponytail.
+    notes: "首幀模式。"
+
+  s063:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, from behind, three-quarter view, hands on railing, metal parapet, night sky, colorful city below,
+        white spherical robot, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers,
+        full body, from below, three-quarter view, standing on parapet, fist raised, arm up, big smile, night sky, city glow on horizon,
+        white spherical robot, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded full shot from a low angle behind her, the camera tilts up. A girl with a dark purple ponytail pushes herself
+      up with both hands and steps onto the narrow top of the metal parapet, standing up straight and steady, facing the colorful
+      city. A small white spherical drone rises to her shoulder. Near the end she thrusts her right fist high into the night sky
+      with a big smile.
+    notes: "路線 B（踏上矮牆、舉拳）。跨 bar 48 後半＋5 拍的 bar 49，Wan 單次可涵蓋，不拆（p5_decisions D04）。"
+
+  # ---------------- Post-chorus ----------------
+  s064:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, aerial view, high angle, vast city at night, tall black tower in center with magenta ring lights, cyan lines,
+        warning light, neon districts, holographic billboards, hover car lights on lanes, colorful horizon,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "路線 C：視差做 orbit_right；燈帶每拍 glow_pulse 由後製。s067 沿用同一張。"
+
+  s065:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        no humans, shopping street, night, rain, pedestrians from behind, umbrellas, dark hoods, wet stone pavement, neon reflections,
+        holographic billboards, floating hover cars with glowing underglow, tall tower with lights at end of street, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded long shot, the camera tracks slowly along a colorful rainy shopping street at night. About six pedestrians
+      walk away from the camera, three under umbrellas and three with dark hoods up, faces unseen. Rain falls through the neon light
+      onto the wet stone pavement, hover cars glide slowly along the elevated lane toward the glowing tower at the far end,
+      billboards play colorful images. No text or signs.
+    notes: "首幀模式。"
+
+  s066:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, single thigh strap, sitting on railing, hands on railing,
+        three-quarter view, looking afar, smile, wind, hair blowing, blurry panoramic windows behind, cyan lights, night,
+        white spherical robot, eye level, upper body,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        high collar, zipper, midriff, bracelets, white skirt, cargo skirt, single thigh strap, sitting on railing, hands on railing,
+        looking at robot, laughing, relaxed shoulders, wind, hair blowing, blurry panoramic windows behind, night,
+        white spherical robot, eye level, upper body,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium shot at eye level from outside the parapet, the camera slowly orbits left. A girl with a dark purple
+      ponytail sits on top of the parapet, hands at her sides, smiling as she looks out over the city; she laughs, her shoulders
+      relax, and she turns her head to glance at the small white spherical drone bobbing at her shoulder. The wind moves her hair.
+    notes: "lint WARN（有轉頭但沒有末幀）：補 last 關鍵幀（看向 @drone、笑），改走首尾幀；shots.yaml 同步補 last_frame（Claude 代決）。@drone glow_pulse 後製。"
+
+  s067:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: "（沿用 s064 關鍵幀）"
+      last: null
+    video: null
+    notes: "同 s064 鏡位；全城 glow_pulse（亮度閾值遮罩）、閃白 2 幀由後製。"
+
+  s068:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, rooftop, open circular hatch in floor, glowing cyan ring around hatch, glowing white platform flush with floor,
+        rain, transparent raindrops, wet concrete, reflections, colorful city at night in distance, low angle, close to ground,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "回顧 1/4（s048 同構圖彩色版，P6 以 s048 為構圖參考）；雨層後製。"
+
+  s069:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, puddle, neon reflections in water, raindrops hitting water, ripples, wet stone pavement, close to ground,
+        blurry colorful shop windows in background, shopping street, night, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "回顧 2/4（s049 同構圖）；漣漪後製。"
+
+  s070:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, from below, red balloon floating near top of frame, balloon string, empty pavement, shopping street,
+        glowing shop buildings, holographic billboards, rain, night, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "回顧 3/4（s050 同構圖、人不見）；氣球上飄、tilt_up 由後製。"
+
+  s071:
+    tier: normal
+    model: parallax
+    keyframe:
+      first: >-
+        no humans, from below, looking up, four floating hover cars arranged diagonally, pearl white car, wine red car, dark blue car,
+        silver grey car, cyan and magenta underglow, shopping street, holographic billboards, rain, night, low angle,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: null
+    notes: "回顧 4/4（s051 同構圖）；車往右上平移由後製分層做。"
+
+  s072:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white shirt, sleeveless, portrait, three-quarter view, looking afar, gentle smile, wind, bangs blowing, blurry city lights,
+        bokeh, faint golden light on horizon, night, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: null
+    video: >-
+      Anime cel-shaded medium close-up, the camera slowly pushes in. A girl with dark purple hair in three-quarter view looks into
+      the distance with a quiet, gentle smile; she takes a soft breath, closes her eyes for a moment and opens them again. The wind
+      stirs the loose strands over her forehead. A small white spherical drone bobs gently at her shoulder. Blurred colorful city
+      lights behind her.
+    notes: "閉眼睜眼屬眼瞼細部 → Wan（不派 H3）。首幀模式。地平線暖金亮度變化由後製調色。"
+
+  # ---------------- Outro ----------------
+  s073:
+    tier: normal
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, white sneakers, from behind, full body, standing, looking at screens,
+        curved wall of monitors showing colorful city images, open glass capsule at left edge, dark circular room, floor guide lights,
+        white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless,
+        white skirt, cargo skirt, single thigh strap, white sneakers, from behind, full body, standing, looking to the side,
+        head turned right, curved wall of monitors showing colorful city images, dark circular room, white spherical robot,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded long shot, the camera tracks slowly sideways. In a dark round room lit by a curved wall of monitors showing
+      colorful city scenes, a girl with a dark purple ponytail stands with her back to the camera looking at the screens, a small
+      white spherical drone at her left shoulder. In the second half she notices something and slowly turns her head toward a
+      screen on the right side of the frame.
+    notes: >-
+      lint WARN（拍點間距＜1 拍有位移）：察覺 [57,2.5] 與灰色擴散 [57,2]–[57,4] 重疊、移動與轉頭擠在一拍內，prompt 寫成「後半段才慢慢轉頭」，
+      生成後以變速把轉頭起點對 [57,2.5]（Claude 代決）。灰色螢幕擴散由後製；轉場 dissolve 由後製。
+
+  s074:
+    tier: hero
+    model: wan_flf
+    keyframe:
+      first: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white crop top, sleeveless, upper body, from side, profile, looking to the side, slight frown, blurry colorful monitor light background,
+        white spherical robot partially hidden, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+      last: >-
+        lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar,
+        white crop top, sleeveless, upper body, looking at viewer, determined, slight smile, blurry colorful monitor light background,
+        white spherical robot, cyan glowing stripe, eye level,
+        masterpiece, best quality, anime screencap, clean lineart, cel shading
+    video: >-
+      Anime cel-shaded medium close-up, static camera. A girl with a dark purple ponytail in profile looks off to the right with a
+      slight frown. She turns her head back and looks straight into the camera with a resolute gaze and the corners of her mouth
+      lifting slightly; a small white spherical drone turns with her to face the camera at her left shoulder. Then she holds still,
+      looking at the viewer. Blurred colorful monitor light behind her.
+    notes: "全片最後一格（淡出前最後完整畫面＝last）。轉頭後長時間定住，生成後尾段可用末幀延長或 RIFE 慢放。"

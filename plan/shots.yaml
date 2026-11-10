@@ -400,7 +400,7 @@ shots:
       - ref: "@drone"
         placement: {x: center_left, y: lower, depth: mg}
         size: 直徑約 @luna 頭部的 1.2 倍；落地後懸在她 char_left 肩旁（她背對鏡頭，所以是畫面左）
-        facing: away
+        facing: {launching: away, settled: away}
         state: "[7,3] 與 @luna 一起從艙口衝出；她落地後停在她肩旁，依 glossary 輕微上下浮動"
       - ref: "@echo_beam"
         placement: {x: center, y: lower, depth: mg}
@@ -908,7 +908,7 @@ shots:
         state: 跟著她同速飛
       - ref: "@hovercar"
         placement: {x: center_right, y: middle, depth: mg}
-        size: 3 台，車頂離地分別約 2 m、4.5 m、7 m，像台階一樣往畫面右上排；第 1 台車尾離起跳點約 3 m，台與台之間水平空隙約 1.5 m；每台長約畫面寬 25%。顏色：第 1 台珍珠白（青色燈帶）、第 2 台酒紅（洋紅燈帶）、第 3 台深藍（青色燈帶）
+        size: 3 台，車頂離地分別約 2 m、4.5 m、7 m，由低到高往畫面右上排成一列；第 1 台車尾離起跳點約 3 m，台與台之間水平空隙約 1.5 m；每台長約畫面寬 25%。顏色：第 1 台珍珠白（青色燈帶）、第 2 台酒紅（洋紅燈帶）、第 3 台深藍（青色燈帶）
       - ref: "@restore_touch"
         placement: {x: center, y: middle, depth: mg}
         size: 每一步落地在落腳點周圍半徑約 3 m（footstep_patch）；地面只恢復圓內，碰到的車整台恢復
@@ -917,7 +917,7 @@ shots:
         size: 背景是街道對面的灰色商店門面，與街道平行
     first_frame: >
       鏡頭在街道一側、離地約 1.5 m，與街道垂直平視。@luna 側身朝畫面右奔跑中（char_left 腳在前），在畫面左半；@drone 從她頭部後方露出一半。
-      她前方（畫面右）有 3 台灰色、定格在半空的 @hovercar，車頂離地約 2 m、4.5 m、7 m，像台階一樣往右上排列，最高的一台在上方車道。背景是對面灰色的商店門面與停在半空的雨。
+      她前方（畫面右）有 3 台灰色、定格在半空的 @hovercar，車頂離地約 2 m、4.5 m、7 m，由低到高往右上排成一列，最高的一台在上方車道。背景是對面灰色的商店門面與停在半空的雨。
     motion:
       camera: {move: track, speed: fast, realize: model}
       subject:
@@ -1438,7 +1438,7 @@ shots:
       subject:
         text: >
           鏡頭繞著她往左轉約 90°。雨持續落下、路人照原本的方向走、@hovercar 輕微上下浮動。
-          [24,2.39] 起，兩側全息看板上的色塊與光帶從看板邊框裡流出來，在街道上空約 8–15 m 處流動、交錯，像光做的絲帶與色塊（沒有文字或可辨認的圖形）。
+          [24,2.39] 起，兩側全息看板上的色塊與光帶從看板邊框裡流出來，在街道上空約 8–15 m 處流動、交錯，形狀是發光的細長帶狀與方塊（沒有文字或可辨認的圖形）。
           她抬頭看著頭頂流動的光，嘴角微揚。
         realize: model+post
     last_frame: >
@@ -3230,7 +3230,7 @@ shots:
     motion:
       camera: {move: orbit_right, speed: slow, realize: post, note: 視差繞行約 3°}
       subject:
-        text: 每一拍 @signal_tower 的洋紅分層燈帶（含觀景台上下兩圈）同時 glow_pulse 一次（光暈 1 幀內放大到約 1.5 倍、3 幀回落），像心跳一樣跟著音樂；肋線、天線與警示燈不變。
+        text: 每一拍 @signal_tower 的洋紅分層燈帶（含觀景台上下兩圈）同時 glow_pulse 一次（光暈 1 幀內放大到約 1.5 倍、3 幀回落），每拍一次；肋線、天線與警示燈不變。
         realize: post
     last_frame: null
     beat_events:
@@ -3309,7 +3309,7 @@ shots:
       subject:
         text: 她笑出聲、肩膀放鬆，轉頭看了 @drone 一眼；@drone 的光帶亮一下回應（glow_pulse）。
         realize: model
-    last_frame: null
+    last_frame: 同一構圖（鏡頭往左繞後）：@luna 坐在矮牆頂上、雙手撐在身體兩側，頭轉向她 char_left 肩旁的 @drone、笑著，肩膀放鬆，風吹動馬尾；@drone 在她左肩旁（畫面右），光帶亮著。
     beat_events:
       - {at: [52, 3], event: "@drone 光帶 glow_pulse"}
     transition_in: {type: cut}

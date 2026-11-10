@@ -1,0 +1,3817 @@
+{
+ "meta": {
+  "fps": 24,
+  "handle_rule": {
+   "原則": "關鍵幀是本鏡第一／最後一個完整畫面（plan/README.md），有關鍵幀釘住的那一端不加 handle；對拍靠整支片段 0.9–1.1 倍變速或後製重定時，不靠 handle。",
+   "頭端": "所有影片鏡頭 handle 0：first_frame（shots/sNNN/keyframe.png）＝shot start_frame，gen_index 0。",
+   "尾端 flf": "mode=flf（有 keyframe.last）handle 0：last_frame 的 gen_index＝gen_frames-1，對應絕對幀 end_frame-1（end_frame 不含）。生成幀數取最接近的合法幀數，差的部分用 retime.speed（生成長度／需要長度，>1 表示播放加速）重定時成 n_frames，範圍 0.9–1.1。",
+   "尾端 i2v": "mode=i2v（沒有 last，只給首幀）尾端多生 tail_handle_frames_24（0.4 s＝10 幀），剪輯時裁掉；gen_range_24 含這段，不變速。",
+   "拆段": "超過單次上限（或劇本指定）的鏡頭拆成 segments（各段 flf）：mid 畫面是上段尾幀（幀 split-1）也是下段首幀（幀 split），接點兩幀幾乎相同，剪輯時刪一幀。",
+   "mode 與 model": "model 維持 wan_flf／h3_fl2va；mode=flf 用 p4_combo 的首尾幀組合（wan22_lightx2v_flf／h3_turbo），mode=i2v 用只給首幀的組合（wan22_lightx2v／h3_turbo_i2v）。"
+  },
+  "tail_handle_frames_24": 10,
+  "wan": {
+   "fps": 16,
+   "max_frames": 81,
+   "rule": "4k+1"
+  },
+  "h3": {
+   "fps": 24,
+   "max_frames": 124,
+   "rule": "4 的倍數；124 為試作值，未驗證更長"
+  },
+  "min_per_run": {
+   "wan_flf": 11.0,
+   "h3_fl2va": 9.4
+  },
+  "attempts": [
+   3,
+   4
+  ],
+  "defaults": {
+   "quality": "masterpiece, best quality, anime screencap, clean lineart, cel shading",
+   "illustrious_negative": "lowres, bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra digits, text, watermark, signature, logo, letters, username, green eyes, aqua eyes, blue eyes, two thigh straps, thighhighs, kneehighs, jacket, hat, glasses, chibi, 3d, realistic, photo, blurry, multiple girls",
+   "video_negative": "text, letters, watermark, subtitles, extra drone, duplicate drone, camera shake, cut, scene change, blurry face, deformed hands, extra fingers, color shift, realistic, 3d render"
+  }
+ },
+ "jobs": [
+  {
+   "id": "s003",
+   "model": "h3_fl2va",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "intro",
+   "p4_combo": "h3_turbo",
+   "start_frame": 121,
+   "end_frame": 175,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded shot, medium shot, static camera. A girl with long dark purple hair stands inside a transparent glass stasis pod, eyes closed, mouth closed, perfectly still, softly lit from below by white light; blurred grey monitor wall behind her. A small white spherical hover drone with a black visor band and a glowing cyan light strip glides in horizontally from beyond the right edge of the frame toward the upper right area, moving smoothly without propellers. While gliding in, the drone faces left in its direction of travel, so its visor and cyan strip point left and we see it from the side. As it decelerates in the last moment it rotates in place about 90 degrees to face the camera, and it stops in the upper right foreground facing the viewer, then bobs gently up and down. The girl does not move.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 24,
+   "gen_frames": 56,
+   "gen_frames_needed": 56,
+   "gen_seconds": 2.333,
+   "retime": {
+    "speed": 1.0377,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    121,
+    175
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 121,
+    "path": "shots/s003/keyframe.png",
+    "prompt": "（沿用 P4 正式關鍵幀 shots/s003/keyframe.png）",
+    "exists": true
+   },
+   "last_frame": {
+    "gen_index": 55,
+    "frame": 174,
+    "path": "shots/s003/last.png",
+    "prompt": "（沿用 shots/s003/last.png）"
+   },
+   "beat_events": [
+    {
+     "at": [
+      2,
+      2
+     ],
+     "frame": 135,
+     "gen_index": 15,
+     "event": "@drone 從畫面右緣外開始滑入"
+    },
+    {
+     "at": [
+      2,
+      3
+     ],
+     "frame": 148,
+     "gen_index": 28,
+     "event": "@drone 停穩，光帶 glow_pulse；@countdown_ring 出現，3 段弧同時在 4 幀內從無到全亮"
+    }
+   ]
+  },
+  {
+   "id": "s004",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "intro",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 175,
+   "end_frame": 230,
+   "n_frames": 55,
+   "video_prompt": "Anime cel-shaded extreme close-up of a girl's eyes and eyebrows behind glass, static camera, lit from below. Her eyes are closed and still at first, then she slowly opens her eyes fully within a quarter second and looks straight into the camera with grey-violet eyes, holding still afterwards. Subtle breathing only.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    175,
+    230
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 175,
+    "path": "shots/s004/keyframe.png",
+    "prompt": "（沿用 P4 正式關鍵幀 shots/s004/keyframe.png）",
+    "exists": true
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 229,
+    "path": "shots/s004/last.png",
+    "prompt": "（沿用 shots/s004/last.png）"
+   },
+   "beat_events": [
+    {
+     "at": [
+      3,
+      2.75
+     ],
+     "frame": 199,
+     "gen_index": 16,
+     "event": "@luna 開始睜眼"
+    }
+   ]
+  },
+  {
+   "id": "s005",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "intro",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 230,
+   "end_frame": 284,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded medium close-up, static camera. A girl with dark purple hair stands inside a glass stasis pod, eyes open, looking straight into the camera with a firm gaze, mouth closed. She only breathes softly and blinks once very lightly; she does not speak and does not turn her head. Near the end the white light from the floor below grows quickly brighter, lighting her white clothes almost pure white while the folds stay visible and her face stays readable.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    230,
+    284
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 230,
+    "path": "shots/s005/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, looking at viewer, closed mouth, serious, determined, standing inside glass capsule, glass reflection, lit from below, white light, dark room, blurry background, monitor wall, depth of field, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 283,
+    "path": "shots/s005/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, looking at viewer, closed mouth, determined, standing inside glass capsule, strong white light from below, bright, glowing white clothes, dark background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      4,
+      1
+     ],
+     "frame": 230,
+     "gen_index": 0,
+     "event": "@countdown_ring 第 1 段弧（中心 60°，畫面右上）2 幀內淡成深灰；@luna 臉上的青光減弱 1/3"
+    },
+    {
+     "at": [
+      4,
+      2
+     ],
+     "frame": 243,
+     "gen_index": 9,
+     "event": "@countdown_ring 第 2 段弧（中心 180°，畫面左）2 幀內淡成深灰；青光再減 1/3"
+    },
+    {
+     "at": [
+      4,
+      3
+     ],
+     "frame": 257,
+     "gen_index": 18,
+     "event": "@countdown_ring 第 3 段弧（中心 300°，畫面右下）2 幀內淡成深灰；青光歸零"
+    },
+    {
+     "at": [
+      4,
+      4
+     ],
+     "frame": 270,
+     "gen_index": 27,
+     "event": "@pod 底座白光開始增強（前 3 幀緩、之後急升），為進入 Hook 蓄力"
+    }
+   ]
+  },
+  {
+   "id": "s006",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "hook",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 284,
+   "end_frame": 339,
+   "n_frames": 55,
+   "video_prompt": "Anime cel-shaded medium long shot from a low angle, the camera rises together with the platform so the girl and the drone stay in the same place in the frame. A girl with dark purple hair stands on a glowing white circular platform shooting up a dark vertical shaft, looking up with a determined face, fists lightly clenched, her braided hair and silver hair chain pressed downward by the rushing air, the hair tips fluttering. Cyan ring lights on the black shaft wall stream outward and downward from the vanishing point above and rush past the camera, each ring sweeping cyan light down over her body; the rings pass faster and faster. A small white spherical drone hovers beside her shoulder at the right, perfectly steady. She only blinks.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "track",
+    "speed": "fast",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 45,
+   "gen_frames_needed": 45,
+   "gen_seconds": 2.812,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    284,
+    349
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 284,
+    "path": "shots/s006/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot, from below, looking up, clenched hands, arms at sides, standing on glowing platform, lit from below, hair blown downward, wind, vertical shaft, dark tunnel, cyan ring lights, concentric rings, vanishing point, white spherical robot, floating robot, cyan glowing stripe, wide angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": [
+    {
+     "at": [
+      5,
+      1
+     ],
+     "frame": 284,
+     "gen_index": 0,
+     "event": "對整個畫面做 shake 4 幀（平台發射的震動）"
+    },
+    {
+     "at": [
+      5,
+      4.63
+     ],
+     "frame": 334,
+     "gen_index": 33,
+     "event": "畫面內所有燈環 glow_pulse：以青色 #29d3f5 色相鍵控出燈環，只提亮燈環本身（@drone 光帶與 @luna 身上的青光不動），1 幀內抬升到約 2 倍、3 幀回落"
+    }
+   ]
+  },
+  {
+   "id": "s007",
+   "model": "h3_fl2va",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "hook",
+   "p4_combo": "h3_turbo",
+   "start_frame": 339,
+   "end_frame": 393,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot, static camera looking straight down a dark vertical shaft lined with concentric cyan ring lights. A glowing white circular platform carrying a girl in white and a small white spherical drone rises straight up the center of the shaft toward the camera, slowing down slightly; the platform grows from a small dot to about one fifth of the frame height and lights up the section of wall it passes. The girl looks straight up into the camera the whole time, her hair pressed downward by the air; the drone rises at the platform's right edge. The ring lights keep the same brightness and color.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 24,
+   "gen_frames": 56,
+   "gen_frames_needed": 56,
+   "gen_seconds": 2.333,
+   "retime": {
+    "speed": 1.0377,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    339,
+    393
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 339,
+    "path": "shots/s007/keyframe.png",
+    "prompt": "no humans, top-down view, from above, looking down a vertical shaft, dark tunnel, concentric circles, cyan ring lights, vanishing point, deep perspective, small glowing white disc at the bottom, tiny figure, darkness, symmetrical, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 55,
+    "frame": 392,
+    "path": "shots/s007/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, white skirt, full body, from above, looking up, looking at viewer, arms at sides, standing on glowing platform, white circular platform, vertical shaft, concentric circles, cyan ring lights, dark tunnel, hair blown downward, lit from below, white spherical robot, small, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      6,
+      3.43
+     ],
+     "frame": 372,
+     "gen_index": 34,
+     "event": "畫面內看得到的燈環 glow_pulse（被平台擋住的不管）：青色色相鍵控，1 幀內抬升到約 2 倍、3 幀回落"
+    }
+   ]
+  },
+  {
+   "id": "s008",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "hook",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 393,
+   "end_frame": 502,
+   "n_frames": 109,
+   "video_prompt": "Anime cel-shaded long shot on a grey rooftop at night where the rain is frozen in mid-air. Camera static at first. The two steel halves of a round floor hatch slide sideways into the floor and white light shines up from the shaft. A girl with dark purple hair is flung up out of the hatch by the stopping platform, flies forward away from the camera toward the city together with a small white spherical drone, lands about two meters ahead on one knee with one palm on the ground, then stands up and looks into the distance. After she stands, the camera rises about five meters and pushes forward, ending high behind her and looking down over her shoulder at the vast grey city, with a band of colorful neon districts on the horizon and a black tower silhouette in the center. The frozen raindrops and the grey city do not move.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "crane_up",
+    "speed": "medium",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": {
+    "at": [
+     8,
+     2
+    ],
+    "frame": 461,
+    "reason": "劇本 notes 指定從 [8,2] 拆（上：static 躍出落地；下：crane_up 揭示）",
+    "mid_keyframe": "shots/s008/mid.png",
+    "single_run_would_fit": true
+   },
+   "segments": [
+    {
+     "id": "s008_a",
+     "start_frame": 393,
+     "end_frame": 461,
+     "n_frames": 68,
+     "mode": "flf",
+     "gen_fps": 16,
+     "gen_frames": 45,
+     "gen_frames_needed": 45,
+     "gen_seconds": 2.812,
+     "exceeds_single_run": false,
+     "retime": {
+      "speed": 0.9851,
+      "within_0p9_1p1": true
+     },
+     "handle_head_frames_24": 0,
+     "handle_tail_frames_24": 0,
+     "gen_range_24": [
+      393,
+      461
+     ],
+     "first_frame": {
+      "gen_index": 0,
+      "frame": 393,
+      "path": "shots/s008/keyframe.png",
+      "prompt": "no humans, rooftop, night, rain, raindrops suspended in air, frozen time, circular hatch, closed hatch, glowing ring on floor, low wall, cityscape, skyscrapers, floating cars, holographic billboards, distant neon, tower silhouette on horizon, eye level, wide shot, overcast, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+      "exists": false
+     },
+     "last_frame": {
+      "gen_index": 44,
+      "frame": 460,
+      "path": "shots/s008/mid.png",
+      "prompt": null,
+      "exists": false,
+      "needs_creation": true
+     },
+     "prompt_use": "video prompt 前段：艙口打開、她躍出、單膝落地到站起（不含鏡頭升高那句）",
+     "beat_events": [
+      {
+       "at": [
+        7,
+        2.37
+       ],
+       "frame": 412,
+       "gen_index": 12,
+       "event": "艙口接縫透出 @echo_beam 的青光（6 幀，依 glossary）；整個畫面 shake 3 幀"
+      },
+      {
+       "at": [
+        7,
+        2.62
+       ],
+       "frame": 415,
+       "gen_index": 14,
+       "event": "艙口兩片鋼板往接縫兩側滑進地面下，5 幀內全開，白光從艙口往上照"
+      },
+      {
+       "at": [
+        7,
+        3
+       ],
+       "frame": 420,
+       "gen_index": 18,
+       "event": "平台與樓頂齊平急停，@luna 躍出艙口、@drone 同時衝出；整個畫面 shake 2 幀"
+      },
+      {
+       "at": [
+        7,
+        3.39
+       ],
+       "frame": 425,
+       "gen_index": 21,
+       "event": "@luna 在半空上升中，穿過的雨滴依 @restore_touch 恢復（後製把恢復中的水珠提亮到約 2 倍）"
+      },
+      {
+       "at": [
+        8,
+        1
+       ],
+       "frame": 447,
+       "gen_index": 35,
+       "event": "@luna 單膝落地；整個畫面 shake 3 幀"
+      }
+     ]
+    },
+    {
+     "id": "s008_b",
+     "start_frame": 461,
+     "end_frame": 502,
+     "n_frames": 41,
+     "mode": "flf",
+     "gen_fps": 16,
+     "gen_frames": 29,
+     "gen_frames_needed": 29,
+     "gen_seconds": 1.812,
+     "exceeds_single_run": false,
+     "retime": {
+      "speed": 1.05,
+      "within_0p9_1p1": true
+     },
+     "handle_head_frames_24": 0,
+     "handle_tail_frames_24": 0,
+     "gen_range_24": [
+      461,
+      502
+     ],
+     "first_frame": {
+      "gen_index": 0,
+      "frame": 461,
+      "path": "shots/s008/mid.png",
+      "prompt": null,
+      "exists": false,
+      "needs_creation": true
+     },
+     "last_frame": {
+      "gen_index": 28,
+      "frame": 501,
+      "path": "shots/s008/last.png",
+      "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, from above, full body, standing, rooftop, open hatch, glowing platform, night, rain, raindrops suspended in air, cityscape, vast city, skyscrapers, floating cars, distant neon lights, magenta and cyan neon, tower silhouette on horizon, high angle, wide shot, white spherical robot, floating robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+     },
+     "prompt_use": "video prompt 後段：站起後鏡頭升高約 5 m 並前推，停在她後上方俯視全城（不含艙口與躍出）",
+     "beat_events": [
+      {
+       "at": [
+        8,
+        2
+       ],
+       "frame": 461,
+       "gen_index": 0,
+       "event": "@luna 開始站起；鏡頭開始 crane_up 並同時 push_in，直到本鏡結束"
+      }
+     ]
+    }
+   ],
+   "exceeds_single_run": false,
+   "mode_note": "每段都是 flf；拆點的 mid 畫面同時是上段尾幀（幀 split-1）與下段首幀（幀 split），接點有兩幀幾乎相同，剪輯時刪掉一幀"
+  },
+  {
+   "id": "s009",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "verse",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 502,
+   "end_frame": 556,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot, static camera at eye level in the middle of a grey, frozen shopping street at night. A girl with a dark purple ponytail walks away from the camera at a normal walking pace toward the far end of the street, shrinking from about two fifths to one quarter of the frame height, arms at her sides; a small white spherical drone glides beside her left shoulder at the same speed. Everything else is perfectly still: the raindrops hang motionless in the air, the floating cars and the statue-like pedestrians do not move.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    502,
+    556
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 502,
+    "path": "shots/s009/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, walking, arms at sides, shopping street, night, rain, raindrops suspended in air, wet stone pavement, puddles, shop windows, holographic billboards, floating cars above street, pedestrians standing still, one-point perspective, distant neon lights, tower silhouette in distance, white spherical robot, floating robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 555,
+    "path": "shots/s009/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, from behind, full body, small figure, walking away, shopping street, night, raindrops suspended in air, wet stone pavement, puddles, shop windows, holographic billboards, floating cars above street, pedestrians standing still, one-point perspective, distant neon lights, tower silhouette in distance, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": []
+  },
+  {
+   "id": "s010",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "verse",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 556,
+   "end_frame": 610,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded full shot from a low angle near the wet stone pavement, static camera. A girl with a dark purple ponytail walks one step toward the camera and her right foot steps into a large puddle in the foreground: water splashes up and ripples spread across the whole puddle. She stops, looks down at the puddle and her calm face turns surprised. A small white spherical drone stops beside her left shoulder and bobs gently. The grey street behind is out of focus and the raindrops hang motionless in the air.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    556,
+    610
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 556,
+    "path": "shots/s010/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, walking towards viewer, puddle in foreground, wet stone pavement, reflection, shopping street, night, raindrops suspended in air, blurry background, white spherical robot, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 609,
+    "path": "shots/s010/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, standing in puddle, looking down, surprised, open mouth, water splash frozen in air, ripples, wet stone pavement, shopping street, night, raindrops suspended in air, blurry background, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      10,
+      1.71
+     ],
+     "frame": 566,
+     "gen_index": 7,
+     "event": "@luna 的 char_right 腳踩進水窪，水窪依 @restore_touch 恢復"
+    },
+    {
+     "at": [
+      10,
+      2.5
+     ],
+     "frame": 576,
+     "gen_index": 14,
+     "event": "@luna 低頭看水窪"
+    }
+   ]
+  },
+  {
+   "id": "s011",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "verse",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 610,
+   "end_frame": 665,
+   "n_frames": 55,
+   "video_prompt": "Anime cel-shaded medium shot from a slightly low angle, static camera. A girl with a dark purple ponytail, seen in three-quarter view, looks up at a balloon hanging still in the air at the upper right. She slowly raises her right hand and near the end gently touches the bottom of the balloon with her index fingertip; the balloon then starts to float upward slowly, rising only a little. Her hand stays in the air, her face focused. The grey child in the blurry foreground, the drone behind her shoulder and the raindrops in the air stay perfectly still.",
+   "variation": "medium",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    610,
+    665
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 610,
+    "path": "shots/s011/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, looking up, balloon floating in air, balloon string, arms at sides, shopping street, night, raindrops suspended in air, blurry foreground, child's yellow raincoat hood out of focus, white spherical robot partially hidden behind shoulder, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 664,
+    "path": "shots/s011/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, reaching up, arm up, index finger, red balloon floating above, balloon string, focused, shopping street, night, raindrops suspended in air, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      11,
+      2
+     ],
+     "frame": 624,
+     "gen_index": 9,
+     "event": "@luna 的 char_right 手開始往上伸"
+    },
+    {
+     "at": [
+      11,
+      4.18
+     ],
+     "frame": 653,
+     "gen_index": 29,
+     "event": "@luna 指尖碰到 @balloon，@balloon 變回紅色、開始往上飄"
+    }
+   ]
+  },
+  {
+   "id": "s012",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "verse",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 665,
+   "end_frame": 719,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded full shot, static side view of a grey frozen shopping street. A red balloon keeps floating slowly upward and leaves the top of the frame. A small child in a hooded raincoat is frozen mid-run facing right. The girl with the dark purple ponytail steps half a step forward and gently pats the child's shoulder with her near hand; the child starts moving again and runs three steps to the right, reaching up after the balloon, still running at the end, never looking back. The girl stops and watches the child, smiling slightly. The drone hovers by her shoulder.",
+   "variation": "medium",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    665,
+    719
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 665,
+    "path": "shots/s012/keyframe.png",
+    "prompt": "lunacsf, 1girl, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, full body, from side, profile, child, yellow raincoat, hood up, running pose, one foot off ground, reaching up, red balloon in air, shopping street, storefront, night, raindrops suspended in air, eye level, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 718,
+    "path": "shots/s012/last.png",
+    "prompt": "lunacsf, 1girl, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, full body, from side, profile, smile, watching, child running away, yellow raincoat, hood up, reaching up, shopping street, storefront, night, raindrops suspended in air, eye level, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      12,
+      2.5
+     ],
+     "frame": 685,
+     "gen_index": 14,
+     "event": "@luna 輕拍 @balloon_child 肩膀，小孩恢復並開始跑"
+    }
+   ]
+  },
+  {
+   "id": "s013",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "verse",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 719,
+   "end_frame": 773,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded medium shot, static camera. A girl with a dark purple ponytail in three-quarter view watches a child running in the blurry background; the child and the balloon stop moving and freeze in place. Her smile fades, and from the second beat she slowly raises her right hand in front of her chest and looks down at her palm, puzzled and serious, until the end of the shot.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    719,
+    773
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 719,
+    "path": "shots/s013/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, three-quarter view, looking to the side, light smile, blurry background, child in yellow raincoat running in background, red balloon, shopping street, night, raindrops suspended in air, depth of field, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 772,
+    "path": "shots/s013/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, three-quarter view, looking at own hand, palm up, hand raised to chest, confused, serious, frown, blurry background, shopping street, night, raindrops suspended in air, depth of field, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      13,
+      1
+     ],
+     "frame": 719,
+     "gen_index": 0,
+     "event": "@balloon_child 與 @balloon 在 6 幀內退回灰色、定格"
+    },
+    {
+     "at": [
+      13,
+      2
+     ],
+     "frame": 732,
+     "gen_index": 9,
+     "event": "@luna 舉起 char_right 手、低頭看掌心"
+    },
+    {
+     "at": [
+      13,
+      4.62
+     ],
+     "frame": 768,
+     "gen_index": 33,
+     "event": "@luna 的手指輕輕握起（表示她明白這力量只能撐一下）"
+    }
+   ]
+  },
+  {
+   "id": "s015",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "verse",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 828,
+   "end_frame": 882,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded medium close-up, static camera. A girl with a dark purple ponytail in three-quarter view looks at a small white spherical drone floating in front of her face at the right. Her expression changes from grave to determined. Near the end the drone slowly turns its cyan light strip toward the right of the frame, and she turns her head to follow, looking far into the distance on the right with a firm gaze. The grey street behind is blurred and still.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    828,
+    882
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 828,
+    "path": "shots/s015/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, three-quarter view, looking forward, serious, white spherical robot floating in front of her, cyan glowing stripe, shopping street, night, blurry background, raindrops suspended in air, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 881,
+    "path": "shots/s015/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, looking to the side, looking afar, determined, white spherical robot facing right, shopping street, night, blurry background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      15,
+      1.5
+     ],
+     "frame": 834,
+     "gen_index": 4,
+     "event": "@drone 光帶 glow_pulse，@tower_hologram 4 幀內出現"
+    },
+    {
+     "at": [
+      15,
+      4
+     ],
+     "frame": 868,
+     "gen_index": 27,
+     "event": "@tower_hologram 4 幀內收掉；@drone 光帶與 @luna 視線轉向畫面右"
+    }
+   ]
+  },
+  {
+   "id": "s016",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "verse",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 882,
+   "end_frame": 936,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot, the camera slowly pushes in. A girl with a dark purple ponytail stands with her back to the camera in the middle of a grey frozen shopping street, fists clenched, looking toward the far end where a black tower silhouette rises above distant neon. At the very end she leans forward and takes the first running step, and the small white spherical drone at her left shoulder shoots forward with her. The raindrops and the street stay perfectly still.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    882,
+    936
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 882,
+    "path": "shots/s016/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, standing, clenched hands, shopping street, night, raindrops suspended in air, wet stone pavement, puddles, floating cars, pedestrians standing still, one-point perspective, distant neon lights, tower silhouette in distance, white spherical robot, floating robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 935,
+    "path": "shots/s016/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white socks, white sneakers, from behind, full body, running, leaning forward, mid-stride, shopping street, night, raindrops suspended in air, wet stone pavement, one-point perspective, distant neon lights, tower silhouette in distance, white spherical robot, floating robot, motion lines, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      16,
+      4
+     ],
+     "frame": 923,
+     "gen_index": 28,
+     "event": "@luna 起跑"
+    }
+   ]
+  },
+  {
+   "id": "s017",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "prechorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 936,
+   "end_frame": 990,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot from the side, the camera tracks right with the girl and rises about seven meters. A girl with a dark purple ponytail sprints to the right, then makes three jumps on the beat, landing on the roofs of three wheel-less hover cars floating in mid-air like a staircase, each higher than the last; each car sinks slightly under her landing and floats back up. She keeps running on the third, highest car. A small white spherical drone flies beside her at the same speed. The street and the raindrops hanging in the air stay perfectly still.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "track",
+    "speed": "fast",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    936,
+    990
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 936,
+    "path": "shots/s017/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from side, profile, running, leaning forward, floating cars in air like stairs, hover cars without wheels, shopping street, storefront, night, raindrops suspended in air, eye level, white spherical robot, motion lines, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 989,
+    "path": "shots/s017/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, white skirt, cargo skirt, single thigh strap, white sneakers, full body, from side, profile, running on car roof, dark blue hover car, glowing underglow, floating cars below, building facade, holographic billboards, night, raindrops suspended in air, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      17,
+      2
+     ],
+     "frame": 950,
+     "gen_index": 10,
+     "event": "落在第 1 台車頂，半徑 3 m 區塊恢復"
+    },
+    {
+     "at": [
+      17,
+      3
+     ],
+     "frame": 963,
+     "gen_index": 18,
+     "event": "落在第 2 台車頂，半徑 3 m 區塊恢復"
+    },
+    {
+     "at": [
+      17,
+      4
+     ],
+     "frame": 977,
+     "gen_index": 28,
+     "event": "落在第 3 台車頂，半徑 3 m 區塊恢復"
+    }
+   ]
+  },
+  {
+   "id": "s018",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "prechorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 990,
+   "end_frame": 1045,
+   "n_frames": 55,
+   "video_prompt": "Anime cel-shaded long shot from the side at roof height, the camera tracks right at the same speed as the girl, so she stays in place in the frame. A girl with a dark purple ponytail sprints across the roofs of a row of hover cars hanging in mid-air, one step every half beat, leaping over the gaps between cars, and makes a long jump near the end onto a wine-red car. Each car sinks a little under her step and floats back. A small white spherical drone flies beside her. The raindrops in the air and the street far below stay still.",
+   "variation": "small",
+   "route": "B",
+   "camera": {
+    "move": "track",
+    "speed": "fast",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 45,
+   "gen_frames_needed": 45,
+   "gen_seconds": 2.812,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    990,
+    1055
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 990,
+    "path": "shots/s018/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from side, profile, running, running on car roofs, row of floating hover cars, glowing underglow, holographic billboards, building facade, night, raindrops suspended in air, white spherical robot, motion lines, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": [
+    {
+     "at": [
+      18,
+      2
+     ],
+     "frame": 1004,
+     "gen_index": 9,
+     "event": "跳過一個車間空隙"
+    },
+    {
+     "at": [
+      18,
+      3
+     ],
+     "frame": 1018,
+     "gen_index": 19,
+     "event": "跳過一個車間空隙"
+    },
+    {
+     "at": [
+      18,
+      4
+     ],
+     "frame": 1031,
+     "gen_index": 27,
+     "event": "@luna_fade 開始（髮尾與指尖，本鏡看不出）"
+    },
+    {
+     "at": [
+      18,
+      4.26
+     ],
+     "frame": 1035,
+     "gen_index": 30,
+     "event": "大步落在酒紅色車頂，那台車整台恢復、被踩得一沉再浮回，半徑 3 m 內一起恢復"
+    }
+   ]
+  },
+  {
+   "id": "s019",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "prechorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1045,
+   "end_frame": 1072,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded insert shot, close-up of a running girl's half-clenched right hand, the camera tracks with her so the hand stays near the center of the frame. The arm swings fully back and forth twice in rhythm with her running stride. Blurred grey street in the background, the corner of a colored car roof at the bottom edge.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "track",
+    "speed": "fast",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.9231,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1045,
+    1072
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1045,
+    "path": "shots/s019/keyframe.png",
+    "prompt": "1girl, close-up, hand focus, half-clenched hand, swinging arm, running, bracelet, motion blur background, blurry background, night, car roof at bottom edge, fingertips, from side, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 1071,
+    "path": "shots/s019/last.png",
+    "prompt": "1girl, close-up, hand focus, half-clenched hand, swinging arm, running, bracelet, motion blur background, blurry background, night, car roof at bottom edge, fingertips, from side, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      19,
+      1.11
+     ],
+     "frame": 1046,
+     "gen_index": 1,
+     "event": "只是歌詞對點，灰色照等速推進（不另加動作）"
+    }
+   ]
+  },
+  {
+   "id": "s020",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "prechorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 1072,
+   "end_frame": 1099,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded medium long shot, the camera moves backward at the same speed as the girl running toward it, so her size stays the same. A girl with a dark purple ponytail sprints across hover car roofs toward the camera, teeth clenched, strained but determined, looking past the camera into the distance; her ponytail swings out behind her shoulder with each stride. A small white spherical drone flies at her left shoulder. The hover cars behind her bob slightly; the rain in the air is still.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "track",
+    "speed": "fast",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 25,
+   "gen_frames_needed": 25,
+   "gen_seconds": 1.562,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    1072,
+    1109
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1072,
+    "path": "shots/s020/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot, running towards viewer, clenched teeth, determined, hair flowing, floating cars behind her, hover cars, night, raindrops suspended in air, white spherical robot, motion lines, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": [
+    {
+     "at": [
+      19,
+      3
+     ],
+     "frame": 1072,
+     "gen_index": 0,
+     "event": "最遠的一台在 6 幀內退回灰色"
+    },
+    {
+     "at": [
+      19,
+      3.5
+     ],
+     "frame": 1079,
+     "gen_index": 5,
+     "event": "中間的一台退回灰色"
+    },
+    {
+     "at": [
+      19,
+      4.02
+     ],
+     "frame": 1086,
+     "gen_index": 9,
+     "event": "最近的一台退回灰色"
+    }
+   ]
+  },
+  {
+   "id": "s022",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "prechorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1126,
+   "end_frame": 1154,
+   "n_frames": 28,
+   "video_prompt": "Anime cel-shaded long shot from a low angle on top of a hover car roof, static camera. A girl with a dark purple ponytail, seen from behind, pushes off the front edge of the car roof and leaps far forward and upward into the night air toward a distant tower, body leaning forward, both arms reaching ahead, legs stretched back, flying away from the camera and reaching the top of her arc; a small white spherical drone flies with her. The raindrops hanging in the air stay still.",
+   "variation": "medium",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.8889,
+    "within_0p9_1p1": false
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1126,
+    1154
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1126,
+    "path": "shots/s022/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, from below, standing on car roof edge, leaning forward, about to jump, night sky, distant city, tall tower with disc deck in distance, small colorful district around tower, raindrops suspended in air, white spherical robot, low angle, car roof in foreground, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 1153,
+    "path": "shots/s022/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, from behind, full body, midair, jumping, leaping, arms outstretched forward, legs extended back, night sky, distant city, tall tower with disc deck in distance, raindrops suspended in air, white spherical robot, low angle, car roof in foreground, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      20,
+      3.09
+     ],
+     "frame": 1128,
+     "gen_index": 1,
+     "event": "起跳"
+    },
+    {
+     "at": [
+      20,
+      4
+     ],
+     "frame": 1140,
+     "gen_index": 8,
+     "event": "開始 speed_ramp（6 幀內 1 倍 → 0.4 倍）；下方升起 @silence 的 surge"
+    },
+    {
+     "at": [
+      20,
+      4.11
+     ],
+     "frame": 1142,
+     "gen_index": 9,
+     "event": "她在半空最高點附近"
+    }
+   ]
+  },
+  {
+   "id": "s024",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1208,
+   "end_frame": 1262,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded medium shot from a low angle. A girl with dark purple hair hangs in mid-air facing the camera, leaning forward with both arms reaching ahead. Suddenly she throws her arms wide open to both sides, pushes her chest forward and lifts her head, determined, mouth closed, and starts falling; the camera tilts down about thirty-five degrees to follow her. Near the end she tucks her legs under her body, ready to land. A small white spherical drone falls with her at her left shoulder. Behind her, shop windows and holographic billboards glow in magenta, cyan and amber, and the rain falls.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "tilt_down",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1208,
+    1262
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1208,
+    "path": "shots/s024/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, midair, facing viewer, leaning forward, arms reaching forward, eyes open, frozen, building facade, holographic billboards, raindrops suspended in air, night sky, white spherical robot, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 1261,
+    "path": "shots/s024/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, midair, falling, arms spread wide, outstretched arms, chest out, head up, determined, closed mouth, legs tucked, shop windows, holographic billboards, magenta and cyan neon, amber lights, rain, night, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      22,
+      1
+     ],
+     "frame": 1208,
+     "gen_index": 0,
+     "event": "顏色從胸口炸開，@broadcast_wave 發出"
+    },
+    {
+     "at": [
+      22,
+      2.89
+     ],
+     "frame": 1234,
+     "gen_index": 18,
+     "event": "雙臂已完全張開，下墜中"
+    }
+   ]
+  },
+  {
+   "id": "s026",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1316,
+   "end_frame": 1371,
+   "n_frames": 55,
+   "video_prompt": "Anime cel-shaded long shot from a low angle, the camera slowly orbits left about ninety degrees around the girl. A girl with a dark purple ponytail stands in the middle of a wet stone shopping street, looking up and around at the street that has come back to life, a small smile on her lips. Rain falls, pedestrians walk on in their own directions, hover cars with glowing underglow bob gently overhead, holographic billboards glow magenta, cyan and amber. A small white spherical drone bobs at her left shoulder.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "orbit_left",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1316,
+    1371
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1316,
+    "path": "shots/s026/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, looking up, looking to the side, light smile, shopping street, wet stone pavement, puddles, reflection, holographic billboards, magenta and cyan neon, amber lights, floating hover cars with glowing underglow, rain, night, pedestrians from behind, white spherical robot, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 1370,
+    "path": "shots/s026/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, three-quarter view, looking up, smile, shopping street, holographic billboards, neon lights, rain, night, white spherical robot, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      24,
+      2.39
+     ],
+     "frame": 1335,
+     "gen_index": 13,
+     "event": "看板的影像流出邊框"
+    },
+    {
+     "at": [
+      24,
+      4.79
+     ],
+     "frame": 1368,
+     "gen_index": 35,
+     "event": "光帶佈滿街道上空"
+    }
+   ]
+  },
+  {
+   "id": "s027",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1371,
+   "end_frame": 1425,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot from behind the girl at shoulder height, static camera. A girl with a dark purple ponytail stands in the colorful rainy street looking at the tall tower at the far end. In the last beat she leans forward and starts running toward the tower, taking two strides away from the camera; a small white spherical drone follows at her left shoulder. Pedestrians walk and rain falls around her.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1371,
+    1425
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1371,
+    "path": "shots/s027/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, black belt, single thigh strap, from behind, cowboy shot, standing, looking afar, shopping street, one-point perspective, neon lights, holographic billboards, rain, night, pedestrians, tall tower with disc deck at end of street, magenta ring lights, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 1424,
+    "path": "shots/s027/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, from behind, full body, running, leaning forward, shopping street, one-point perspective, neon lights, rain, night, tall tower at end of street, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      25,
+      2.56
+     ],
+     "frame": 1392,
+     "gen_index": 14,
+     "event": "她看著塔"
+    },
+    {
+     "at": [
+      25,
+      3
+     ],
+     "frame": 1398,
+     "gen_index": 18,
+     "event": "灰彩交界開始往鏡頭推進"
+    },
+    {
+     "at": [
+      25,
+      4.05
+     ],
+     "frame": 1412,
+     "gen_index": 28,
+     "event": "起跑"
+    }
+   ]
+  },
+  {
+   "id": "s028",
+   "model": "h3_fl2va",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "h3_turbo",
+   "start_frame": 1425,
+   "end_frame": 1480,
+   "n_frames": 55,
+   "video_prompt": "Anime cel-shaded long shot at the base of a giant black tower at night. A girl with a dark purple ponytail runs two more steps across the plaza away from the camera and stops about six meters in front of the tower, feet together, and looks up. Then the camera tilts up along the tower: layer after layer of magenta ring lights, cyan lines on the structural ribs and metal maintenance platforms slide down out of frame, until the camera stops almost vertical on the huge disc-shaped observation deck underside with diagonal support beams and a thin antenna with a white light above it.",
+   "variation": "large",
+   "route": "A",
+   "camera": {
+    "move": "tilt_up",
+    "speed": "medium",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 24,
+   "gen_frames": 56,
+   "gen_frames_needed": 56,
+   "gen_seconds": 2.333,
+   "retime": {
+    "speed": 1.0185,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1425,
+    1480
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1425,
+    "path": "shots/s028/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, from behind, full body, running, from below, giant tower base, black matte tower, structural ribs, cyan glowing lines, magenta horizontal ring lights, metal grate maintenance platforms, circular plaza, wet stone pavement, puddles, night, raindrops suspended in air, white spherical robot, low angle, looking up, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 55,
+    "frame": 1479,
+    "path": "shots/s028/last.png",
+    "prompt": "no humans, from below, looking up, extreme low angle, giant tower, disc observation deck underside, diagonal support beams, magenta ring lights, cyan glowing lines, thin antenna, white warning light, night sky, structural ribs, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      26,
+      2.37
+     ],
+     "frame": 1444,
+     "gen_index": 19,
+     "event": "她停下、抬頭"
+    },
+    {
+     "at": [
+      26,
+      3
+     ],
+     "frame": 1452,
+     "gen_index": 27,
+     "event": "鏡頭開始往上搖"
+    },
+    {
+     "at": [
+      26,
+      4.98
+     ],
+     "frame": 1479,
+     "gen_index": 55,
+     "event": "鏡頭停在觀景台"
+    }
+   ]
+  },
+  {
+   "id": "s029",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1480,
+   "end_frame": 1534,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded full shot, the camera cranes up fast along a structural rib of a giant black tower. A girl with a dark purple ponytail dashes to the rib and kick-jumps upward, pushing off the rib to leap left onto a metal maintenance platform eight meters up, then off the rib to the right onto the next platform, then left again to a third, rising about eight meters with each beat-timed jump, and crouches on the last platform ready for the next jump. A small white spherical drone flies up beside her. Superhuman, agile, clean movement.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "crane_up",
+    "speed": "fast",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1480,
+    1534
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1480,
+    "path": "shots/s029/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, full body, leaning forward, arms back, about to jump, giant tower, structural rib, cyan glowing line, metal grate platforms on alternating sides, circular plaza, night, raindrops suspended in air, white spherical robot, from below, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 1533,
+    "path": "shots/s029/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, from behind, full body, crouching, on metal grate platform, high up on tower, structural rib, cyan glowing line, magenta ring lights above, night, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      27,
+      2.05
+     ],
+     "frame": 1494,
+     "gen_index": 10,
+     "event": "第一次蹬跳"
+    },
+    {
+     "at": [
+      27,
+      3
+     ],
+     "frame": 1507,
+     "gen_index": 18,
+     "event": "第二次蹬跳"
+    },
+    {
+     "at": [
+      27,
+      4
+     ],
+     "frame": 1520,
+     "gen_index": 27,
+     "event": "第三次蹬跳（仍在灰色範圍內）"
+    }
+   ]
+  },
+  {
+   "id": "s030",
+   "model": "h3_fl2va",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "h3_turbo",
+   "start_frame": 1534,
+   "end_frame": 1643,
+   "n_frames": 109,
+   "video_prompt": "Anime cel-shaded extreme long shot from the side of a giant black tower, the camera slowly rises. A tiny figure of a girl climbs the tower's structural rib with superhuman kick-jumps, one jump per beat, zigzagging left and right and rising steadily from the lower part of the frame to its middle; a tiny white dot of a drone follows her. The vast city behind is still.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "crane_up",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": {
+    "at": [
+     29,
+     1
+    ],
+    "frame": 1588,
+    "reason": "劇本指定從 [29,1] 拆",
+    "mid_keyframe": "shots/s030/mid.png",
+    "single_run_would_fit": true
+   },
+   "segments": [
+    {
+     "id": "s030_a",
+     "start_frame": 1534,
+     "end_frame": 1588,
+     "n_frames": 54,
+     "mode": "flf",
+     "gen_fps": 24,
+     "gen_frames": 56,
+     "gen_frames_needed": 56,
+     "gen_seconds": 2.333,
+     "exceeds_single_run": false,
+     "retime": {
+      "speed": 1.0377,
+      "within_0p9_1p1": true
+     },
+     "handle_head_frames_24": 0,
+     "handle_tail_frames_24": 0,
+     "gen_range_24": [
+      1534,
+      1588
+     ],
+     "first_frame": {
+      "gen_index": 0,
+      "frame": 1534,
+      "path": "shots/s030/keyframe.png",
+      "prompt": "no humans, extreme long shot, giant black tower from the side, structural ribs, cyan glowing lines, magenta ring lights, tiny figure climbing the tower, vast city below at night, sprawling city, distant street, small colorful district far away, eye level, aerial view, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+      "exists": false
+     },
+     "last_frame": {
+      "gen_index": 55,
+      "frame": 1587,
+      "path": "shots/s030/mid.png",
+      "prompt": null,
+      "exists": false,
+      "needs_creation": true
+     },
+     "prompt_use": "video prompt 前半：鏡頭緩升、她從塔下段蹬跳往上（前 4 拍）",
+     "beat_events": [
+      {
+       "at": [
+        28,
+        1.72
+       ],
+       "frame": 1544,
+       "gen_index": 10,
+       "event": "她越過灰彩交界"
+      },
+      {
+       "at": [
+        28,
+        1.89
+       ],
+       "frame": 1546,
+       "gen_index": 12,
+       "event": "她與灰彩交界的距離拉開"
+      },
+      {
+       "at": [
+        28,
+        4.89
+       ],
+       "frame": 1587,
+       "gen_index": 55,
+       "event": "遠方彩色街區縮到約畫面寬 3%（直徑約 70 m）"
+      }
+     ]
+    },
+    {
+     "id": "s030_b",
+     "start_frame": 1588,
+     "end_frame": 1643,
+     "n_frames": 55,
+     "mode": "flf",
+     "gen_fps": 24,
+     "gen_frames": 56,
+     "gen_frames_needed": 56,
+     "gen_seconds": 2.333,
+     "exceeds_single_run": false,
+     "retime": {
+      "speed": 1.0185,
+      "within_0p9_1p1": true
+     },
+     "handle_head_frames_24": 0,
+     "handle_tail_frames_24": 0,
+     "gen_range_24": [
+      1588,
+      1643
+     ],
+     "first_frame": {
+      "gen_index": 0,
+      "frame": 1588,
+      "path": "shots/s030/mid.png",
+      "prompt": null,
+      "exists": false,
+      "needs_creation": true
+     },
+     "last_frame": {
+      "gen_index": 55,
+      "frame": 1642,
+      "path": "shots/s030/last.png",
+      "prompt": "no humans, extreme long shot, giant black tower from the side, structural ribs, cyan glowing lines, magenta ring lights, tiny figure high on the tower, vast city below at night, sprawling city, eye level, aerial view, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+     },
+     "prompt_use": "video prompt 後半：繼續蹬跳到中段、遠方彩色街區被吞回（後 4 拍）",
+     "beat_events": []
+    }
+   ],
+   "exceeds_single_run": false,
+   "mode_note": "每段都是 flf；拆點的 mid 畫面同時是上段尾幀（幀 split-1）與下段首幀（幀 split），接點有兩幀幾乎相同，剪輯時刪掉一幀"
+  },
+  {
+   "id": "s031",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1643,
+   "end_frame": 1697,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded medium shot, static camera high on a tower looking straight down along a structural rib. A girl with a dark purple ponytail kick-jumps up toward the camera four times, alternating left and right between metal maintenance platforms, growing larger with each jump, and on the last one lands just below the camera, grabs the platform edge and stops, looking up past the camera with a focused face. A small white spherical drone rises beside her. The city lies far below.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1643,
+    1697
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1643,
+    "path": "shots/s031/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, full body, from above, high angle, looking up, looking at viewer, crouching on metal grate platform, giant tower, structural rib, magenta ring lights, cyan glowing lines, vertigo, city far below, night, white spherical robot, deep perspective, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 1696,
+    "path": "shots/s031/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, upper body, from above, high angle, looking up, focused, grabbing ledge, metal grate platform, giant tower, city far below, night, white spherical robot, deep perspective, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      30,
+      1.82
+     ],
+     "frame": 1654,
+     "gen_index": 7,
+     "event": "落到 104 m"
+    },
+    {
+     "at": [
+      30,
+      2.85
+     ],
+     "frame": 1668,
+     "gen_index": 17,
+     "event": "落到 112 m"
+    },
+    {
+     "at": [
+      30,
+      3.89
+     ],
+     "frame": 1682,
+     "gen_index": 26,
+     "event": "落到 120 m，衝到鏡頭前"
+    }
+   ]
+  },
+  {
+   "id": "s032",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1697,
+   "end_frame": 1751,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot from below, the camera slowly tilts up. A girl with a dark purple ponytail kick-jumps three more times up the tower's rib, left and right, and lands standing at the root of a huge diagonal support beam under the disc-shaped observation deck; at the end she looks up at the beam stretching outward to the deck's edge with its magenta ring light. A small white spherical drone follows at her left shoulder.",
+   "variation": "medium",
+   "route": "B",
+   "camera": {
+    "move": "tilt_up",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1697,
+    1751
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1697,
+    "path": "shots/s032/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, from behind, full body, crouching, metal grate platform, from below, giant disc observation deck underside above, diagonal support beams, magenta ring lights, structural rib, cyan glowing line, night sky, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 1750,
+    "path": "shots/s032/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, from behind, full body, standing, looking up, at the root of a diagonal support beam, giant disc observation deck underside, magenta ring lights, night sky, from below, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      31,
+      1.84
+     ],
+     "frame": 1708,
+     "gen_index": 7,
+     "event": "她蹬跳中"
+    },
+    {
+     "at": [
+      31,
+      4
+     ],
+     "frame": 1738,
+     "gen_index": 28,
+     "event": "站上斜樑根部、抬頭"
+    }
+   ]
+  },
+  {
+   "id": "s033",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1751,
+   "end_frame": 1778,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded medium shot from the side, the camera tracks with the girl so she stays in place. A girl with a dark purple ponytail sprints up a black diagonal support beam with a cyan line toward the upper right; halfway through she reaches the end of the beam just under the edge of the observation deck, crouches low and swings her arms back, ready to jump. A small white spherical drone follows behind her head. The city far below is still.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "track",
+    "speed": "fast",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.9231,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1751,
+    1778
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1751,
+    "path": "shots/s033/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot, from side, profile, running up a diagonal steel beam, leaning forward, cyan glowing line on beam, dark underside of observation deck above, city far below, night, white spherical robot, motion lines, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 1777,
+    "path": "shots/s033/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, cowboy shot, from side, crouching, arms back, about to jump, end of steel beam, edge of observation deck above, magenta ring light, city far below, night, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      32,
+      2.5
+     ],
+     "frame": 1772,
+     "gen_index": 13,
+     "event": "衝到斜樑末端、蹲低"
+    }
+   ]
+  },
+  {
+   "id": "s034",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1778,
+   "end_frame": 1806,
+   "n_frames": 28,
+   "video_prompt": "Anime cel-shaded medium shot, static camera on a high walkway looking down past a metal parapet. A girl with a dark purple ponytail, both hands gripping the top of the parapet, pushes herself up and vaults over it in one motion, landing crouched on the metal walkway with one hand on the floor, looking up past the camera. A small white spherical drone flies up from beyond the parapet and stops at her left shoulder. The grey city lies far below.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.8889,
+    "within_0p9_1p1": false
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1778,
+    1806
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1778,
+    "path": "shots/s034/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, upper body, from above, looking up, looking at viewer, hands gripping railing, climbing over wall, head peeking over metal parapet, metal walkway floor in foreground, city far below, night, white spherical robot, high angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 1805,
+    "path": "shots/s034/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, full body, from above, crouching, one hand on ground, looking up, metal walkway, metal parapet behind her, night sky, city far below, white spherical robot, high angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      32,
+      3.95
+     ],
+     "frame": 1791,
+     "gen_index": 8,
+     "event": "翻上走道落地"
+    }
+   ]
+  },
+  {
+   "id": "s035",
+   "model": "h3_fl2va",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "h3_turbo",
+   "start_frame": 1806,
+   "end_frame": 1833,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded medium shot, static camera on an outdoor walkway at forty-five degrees to a wall of tall dark glass windows. A girl with a dark purple ponytail rises from a crouch to stand facing the window. At the same time a small white spherical drone flies forward from her shoulder to the window frame, pauses, and the four-meter glass pane slides smoothly to the right behind the neighboring pane, leaving a wide opening into a dark control room. The drone returns to her left shoulder and she leans forward and dashes toward the opening.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 24,
+   "gen_frames": 28,
+   "gen_frames_needed": 28,
+   "gen_seconds": 1.167,
+   "retime": {
+    "speed": 1.0385,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1806,
+    1833
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1806,
+    "path": "shots/s035/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, full body, three-quarter view, crouching, one hand on ground, metal walkway, tall dark glass panoramic window, dark room behind glass, city lights reflected on glass, night, white spherical robot, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 27,
+    "frame": 1832,
+    "path": "shots/s035/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, white crop top, sleeveless, white skirt, single thigh strap, white sneakers, full body, three-quarter view, running, leaning forward, open window, dark room, metal walkway, night, white spherical robot, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      33,
+      1.5
+     ],
+     "frame": 1812,
+     "gen_index": 6,
+     "event": "@echo_beam 照到鎖點，窗開始滑開"
+    },
+    {
+     "at": [
+      33,
+      2.5
+     ],
+     "frame": 1826,
+     "gen_index": 21,
+     "event": "她往開口衝"
+    }
+   ]
+  },
+  {
+   "id": "s036",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "chorus1",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1833,
+   "end_frame": 1860,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded long shot inside a dark control room, static low camera facing an open window. A girl with a dark purple ponytail, already airborne and nearly horizontal, dives in through the window toward the camera, lands on her hands, rolls forward once and comes up crouched on the floor three meters from the camera, one hand on the floor, looking up past the camera into the room. A small white spherical drone flies in after her and stops at her left shoulder, its cyan strip the brightest light in the room.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.9231,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1833,
+    1860
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1833,
+    "path": "shots/s036/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, full body, silhouette, diving through window, midair, horizontal, arms reaching forward, dark control room, open window, night sky, distant city lights, consoles in foreground, dim floor lights, white spherical robot, low angle, backlighting, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 1859,
+    "path": "shots/s036/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, full body, crouching, one hand on ground, looking up, rim light, backlighting, dark control room, open window behind her, night sky, white spherical robot, cyan glowing stripe, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      33,
+      3.65
+     ],
+     "frame": 1842,
+     "gen_index": 6,
+     "event": "雙手著地、開始前滾翻"
+    },
+    {
+     "at": [
+      33,
+      4.55
+     ],
+     "frame": 1854,
+     "gen_index": 13,
+     "event": "落地"
+    }
+   ]
+  },
+  {
+   "id": "s037",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "bridge",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1860,
+   "end_frame": 1887,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded medium long shot, static camera looking slightly down over a dark glass console table in a dark control room. A girl with a dark purple ponytail leaps in from above with both arms raised, lands quickly on the floor at the far edge of the console and immediately slaps both palms down on the table edge, grinning with excitement. A beat later she pushes off the table and turns quickly to her right, looking back over her shoulder at the consoles behind her. A small white spherical drone turns with her at her left shoulder. The console, the glass pillar and the cabinets stay unlit.",
+   "variation": "medium",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.9231,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1860,
+    1887
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1860,
+    "path": "shots/s037/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot, midair, jumping, arms raised overhead, palms down, leaning forward, excited, smile, dark control room, dark glass console table in foreground, transparent glass pillar, rows of dark server cabinets, open window at end of aisle, night, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 1886,
+    "path": "shots/s037/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cowboy shot, standing, turning around, looking back, three-quarter view, smile, dark control room, console table in foreground, transparent glass pillar, rows of dark server cabinets, night, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      34,
+      1.6
+     ],
+     "frame": 1868,
+     "gen_index": 5,
+     "event": "雙掌拍下，桌面光紋從掌下擴散（6 幀內鋪滿）"
+    },
+    {
+     "at": [
+      34,
+      2.5
+     ],
+     "frame": 1880,
+     "gen_index": 12,
+     "event": "她撐離桌面、轉向身後的副控台"
+    }
+   ]
+  },
+  {
+   "id": "s038",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "bridge",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1887,
+   "end_frame": 1901,
+   "n_frames": 14,
+   "video_prompt": "Anime cel-shaded medium shot, static camera at chest height, side view. A girl with a dark purple ponytail stands in profile at a small control panel, looking down, her right hand gripping a lever in a straight slot. Halfway through she pushes the lever all the way forward in one firm motion and lifts her head with a proud smile, looking at the row of dark server cabinets behind the panel. A small white spherical drone is half hidden behind her head. The cabinets stay unlit.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 9,
+   "gen_frames_needed": 9,
+   "gen_seconds": 0.562,
+   "retime": {
+    "speed": 0.9231,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1887,
+    1901
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1887,
+    "path": "shots/s038/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, looking down, hand on lever, control panel, row of dark server cabinets behind, dark control room, cyan light from the side, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 8,
+    "frame": 1900,
+    "path": "shots/s038/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, looking up, smug, smile, hand on lever, control panel, row of server cabinets, dark control room, cyan light, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      34,
+      3.35
+     ],
+     "frame": 1892,
+     "gen_index": 3,
+     "event": "推桿推到底，桌板與機櫃開始依序亮起"
+    }
+   ]
+  },
+  {
+   "id": "s039",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "bridge",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1901,
+   "end_frame": 1968,
+   "n_frames": 67,
+   "video_prompt": "Anime cel-shaded long shot from high above, static camera overlooking a large round control room lit by cyan cabinet lights. A small girl with a dark purple ponytail, seen from behind, lets go of a lever and slaps her left palm on the panel, then straightens up and opens both arms diagonally downward, palms forward, facing the curved wall of dark windows. Then she walks backward three steps with her arms half open to the edge of the central console, turning her head left and right as if watching something appear on the windows, and finally lowers her arms and looks up. A small white spherical drone stays at her left shoulder. The windows stay dark.",
+   "variation": "medium",
+   "route": "B",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "post"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 45,
+   "gen_frames_needed": 45,
+   "gen_seconds": 2.812,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1901,
+    1968
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1901,
+    "path": "shots/s039/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, from behind, from above, full body, small figure, standing at control panel, wide shot, large circular control room, radial rows of server cabinets with cyan light strips, glowing cyan console in center, transparent glass pillar, curved panoramic windows, dark glass, distant grey city through windows, open window in center, night, white spherical robot, high angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 44,
+    "frame": 1967,
+    "path": "shots/s039/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, from behind, from above, full body, small figure, standing, looking up, wide shot, large circular control room, radial rows of server cabinets with cyan light strips, glowing cyan console, transparent glass pillar, curved panoramic windows, night, white spherical robot, high angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      34,
+      4.1
+     ],
+     "frame": 1902,
+     "gen_index": 1,
+     "event": "她拍副控台桌板"
+    },
+    {
+     "at": [
+      35,
+      1.07
+     ],
+     "frame": 1915,
+     "gen_index": 9,
+     "event": "入口窗畫面左側相鄰的第 1 片窗生成"
+    },
+    {
+     "at": [
+      35,
+      2.07
+     ],
+     "frame": 1929,
+     "gen_index": 19,
+     "event": "入口窗畫面右側相鄰的第 1 片窗生成"
+    },
+    {
+     "at": [
+      35,
+      3.05
+     ],
+     "frame": 1942,
+     "gen_index": 27,
+     "event": "入口窗畫面左側第 2 片生成"
+    },
+    {
+     "at": [
+      35,
+      3.35
+     ],
+     "frame": 1946,
+     "gen_index": 30,
+     "event": "入口窗畫面右側第 2 片生成"
+    },
+    {
+     "at": [
+      35,
+      3.6
+     ],
+     "frame": 1949,
+     "gen_index": 32,
+     "event": "入口窗畫面左側第 3 片生成"
+    },
+    {
+     "at": [
+      35,
+      3.87
+     ],
+     "frame": 1953,
+     "gen_index": 35,
+     "event": "入口窗畫面右側第 3 片生成；其餘 31 片（左側 15、右側 16）從這 6 片往兩側接連生成，每側每 0.5 幀開始一片，約 8 幀後全部開始、[35,4.8] 前全部掃完（含鏡頭背後看不到的窗）"
+    }
+   ]
+  },
+  {
+   "id": "s040",
+   "model": "h3_fl2va",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "bridge",
+   "p4_combo": "h3_turbo",
+   "start_frame": 1968,
+   "end_frame": 1989,
+   "n_frames": 21,
+   "video_prompt": "Anime cel-shaded medium shot from slightly above, static camera over a glowing cyan console table. A girl with a dark purple ponytail leans on the far edge with her forearms and quickly waves her left hand, palm open, toward a bowl-shaped socket in the middle of the table. A small white spherical drone glides from her shoulder low over the table to directly above the socket, then sinks straight down so its lower half settles into the bowl, facing the camera. She watches it and smiles. Blurred colorful windows behind her.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 24,
+   "gen_frames": 20,
+   "gen_frames_needed": 20,
+   "gen_seconds": 0.833,
+   "retime": {
+    "speed": 0.95,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1968,
+    1989
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1968,
+    "path": "shots/s040/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white crop top, sleeveless, upper body, leaning forward, forearms on table, looking down, lit from below, cyan light, glowing cyan console table with concentric patterns, bowl-shaped socket, transparent glass pillar, white spherical robot, blurry colorful windows in background, from above, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 19,
+    "frame": 1988,
+    "path": "shots/s040/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white crop top, sleeveless, upper body, leaning forward, forearms on table, smile, looking down, lit from below, cyan light, glowing cyan console table, white spherical robot sitting in bowl-shaped socket, transparent glass pillar, blurry colorful windows in background, from above, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      36,
+      1
+     ],
+     "frame": 1968,
+     "gen_index": 0,
+     "event": "她手掌一揮，@drone 滑向插座"
+    },
+    {
+     "at": [
+      36,
+      1.5
+     ],
+     "frame": 1975,
+     "gen_index": 7,
+     "event": "@drone 開始垂直下降"
+    },
+    {
+     "at": [
+      36,
+      1.8
+     ],
+     "frame": 1979,
+     "gen_index": 10,
+     "event": "@drone 落進插座，插座環亮起"
+    },
+    {
+     "at": [
+      36,
+      2
+     ],
+     "frame": 1982,
+     "gen_index": 13,
+     "event": "光柱下端管口透出青白光"
+    }
+   ]
+  },
+  {
+   "id": "s041",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "bridge",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 1989,
+   "end_frame": 2009,
+   "n_frames": 20,
+   "video_prompt": "Anime cel-shaded medium long shot from a low angle, static camera. A girl with a dark purple ponytail stands behind a glowing console, her right fist raised by her shoulder; she brings the fist down onto the table with a firm punch and then keeps looking up, following something rising inside the tall transparent pillar beside her, her gaze slowly climbing to the top. The pillar itself stays unlit.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 13,
+   "gen_frames_needed": 13,
+   "gen_seconds": 0.812,
+   "retime": {
+    "speed": 0.9474,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    1989,
+    2009
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 1989,
+    "path": "shots/s041/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white crop top, sleeveless, upper body, from below, looking up, clenched hand raised, transparent glass pillar with dark segment rings, dark ceiling, glowing cyan console edge in foreground, white spherical robot in socket at pillar base, colorful light on ceiling, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 12,
+    "frame": 2008,
+    "path": "shots/s041/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white crop top, sleeveless, upper body, from below, looking up, fist on table, glowing pillar of light, cyan glow, dark ceiling, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      36,
+      2.55
+     ],
+     "frame": 1989,
+     "gen_index": 0,
+     "event": "她捶桌；光柱第 1 段亮起，@drone 開始往上升"
+    },
+    {
+     "at": [
+      36,
+      2.9
+     ],
+     "frame": 1994,
+     "gen_index": 3,
+     "event": "第 2 段亮起"
+    },
+    {
+     "at": [
+      36,
+      3.2
+     ],
+     "frame": 1998,
+     "gen_index": 6,
+     "event": "第 3 段亮起"
+    },
+    {
+     "at": [
+      36,
+      3.5
+     ],
+     "frame": 2002,
+     "gen_index": 8,
+     "event": "第 4 段亮起"
+    },
+    {
+     "at": [
+      36,
+      3.8
+     ],
+     "frame": 2006,
+     "gen_index": 11,
+     "event": "第 5 段亮起；@drone 停在頂端，頂端套環亮起"
+    }
+   ]
+  },
+  {
+   "id": "s043",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "build",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 2023,
+   "end_frame": 2036,
+   "n_frames": 13,
+   "video_prompt": "Anime cel-shaded medium close-up from a low angle, the camera slowly pushes in. A girl with a dark purple ponytail looks up to the upper left at the top of a glowing pillar, eyes shining; her smile slowly grows into a victorious grin. Blurred bright pillar at the left edge lights the left side of her face cyan-white; blurred colorful window lights behind her.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    2023,
+    2046
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2023,
+    "path": "shots/s043/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, from below, three-quarter view, looking up, smile, sparkling eyes, victorious, cyan light on face, blurry glowing pillar in foreground, blurry colorful windows in background, bokeh, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": []
+  },
+  {
+   "id": "s045",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "build",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 2043,
+   "end_frame": 2050,
+   "n_frames": 7,
+   "video_prompt": "Anime cel-shaded long shot from high above, static camera, a completely dark round control room. A girl with a dark purple ponytail bends her knees and jumps up onto the central console table, landing next to the tall unlit glass pillar, and reaches both hands toward it. Inside the upper part of the pillar a small white sphere drops slowly downward.",
+   "variation": "medium",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 5,
+   "gen_frames_needed": 5,
+   "gen_seconds": 0.312,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2043,
+    2050
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2043,
+    "path": "shots/s045/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, full body, small figure, from above, high angle, knees bent, arms back, about to jump, dark circular control room, unlit console, unlit transparent pillar, dark server cabinets, dark windows, white sphere inside pillar, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 4,
+    "frame": 2049,
+    "path": "shots/s045/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, white crop top, white skirt, single thigh strap, white sneakers, full body, small figure, from above, high angle, standing on console table, reaching for pillar, arms outstretched, dark circular control room, unlit transparent pillar, dark server cabinets, dark windows, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      37,
+      2.55
+     ],
+     "frame": 2044,
+     "gen_index": 1,
+     "event": "她起跳"
+    },
+    {
+     "at": [
+      37,
+      2.9
+     ],
+     "frame": 2048,
+     "gen_index": 3,
+     "event": "她落在主控台桌面上"
+    }
+   ]
+  },
+  {
+   "id": "s046",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "build",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 2050,
+   "end_frame": 2078,
+   "n_frames": 28,
+   "video_prompt": "Anime cel-shaded long shot from a low angle, static camera. In a dark control room a girl with a dark purple ponytail stands on the console table with both hands pressed flat on a tall glass pillar, fingers spread, looking up at it, lips closed; she presses firmly twice, in rhythm. Inside the pillar a small white spherical drone falls down, hits the socket at her feet, bounces out to the lower right and lands on the floor outside the console, where it stops dead. Near the end the girl becomes completely still.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.8889,
+    "within_0p9_1p1": false
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2050,
+    2078
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2050,
+    "path": "shots/s046/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, three-quarter view, standing on console table, hands on glass pillar, palms flat, spread fingers, looking up, closed mouth, tall unlit transparent pillar, white sphere falling inside pillar, dark control room, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 2077,
+    "path": "shots/s046/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, three-quarter view, standing on console table, hands on glass pillar, palms flat, spread fingers, looking up, closed mouth, still, frozen, white sphere robot lying on floor, dark control room, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      37,
+      3.05
+     ],
+     "frame": 2051,
+     "gen_index": 1,
+     "event": "第 1 段光柱亮起；@luna_hold 縮到 3 m"
+    },
+    {
+     "at": [
+      37,
+      3.85
+     ],
+     "frame": 2061,
+     "gen_index": 7,
+     "event": "第 2 段亮起；@luna_hold 縮到 2.2 m"
+    },
+    {
+     "at": [
+      37,
+      3.9
+     ],
+     "frame": 2062,
+     "gen_index": 7,
+     "event": "@drone 撞到插座彈出"
+    },
+    {
+     "at": [
+      37,
+      4.4
+     ],
+     "frame": 2069,
+     "gen_index": 11,
+     "event": "@drone 落地、被凍"
+    },
+    {
+     "at": [
+      37,
+      4.6
+     ],
+     "frame": 2072,
+     "gen_index": 13,
+     "event": "第 3 段亮起；@luna_hold 縮到她身上"
+    },
+    {
+     "at": [
+      37,
+      4.85
+     ],
+     "frame": 2076,
+     "gen_index": 15,
+     "event": "她完全定住"
+    }
+   ]
+  },
+  {
+   "id": "s053",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 2227,
+   "end_frame": 2281,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded medium shot from a low angle, the camera slowly pushes in. A girl with a dark purple ponytail stands with both palms pressed flat against a tall glowing cyan-white pillar of light, looking up along it. She stays in place without letting go; her shoulders and hair stir as if a surge of power flows from her hands up into the pillar, and in the second half she lifts her chin with a resolute gaze. The pillar's light brightens upward.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2227,
+    2281
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2227,
+    "path": "shots/s053/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, hands on glowing pillar, palms flat, looking up, closed mouth, glowing cyan-white pillar of light, dark ceiling, server cabinets, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 2280,
+    "path": "shots/s053/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, hands on glowing pillar, palms flat, looking up, chin up, determined, glowing cyan-white pillar of light, light on face, dark ceiling, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      41,
+      1
+     ],
+     "frame": 2227,
+     "gen_index": 0,
+     "event": "掌心先恢復顏色；下面 3 段光柱變回青白"
+    },
+    {
+     "at": [
+      41,
+      2
+     ],
+     "frame": 2240,
+     "gen_index": 9,
+     "event": "光柱 5 段全亮，頂端套環亮起"
+    },
+    {
+     "at": [
+      41,
+      3
+     ],
+     "frame": 2254,
+     "gen_index": 18,
+     "event": "她全身恢復彩色"
+    }
+   ]
+  },
+  {
+   "id": "s055",
+   "model": "h3_fl2va",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "final_chorus",
+   "p4_combo": "h3_turbo",
+   "start_frame": 2335,
+   "end_frame": 2389,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot from a low angle, static camera. The control room lights come back on all at once: consoles, cabinet light strips and rings glow cyan. A small white spherical drone lying on the floor at the lower right lights up its cyan strip, rises and flies up in an arc to hover at the shoulder of the girl standing on the console. The girl with the dark purple ponytail lets go of the glowing pillar, turns her head to the drone and laughs, then turns her body to face the right of the frame.",
+   "variation": "large",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 24,
+   "gen_frames": 56,
+   "gen_frames_needed": 56,
+   "gen_seconds": 2.333,
+   "retime": {
+    "speed": 1.0377,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2335,
+    2389
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2335,
+    "path": "shots/s055/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, three-quarter view, standing on console table, hands on glowing pillar, looking up, glowing cyan-white pillar, white sphere robot lying on floor, control room, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 55,
+    "frame": 2388,
+    "path": "shots/s055/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, from side, profile, standing on console table, smile, glowing pillar, control room with cyan cabinet lights, transparent windows, white spherical robot behind her head, cyan glowing stripe, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      43,
+      1
+     ],
+     "frame": 2335,
+     "gen_index": 0,
+     "event": "波前掃過房間"
+    },
+    {
+     "at": [
+      43,
+      1.2
+     ],
+     "frame": 2338,
+     "gen_index": 3,
+     "event": "@drone 恢復"
+    },
+    {
+     "at": [
+      43,
+      3
+     ],
+     "frame": 2362,
+     "gen_index": 28,
+     "event": "@drone 回到她肩旁；她轉向入口窗"
+    }
+   ]
+  },
+  {
+   "id": "s057",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 2443,
+   "end_frame": 2497,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot, static camera in the middle of a colorful shopping street at night, one-point perspective toward a glowing tower at the far end. Rain falls through the neon light, pedestrians walk along, hover cars with glowing underglow glide slowly along the elevated lane toward the far end of the street, holographic billboards play colorful images.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2443,
+    2497
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2443,
+    "path": "shots/s057/keyframe.png",
+    "prompt": "no humans, shopping street, one-point perspective, eye level, night, rain, neon lights, holographic billboards, floating hover cars with glowing underglow, pedestrians walking, umbrellas, wet stone pavement, reflections, tall tower with magenta lights at end of street, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 2496,
+    "path": "shots/s057/last.png",
+    "prompt": "no humans, shopping street, one-point perspective, eye level, night, rain, neon lights, holographic billboards, floating hover cars with glowing underglow, pedestrians walking, umbrellas, wet stone pavement, reflections, tall tower with magenta lights at end of street, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      45,
+      4
+     ],
+     "frame": 2484,
+     "gen_index": 28,
+     "event": "光環掃過鏡頭"
+    }
+   ]
+  },
+  {
+   "id": "s058",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 2497,
+   "end_frame": 2524,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded medium shot, static camera at eye level on a high outdoor walkway. A girl with a dark purple ponytail in profile steps forward to the metal parapet, rests both hands on its top edge and looks down at the colorful city below, a smile forming. The wind blows her ponytail. A small white spherical drone hovers behind her head.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 17,
+   "gen_frames_needed": 17,
+   "gen_seconds": 1.062,
+   "retime": {
+    "speed": 0.9231,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2497,
+    2524
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2497,
+    "path": "shots/s058/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, standing, wind, hair blowing, outdoor walkway, open window to bright control room at left, metal parapet at right, colorful city at night below, white spherical robot, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 16,
+    "frame": 2523,
+    "path": "shots/s058/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from side, profile, hands on railing, looking down, smile, wind, hair blowing, metal parapet, colorful city at night below, neon lights, white spherical robot, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": []
+  },
+  {
+   "id": "s059",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 2524,
+   "end_frame": 2551,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded insert shot from a low angle, the camera slowly pushes in toward a giant semi-transparent holographic billboard with a glowing cyan frame on a skyscraper at night. Inside the billboard a widescreen film plays: a silhouetted figure walks slowly toward a sunrise on the horizon, and the sunlight grows brighter with lens flare. No text anywhere.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 25,
+   "gen_frames_needed": 25,
+   "gen_seconds": 1.562,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    2524,
+    2561
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2524,
+    "path": "shots/s059/keyframe.png",
+    "prompt": "no humans, from below, giant holographic billboard on skyscraper wall, semi-transparent screen, glowing cyan frame, widescreen film image with black bars, silhouette of a person walking toward sunrise on horizon, backlighting, lens flare, night sky, city lights, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": [
+    {
+     "at": [
+      46,
+      3.5
+     ],
+     "frame": 2531,
+     "gen_index": 5,
+     "event": "看板 glow_pulse（光暈約 1.3 倍，後製）"
+    }
+   ]
+  },
+  {
+   "id": "s060",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 2551,
+   "end_frame": 2578,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded insert shot, static camera facing a giant semi-transparent holographic billboard with a glowing magenta frame. Inside it a silhouetted guitarist plays; colorful concentric rings expand outward around him and colorful sound-wave bars rise and fall to the beat. No text, numbers or scales.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 25,
+   "gen_frames_needed": 25,
+   "gen_seconds": 1.562,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    2551,
+    2588
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2551,
+    "path": "shots/s060/keyframe.png",
+    "prompt": "no humans, giant holographic billboard, semi-transparent screen, glowing magenta frame, silhouette of a guitarist, concentric colorful rings, colorful sound wave bars, night, city lights, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": [
+    {
+     "at": [
+      47,
+      1.9
+     ],
+     "frame": 2563,
+     "gen_index": 8,
+     "event": "看板 glow_pulse（光暈約 1.3 倍，後製）"
+    }
+   ]
+  },
+  {
+   "id": "s061",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 2578,
+   "end_frame": 2605,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded insert shot from slightly above, static camera on a giant semi-transparent holographic billboard with a glowing cyan frame. Inside it a round, hand-drawn fox-like little creature bounces once on a pastel meadow, and the flowers sway together as it lands. No text.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 25,
+   "gen_frames_needed": 25,
+   "gen_seconds": 1.562,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    2578,
+    2615
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2578,
+    "path": "shots/s061/keyframe.png",
+    "prompt": "no humans, from above, giant holographic billboard, semi-transparent screen, glowing cyan frame, hand-drawn style round fox-like creature, pastel meadow, flowers, flat colors, clear lines, night, city lights, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": [
+    {
+     "at": [
+      47,
+      4
+     ],
+     "frame": 2592,
+     "gen_index": 9,
+     "event": "小生物彈到最高點"
+    }
+   ]
+  },
+  {
+   "id": "s062",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 2605,
+   "end_frame": 2632,
+   "n_frames": 27,
+   "video_prompt": "Anime cel-shaded long shot from above and behind the girl, the camera slowly pushes in over her right shoulder. A girl with a dark purple ponytail rests her hands on the parapet, looking down at the vast colorful city at night; the billboards play moving images, street lights and hover car underglow stream along the roads, light rain glitters. The wind moves her ponytail.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 25,
+   "gen_frames_needed": 25,
+   "gen_seconds": 1.562,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    2605,
+    2642
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2605,
+    "path": "shots/s062/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, from behind, upper body, over the shoulder, hands on railing, metal parapet, looking down at city, from above, high angle, vast colorful city at night, holographic billboards, neon lights, hover cars with glowing underglow, light rain, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": []
+  },
+  {
+   "id": "s063",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "final_chorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 2632,
+   "end_frame": 2725,
+   "n_frames": 93,
+   "video_prompt": "Anime cel-shaded full shot from a low angle behind her, the camera tilts up. A girl with a dark purple ponytail pushes herself up with both hands and steps onto the narrow top of the metal parapet, standing up straight and steady, facing the colorful city. A small white spherical drone rises to her shoulder. Near the end she thrusts her right fist high into the night sky with a big smile.",
+   "variation": "large",
+   "route": "B",
+   "camera": {
+    "move": "tilt_up",
+    "speed": "medium",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 61,
+   "gen_frames_needed": 61,
+   "gen_seconds": 3.812,
+   "retime": {
+    "speed": 0.9783,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2632,
+    2725
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2632,
+    "path": "shots/s063/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, from behind, three-quarter view, hands on railing, metal parapet, night sky, colorful city below, white spherical robot, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 60,
+    "frame": 2724,
+    "path": "shots/s063/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, three-quarter view, standing on parapet, fist raised, arm up, big smile, night sky, city glow on horizon, white spherical robot, low angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      48,
+      3.8
+     ],
+     "frame": 2643,
+     "gen_index": 7,
+     "event": "她踏上矮牆"
+    },
+    {
+     "at": [
+      49,
+      5.4
+     ],
+     "frame": 2718,
+     "gen_index": 56,
+     "event": "舉拳"
+    }
+   ]
+  },
+  {
+   "id": "s065",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "post_chorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 2779,
+   "end_frame": 2833,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot, the camera tracks slowly along a colorful rainy shopping street at night. About six pedestrians walk away from the camera, three under umbrellas and three with dark hoods up, faces unseen. Rain falls through the neon light onto the wet stone pavement, hover cars glide slowly along the elevated lane toward the glowing tower at the far end, billboards play colorful images. No text or signs.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "track",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 45,
+   "gen_frames_needed": 45,
+   "gen_seconds": 2.812,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    2779,
+    2843
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2779,
+    "path": "shots/s065/keyframe.png",
+    "prompt": "no humans, shopping street, night, rain, pedestrians from behind, umbrellas, dark hoods, wet stone pavement, neon reflections, holographic billboards, floating hover cars with glowing underglow, tall tower with lights at end of street, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": []
+  },
+  {
+   "id": "s066",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "post_chorus",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 2833,
+   "end_frame": 2886,
+   "n_frames": 53,
+   "video_prompt": "Anime cel-shaded medium shot at eye level from outside the parapet, the camera slowly orbits left. A girl with a dark purple ponytail sits on top of the parapet, hands at her sides, smiling as she looks out over the city; she laughs, her shoulders relax, and she turns her head to glance at the small white spherical drone bobbing at her shoulder. The wind moves her hair.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "orbit_left",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0385,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    2833,
+    2886
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 2833,
+    "path": "shots/s066/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, single thigh strap, sitting on railing, hands on railing, three-quarter view, looking afar, smile, wind, hair blowing, blurry panoramic windows behind, cyan lights, night, white spherical robot, eye level, upper body, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 2885,
+    "path": "shots/s066/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, single thigh strap, sitting on railing, hands on railing, looking at robot, laughing, relaxed shoulders, wind, hair blowing, blurry panoramic windows behind, night, white spherical robot, eye level, upper body, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      52,
+      3
+     ],
+     "frame": 2860,
+     "gen_index": 19,
+     "event": "@drone 光帶 glow_pulse"
+    }
+   ]
+  },
+  {
+   "id": "s072",
+   "model": "wan_flf",
+   "mode": "i2v",
+   "tier": "normal",
+   "section": "post_chorus",
+   "p4_combo": "wan22_lightx2v",
+   "start_frame": 3048,
+   "end_frame": 3102,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded medium close-up, the camera slowly pushes in. A girl with dark purple hair in three-quarter view looks into the distance with a quiet, gentle smile; she takes a soft breath, closes her eyes for a moment and opens them again. The wind stirs the loose strands over her forehead. A small white spherical drone bobs gently at her shoulder. Blurred colorful city lights behind her.",
+   "variation": "small",
+   "route": "A",
+   "camera": {
+    "move": "push_in",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 45,
+   "gen_frames_needed": 45,
+   "gen_seconds": 2.812,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 10,
+   "gen_range_24": [
+    3048,
+    3112
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 3048,
+    "path": "shots/s072/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, three-quarter view, looking afar, gentle smile, wind, bangs blowing, blurry city lights, bokeh, faint golden light on horizon, night, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": null,
+   "beat_events": []
+  },
+  {
+   "id": "s073",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "normal",
+   "section": "outro",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 3102,
+   "end_frame": 3156,
+   "n_frames": 54,
+   "video_prompt": "Anime cel-shaded long shot, the camera tracks slowly sideways. In a dark round room lit by a curved wall of monitors showing colorful city scenes, a girl with a dark purple ponytail stands with her back to the camera looking at the screens, a small white spherical drone at her left shoulder. In the second half she notices something and slowly turns her head toward a screen on the right side of the frame.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "track",
+    "speed": "slow",
+    "realize": "model"
+   },
+   "subject_realize": "model+post",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 37,
+   "gen_frames_needed": 37,
+   "gen_seconds": 2.312,
+   "retime": {
+    "speed": 1.0189,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    3102,
+    3156
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 3102,
+    "path": "shots/s073/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, from behind, full body, standing, looking at screens, curved wall of monitors showing colorful city images, open glass capsule at left edge, dark circular room, floor guide lights, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 36,
+    "frame": 3155,
+    "path": "shots/s073/last.png",
+    "prompt": "lunacsf, 1girl, solo, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, white skirt, cargo skirt, single thigh strap, white sneakers, from behind, full body, standing, looking to the side, head turned right, curved wall of monitors showing colorful city images, dark circular room, white spherical robot, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      57,
+      2
+     ],
+     "frame": 3115,
+     "gen_index": 9,
+     "event": "灰色開始吞掉剩下的彩色"
+    },
+    {
+     "at": [
+      57,
+      2.5
+     ],
+     "frame": 3122,
+     "gen_index": 14,
+     "event": "她轉頭看向灰色螢幕"
+    },
+    {
+     "at": [
+      57,
+      4
+     ],
+     "frame": 3142,
+     "gen_index": 27,
+     "event": "那面螢幕全灰"
+    }
+   ]
+  },
+  {
+   "id": "s074",
+   "model": "wan_flf",
+   "mode": "flf",
+   "tier": "hero",
+   "section": "outro",
+   "p4_combo": "wan22_lightx2v_flf",
+   "start_frame": 3156,
+   "end_frame": 3223,
+   "n_frames": 67,
+   "video_prompt": "Anime cel-shaded medium close-up, static camera. A girl with a dark purple ponytail in profile looks off to the right with a slight frown. She turns her head back and looks straight into the camera with a resolute gaze and the corners of her mouth lifting slightly; a small white spherical drone turns with her to face the camera at her left shoulder. Then she holds still, looking at the viewer. Blurred colorful monitor light behind her.",
+   "variation": "medium",
+   "route": "A",
+   "camera": {
+    "move": "static",
+    "speed": "slow",
+    "realize": "none"
+   },
+   "subject_realize": "model",
+   "split": null,
+   "segments": null,
+   "exceeds_single_run": false,
+   "gen_fps": 16,
+   "gen_frames": 45,
+   "gen_frames_needed": 45,
+   "gen_seconds": 2.812,
+   "retime": {
+    "speed": 1.0,
+    "within_0p9_1p1": true
+   },
+   "handle_head_frames_24": 0,
+   "handle_tail_frames_24": 0,
+   "gen_range_24": [
+    3156,
+    3223
+   ],
+   "first_frame": {
+    "gen_index": 0,
+    "frame": 3156,
+    "path": "shots/s074/keyframe.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white crop top, sleeveless, upper body, from side, profile, looking to the side, slight frown, blurry colorful monitor light background, white spherical robot partially hidden, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading",
+    "exists": false
+   },
+   "last_frame": {
+    "gen_index": 44,
+    "frame": 3222,
+    "path": "shots/s074/last.png",
+    "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white crop top, sleeveless, upper body, looking at viewer, determined, slight smile, blurry colorful monitor light background, white spherical robot, cyan glowing stripe, eye level, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+   },
+   "beat_events": [
+    {
+     "at": [
+      58,
+      2.5
+     ],
+     "frame": 3176,
+     "gen_index": 13,
+     "event": "她直視鏡頭（最後一格的姿勢）"
+    }
+   ]
+  }
+ ],
+ "unassigned": []
+}
