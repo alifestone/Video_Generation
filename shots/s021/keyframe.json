@@ -1,0 +1,130 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "長焦遠景，從車道高度（約 7 m）往 @city 中心看：@signal_tower 在畫面水平正中（天線尖端約畫面高 10%、觀景台寬約畫面寬 6%），周圍一片彩色街區（洋紅、青、琥珀色霓虹與全息看板、落下的雨）從畫面寬約 20% 延伸到 80%，兩側樓群灰色定格（雨停成小圓點），左右各一條銳利的灰彩交界；沒有人物。路線 C（同 s014）：場景＝Qwen 長焦城市全景，塔＝程式繪製剪影（藏在樓群後），彩色帶＝後製 band_split；另存 first_color_s*.png（全彩）與 first_frozen_s*.png（全灰）供 P9 推進交界",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Draw a wide, flat, eye-level panorama of a huge futuristic city at night, seen from far away from a height of seven metres above a flat horizon, a very long telephoto view in which the distant skyscrapers look flat and are stacked and overlapping tightly in many layers behind one another, the dense city fills the whole lower part of the image from the left edge to the right edge, from about 45 percent of the image height down to the bottom edge, with the tops of the tallest skyscrapers at about 45 to 50 percent of the image height, and above them the sky is a plain dark navy night sky with only a few thin raindrops, taking the top 45 percent of the image. The skyscrapers are full of glowing neon lights in magenta, cyan and amber, with big glowing holographic billboards showing abstract blobs of colour, and rain falls through the scene. The city is symmetrical and similar on the left and right side. There is no tower in the picture, no character, no robot and no text. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "post": [
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.82,
+      "h": 0.72,
+      "behind_sky": true,
+      "sky_mode": "cols",
+      "sky_y": 0.2,
+      "sky_top": 0.05,
+      "sky_tol": 34,
+      "halo_a": 70
+     },
+     {
+      "op": "band_split",
+      "color": [
+       0.2,
+       0.8
+      ],
+      "stash": true
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 71.1,
+     "2": 94.2,
+     "3": 94.2,
+     "4": 26.0,
+     "5": 26.0,
+     "6": 26.0
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "3": "右側另有一棟帶天線的高樓，和塔搶焦點、天際線過稀"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖（A 稿沿用首幀同 seed）：彩色區只剩畫面寬約 39% 到 61%，緊緊圍著 @signal_tower；兩側大片灰色",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "copy",
+    "A": {
+     "refs": [
+      "first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png，不經 Qwen)"
+    },
+    "post": [
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.82,
+      "h": 0.72,
+      "behind_sky": true,
+      "sky_mode": "cols",
+      "sky_y": 0.2,
+      "sky_top": 0.05,
+      "sky_tol": 34,
+      "halo_a": 70
+     },
+     {
+      "op": "band_split",
+      "color": [
+       0.39,
+       0.61
+      ],
+      "stash": true
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 0,
+     "2": 0,
+     "3": 0,
+     "4": 0,
+     "5": 0,
+     "6": 0
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "3": "右側另有一棟帶天線的高樓，和塔搶焦點、天際線過稀"
+  },
+  "contact": "contact_last.png"
+ }
+}

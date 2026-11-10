@@ -19,6 +19,44 @@ ASSETS = {
               "one arm swinging back and the other arm stretched forward and up toward the upper right with the hand open. "
               "The background is plain pure white, with no ground, no shadow, no balloon, no other object. Clean Japanese anime cel shading with thin black line art, flat colors. No text."),
     ),
+    # Prechorus s017–s020：懸浮車側視圖的換色版（refs/entities/hovercar/side.png 是珍珠白＋青色燈帶；劇本：第 2 台酒紅＋洋紅燈帶、第 3 台深藍＋青色燈帶、銀灰）
+    **{f"hovercar_{name}": dict(
+        refs=["refs/entities/hovercar/side.png"],
+        qwen=("Image 1 is an unrelated character sheet: ignore it completely. Image 2 shows a futuristic wheel-less hovering capsule car in a flat side view. "
+              "Draw exactly the same car with exactly the same shape, the same side view, the same size and position in the frame, the same dark windows and the same flat gently curved roof, "
+              f"but the body shell is {shell} and the glowing underglow strip along the bottom is {glow}. "
+              "The background is plain pure white, with no ground, no shadow ellipse below the car, no other object. "
+              "Clean Japanese anime cel shading with thin black line art, flat colors. No text, no letters, no logos, no licence plate."),
+    ) for name, shell, glow in (
+        ("pearl", "a glossy pearl white paint", "bright cyan"),
+        ("wine", "a deep wine red (burgundy) glossy paint", "bright magenta"),
+        ("navy", "a deep dark navy blue glossy paint", "bright cyan"),
+        ("silver", "a silver-grey metallic paint", "bright magenta"),
+    )},
+    # s020：懸浮車正面（車頭朝鏡頭，鏡頭略高於車頂）；先用前三台的顏色（遠處的車用同一張去飽和）
+    **{f"hovercar_front_{name}": dict(
+        refs=["refs/entities/hovercar/side.png", "refs/entities/hovercar/three_quarter.png"],
+        qwen=("Image 1 is an unrelated character sheet: ignore it completely. Images 2 and 3 show a futuristic wheel-less hovering capsule car with dark windows and a glowing strip under the body. "
+              "Draw exactly the same car in a straight FRONT view: the nose of the car points straight at the viewer, perfectly symmetrical, the camera is slightly above the roof so that the flat gently curved roof is visible above the windshield, "
+              f"the body shell is {shell} and the glowing underglow strip along the bottom edge is {glow}, it hovers in the air with no wheels. "
+              "The background is plain pure white, with no ground, no shadow ellipse, no other object. "
+              "Clean Japanese anime cel shading with thin black line art, flat colors. No text, no letters, no logos, no licence plate."),
+    ) for name, shell, glow in (
+        ("pearl", "a glossy pearl white paint", "bright cyan"),
+        ("wine", "a deep wine red (burgundy) glossy paint", "bright magenta"),
+        ("navy", "a deep dark navy blue glossy paint", "bright cyan"),
+    )},
+    # s020：由 hovercar_front_navy_1.png（正面）換色
+    **{f"hovercar_frontb_{name}": dict(
+        refs=["refs/p6/hovercar_front_navy_1.png"],
+        qwen=("Image 1 is an unrelated character sheet: ignore it completely. Image 2 shows a futuristic wheel-less hovering capsule car in a straight front view. "
+              "Draw exactly the same picture with the same car in exactly the same straight front view, the same shape, the same size and position in the frame, "
+              f"but the body shell is {shell} and the glowing underglow strip along the bottom edge is {glow}. "
+              "The background is plain pure white, with no ground and no shadow. Clean Japanese anime cel shading with thin black line art, flat colors. No text, no letters, no logos."),
+    ) for name, shell, glow in (
+        ("pearl", "a glossy pearl white paint", "bright cyan"),
+        ("wine", "a deep wine red (burgundy) glossy paint", "bright magenta"),
+    )},
 }
 
 if __name__ == "__main__":

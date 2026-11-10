@@ -1,0 +1,371 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "鏡頭貼在一台灰色懸浮車車頂靠近車頭、低角度往前上方拍：車頂板面佔畫面下緣（程式繪製的膠囊形車頂，邊緣在畫面高約 85%、中央最高、往兩側下彎，兩下角露出車外的空中）；Luna 背對鏡頭、屈膝前傾、char_right 腳踏在車頭邊緣準備起跳（身高約畫面高 40–45%、x≈40%）；ECHO 在她左肩旁（畫面左，後製貼，背面）；遠方是塔（觀景台寬約畫面寬 2.8%），塔底一小片彩色街區（橢圓、邊界銳利），其餘灰色；髮尾約 14 cm 灰色（fade_hair）、雙手整根手指到指根灰色（fade_hands）；場景＝s021 的 A 稿（同一座城）去飽和，地平線下移到約 62%（低角度往上拍）",
+  "variants": [
+   {
+    "seeds": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s021/candidates/first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png 的場景，不經 Qwen)"
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s022/candidates/first_pose_s11.png",
+      "pose_strength": 1.3,
+      "pose_end": 0.95,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, back view, facing away, full body, crouching, squatting, bent knees, knees apart, leaning forward, head lowered, preparing to jump, about to jump, hands at sides, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "horizon",
+      "from": 0.5,
+      "to": 0.62
+     },
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.645,
+      "h": 0.3,
+      "behind_sky": true,
+      "sky_mode": "cols",
+      "sky_y": 0.2,
+      "sky_top": 0.05,
+      "sky_tol": 34,
+      "halo_a": 60
+     },
+     {
+      "op": "remove_streaks",
+      "maxw": 14,
+      "ratio": 1.6,
+      "thr": 20
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       },
+       {
+        "ellipse": [
+         0.455,
+         0.6,
+         0.545,
+         0.685
+        ],
+        "grey": false,
+        "feather": 0.8
+       }
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 200,
+      "rmin": 1.2,
+      "rmax": 3.2,
+      "person": false
+     },
+     {
+      "op": "roof_slab",
+      "edge_y": 0.84,
+      "bulge": 0.11,
+      "pod": true
+     },
+     {
+      "op": "fade_hands",
+      "strict": "bi",
+      "flip": [
+       11,
+       13,
+       18
+      ],
+      "s0": 0.05,
+      "L": 0.07,
+      "wrist": {
+       "r": [
+        0.64,
+        0.55
+       ],
+       "l": [
+        0.36,
+        0.55
+       ]
+      },
+      "elbow": {
+       "r": [
+        0.66,
+        0.43
+       ],
+       "l": [
+        0.34,
+        0.43
+       ]
+      }
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.42,
+      "fx": 0.4,
+      "fy": 0.865,
+      "cut_name": "cutg"
+     },
+     {
+      "op": "fade_hair",
+      "frac": 0.25,
+      "person_seed": [
+       0.4,
+       0.65
+      ]
+     },
+     {
+      "op": "drone",
+      "cx": 0.335,
+      "cy": 0.52,
+      "diam": 0.07,
+      "yaw": 180
+     }
+    ],
+    "seconds_per_candidate": {
+     "11": 25.4,
+     "12": 37.3,
+     "13": 38.6,
+     "14": 37.3,
+     "15": 38.3,
+     "16": 38.3,
+     "17": 38.3,
+     "18": 38.4
+    },
+    "files": {
+     "11": "first_s11.png",
+     "12": "first_s12.png",
+     "13": "first_s13.png",
+     "14": "first_s14.png",
+     "15": "first_s15.png",
+     "16": "first_s16.png",
+     "17": "first_s17.png",
+     "18": "first_s18.png"
+    }
+   }
+  ],
+  "rejected": {
+   "1": "背面立繪的腿環看不清楚（無法確認在畫面右腿）",
+   "7": "背面立繪的腿環看不清楚（無法確認在畫面右腿）",
+   "2": "舊姿勢（直立站姿）候選，被新的屈膝前傾姿勢取代",
+   "4": "舊姿勢（直立站姿）候選，被新的屈膝前傾姿勢取代",
+   "5": "舊姿勢（直立站姿）候選，被新的屈膝前傾姿勢取代",
+   "6": "舊姿勢（直立站姿）候選，被新的屈膝前傾姿勢取代",
+   "8": "舊姿勢（直立站姿）候選，被新的屈膝前傾姿勢取代",
+   "9": "舊姿勢（直立站姿）候選，被新的屈膝前傾姿勢取代",
+   "12": "背面立繪沒有大腿腿環",
+   "17": "背面立繪沒有大腿腿環",
+   "15": "大腿有兩條腿環"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖（場景同首幀同 seed 的 A 稿）：Luna 在半空、背對鏡頭、剛過最高點開始下降，身體前傾（OpenPose 骨架：軀幹軸線向畫面右上傾約 20°、雙手往前伸＝在頭的前方收攏、雙腿往後伸直＝在身後下方），身高約畫面高 25%、在畫面正中偏上，疊在遠方塔的下方；腳下沒有任何東西（不畫彩色區塊）；ECHO 在她左肩旁同高；馬尾下 1/3（約 18 cm）與雙手到手腕灰色；她下方約畫面高 75% 是往上湧的灰色顆粒霧（surge，程式繪製）；車頭邊緣淡色退回留給 P9",
+  "variants": [
+   {
+    "seeds": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s021/candidates/first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png 的場景，不經 Qwen)"
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s022/candidates/last_pose_s11.png",
+      "pose_strength": 1.3,
+      "pose_end": 0.95,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, back view, facing away, full body, midair, flying, diving, leaping forward, body leaning far forward, arms stretched forward, arms together ahead of head, legs extended straight behind, dynamic pose, foreshortening, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "horizon",
+      "from": 0.5,
+      "to": 0.62
+     },
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.645,
+      "h": 0.3,
+      "behind_sky": true,
+      "sky_mode": "cols",
+      "sky_y": 0.2,
+      "sky_top": 0.05,
+      "sky_tol": 34,
+      "halo_a": 60
+     },
+     {
+      "op": "remove_streaks",
+      "maxw": 14,
+      "ratio": 1.6,
+      "thr": 20
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 200,
+      "rmin": 1.2,
+      "rmax": 3.2,
+      "person": false
+     },
+     {
+      "op": "surge",
+      "y": 0.75,
+      "th": 0.05
+     },
+     {
+      "op": "roof_slab",
+      "edge_y": 0.84,
+      "bulge": 0.11,
+      "pod": true
+     },
+     {
+      "op": "fade_hands",
+      "strict": "bi",
+      "flip": [
+       11,
+       12,
+       13,
+       16
+      ],
+      "s0": 0.0,
+      "L": 0.12,
+      "wrist": {
+       "r": [
+        0.831,
+        0.124
+       ],
+       "l": [
+        0.694,
+        0.09
+       ]
+      },
+      "elbow": {
+       "r": [
+        0.826,
+        0.28
+       ],
+       "l": [
+        0.551,
+        0.211
+       ]
+      }
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.25,
+      "fx": 0.5,
+      "fy": 0.62,
+      "cut_name": "cutg",
+      "shadow": false
+     },
+     {
+      "op": "fade_hair",
+      "frac": 0.33,
+      "person_seed": [
+       0.5,
+       0.45
+      ]
+     },
+     {
+      "op": "drone",
+      "cx": 0.44,
+      "cy": 0.4,
+      "diam": 0.043,
+      "yaw": 180
+     }
+    ],
+    "seconds_per_candidate": {
+     "11": 38.3,
+     "12": 38.3,
+     "13": 38.4,
+     "14": 38.4,
+     "15": 22.3,
+     "16": 21.6,
+     "17": 36.6,
+     "18": 22.3
+    },
+    "files": {
+     "11": "last_s11.png",
+     "12": "last_s12.png",
+     "13": "last_s13.png",
+     "14": "last_s14.png",
+     "15": "last_s15.png",
+     "16": "last_s16.png",
+     "17": "last_s17.png",
+     "18": "last_s18.png"
+    }
+   }
+  ],
+  "rejected": {
+   "1": "立繪畫成正面（劇本：背對鏡頭）",
+   "2": "背面立繪的腿環看不清楚／腿交叉、頭髮畫成觸手",
+   "7": "背面立繪的腿環看不清楚／腿交叉、頭髮畫成觸手",
+   "4": "舊姿勢（直立、雙手舉過頭、腳下有彩色區塊）候選，被新的飛撲姿勢取代",
+   "5": "舊姿勢（直立、雙手舉過頭、腳下有彩色區塊）候選，被新的飛撲姿勢取代",
+   "6": "舊姿勢（直立、雙手舉過頭、腳下有彩色區塊）候選，被新的飛撲姿勢取代",
+   "8": "舊姿勢（直立、雙手舉過頭、腳下有彩色區塊）候選，被新的飛撲姿勢取代",
+   "9": "舊姿勢（直立、雙手舉過頭、腳下有彩色區塊）候選，被新的飛撲姿勢取代",
+   "14": "腿環位置看不出是否在畫面右腿",
+   "15": "背面立繪沒有大腿腿環",
+   "17": "腰包走樣（多出橄欖綠腰包）"
+  },
+  "contact": "contact_last.png"
+ }
+}

@@ -155,6 +155,9 @@ def apply_ops(im, ops, ctx):
     for st in ops or []:
         st = dict(st)
         op = st.pop("op")
+        for k_, v_ in list(st.items()):   # 參數可寫成 {seed: 值}（依候選 seed 取值，例如每張手的手腕位置不同）
+            if isinstance(v_, dict) and v_ and all(isinstance(x, int) for x in v_):
+                st[k_] = v_[ctx[2]]
         if op == "black_line":
             im = op_black_line(im, st, ctx[2])
         elif op == "shrink_paste":
@@ -171,7 +174,7 @@ def apply_ops(im, ops, ctx):
             im = op_paste_asset(im, st, ctx)
         elif op == "paste_head":
             im = op_paste_head(im, st, ctx)
-        elif op in ("frozen_rain", "billboards", "harmonize"):
+        elif op in ("frozen_rain", "billboards", "harmonize", "paste_car", "remove_streaks", "fade_tips", "band_split", "paste_car_row", "fade_hair", "fade_hands", "roof_slab", "surge", "sat_scale"):
             im = OPS[op](im, st, ctx)
         else:
             im = OPS[op](im, st)
@@ -622,6 +625,8 @@ def step_sprite(shot, frame, seed, v):
     tags = sp["tags"]
     pos = L.BASE + L.prompt_outfit(tags) + tags + L.QUALITY
     wf = L.workflow(K.LORA, 0.9, pos, SPRITE[0], SPRITE[1], seed, 28, 6.0)
+    if sp.get("neg_add"):   # D10：眼睛不要棕紅（正面立繪臉大時才會露出來）
+        wf["5"]["inputs"]["text"] = L.NEG + ", " + sp["neg_add"]
     pose = sp.get("pose")
     rel = None
     if isinstance(pose, dict):
@@ -640,7 +645,7 @@ def step_sprite(shot, frame, seed, v):
     data = K.run(wf, "9")
     fs = d / f"{frame}_sprite_s{seed}.png"
     fs.write_bytes(data)
-    cut = cutout_sprite(fs)
+    cut = cutout_sprite(fs, v.get("cut_strict", False))
     if seed in (v.get("flip") or []):   # LoRA 畫背面時腿環常落在畫面左腿（角色左腿）：只水平翻轉這個立繪（立繪裡其他部分左右對稱），讓腿環在畫面右＝角色右腿
         cut = cut.transpose(Image.FLIP_LEFT_RIGHT)
     cut.save(d / f"{frame}_cut_s{seed}.png")
@@ -649,10 +654,25 @@ def step_sprite(shot, frame, seed, v):
     return fs
 
 
-def cutout_sprite(path):
-    """白底立繪摳圖：由四邊洪水填充去掉近白背景（黑色輪廓線擋住白衣），其餘為前景。"""
+_CUT_BBOX = {}
+
+
+def cutout_sprite(path, strict=False):
+    """白底立繪摳圖：由四邊洪水填充去掉近白背景（黑色輪廓線擋住白衣），其餘為前景。
+    strict（jobs 的 cut_strict）：另外把被頭髮、手臂圍住而沒被洪水填充到的「背景色小洞」也去掉（fill_holes 會把它們當前景，貼進場景變成髒色塊），並內縮 1 px 去白邊。"""
     from scipy import ndimage as ndi
     im = Image.open(path).convert("RGB")
+    if strict == "bi":   # BiRefNet 去背：髮束之間漏出的背景、手臂與身體之間的縫都乾淨（不做 fill_holes，保留洞）
+        mk = np.asarray(person_mask(im)) > 110
+        lab, n = ndi.label(mk)
+        if n:
+            mk = lab == (1 + int(np.argmax(ndi.sum(mk, lab, range(1, n + 1)))))
+        m = Image.fromarray((mk * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.9))
+        rgba = im.convert("RGBA")
+        rgba.putalpha(m)
+        bb = rgba.getchannel("A").point(lambda x: 255 if x > 40 else 0).getbbox()
+        _CUT_BBOX[str(path)] = bb
+        return rgba.crop(bb)
     a = np.asarray(im).astype(int)
     border = np.concatenate([a[0], a[-1], a[:, 0], a[:, -1]])
     bgc = np.median(border, axis=0)                      # 立繪背景可能是白或淺灰，取四邊的中位色
@@ -668,16 +688,38 @@ def cutout_sprite(path):
     if n2:
         sizes = ndi.sum(fg, lab2, range(1, n2 + 1))
         fg = lab2 == (1 + int(np.argmax(sizes)))
+    if strict and bgc.min() < 235:   # 輪廓不變（bbox 不變），只挖掉前景內部的背景色小洞並內縮 1 px
+        dist = np.abs(a - bgc).max(axis=2)
+        hole = fg & (dist < 16)   # 淺色背景與膚色、白衣的差 ≥ 20，門檻取 16
+        hole = ndi.binary_dilation(hole, iterations=2) & (dist < 30)
+        if hole.sum() < 0.04 * fg.sum():   # 背景色和膚色太接近時會把皮膚也挖掘掉：挖掉的面積超過人物 4% 就放棄（只做內縮）
+            fg = fg & ~hole
+        fg = ndi.binary_erosion(fg, iterations=1) | (fg & ndi.binary_erosion(fg, iterations=3))
+    elif strict:   # 白底：白衣和背景同色，所以只挖「被紫色頭髮圍住的小白洞」（髮束之間漏出的背景）
+        import cv2
+        hsv = cv2.cvtColor(a.astype("uint8"), cv2.COLOR_RGB2HSV).astype(float)
+        purple = ((hsv[..., 0] * 2 >= 235) & (hsv[..., 0] * 2 <= 320) & (hsv[..., 1] / 255 >= 0.2)) & fg
+        white = fg & (np.abs(a - bgc).max(axis=2) < 16)
+        lab_w, nw = ndi.label(white)
+        for i in range(1, nw + 1):
+            c = lab_w == i
+            if c.sum() > 0.03 * fg.sum():
+                continue
+            ring = ndi.binary_dilation(c, iterations=5) & ~c
+            if ring.sum() and (purple & ring).sum() / ring.sum() >= 0.14:
+                fg &= ~ndi.binary_dilation(c, iterations=1)
     m = Image.fromarray((fg * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(1.0))
     rgba = im.convert("RGBA")
     rgba.putalpha(m)
-    return rgba.crop(rgba.getchannel("A").point(lambda x: 255 if x > 40 else 0).getbbox())
+    bb = rgba.getchannel("A").point(lambda x: 255 if x > 40 else 0).getbbox()
+    _CUT_BBOX[str(path)] = bb
+    return rgba.crop(bb)
 
 
 def op_paste_sprite(im, p, ctx):
     """把摳好的立繪縮成目標身高（畫面高比例）貼到腳點 (fx, fy)，腳下加一個柔和的接觸陰影。"""
     shot, frame, seed = ctx
-    cut = Image.open(cdir(shot) / f"{frame}_cut_s{seed}.png").convert("RGBA")
+    cut = Image.open(cdir(shot) / f"{frame}_{p.get('cut_name', 'cut')}_s{seed}.png").convert("RGBA")
     th = p["target_h"] * H
     f = th / cut.height
     cut = cut.resize((max(1, round(cut.width * f)), round(th)), Image.LANCZOS)
@@ -685,7 +727,8 @@ def op_paste_sprite(im, p, ctx):
     fx, fy = p["fx"] * W, p["fy"] * H
     sh = Image.new("RGBA", out.size, (0, 0, 0, 0))
     sw = cut.width * 0.9
-    ImageDraw.Draw(sh).ellipse((fx - sw / 2, fy - th * 0.05, fx + sw / 2, fy + th * 0.05), fill=(0, 0, 0, 120))
+    if p.get("shadow", True):   # 半空中（s022 末幀）不畫接觸陰影
+        ImageDraw.Draw(sh).ellipse((fx - sw / 2, fy - th * 0.05, fx + sw / 2, fy + th * 0.05), fill=(0, 0, 0, 120))
     out = Image.alpha_composite(out, sh.filter(ImageFilter.GaussianBlur(th * 0.03)))
     out.alpha_composite(cut, (round(fx - cut.width * p.get("anchor_x", 0.5)), round(fy - cut.height)))
     return out.convert("RGB")
@@ -1361,7 +1404,364 @@ def op_desat_hue(im, p):
     return Image.composite(ImageOps.grayscale(im).convert("RGB"), im, mm)
 
 
-OPS = dict(desat_hue=op_desat_hue, remove_rain=op_remove_rain, frozen_rain=op_frozen_rain, fix_eyes=op_fix_eyes, billboards=op_billboards, shift_person=op_shift_person, harmonize=op_harmonize, paste_head=op_paste_head, paste_asset=op_paste_asset, paste_balloon=op_paste_balloon, paste_childhand=op_paste_childhand, move_balloon=op_move_balloon, fit_person=op_fit_person, horizon=op_horizon, drone=op_drone, neon_far=op_neon_far, grey_keep=op_grey_keep, skyline_from=op_skyline_from, roof=op_roof, floor_stretch=op_floor_stretch, band_grey=op_band_grey, tower=op_tower, grey=op_grey, glow=op_glow, hatch=op_hatch, paste_drone=op_paste_drone, platform_dot=op_platform_dot, shift=op_shift, zoom=op_zoom)
+# ---------------------------------------------------------------- Prechorus（s017–s022）新增
+_CAR_CACHE = {}
+
+
+def car_cutout(color, a):
+    """懸浮車側視圖（refs/p6/hovercar_<color>_<a>.png，tools/p6_make_asset.py 以 Qwen 由 refs/entities/hovercar/side.png 換色）摳圖；
+    車底燈帶的白色光暈會被當成前景，所以把車底下緣近白的像素拿掉。"""
+    k = (color, a)
+    if k not in _CAR_CACHE:
+        cut = cutout_sprite(ROOT / f"refs/p6/hovercar_{color}_{a}.png")
+        arr = np.asarray(cut).copy()
+        h = arr.shape[0]
+        rgb = arr[..., :3].astype(int)
+        white = (rgb.min(axis=2) > 195) & (np.arange(h)[:, None] > 0.86 * h)
+        arr[..., 3] = np.where(white, 0, arr[..., 3])
+        cut = Image.fromarray(arr)
+        _CAR_CACHE[k] = cut.crop(cut.getchannel("A").point(lambda x: 255 if x > 40 else 0).getbbox())
+    return _CAR_CACHE[k]
+
+
+def op_paste_car(im, p, ctx=None):
+    """貼懸浮車（側視；素材車頭朝畫面左，flip 預設 true 讓車頭朝右＝街尾／塔的方向）：color＝pearl／wine／navy／silver；cx＝車身中心 x、
+    top＝車頂（含頂板）上緣的 y、w＝車長（畫面寬比例；高度依素材比例）；sat＝飽和度保留比例（0＝全灰 frozen、1＝全彩、0.1＝退到約 1/10）；
+    blur＝景深；dim＝亮度乘數（遠處／背景的車）。記下車頂的 y 供 Luna 腳點參考（_CAR['roof']）。"""
+    seed = ctx[2] if ctx else 1
+    a = ((seed - 1) % p.get("assets", 2)) + 1
+    cut = car_cutout(p["color"], a)
+    if p.get("flip", True):
+        cut = cut.transpose(Image.FLIP_LEFT_RIGHT)
+    f = p["w"] * W / cut.width
+    cut = cut.resize((max(2, round(cut.width * f)), max(2, round(cut.height * f))), Image.LANCZOS)
+    sat = p.get("sat", 0.0)
+    if sat < 1:
+        rgb = cut.convert("RGB")
+        g = ImageOps.grayscale(rgb).convert("RGB")
+        mix = Image.blend(g, rgb, sat)
+        cut2 = mix.convert("RGBA")
+        cut2.putalpha(cut.getchannel("A"))
+        cut = cut2
+    if p.get("dim", 1.0) != 1.0:
+        arr = np.asarray(cut).astype(float)
+        arr[..., :3] *= p["dim"]
+        cut = Image.fromarray(arr.clip(0, 255).astype("uint8"))
+    if p.get("blur"):
+        cut = cut.filter(ImageFilter.GaussianBlur(p["blur"]))
+    out = im.convert("RGBA")
+    ox, oy = round(p["cx"] * W - cut.width / 2), round(p["top"] * H)
+    out.paste(cut, (ox, oy), cut)   # paste 容許超出畫面邊
+    return out.convert("RGB")
+
+
+def op_remove_streaks(im, p, ctx=None):
+    """只去掉雨絲／水滴（細長、近乎垂直、短的亮色小連通區），不動窗框、燈柱、看板邊線等長結構（op_remove_rain 的白頂帽會把這些線稿一起抹掉）。
+    tophat（size）超過 thr 的像素 → 連通區 → 只留寬 ≤ maxw、高在 minh–maxh、高寬比 ≥ ratio 的 → 膨脹後 cv2.inpaint。"""
+    import cv2
+    from scipy import ndimage as ndi
+    a = np.asarray(im.convert("RGB"))
+    g = cv2.cvtColor(a, cv2.COLOR_RGB2GRAY)
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (p.get("size", 9), p.get("size", 9)))
+    th = g.astype(int) - cv2.morphologyEx(g, cv2.MORPH_OPEN, k).astype(int)
+    m = th > p.get("thr", 22)
+    lab, n = ndi.label(m, structure=np.ones((3, 3)))
+    objs = ndi.find_objects(lab)
+    keep = np.zeros_like(m)
+    for i, sl in enumerate(objs, 1):
+        h, w = sl[0].stop - sl[0].start, sl[1].stop - sl[1].start
+        if w <= p.get("maxw", 10) and p.get("minh", 8) <= h <= p.get("maxh", 110) and h / max(w, 1) >= p.get("ratio", 2.2):
+            keep[sl] |= (lab[sl] == i)
+    if p.get("ymax"):
+        keep[round(p["ymax"] * H):] = False
+    mm = cv2.dilate(keep.astype("uint8") * 255, np.ones((5, 5), np.uint8))
+    return Image.fromarray(cv2.inpaint(a, mm, 4, cv2.INPAINT_TELEA))
+
+
+def op_fade_tips(im, p, ctx=None):
+    """@luna_fade（s019）：手指末端變灰。膚色遮罩（HSV）→ 從手腕線起算在遮罩內的測地距離（手指彎曲時沿著手指走）→ 距離占最遠點（指尖）的比例
+    超過 1-frac 的地方去飽和（亮度不變）。frac＝灰色長度占「手腕到指尖」的比例：最末一節約 0.15、最末兩節約 0.30；soft＝漸層寬度（比例，約 2 cm）。
+    wrist＝[x, y]（畫面比例，手腕上一點，每張手不同所以依 seed 給）；灰色範圍連輪廓線一起（輪廓本來就接近黑／灰）。mask_img＝存下遮罩。"""
+    import cv2
+    from skimage.graph import MCP_Geometric
+    from scipy import ndimage as ndi
+    a = np.asarray(im.convert("RGB"))
+    hsv = cv2.cvtColor(a, cv2.COLOR_RGB2HSV).astype(float)
+    h, s_, v = hsv[..., 0] * 2, hsv[..., 1] / 255, hsv[..., 2] / 255
+    skin = (h >= 5) & (h <= 45) & (s_ >= 0.12) & (s_ <= 0.70) & (v >= 0.40)
+    skin = ndi.binary_opening(skin, iterations=1)
+    wx, wy = p["wrist"][0] * W, p["wrist"][1] * H
+    lab, n = ndi.label(skin)
+    k = lab[int(wy), int(wx)]
+    if not k:   # 手腕點落在手環（低飽和）上：往附近找最近的膚色
+        yy, xx = np.where(skin)
+        j = np.argmin((yy - wy) ** 2 + (xx - wx) ** 2)
+        k = lab[yy[j], xx[j]]
+    comp = lab == k
+    # 手腕線以左（前臂）不算手；手的邊界含連到輪廓線的像素：把遮罩閉運算，讓手指之間的輪廓線不切斷整隻手，但測地距離仍沿著各手指
+    cost = np.where(comp, 1.0, np.inf)
+    cost[:, :int(wx)] = np.inf
+    starts = np.argwhere(comp & (np.abs(np.arange(W)[None, :] - wx) <= 3))
+    mcp = MCP_Geometric(cost, fully_connected=True)
+    d, _ = mcp.find_costs(starts.tolist())
+    d = np.where(np.isfinite(d), d, 0)
+    dmax = np.percentile(d[comp & (d > 0)], 99.5)
+    t = d / dmax
+    t0 = 1 - p["frac"]
+    wgt = np.clip((t - t0) / max(p.get("soft", 0.05), 1e-3), 0, 1)
+    wgt = wgt * (d > 0)
+    wgt = wgt * wgt * (3 - 2 * wgt)
+    wgt = cv2.dilate(wgt.astype(np.float32), np.ones((3, 3), np.uint8))   # 連輪廓線
+    wgt = cv2.GaussianBlur(wgt, (0, 0), 0.8)
+    if p.get("mask_img") and ctx:
+        Image.fromarray((wgt * 255).astype("uint8")).save(cdir(ctx[0]) / f"{ctx[1]}_{p['mask_img']}_s{ctx[2]}.png")
+    grey = np.asarray(ImageOps.grayscale(im).convert("RGB")).astype(float)
+    out = a.astype(float) * (1 - wgt[..., None]) + grey * wgt[..., None]
+    return Image.fromarray(out.clip(0, 255).astype("uint8"))
+
+
+def op_band_split(im, p, ctx=None):
+    """s021（路線 C）：垂直的彩色帶，帶外是 frozen。color＝[x0,x1]（畫面寬比例）彩色帶，edge＝交界銳利度（高斯 px）；帶外先 remove_streaks（雨絲→停住的小圓點）再去飽和。
+    stash＝true 時另存 <frame>_color_s*.png（全彩）與 <frame>_frozen_s*.png（全灰），給 P9 做兩條交界往中間推進的遮罩。"""
+    x0, x1 = p["color"]
+    col = im.convert("RGB")
+    fr = op_remove_streaks(col, dict(maxw=14, ratio=1.6, minh=6, thr=p.get("thr", 20)))
+    fr = ImageOps.grayscale(fr).convert("RGB")
+    fr = op_frozen_rain(fr, dict(n=p.get("n", 260), rmin=p.get("rmin", 1.0), rmax=p.get("rmax", 2.6), person=False), ctx)
+    xx = np.arange(W)[None, :].repeat(H, 0)
+    m = Image.fromarray((((xx >= x0 * W) & (xx <= x1 * W)) * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(p.get("edge", 1.2)))
+    if p.get("stash") and ctx:
+        shot, frame, seed = ctx
+        stash_aux(shot, frame, seed, "color", col)
+        stash_aux(shot, frame, seed, "frozen", fr)
+    return Image.composite(col, fr, m)
+
+
+def op_paste_car_row(im, p, ctx=None):
+    """s020：一排正面的懸浮車（車頭朝鏡頭，素材 refs/p6/hovercar_front*_<color>_1.png），沿透視線往消失點 vp 排開：
+    near＝{x, roof_y, w}（最近一台的車身中心 x、車頂上緣 y、車寬，皆畫面比例），pitch＝相鄰兩台的距離比（以最近一台的距離為 1 的增量）；
+    cars＝[{color, sat, dim}…] 由近到遠；由遠到近依序貼（近的蓋住遠的）。"""
+    vx, vy = p["vp"]
+    n0 = p["near"]
+    out = im.convert("RGBA")
+    items = []
+    for k, c in enumerate(p["cars"]):
+        r = 1 + p.get("pitch", 1.1) * k
+        items.append((r, c))
+    for r, c in sorted(items, key=lambda t: -t[0]):
+        f = p.get("file", "refs/p6/hovercar_front{b}_{color}_1.png").format(b=c.get("b", ""), color=c["color"])
+        key = ("row", f)
+        if key not in _CAR_CACHE:
+            cut = cutout_sprite(ROOT / f)
+            arr = np.asarray(cut).copy()
+            h = arr.shape[0]
+            rgb = arr[..., :3].astype(int)
+            white = (rgb.min(axis=2) > 195) & (np.arange(h)[:, None] > 0.80 * h)
+            arr[..., 3] = np.where(white, 0, arr[..., 3])
+            cut = Image.fromarray(arr)
+            _CAR_CACHE[key] = cut.crop(cut.getchannel("A").point(lambda x: 255 if x > 40 else 0).getbbox())
+        cut = _CAR_CACHE[key]
+        w = n0["w"] * W / r
+        cut = cut.resize((max(2, round(w)), max(2, round(w * cut.height / cut.width))), Image.LANCZOS)
+        sat = c.get("sat", 0.0)
+        if sat < 1:
+            rgb = cut.convert("RGB")
+            m2 = Image.blend(ImageOps.grayscale(rgb).convert("RGB"), rgb, sat).convert("RGBA")
+            m2.putalpha(cut.getchannel("A"))
+            cut = m2
+        if c.get("dim", 1.0) != 1.0:
+            arr = np.asarray(cut).astype(float)
+            arr[..., :3] *= c["dim"]
+            cut = Image.fromarray(arr.clip(0, 255).astype("uint8"))
+        if p.get("blur_far") and r > 2.5:
+            cut = cut.filter(ImageFilter.GaussianBlur(p["blur_far"]))
+        x = vx + (n0["x"] - vx) / r
+        y = vy + (n0["roof_y"] - vy) / r
+        out.paste(cut, (round(x * W - cut.width / 2), round(y * H)), cut)
+    return out.convert("RGB")
+
+
+def op_fade_hair(im, p, ctx=None):
+    """s020／s022：馬尾髮尾變灰（@luna_fade）。紫色頭髮遮罩（HSV）在人物遮罩內 → 從頭頂（遮罩最高處附近）起算的測地距離 → 距離占最遠點（髮尾）比例超過 1-frac 的地方去飽和。
+    frac＝灰色長度占「頭頂到髮尾」的比例（馬尾約 55 cm：8–10 cm≈0.17、14 cm≈0.25、18 cm≈0.33）。person_seed 給人物位置。"""
+    import cv2
+    from skimage.graph import MCP_Geometric
+    from scipy import ndimage as ndi
+    a = np.asarray(im.convert("RGB"))
+    hsv = cv2.cvtColor(a, cv2.COLOR_RGB2HSV).astype(float)
+    h, s_, v = hsv[..., 0] * 2, hsv[..., 1] / 255, hsv[..., 2] / 255
+    hair = (h >= 235) & (h <= 320) & (s_ >= 0.22) & (v >= 0.08)
+    pm = np.asarray(_person_bin(im, p.get("person_seed"))) > 0
+    hair &= ndi.binary_dilation(pm, iterations=4)
+    hair = ndi.binary_closing(hair, iterations=1)
+    lab, n = ndi.label(hair)
+    if n == 0:
+        return im
+    sizes = ndi.sum(hair, lab, range(1, n + 1))
+    hair = lab == (1 + int(np.argmax(sizes)))
+    ys, xs = np.where(hair)
+    top = ys.min()
+    cost = np.where(hair, 1.0, np.inf)
+    starts = np.argwhere(hair & (np.arange(H)[:, None] <= top + 0.06 * (ys.max() - top) + 4))
+    d, _ = MCP_Geometric(cost, fully_connected=True).find_costs(starts.tolist())
+    d = np.where(np.isfinite(d), d, 0)
+    dmax = np.percentile(d[hair], 99.7)
+    t = d / dmax
+    wgt = np.clip((t - (1 - p["frac"])) / max(p.get("soft", 0.06), 1e-3), 0, 1) * hair
+    wgt = wgt * wgt * (3 - 2 * wgt)
+    wgt = cv2.GaussianBlur(cv2.dilate(wgt.astype(np.float32), np.ones((3, 3), np.uint8)), (0, 0), 0.8)
+    grey = np.asarray(ImageOps.grayscale(im).convert("RGB")).astype(float)
+    # 灰化後銀鏈仍應保持銀色：銀鏈本來就低飽和，不受影響
+    return Image.fromarray((a.astype(float) * (1 - wgt[..., None]) + grey * wgt[..., None]).clip(0, 255).astype("uint8"))
+
+
+def op_fade_hands(im, p, ctx=None):
+    """s022（@luna_fade）：立繪（背面）雙手變灰。用立繪的 OpenPose 關鍵點（在 jobs 的 sprite.pose 裡）換算到摳圖座標，沿「手肘→手腕」方向往外 s0…s0+L（單位：立繪摳圖高）內的膚色像素去飽和：
+    手指到指根＝s0 0.05、L 0.07；整隻手到手腕＝s0 0、L 0.12。結果存成 <frame>_cutg_s<seed>.png（paste_sprite 用 cut_name: cutg 取用）；對畫面不做事。
+    wrist／elbow＝{r:[x,y], l:[x,y]} 的關鍵點（與 pose 同座標；以 sprite.pose 的值抄過來），flip＝這個 seed 的摳圖是否水平翻轉過（翻轉時 r、l 互換位置）。"""
+    import cv2
+    shot, frame, seed = ctx
+    d = cdir(shot)
+    cut = Image.open(d / f"{frame}_cut_s{seed}.png").convert("RGBA")
+    sp = d / f"{frame}_sprite_s{seed}.png"
+    if str(sp) not in _CUT_BBOX:
+        cutout_sprite(sp, p.get("strict", True))
+    bb = _CUT_BBOX[str(sp)]
+    flip = seed in (p.get("flip") or [])
+    a = np.asarray(cut).copy()
+    ch, cw = a.shape[:2]
+    hsv = cv2.cvtColor(a[..., :3], cv2.COLOR_RGB2HSV).astype(float)
+    hh, ss, vv = hsv[..., 0] * 2, hsv[..., 1] / 255, hsv[..., 2] / 255
+    skin = (hh >= 5) & (hh <= 50) & (ss >= 0.10) & (ss <= 0.75) & (vv >= 0.40) & (a[..., 3] > 100)
+    yy, xx = np.mgrid[0:ch, 0:cw]
+    wg = np.zeros((ch, cw), np.float32)
+    for side in ("r", "l"):
+        wx, wy = p["wrist"][side][0] * SPRITE[0] - bb[0], p["wrist"][side][1] * SPRITE[1] - bb[1]
+        ex, ey = p["elbow"][side][0] * SPRITE[0] - bb[0], p["elbow"][side][1] * SPRITE[1] - bb[1]
+        if flip:
+            wx, ex = cw - wx, cw - ex
+        u = np.array([wx - ex, wy - ey]); u /= np.linalg.norm(u) + 1e-6
+        sdist = (xx - wx) * u[0] + (yy - wy) * u[1]
+        perp = np.abs(-(xx - wx) * u[1] + (yy - wy) * u[0])
+        m = skin & (sdist >= p["s0"] * ch) & (sdist <= (p["s0"] + p["L"]) * ch) & (perp <= p.get("w", 0.05) * ch)
+        wg = np.maximum(wg, m.astype(np.float32))
+    wg = cv2.GaussianBlur(cv2.dilate(wg, np.ones((3, 3), np.uint8)), (0, 0), 1.0)
+    g = np.asarray(ImageOps.grayscale(Image.fromarray(a[..., :3])).convert("RGB")).astype(float)
+    rgb = a[..., :3].astype(float) * (1 - wg[..., None]) + g * wg[..., None]
+    a[..., :3] = rgb.clip(0, 255).astype("uint8")
+    Image.fromarray(a).save(d / f"{frame}_cutg_s{seed}.png")
+    return im
+
+
+def _roof_pod(im, p):
+    """懸浮車車頂（低機位貼在車頂靠近車頭往前上方拍）：膠囊形車身的頂面——邊緣在中央最高、往兩側明顯下彎（兩下角露出車外的空中），
+    邊緣外緣有圓角斜面（較暗的一帶＋亮線），頂面中央有凸起的長形頂板（素材 side.png 的頂板）與接縫，整體灰階（frozen），由邊緣往近處變暗。"""
+    S = 3
+    big = im.resize((W * S, H * S), Image.LANCZOS).convert("RGBA")
+    ey, bg_ = p.get("edge_y", 0.84) * H * S, p.get("bulge", 0.11) * H * S
+    xs = np.arange(0, W * S + 1, 6)
+    edge = ey + bg_ * np.abs(2 * (xs / (W * S) - 0.5)) ** 2.3
+    pts = list(zip(xs.tolist(), edge.tolist()))
+    slab = Image.new("RGBA", big.size, (0, 0, 0, 0))
+    sd = ImageDraw.Draw(slab)
+    sd.polygon(pts + [(W * S, H * S), (0, H * S)], fill=(128, 130, 136, 255))
+    arr = np.asarray(slab).astype(float)
+    yy = np.arange(H * S)[:, None]
+    gr = np.clip((yy - ey) / (H * S - ey), 0, 1)
+    arr[..., :3] *= (1.22 - 0.62 * gr)[..., None]
+    slab = Image.fromarray(arr.clip(0, 255).astype("uint8"))
+    big = Image.alpha_composite(big, slab)
+    d = ImageDraw.Draw(big)
+    # 圓角斜面：邊緣內側一條較暗的帶＋更內側的亮線
+    d.line(pts, fill=(12, 12, 16, 255), width=5 * S)
+    band = [(x, y + 9 * S) for x, y in pts]
+    d.line(band, fill=(70, 72, 78, 255), width=7 * S)
+    d.line([(x, y + 15 * S) for x, y in pts], fill=(206, 208, 214, 255), width=2 * S)
+    d.line([(x, y + 18 * S) for x, y in pts], fill=(24, 24, 28, 255), width=2 * S)
+    # 中央凸起的長形頂板（朝消失點收窄的梯形）＋接縫
+    cx = W * S / 2
+    top_y, bot_y = ey + bg_ * 0.16 + 34 * S, H * S * 1.0
+    plate = [(cx - 0.20 * W * S, top_y), (cx + 0.20 * W * S, top_y), (cx + 0.46 * W * S, bot_y), (cx - 0.46 * W * S, bot_y)]
+    ov = Image.new("RGBA", big.size, (0, 0, 0, 0))
+    ImageDraw.Draw(ov).polygon(plate, fill=(150, 152, 158, 120))
+    big = Image.alpha_composite(big, ov)
+    d = ImageDraw.Draw(big)
+    d.line(plate + [plate[0]], fill=(20, 20, 24, 255), width=3 * S)
+    d.line([(cx - 0.20 * W * S + 6 * S, top_y + 6 * S), (cx + 0.20 * W * S - 6 * S, top_y + 6 * S)], fill=(214, 216, 222, 255), width=2 * S)
+    for fx in (-0.5, 0.5):
+        d.line([(cx + fx * 0.40 * W * S, top_y), (cx + fx * 0.92 * W * S, bot_y)], fill=(50, 52, 58, 255), width=2 * S)
+    return big.convert("RGB").resize((W, H), Image.LANCZOS)
+
+
+def op_roof_slab(im, p, ctx=None):
+    """s022：前景的灰色車頂（低機位貼在車頂上往前拍）：邊緣在畫面高 edge_y（中央最高，往兩側略下彎 bulge），以下是車頂板面，灰階（frozen）。
+    畫上黑色輪廓、邊緣的亮線、面板接縫與由邊緣往下變暗的漸層；4 倍超取樣。"""
+    if p.get("pod"):
+        return _roof_pod(im, p)
+    S = 3
+    big = im.resize((W * S, H * S), Image.LANCZOS).convert("RGBA")
+    d = ImageDraw.Draw(big)
+    ey, bg_ = p.get("edge_y", 0.85) * H * S, p.get("bulge", 0.03) * H * S
+    pts = []
+    for i in range(0, W * S + 1, 8):
+        x = i / (W * S)
+        pts.append((i, ey + bg_ * (2 * (x - 0.5)) ** 2))
+    poly = pts + [(W * S, H * S), (0, H * S)]
+    slab = Image.new("RGBA", big.size, (0, 0, 0, 0))
+    sd = ImageDraw.Draw(slab)
+    sd.polygon(poly, fill=(122, 124, 130, 255))
+    arr = np.asarray(slab).astype(float)
+    yy = np.arange(H * S)[:, None]
+    gr = np.clip((yy - ey) / (H * S - ey), 0, 1)
+    shade = 1.18 - 0.55 * gr
+    arr[..., :3] *= shade[..., None]
+    slab = Image.fromarray(arr.clip(0, 255).astype("uint8"))
+    big = Image.alpha_composite(big, slab)
+    d = ImageDraw.Draw(big)
+    d.line(pts, fill=(14, 14, 18, 255), width=4 * S)
+    d.line([(x, y + 5 * S) for x, y in pts], fill=(196, 198, 204, 255), width=2 * S)    # 邊緣的反光
+    for fx in (0.22, 0.5, 0.78):                                                          # 面板接縫（往消失點收斂）
+        d.line([(fx * W * S, ey + bg_ * (2 * (fx - 0.5)) ** 2 + 8 * S), ((0.5 + (fx - 0.5) * 1.8) * W * S, H * S)], fill=(60, 62, 68, 255), width=2 * S)
+    return big.convert("RGB").resize((W, H), Image.LANCZOS)
+
+
+def op_surge(im, p, ctx=None):
+    """s022 末幀：@silence 的 surge＝一道由下往上湧的邊界帶（約畫面高 5% 厚的細小灰色顆粒霧），寬滿畫面，中心在畫面高 y。
+    顆粒＝隨機的灰色小點（半徑 0.6–1.6 px），密度在帶中心最高、往上下漸淡，疊在原圖上（帶內略壓暗成霧）。"""
+    seed = (ctx[2] if ctx else 0) + 11
+    rnd = np.random.RandomState(seed)
+    y0, th = p["y"] * H, p.get("th", 0.05) * H
+    lay = Image.new("RGBA", (W * 2, H * 2), (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    for _ in range(p.get("n", 9000)):
+        t = rnd.normal(0, 0.33)
+        if abs(t) > 1:
+            continue
+        x, y = rnd.uniform(0, W), y0 + t * th
+        r = rnd.uniform(0.6, 1.6) * 2
+        v = int(rnd.uniform(150, 215))
+        d.ellipse((x * 2 - r, y * 2 - r, x * 2 + r, y * 2 + r), fill=(v, v, v, int(rnd.uniform(110, 220) * (1 - abs(t) * 0.6))))
+    lay = lay.resize((W, H), Image.LANCZOS)
+    fog = Image.new("L", (W, H), 0)
+    yy = np.arange(H)[:, None].repeat(W, 1)
+    fa = np.exp(-((yy - y0) / (th * 0.55)) ** 2) * p.get("fog", 0.35)
+    fog = Image.fromarray((fa * 255).astype("uint8"))
+    base = Image.composite(Image.new("RGB", (W, H), (88, 90, 96)), im.convert("RGB"), fog)
+    return Image.alpha_composite(base.convert("RGBA"), lay).convert("RGB")
+
+
+def op_sat_scale(im, p, ctx=None):
+    """矩形範圍內的飽和度乘 s（s=0.1 → 剩約 1/10）；rect＝[x0,y0,x1,y1] 畫面比例。用在 harmonize 之後把某台車的顏色壓到指定程度。"""
+    import cv2
+    a = np.asarray(im.convert("RGB"))
+    hsv = cv2.cvtColor(a, cv2.COLOR_RGB2HSV).astype(np.float32)
+    x0, y0, x1, y1 = p["rect"]
+    sl = (slice(round(y0 * H), round(y1 * H)), slice(round(x0 * W), round(x1 * W)))
+    hsv[sl][..., 1] *= p["s"]
+    return Image.fromarray(cv2.cvtColor(hsv.clip(0, 255).astype(np.uint8), cv2.COLOR_HSV2RGB))
+
+
+OPS = dict(sat_scale=op_sat_scale, fade_hands=op_fade_hands, roof_slab=op_roof_slab, surge=op_surge, paste_car_row=op_paste_car_row, fade_hair=op_fade_hair, band_split=op_band_split, fade_tips=op_fade_tips, remove_streaks=op_remove_streaks, paste_car=op_paste_car, desat_hue=op_desat_hue, remove_rain=op_remove_rain, frozen_rain=op_frozen_rain, fix_eyes=op_fix_eyes, billboards=op_billboards, shift_person=op_shift_person, harmonize=op_harmonize, paste_head=op_paste_head, paste_asset=op_paste_asset, paste_balloon=op_paste_balloon, paste_childhand=op_paste_childhand, move_balloon=op_move_balloon, fit_person=op_fit_person, horizon=op_horizon, drone=op_drone, neon_far=op_neon_far, grey_keep=op_grey_keep, skyline_from=op_skyline_from, roof=op_roof, floor_stretch=op_floor_stretch, band_grey=op_band_grey, tower=op_tower, grey=op_grey, glow=op_glow, hatch=op_hatch, paste_drone=op_paste_drone, platform_dot=op_platform_dot, shift=op_shift, zoom=op_zoom)
 
 
 def step_C(shot, frame, seed, v, src):
@@ -1398,6 +1798,11 @@ def variants(fj):
 def run_one(shot, frame, seed, v, macros, stage, force):
     ff, fb, fa = fF(shot, frame, seed), fB(shot, frame, seed), fA(shot, frame, seed)
     gen = v.get("gen", "qwen")
+    if gen == "copy":   # A 稿直接沿用同鏡另一幀同 seed 的 A 稿（s019：首尾幀同一隻手、同相位，只有後製的灰色範圍不同）
+        src = cdir(shot) / v["copy_a"].format(seed=seed)
+        if force or not fa.exists() or stage in ("post", "BC", "A"):
+            shutil.copy(src, fa)
+            log(shot, dict(step="A", frame=frame, file=fa.name, seed=seed, refs=[src.name], prompt="(沿用 %s，不經 Qwen)" % src.name, seconds=0))
     if gen == "proc" and not fa.exists():
         Image.new("RGB", (W, H), (4, 5, 7)).save(fa)   # 程式繪製的候選：A 只是占位，內容由 post 的 op 畫
     if gen == "sprite":
@@ -1423,7 +1828,7 @@ def run_one(shot, frame, seed, v, macros, stage, force):
         elif stage in ("all", "B", "BC") and (force or not (cdir(shot) / f"{frame}_cut_s{seed}.png").exists()):
             step_sprite(shot, frame, seed, v)
         if stage == "cut" and not v.get("cut_from"):   # 只從已存的立繪重新摳圖（改摳圖演算法或 flip 清單後用），再做後製
-            cut = cutout_sprite(cdir(shot) / f"{frame}_sprite_s{seed}.png")
+            cut = cutout_sprite(cdir(shot) / f"{frame}_sprite_s{seed}.png", v.get("cut_strict", False))
             if seed in (v.get("flip") or []):
                 cut = cut.transpose(Image.FLIP_LEFT_RIGHT)
             cut.save(cdir(shot) / f"{frame}_cut_s{seed}.png")

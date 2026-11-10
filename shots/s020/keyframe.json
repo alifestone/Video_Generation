@@ -1,0 +1,353 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "鏡頭在 Luna 前方、與她胸口同高，往大樓方向拍她迎面跑來（膝以上、頭頂約畫面高 12%）；馬尾甩出、髮尾約 8–10 cm 灰色（後製 fade_hair）；ECHO 在畫面右上（她 char_left 肩旁，後製貼）；她身後一路往後排著停在半空的懸浮車（正面、鏡頭略高於車頂；近處 3 台彩色：珍珠白、酒紅、深藍，其餘灰），遠處大樓與灰色街景、停住的雨。Qwen 一次畫不出「車排在車道空中、街在下方」的構圖（都畫成地面公路），所以：場景＝Qwen 空中視角的街廊（無車無人）、車＝正面素材沿透視線排列、Luna＝正面奔跑立繪（路線 B：LoRA＋OpenPose）。手指末兩節灰色在此景別不可辨（手約 30 px），留給 P9 追蹤遮罩。只用首幀",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "refs/entities/street/frozen.png"
+     ],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Image 2 shows a frozen grey shopping street. Draw a flat, perfectly symmetrical one-point-perspective view straight down a long straight street canyon of tall grey shop buildings with big glowing blank billboards on the upper floors, in the same style as image 2, seen from a camera floating eight metres above the street at the height of the second floor, looking exactly horizontally, so that the horizon and the vanishing point are at 42 percent of the image height. The street surface is far below and is visible only as a narrow strip of distant grey wet ground in the bottom part of the image between the building rows. The sky is a narrow dark strip between the roofs. At the far end of the street at the vanishing point stands one tall dark building. Nothing floats in the air in the middle of the image, there is no car, no person, no robot and no character; tiny raindrops hang motionless in the air as small dots. The whole picture is completely greyscale with no colour at all. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s020/candidates/first_pose_s1.png",
+      "pose_strength": 1.1,
+      "pose_end": 0.9,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from front, facing viewer, looking at viewer, full body, running towards viewer, leaning forward, clenched teeth, determined, hair flowing, wind, dynamic pose, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "remove_streaks",
+      "maxw": 14,
+      "ratio": 1.6
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 130,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person": false
+     },
+     {
+      "op": "paste_car_row",
+      "vp": [
+       0.6,
+       0.42
+      ],
+      "near": {
+       "x": 0.6,
+       "roof_y": 0.82,
+       "w": 0.24
+      },
+      "pitch": 1.2,
+      "cars": [
+       {
+        "color": "pearl",
+        "b": "b",
+        "sat": 1.0
+       },
+       {
+        "color": "wine",
+        "b": "b",
+        "sat": 1.0
+       },
+       {
+        "color": "navy",
+        "sat": 1.0
+       },
+       {
+        "color": "navy",
+        "sat": 0.0,
+        "dim": 1.7
+       },
+       {
+        "color": "navy",
+        "sat": 0.0,
+        "dim": 1.7
+       },
+       {
+        "color": "wine",
+        "b": "b",
+        "sat": 0.0,
+        "dim": 1.6
+       },
+       {
+        "color": "pearl",
+        "b": "b",
+        "sat": 0.0
+       },
+       {
+        "color": "navy",
+        "sat": 0.0,
+        "dim": 1.7
+       },
+       {
+        "color": "wine",
+        "b": "b",
+        "sat": 0.0,
+        "dim": 1.6
+       }
+      ]
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 1.22,
+      "fx": 0.4,
+      "fy": 1.34
+     },
+     {
+      "op": "fade_hair",
+      "frac": 0.2
+     },
+     {
+      "op": "drone",
+      "cx": 0.55,
+      "cy": 0.2,
+      "diam": 0.19,
+      "yaw": 0
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 69.8,
+     "2": 77.7,
+     "3": 95.7,
+     "4": 79.9,
+     "5": 116.4,
+     "6": 109.8
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   },
+   {
+    "seeds": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s020/candidates/first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png 的場景，不經 Qwen)"
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s020/candidates/first_pose_s7.png",
+      "pose_strength": 1.25,
+      "pose_end": 0.95,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from front, facing viewer, looking at viewer, full body, running towards viewer, leaning forward, clenched teeth, determined, hair flowing, wind, dynamic pose, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "remove_streaks",
+      "maxw": 14,
+      "ratio": 1.6
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 130,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person": false
+     },
+     {
+      "op": "paste_car_row",
+      "vp": [
+       0.6,
+       0.42
+      ],
+      "near": {
+       "x": 0.6,
+       "roof_y": 0.82,
+       "w": 0.24
+      },
+      "pitch": 1.2,
+      "cars": [
+       {
+        "color": "pearl",
+        "b": "b",
+        "sat": 1.0
+       },
+       {
+        "color": "wine",
+        "b": "b",
+        "sat": 1.0
+       },
+       {
+        "color": "navy",
+        "sat": 1.0
+       },
+       {
+        "color": "navy",
+        "sat": 0.0,
+        "dim": 1.7
+       },
+       {
+        "color": "navy",
+        "sat": 0.0,
+        "dim": 1.7
+       },
+       {
+        "color": "wine",
+        "b": "b",
+        "sat": 0.0,
+        "dim": 1.6
+       },
+       {
+        "color": "pearl",
+        "b": "b",
+        "sat": 0.0
+       },
+       {
+        "color": "navy",
+        "sat": 0.0,
+        "dim": 1.7
+       },
+       {
+        "color": "wine",
+        "b": "b",
+        "sat": 0.0,
+        "dim": 1.6
+       }
+      ]
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 1.22,
+      "fx": 0.4,
+      "fy": 1.34
+     },
+     {
+      "op": "fade_hair",
+      "frac": 0.2
+     },
+     {
+      "op": "drone",
+      "cx": 0.55,
+      "cy": 0.2,
+      "diam": 0.19,
+      "yaw": 0
+     }
+    ],
+    "seconds_per_candidate": {
+     "7": 21.7,
+     "8": 21.4,
+     "9": 21.3,
+     "10": 21.6,
+     "11": 21.3,
+     "12": 21.3,
+     "13": 22.4,
+     "14": 22.3,
+     "15": 22.3,
+     "16": 22.3,
+     "17": 22.5,
+     "18": 22.4
+    },
+    "files": {
+     "7": "first_s7.png",
+     "8": "first_s8.png",
+     "9": "first_s9.png",
+     "10": "first_s10.png",
+     "11": "first_s11.png",
+     "12": "first_s12.png",
+     "13": "first_s13.png",
+     "14": "first_s14.png",
+     "15": "first_s15.png",
+     "16": "first_s16.png",
+     "17": "first_s17.png",
+     "18": "first_s18.png"
+    }
+   }
+  ],
+  "rejected": {
+   "1": "腿抬起、姿勢怪、馬尾甩向畫面右（劇本要甩向畫面左）",
+   "4": "馬尾甩向畫面右（劇本：從 char_right 肩外側＝畫面左甩出）",
+   "6": "馬尾甩向畫面右（劇本：從 char_right 肩外側＝畫面左甩出）",
+   "7": "馬尾甩向畫面右（劇本：從 char_right 肩外側＝畫面左甩出）",
+   "9": "馬尾甩向畫面右（劇本：從 char_right 肩外側＝畫面左甩出）",
+   "10": "馬尾甩向畫面右且手臂張開、姿勢走樣",
+   "11": "右眼紅棕色（D10）",
+   "12": "馬尾甩向畫面右（劇本：從 char_right 肩外側＝畫面左甩出）",
+   "13": "馬尾甩向畫面右（劇本：畫面左）",
+   "15": "馬尾甩向畫面右（劇本：畫面左）",
+   "16": "馬尾甩向畫面右（劇本：畫面左）",
+   "17": "馬尾甩向畫面右（劇本：畫面左）",
+   "18": "馬尾周圍殘留淺白色底色（去背漏白）"
+  },
+  "contact": "contact_first.png"
+ }
+}

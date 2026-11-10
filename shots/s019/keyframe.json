@@ -1,0 +1,112 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "跟著奔跑的 Luna 平移拍她 char_right 手（靠鏡頭那隻）特寫：手半握、往前擺到畫面正中；五根手指最末一節是灰色（和膚色間約 2 cm 的柔和漸層）；背景失焦的灰色街景，下緣是她腳下那台恢復中的彩色車頂一角（深藍＋青色光）。路線 A、不做 B（LoRA 只對全身／臉，手特寫 p5 notes 不用 lunacsf）；指尖灰色＝後製 fade_tips（劇本：變灰由後製追蹤遮罩），首尾幀共用同一張 A 稿（同相位）",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [],
+     "prompt": "Image 1 is the character sheet of a girl: keep her exact skin tone, the same slim hand and the same thin silver bracelets as in the sheet, but do not draw her face or body. Draw a very tight extreme close-up in a wide 16:9 frame, seen from the side at eye level, of only her right hand and forearm swinging forward while she runs, filmed from very close so that the hand is big: the hand itself, from the wrist to the fingertips, is about 40 percent of the image height tall and about 30 percent of the image width wide, and it is in the exact centre of the frame; the forearm comes in from the left edge of the frame. The hand is half-clenched like a sprinter's hand: the four fingers are curled halfway, bent at all knuckles to about 90 degrees, so that the fingertips and fingernails point down and curl in toward the palm and are all clearly visible in a row, separated from each other; the thumb rests against the side of the index finger. It is not a fist and not pointing, exactly five fingers. The hand is seen from the outer side with the thumb on top, and the back of the hand is toward the camera. Two or three thin silver bracelets are on the wrist. The upper arm, her white top and her face are not visible. All of the hand and arm has the same normal warm skin colour. The background is a strongly blurred, out-of-focus greyscale night street with bokeh lights and no colour. Along the bottom edge of the frame is a blurred corner of a glossy dark blue car roof with a faint cyan glow. No face, no text, no letters, no logos. Clean Japanese anime cel shading with thin black line art, flat colors. "
+    },
+    "post": [
+     {
+      "op": "fade_tips",
+      "wrist": [
+       0.4,
+       0.46
+      ],
+      "frac": 0.15,
+      "soft": 0.05,
+      "mask_img": "tipmask"
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 33.1,
+     "2": 26.0,
+     "3": 26.0,
+     "4": 26.0,
+     "5": 26.0,
+     "6": 26.0
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "3": "灰色只蓋到拳頭前緣一小塊、看不出指尖變灰",
+   "6": "灰色邊界是一條垂直直線、不像指節"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖、與首幀同相位（A 稿＝首幀同 seed 的 A 稿）：手再次往前擺到畫面正中，灰色到最末兩節（後製 frac 0.30）",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "copy",
+    "A": {
+     "refs": [
+      "first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png，不經 Qwen)"
+    },
+    "post": [
+     {
+      "op": "fade_tips",
+      "wrist": [
+       0.4,
+       0.46
+      ],
+      "frac": 0.3,
+      "soft": 0.05,
+      "mask_img": "tipmask"
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 0,
+     "2": 0,
+     "3": 0,
+     "4": 0,
+     "5": 0,
+     "6": 0
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "3": "灰色只蓋到拳頭前緣一小塊、看不出指尖變灰",
+   "6": "灰色邊界是一條垂直直線、不像指節"
+  },
+  "contact": "contact_last.png"
+ }
+}

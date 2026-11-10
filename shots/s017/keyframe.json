@@ -1,0 +1,445 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "街道一側 1.5 m 平視；Luna 側身朝右奔跑在畫面左半（身高約畫面高 30%、腳在 84%、char_left 腳在前）；ECHO 從她頭後方露出一半（後製貼）；右上方 3 台灰色定格的懸浮車由低到高排成階梯（車頂約畫面高 46%、31%、16%）；背景灰色商店立面與停在半空的雨；只有 Luna 與 ECHO 有色。場景＝s012 的 A 稿，車＝素材貼上（Qwen 無法精確排出劇本的 3 台階梯）",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s012/candidates/first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png 的場景，不經 Qwen)"
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s017/candidates/first_pose_s1.png",
+      "pose_strength": 1.0,
+      "pose_end": 0.9,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from side, profile, facing right, full body, running, leaning forward, mid-stride, one leg forward, arms swinging, dynamic pose, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "remove_streaks",
+      "maxw": 14,
+      "ratio": 1.6
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 150,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person": false
+     },
+     {
+      "op": "paste_car",
+      "color": "pearl",
+      "cx": 0.395,
+      "top": 0.46,
+      "w": 0.205,
+      "sat": 0.0
+     },
+     {
+      "op": "paste_car",
+      "color": "wine",
+      "cx": 0.645,
+      "top": 0.31,
+      "w": 0.205,
+      "sat": 0.0,
+      "dim": 1.7
+     },
+     {
+      "op": "paste_car",
+      "color": "navy",
+      "cx": 0.89,
+      "top": 0.16,
+      "w": 0.205,
+      "sat": 0.0,
+      "dim": 1.7
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.3,
+      "fx": 0.2,
+      "fy": 0.84
+     },
+     {
+      "op": "drone",
+      "cx": 0.17,
+      "cy": 0.575,
+      "diam": 0.05,
+      "yaw": 70,
+      "behind": true
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 21.6,
+     "2": 20.5,
+     "3": 20.5,
+     "4": 20.4,
+     "5": 20.4,
+     "6": 20.4
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   },
+   {
+    "seeds": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s012/candidates/first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png 的場景，不經 Qwen)"
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s017/candidates/first_pose_s7.png",
+      "pose_strength": 1.25,
+      "pose_end": 0.95,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from side, profile, facing right, full body, sprinting, running, leaning forward, mid-stride, one leg forward, dynamic pose, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "remove_streaks",
+      "maxw": 14,
+      "ratio": 1.6
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 150,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person": false
+     },
+     {
+      "op": "paste_car",
+      "color": "pearl",
+      "cx": 0.395,
+      "top": 0.46,
+      "w": 0.205,
+      "sat": 0.0
+     },
+     {
+      "op": "paste_car",
+      "color": "wine",
+      "cx": 0.645,
+      "top": 0.31,
+      "w": 0.205,
+      "sat": 0.0,
+      "dim": 1.7
+     },
+     {
+      "op": "paste_car",
+      "color": "navy",
+      "cx": 0.89,
+      "top": 0.16,
+      "w": 0.205,
+      "sat": 0.0,
+      "dim": 1.7
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.3,
+      "fx": 0.2,
+      "fy": 0.84
+     },
+     {
+      "op": "drone",
+      "cx": 0.17,
+      "cy": 0.575,
+      "diam": 0.05,
+      "yaw": 70,
+      "behind": true
+     }
+    ],
+    "seconds_per_candidate": {
+     "7": 22.4,
+     "8": 21.3,
+     "9": 21.7,
+     "10": 20.8,
+     "11": 20.6,
+     "12": 20.5,
+     "13": 28.5,
+     "14": 21.4,
+     "15": 21.3,
+     "16": 21.3,
+     "17": 21.3,
+     "18": 21.3
+    },
+    "files": {
+     "7": "first_s7.png",
+     "8": "first_s8.png",
+     "9": "first_s9.png",
+     "10": "first_s10.png",
+     "11": "first_s11.png",
+     "12": "first_s12.png",
+     "13": "first_s13.png",
+     "14": "first_s14.png",
+     "15": "first_s15.png",
+     "16": "first_s16.png",
+     "17": "first_s17.png",
+     "18": "first_s18.png"
+    }
+   }
+  ],
+  "rejected": {
+   "2": "皮膚偏橘棕（LoRA 立繪膚色走樣）",
+   "5": "前傾不足、像快走不像奔跑",
+   "6": "前傾不足、像快走不像奔跑",
+   "1": "場景 A 稿左側窗格留有純白方塊（劇本不許純白）",
+   "7": "場景 A 稿左側窗格留有純白方塊（劇本不許純白）",
+   "4": "harmonize 後腿環看不清楚",
+   "9": "harmonize 後大腿偏橘紅",
+   "10": "harmonize 後大腿偏橘紅",
+   "13": "場景 A 稿窗格留有純白方塊",
+   "14": "腿環看不清楚",
+   "15": "harmonize 後腿環消失",
+   "16": "harmonize 後腿環消失",
+   "18": "腿環看不清楚"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "鏡頭升到離地約 8.5 m：Luna 在第 3 台（深藍、彩色、青色燈帶亮著）車頂上往右跑（沿用首幀同 seed 的立繪），畫面左下第 2 台（酒紅、飽和度剩約 1/10）與第 1 台（全灰，只露出畫面左下角）；背景是對面商店的二、三樓與灰色看板（場景＝首幀的 A 稿放大）；ECHO 在她頭後方",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s012/candidates/first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png 的場景，不經 Qwen)"
+    },
+    "post": [
+     {
+      "op": "zoom",
+      "z": 1.75,
+      "cx": 0.5,
+      "cy": 0.36
+     },
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "remove_streaks",
+      "maxw": 14,
+      "ratio": 1.6
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 120,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person": false
+     },
+     {
+      "op": "paste_car",
+      "color": "silver",
+      "cx": -0.11,
+      "top": 0.9,
+      "w": 0.34,
+      "sat": 0.0,
+      "dim": 1.2
+     },
+     {
+      "op": "paste_car",
+      "color": "wine",
+      "cx": 0.25,
+      "top": 0.78,
+      "w": 0.34,
+      "sat": 0.1,
+      "dim": 1.35
+     },
+     {
+      "op": "paste_car",
+      "color": "navy",
+      "cx": 0.62,
+      "top": 0.66,
+      "w": 0.34,
+      "sat": 1.0
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.26,
+      "fx": 0.58,
+      "fy": 0.675
+     },
+     {
+      "op": "drone",
+      "cx": 0.554,
+      "cy": 0.436,
+      "diam": 0.043,
+      "yaw": 70,
+      "behind": true
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 0,
+     "2": 0,
+     "3": 0,
+     "4": 0,
+     "5": 0,
+     "6": 0,
+     "7": 0,
+     "8": 0,
+     "9": 0,
+     "10": 0,
+     "11": 0,
+     "12": 0,
+     "13": 0,
+     "14": 0,
+     "15": 0,
+     "16": 0,
+     "17": 0,
+     "18": 0
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png",
+     "7": "last_s7.png",
+     "8": "last_s8.png",
+     "9": "last_s9.png",
+     "10": "last_s10.png",
+     "11": "last_s11.png",
+     "12": "last_s12.png",
+     "13": "last_s13.png",
+     "14": "last_s14.png",
+     "15": "last_s15.png",
+     "16": "last_s16.png",
+     "17": "last_s17.png",
+     "18": "last_s18.png"
+    }
+   }
+  ],
+  "rejected": {
+   "2": "同 first #2，皮膚偏橘棕",
+   "5": "同 first #5，不像奔跑",
+   "6": "同 first #6，不像奔跑",
+   "1": "場景 A 稿窗格留有純白方塊、看板殘缺",
+   "7": "場景 A 稿窗格留有純白方塊、看板殘缺",
+   "4": "harmonize 後腿環消失",
+   "9": "腿上橘紅色塊、輪廓怪",
+   "10": "腿上橘紅色塊",
+   "11": "腿環只剩淡淡一條、看不清",
+   "12": "腿上橘紅色塊",
+   "13": "腿環偏粉、場景留白方塊",
+   "14": "腿環看不清楚",
+   "15": "harmonize 後腿環消失"
+  },
+  "contact": "contact_last.png"
+ }
+}
