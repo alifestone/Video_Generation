@@ -127,3 +127,6 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   animatic_frames: sdxl_drafts           # 使用者：animatic 每鏡快速出一張 SDXL 草圖
   g1_user_review: merged_into_g2         # 使用者：草圖難以審查，G1 的使用者審查跳過，到 G2（關鍵幀換進 animatic）一起審；Sonnet 節奏審查已通過（g1_r1）
   plot_review: at_g3_only                # 使用者：P2 每段 render 後的使用者確認取消；劇情一律在 G3 粗剪時和影片對照檢驗（S 類退回 P2）
+  # 2026-11-10 P6（p6 session）
+  p6_order: all_keyframes_first          # 使用者：74 鏡關鍵幀依段落（時間順序）全部出完，再一次做 G2（含節奏與段落起伏），之後才進 P7；不採計畫書「Chorus 1 先、逐段走到 P7」
+  p6_fun_control_test: before_p7         # 因此 Fun Control 測試延到 P7 開始前（P6 的路線 B 姿勢關鍵幀用 OpenPose ControlNet 出靜態圖，不依賴 Fun Control）

@@ -1,0 +1,39 @@
+# P6 關鍵幀：Claude 代決事項（精度層級；劇情與設定層級的已問使用者）
+# 2026-11-10 起，p6 session（Claude Opus 5.5；實作 Sonnet 5.5 subagent）
+
+user_decisions:
+  - id: U1
+    topic: P6 段落順序
+    answer: 74 鏡關鍵幀依時間順序逐段全部出完，再一次做 G2（含節奏與段落起伏），之後才進 P7；Fun Control 測試延到 P7 前（project.yaml p6_order）
+
+claude_decisions:
+  # 第一批：Intro s001、s005，Hook s006–s008
+  - id: D01
+    topic: 關鍵幀解析度
+    decision: 最終候選一律 1280×720（Qwen/SDXL 1344×768 中間稿縮放後置中裁切，垂直只裁約 1.5%）；P4 的 s002–s004 維持 1344×768，p4_video prep_image 會自動處理
+  - id: D02
+    topic: s005 光環與青光
+    decision: 關鍵幀不畫 @countdown_ring 與臉上青光，P9 後製疊；B 的 tag 用 calm, confident 取代 serious, determined（後者讓 LoRA 畫成皺眉）；末幀白光增強不足的部分後製補
+  - id: D03
+    topic: s005 背景
+    decision: monitor_wall 背景後製灰化，艙玻璃與 LUNA 保持彩色（沿用 P4 s003）
+  - id: D04
+    topic: ECHO 的畫法
+    decision: s006、s007、s008 的 @drone 一律後製貼圖（尺寸依劇本公式推算：s006 直徑畫面高 19%、s007 末幀 5%、s008 mid 3%、末幀 3.6%），B 的 tag 不放 drone
+  - id: D05
+    topic: s008 首幀與中間幀的場景
+    decision: >-
+      Qwen 畫不出 1.2 m 平視的樓頂，所以城市取同 seed 末幀的 Qwen 場景（首尾幀同一座城），整片灰化只留地平線一條彩色光帶；
+      矮牆、地面、艙口、雨點、塔剪影程式繪製。偏離：艙口寬 11%（劇本 8%，為了看得清）、塔高約畫面高 26%（為了醒目）、城市仍是略俯視的透視
+  - id: D06
+    topic: s008 中間幀（從 [8,2] 拆）的姿勢
+    decision: 單膝落地、正要站起（依 motion「[8,1] 單膝著地，[8,2]–[8,3] 站起」與拆點 [8,2]）；notes 的「cut 在站起完成點」不採用。著地膝照 shots.yaml 為 char_left（G0 示範圖是另一腿，不採）
+  - id: D07
+    topic: s008 立繪腿環錯邊
+    decision: 背面立繪腿環落在畫面左的（末幀 #1、3、4、5）水平翻轉；跪姿立繪不能翻轉（會變成另一膝著地），中間幀小人物的腿環左右留到 P8 檢查
+  - id: D08
+    topic: s008 末幀 vs s006 的燈環距離
+    decision: 「燈環距頭頂約 1/3 畫面高」與頭頂在 15% 矛盾，以頭頂 15% 為準
+  - id: D09
+    topic: s001
+    decision: Qwen 的青線都貼滿全寬，另出程式繪製版（#5–8：45% 高、約 80% 寬），兩種都放進候選

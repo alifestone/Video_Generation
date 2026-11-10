@@ -1,0 +1,135 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "正上方俯瞰豎井，同心青色燈環往中心縮小，最深處是黑的；正中很深處一個發白光的小圓盤（直徑約畫面高 6%）、白衣紫髮小人影、盤緣右側 ECHO 小白點",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "refs/entities/launch_tunnel/shaft.png"
+     ],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Image 2 shows glowing cyan ring lights in a black shaft. Straight top-down view looking vertically down a very deep circular shaft, perfectly symmetrical, centred in the image. The glowing cyan ring lights (colour #29d3f5) form concentric circles around the exact centre of the image: the outermost ring has a diameter equal to the full image height, and each ring toward the centre is a smaller circle, getting closer and closer together, shrinking toward the centre, which is pure black and far away. The shaft wall between the rings is very dark blue-black matte metal with faint thin vertical seams, and the left and right sides of the image outside the outermost ring are the same dark wall. There is no character, no platform, no disc, no drone and no white light anywhere in the image. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "post": [
+     {
+      "op": "platform_dot",
+      "cx": 0.5,
+      "cy": 0.5,
+      "diam": 0.06
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 58.9,
+     "2": 42.2,
+     "3": 38.0,
+     "4": 38.0,
+     "5": 38.0,
+     "6": 38.1
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "6": "左側多出一圈半透明鬼影燈環，燈環不同心"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同心圓構圖；平台圓盤直徑約畫面高 20%、圓心在正中；LUNA 站在平台上，仰起的臉直視鏡頭，看得出臉與紫色編髮；ECHO 在平台右緣（後製貼）；平台周圍牆面被白光照亮",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "refs/entities/launch_tunnel/shaft.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 shows glowing cyan ring lights in a black shaft. Straight top-down view looking vertically down a deep circular shaft, perfectly symmetrical and centred: the glowing cyan ring lights from image 2 form concentric circles around the exact centre of the image, the outermost ring having a diameter equal to the full image height, and each ring below it is a smaller circle shrinking toward the centre. In the exact centre of the image is a flat, bright glowing white circular platform whose diameter is exactly 20 percent of the image height. The girl from image 1 stands on the platform, seen from directly above from a very high angle, with her head tilted back so that her face looks straight up at the camera, her face upright in the image and clearly visible with a firm determined expression, her shoulders and her arms hanging at her sides, her whole body lies inside the white disc, her ponytail pressed down behind her. The white light of the platform brightly lights the wall of the shaft around it. There is no drone and no floating sphere. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "shrink_paste",
+       "bg": "first_A_s{seed}.png",
+       "target": 0.2,
+       "cx": 0.5,
+       "cy": 0.5
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": [
+      472,
+      264,
+      872,
+      504
+     ],
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from above, high angle, looking up, looking at viewer, upper body, standing, arms at sides, white circular platform, glowing platform, hair blown downward, lit from below, vertical shaft, dark tunnel, concentric circles, cyan ring lights, centered, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "glow",
+      "cx": 0.5,
+      "cy": 0.5,
+      "r": 0.17,
+      "a": 0.45
+     },
+     {
+      "op": "paste_drone",
+      "cx": 0.557,
+      "cy": 0.465,
+      "diam": 0.05
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 59.5,
+     "2": 91.0,
+     "3": 78.7,
+     "4": 94.7,
+     "5": 76.4,
+     "6": 89.8
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "6": "左側多出一圈半透明鬼影燈環，燈環不同心"
+  },
+  "contact": "contact_last.png"
+ }
+}

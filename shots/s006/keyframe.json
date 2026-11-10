@@ -1,0 +1,69 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "豎井裡由下往上仰拍 LUNA 膝以上，抬頭看上方；ECHO 在右上（後製貼）；只用首幀。背景＝refs/p6/s006_shaft_bg.png（refs/entities/launch_tunnel/shaft.png 取消失點以下的下半部，消失點在畫面高約 8%、燈環是往下彎的弧）",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "refs/p6/s006_shaft_bg.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 is the background, the inside of a black vertical shaft seen from below with glowing cyan ring lights that converge to a black vanishing point at the top. Keep the background of image 2 exactly as it is, the same rings, the same colours and the same vanishing point at the top, and add the girl from image 1 in front of it: low-angle shot from below, knees-up framing, she stands in the exact centre of the frame facing the camera, the bottom edge of the frame cuts her at the knees, and the top of her head is at about 15 percent of the image height, so she is large and fills most of the image height. Her feet are shoulder width apart and her knees are slightly bent, her arms hang at her sides with both hands in loose fists, and her chin is raised and her head tilted back so that she looks up toward the vanishing point at the top of the shaft, with a determined, firm expression, her mouth closed and her eyes open. Her face and white clothes are lit brightly from below by white light, with normal exposure so that the clothes show folds. Her long ponytail hangs straight down behind her head and her back under its own weight, hanging vertically with only the tips fluttering slightly; it does not fly up and does not blow sideways. There is no drone, no floating sphere and no platform visible. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. She has exactly one black thigh strap with a silver buckle, only on her right leg, which is on the LEFT side of the image because she faces the viewer; her other leg is bare. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "zoom",
+       "z": 1.5,
+       "cx": 0.5,
+       "cy": 0.3333
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, cowboy shot, from below, looking up, clenched hands, arms at sides, standing, closed mouth, lit from below, white light from below, hair blown downward, wind, vertical shaft, dark tunnel, cyan ring lights, concentric rings, vanishing point, wide angle, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "paste_drone",
+      "cx": 0.7,
+      "cy": 0.3,
+      "diam": 0.19
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 79.5,
+     "2": 93.4,
+     "3": 95.2,
+     "4": 81.6,
+     "5": 88.7,
+     "6": 81.7
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "contact": "contact_first.png"
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "主螢幕黑色玻璃面佔滿畫面，水平正中、畫面高 45% 處一條幾乎平直的青色 @signal_wave",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Create a minimalist flat anime-style image of a completely black glass monitor surface that fills the whole picture edge to edge, with no frame, no bezel, no border and no edges of the screen visible anywhere. The glass is almost pure black with only an extremely faint soft reflection. Exactly one thin, perfectly straight, perfectly horizontal glowing cyan line (colour #29d3f5) crosses the picture from 10 percent to 90 percent of the width, positioned at exactly 45 percent of the image height measured from the top edge, slightly above the vertical centre. The line is very thin, about half a percent of the image height, and it has a soft faint cyan glow around it about three line widths wide. The line is flat, with no bumps, no peaks, no waveform and no zigzag. Nothing else in the image: no grid, no axes, no tick marks, no numbers, no text, no icons. "
+    },
+    "post": [
+     {
+      "op": "zoom",
+      "z": 1.08,
+      "cx": 0.5,
+      "cy": 0.5463
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 56.1,
+     "2": 26.0,
+     "3": 26.0,
+     "4": 26.0
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png"
+    }
+   },
+   {
+    "seeds": [
+     5,
+     6
+    ],
+    "gen": "proc",
+    "post": [
+     {
+      "op": "black_line",
+      "y": 0.45,
+      "x0": 0.1,
+      "x1": 0.9
+     }
+    ],
+    "seconds_per_candidate": {
+     "5": 0,
+     "6": 0
+    },
+    "files": {
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   },
+   {
+    "seeds": [
+     7,
+     8
+    ],
+    "gen": "proc",
+    "post": [
+     {
+      "op": "black_line",
+      "y": 0.45,
+      "x0": 0.1,
+      "x1": 0.9,
+      "refl": 14,
+      "glow": 0.9,
+      "lw_scale": 1.3
+     }
+    ],
+    "seconds_per_candidate": {
+     "7": 0,
+     "8": 0
+    },
+    "files": {
+     "7": "first_s7.png",
+     "8": "first_s8.png"
+    }
+   }
+  ],
+  "contact": "contact_first.png"
+ }
+}

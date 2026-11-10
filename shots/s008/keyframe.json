@@ -1,0 +1,277 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "樓頂整片灰階 frozen（灰色高樓、灰色懸停 hovercar、看板仍亮但無色，只有地平線一條細的彩色光帶）；鏡頭在艙口後方 8 m、離地 1.2 m 平視；艙口（兩片半圓鋼板、接縫朝遠方、淺灰白發光環）在畫面水平正中、下方；停在半空的灰色雨滴小點分布整個畫面；地平線正中純黑塔剪影；沒有 LUNA 與 ECHO。城市＝同 seed 末幀的 Qwen 城市（首尾幀同一座），裁矮牆以上拉成平視背景，再疊程式繪製的矮牆、地面、艙口、塔",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "proc",
+    "A": {
+     "refs": [],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Draw only a wide, flat, eye-level panorama of a huge futuristic city at night, seen from far away across a flat horizon, with nothing in the foreground: the horizon is a straight horizontal line at about 58 percent of the image height, and a dense forest of tall skyscrapers stands along it, many of them rising high into the sky up to between 20 and 45 percent of the image height, with the foreground below the horizon filled by more dark rooftops of the city. Many skyscrapers of different heights with lit windows, glowing hologram billboards showing abstract blobs of colour, and many small sleek wheel-less hover cars floating motionless in the air above the city at different heights and distances, each only one or two percent of the image width wide. Along the horizon behind the buildings there is a thin bright band of colourful neon districts in magenta, cyan and amber. The sky is dark night. There is no rain, no tall tower, no character, no drone, no wall and no roof edge. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "post": [
+     {
+      "op": "skyline_from",
+      "src": "last_A_s{seed}.png",
+      "wall_top": 0.605
+     },
+     {
+      "op": "roof",
+      "wall_top": 0.605,
+      "wall_bottom": 0.667,
+      "puddles": 0,
+      "drops": 520
+     },
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.4,
+      "h": 0.26
+     },
+     {
+      "op": "hatch",
+      "state": "closed",
+      "cx": 0.5,
+      "cy": 0.83,
+      "w": 0.11,
+      "ratio": 0.2
+     },
+     {
+      "op": "band_grey",
+      "band_px": 16,
+      "lo": 0.12,
+      "hi": 0.5
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 32.0,
+     "2": 26.0,
+     "3": 26.0,
+     "4": 26.0,
+     "5": 26.0,
+     "6": 26.0
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "contact": "contact_first.png"
+ },
+ "mid": {
+  "說明": "[8,2] 拆段點：靜止鏡頭（同首幀機位與場景），艙口已開、白光往上照（程式繪製）；LUNA 背對鏡頭，落在艙口前方約 2.5 m 處單膝落地（char_left 膝與 char_right 手掌著地、char_right 腳在前），開始站起，高約畫面高 15%、腳約在畫面高 77%；ECHO 在她 char_left 肩旁（畫面左，後製貼）。人物＝立繪（Illustrious＋LoRA＋OpenPose 骨架，路線 B）摳圖縮貼",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "first_Cpre_s1.png"
+     ],
+     "prompt": "(沿用同 seed 首幀的場景，不經 Qwen)"
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s008/candidates/mid_pose_s1.png",
+      "pose_strength": 0.9,
+      "pose_end": 0.8,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, back view, facing away, full body, kneeling, one knee on ground, superhero landing, hand on ground, leaning forward, head down, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "hatch",
+      "state": "open",
+      "cx": 0.5,
+      "cy": 0.83,
+      "w": 0.11,
+      "ratio": 0.2,
+      "beam": 0.07
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.15,
+      "fx": 0.5,
+      "fy": 0.775
+     },
+     {
+      "op": "paste_drone",
+      "cx": 0.463,
+      "cy": 0.667,
+      "diam": 0.03
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 14.4,
+     "2": 14.3,
+     "3": 14.3,
+     "4": 14.3,
+     "5": 14.3,
+     "6": 14.3,
+     "7": 14.3,
+     "8": 14.3,
+     "9": 14.3,
+     "10": 14.2,
+     "11": 14.3,
+     "12": 14.2
+    },
+    "files": {
+     "1": "mid_s1.png",
+     "2": "mid_s2.png",
+     "3": "mid_s3.png",
+     "4": "mid_s4.png",
+     "5": "mid_s5.png",
+     "6": "mid_s6.png",
+     "7": "mid_s7.png",
+     "8": "mid_s8.png",
+     "9": "mid_s9.png",
+     "10": "mid_s10.png",
+     "11": "mid_s11.png",
+     "12": "mid_s12.png"
+    }
+   }
+  ],
+  "rejected": {
+   "2": "前傾站姿彎腰，不是單膝落地",
+   "5": "皮膚與腿部出現橘紅色塊（著色壞掉）",
+   "6": "彎腰站姿，沒有單膝著地、手也沒著地",
+   "7": "正面朝向鏡頭（應背對）",
+   "8": "側前方朝向鏡頭（應背對）",
+   "9": "蹲姿且手在摸腳，不是單膝落地手掌著地"
+  },
+  "contact": "contact_mid.png"
+ },
+ "last": {
+  "說明": "鏡頭在 LUNA 後上方約 6 m、身後約 5 m 俯看越過她看向 @city；她背對鏡頭站立（腳在畫面高 92%、身高 22%），ECHO 在她左肩旁（畫面左，後製貼）；身後艙口開著發白光（畫面下緣）；灰彩分界在畫面高 36%、地平線 32%、正中黑色塔剪影（程式繪製）。人物＝立繪（路線 B）摳圖縮貼",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. High-angle wide shot at night, the camera about 6 metres above a flat concrete rooftop, looking forward and down over the roof toward a huge city. The roof floor, plain wet concrete with a few puddles and nobody on it, fills the lower 60 percent of the image, and a low concrete parapet wall runs across the whole width of the image at about 62 percent of the image height. Beyond the wall the vast city spreads out to a far horizon that lies at about 32 percent of the image height: the nearby and middle-distance skyscrapers, holographic billboards and dozens of small wheel-less hover cars parked motionless in the air are all plain greyscale with no colour, and tiny raindrops hang motionless in the air as small dots. At a sharp, hard-edged line at about 36 percent of the image height the colour begins: everything beyond that line up to the horizon is colourful, with magenta, cyan and amber neon lights and glowing holographic billboards, and the tops of the tallest far buildings above the horizon are coloured too. There is no tall tower, no character, no drone and no hatch. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s008/candidates/last_pose_s1.png",
+      "pose_strength": 0.9,
+      "pose_end": 0.8,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, back view, facing away, full body, standing, arms at sides, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.32,
+      "h": 0.17
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       },
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         0.36
+        ],
+        "grey": false,
+        "feather": 1
+       }
+      ]
+     },
+     {
+      "op": "hatch",
+      "state": "open",
+      "cx": 0.5,
+      "cy": 0.99,
+      "w": 0.22,
+      "ratio": 0.2,
+      "beam": 0.08
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.22,
+      "fx": 0.5,
+      "fy": 0.92
+     },
+     {
+      "op": "paste_drone",
+      "cx": 0.472,
+      "cy": 0.742,
+      "diam": 0.036
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 75.4,
+     "2": 76.6,
+     "3": 60.3,
+     "4": 40.2,
+     "5": 40.2,
+     "6": 24.2
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png"
+    }
+   }
+  ],
+  "contact": "contact_last.png"
+ }
+}

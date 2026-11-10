@@ -1,0 +1,225 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "透過（後製疊的）光環中央看 @pod 裡的 LUNA：MCU 胸口以上，臉在畫面正中，睜眼直視鏡頭、嘴閉；光環與臉上青光由後製疊，所以不畫",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "shots/s003/keyframe.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 shows the same glass capsule and the same blurred greyscale monitor wall that this scene needs, with the same girl inside. Make a new medium close-up of this same scene, with the camera straight in front of the capsule at eye level but much closer: the girl is framed from the chest up, her face exactly in the centre of the frame, her shoulders and upper chest along the bottom of the frame, her head upright and facing the camera. Curved transparent glass of the capsule surrounds her with faint light reflections. Her eyes are wide open and look straight into the camera with a firm, determined gaze, and her mouth is closed with a serious, calm expression. Soft white light from the capsule base below the frame lights her face and her white top softly from below. Behind the glass the wall of greyscale monitor screens is completely out of focus, dark room. Do not draw any ring, any glowing circle or any cyan light on her face. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": null,
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, looking at viewer, closed mouth, calm, confident, standing inside glass capsule, glass reflection, lit from below, white light, dark room, blurry background, monitor wall, depth of field, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       },
+       {
+        "ellipse": [
+         0.2,
+         0.0,
+         0.8,
+         1.0
+        ],
+        "grey": false,
+        "feather": 30
+       }
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 134.2,
+     "2": 86.4,
+     "3": 78.5,
+     "4": 94.8
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png"
+    }
+   },
+   {
+    "seeds": [
+     5,
+     6,
+     7,
+     8
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "refs/entities/pod/closed.png",
+      "refs/entities/monitor_wall/frozen.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 shows the glass capsule pod, image 3 shows a wall of grey screens. Medium close-up, eye level, straight-on front view: the girl from image 1 stands inside the transparent glass tube of the capsule from image 2, framed from the chest up, her face exactly in the centre of the frame, her shoulders and upper chest along the bottom edge of the frame, her head upright and facing the camera. Her eyes are wide open and look straight into the camera with a firm, determined gaze, her mouth is closed, serious calm expression. The curved glass of the capsule fills the space around her with faint reflections, and soft white light from the capsule base below the frame lights her face from underneath. Behind the capsule is a wall of greyscale monitor screens, completely out of focus and blurred, dark room. Do not draw any ring, any glowing circle or any cyan light on her face. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": null,
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, looking at viewer, closed mouth, calm, confident, standing inside glass capsule, glass reflection, lit from below, white light, dark room, blurry background, monitor wall, depth of field, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       },
+       {
+        "ellipse": [
+         0.2,
+         0.0,
+         0.8,
+         1.0
+        ],
+        "grey": false,
+        "feather": 30
+       }
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "5": 92.7,
+     "6": 110.7,
+     "7": 102.7,
+     "8": 94.7
+    },
+    "files": {
+     "5": "first_s5.png",
+     "6": "first_s6.png",
+     "7": "first_s7.png",
+     "8": "first_s8.png"
+    }
+   }
+  ],
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖；青光已無；@pod 底座白光增強到白衣接近純白但仍有皺褶，臉仍看得清楚（光環弧熄滅成深灰由後製疊）",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "shots/s005/candidates/first_B_s1.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 is the first frame. Keep image 2 exactly as it is, with the same girl, the same framing, the same capsule glass, the same pose, her eyes open looking straight into the camera and her mouth closed, and change only the lighting: the white light from the capsule base below is now very strong, a bright white glow rises from the bottom of the frame, her white top is lit almost to pure white, but the fold lines and soft pale shading of the fabric stay visible, and her face stays clearly readable and not overexposed. The background behind the glass is darker. There is no ring and no cyan light. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": null,
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, earrings, high collar, white shirt, sleeveless, portrait, looking at viewer, closed mouth, determined, standing inside glass capsule, strong white light from below, bright, glowing white clothes, dark background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       },
+       {
+        "ellipse": [
+         0.2,
+         0.0,
+         0.8,
+         1.0
+        ],
+        "grey": false,
+        "feather": 30
+       }
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 87.9,
+     "2": 92.0,
+     "3": 82.5,
+     "4": 93.5,
+     "5": 95.4,
+     "6": 82.4,
+     "7": 89.4,
+     "8": 79.4
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png",
+     "7": "last_s7.png",
+     "8": "last_s8.png"
+    }
+   }
+  ],
+  "rejected": {
+   "6": "玻璃左側出現像字母 F 的深色形狀（疑似畫出文字）",
+   "8": "玻璃左側深色污跡與背景螢幕牆破圖"
+  },
+  "contact": "contact_last.png"
+ }
+}

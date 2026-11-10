@@ -1,0 +1,257 @@
+# P6 關鍵幀 job 定義（tools/p6_keyframes.py 讀這份）。內容正本是 plan/shots.yaml 的 first_frame／last_frame；這裡只放「怎麼生」：
+#   qwen        Qwen-Image-Edit 的英文說明（A）。image1 一律是角色表，refs 依序是 image2、image3…；
+#               refs 可用 {first}／{mid}／{last}＝同鏡該幀的中間稿（B，沒有 B 就用 A）、{first:final}＝該幀最終稿，seed 對應同 seed（srcseed 可改）。
+#   lora        false＝不做 B（環境鏡只留 A）；預設 true＝B：Illustrious＋LUNA LoRA v2 img2img＋canny。
+#   tags        B 的 Danbooru tag 覆寫（預設用 plan/p5_prompts.yaml 該鏡 keyframe.first／last，剝掉固定外觀與品質 tag 後重組）；
+#               tags_add／tags_drop 增刪個別 tag。ECHO 由後製貼，所以 B 的 tag 不放 drone 相關。
+#   denoise     B 的 denoise（預設 0.6）
+#   controlnet  {pose: 內嵌關鍵點 dict 或骨架圖路徑, pose_strength, pose_end, canny, canny_strength, canny_end}（路線 B：OpenPose＋A 的邊緣當參考線稿）
+#   region      [x0,y0,x1,y1]（1344×768 像素）：B 只重繪這個區域（小人物用，放大後重繪再羽化貼回）
+#   post        後製步驟 list：grey／paste_drone／platform_dot／black_line／zoom／shift（見 tools/p6_keyframes.py）
+#   seeds       候選的 seed；variants 可讓不同 seed 用不同 refs／說明
+#   gen: proc   程式繪製（不經 Qwen），由 post 的 op 畫
+# 灰色（frozen）的東西一律後製去飽和，tag 不寫 greyscale（p5_decisions D03）。字標與歌詞不畫（P9 疊）。
+
+macros:
+  STYLE: >-
+    Clean Japanese anime cel shading with thin black line art, flat colors, anime background art.
+    No text, no letters, no numbers, no logos anywhere.
+  # 外觀五項（docs/style_bible.md）：臉、紫色高馬尾編髮＋銀鏈、白色無袖高領拉鍊上衣、腿環只在角色右腿、手指數
+  CHAR_FACE: >-
+    Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe.
+  CHAR_HAIR: >-
+    Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair
+    and hanging down along the ponytail, with a few loose bangs on her forehead.
+  CHAR_TOP: >-
+    She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff.
+  CHAR_LOWER: >-
+    She wears a white cargo mini skirt with two big pockets, a black belt with a long black strap hanging down, silver bracelets on both wrists, white ankle socks and white chunky sneakers.
+  LEG_FRONT: >-
+    She has exactly one black thigh strap with a silver buckle, only on her right leg, which is on the LEFT side of the image because she faces the viewer; her other leg is bare.
+  LEG_BACK: >-
+    She has exactly one black thigh strap with a silver buckle, only on her right leg, which is on the RIGHT side of the image because she is seen from behind; her other leg is bare.
+  FINGERS: Each visible hand has exactly five fingers.
+  KEEP_SHEET: >-
+    Keep the exact same character and outfit as the reference sheet in image 1.
+
+shots:
+  s001:
+    frames:
+      first:
+        desc: 主螢幕黑色玻璃面佔滿畫面，水平正中、畫面高 45% 處一條幾乎平直的青色 @signal_wave
+        lora: false
+        variants:
+          - seeds: [1, 2, 3, 4]
+            post:   # Qwen 都把線放在畫面高 50%、螢幕玻璃邊緣會露出一圈淡框：放大 1.08 倍裁掉淡框，同時把線移到 45%
+              - {op: zoom, z: 1.08, cx: 0.5, cy: 0.5463}
+            qwen: >-
+              Image 1 is an unrelated character sheet: ignore it completely and do not draw any character.
+              Create a minimalist flat anime-style image of a completely black glass monitor surface that fills the whole picture edge to edge,
+              with no frame, no bezel, no border and no edges of the screen visible anywhere.
+              The glass is almost pure black with only an extremely faint soft reflection.
+              Exactly one thin, perfectly straight, perfectly horizontal glowing cyan line (colour #29d3f5) crosses the picture from 10 percent to 90 percent of the width,
+              positioned at exactly 45 percent of the image height measured from the top edge, slightly above the vertical centre.
+              The line is very thin, about half a percent of the image height, and it has a soft faint cyan glow around it about three line widths wide.
+              The line is flat, with no bumps, no peaks, no waveform and no zigzag. Nothing else in the image: no grid, no axes, no tick marks, no numbers, no text, no icons.
+          - seeds: [5, 6]     # 程式繪製：位置精確、玻璃反光很淡
+            gen: proc
+            post:
+              - {op: black_line, y: 0.45, x0: 0.10, x1: 0.90}
+          - seeds: [7, 8]     # 程式繪製：玻璃反光較明顯、線較粗且光暈較強
+            gen: proc
+            post:
+              - {op: black_line, y: 0.45, x0: 0.10, x1: 0.90, refl: 14, glow: 0.9, lw_scale: 1.3}
+
+  s006:
+    frames:
+      first:
+        desc: 豎井裡由下往上仰拍 LUNA 膝以上，抬頭看上方；ECHO 在右上（後製貼）；只用首幀。背景＝refs/p6/s006_shaft_bg.png（refs/entities/launch_tunnel/shaft.png 取消失點以下的下半部，消失點在畫面高約 8%、燈環是往下彎的弧）
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: [refs/p6/s006_shaft_bg.png]
+        tags: >-
+          cowboy shot, from below, looking up, clenched hands, arms at sides, standing, closed mouth, lit from below, white light from below,
+          hair blown downward, wind, vertical shaft, dark tunnel, cyan ring lights, concentric rings, vanishing point, wide angle
+        pre:    # Qwen 都把她拍成全身（膝蓋落在畫面高 62%）：先放大 1.5 倍裁切（頂端對齊），讓頭頂約在 9–12%、膝蓋接近畫面下緣，再做 B
+          - {op: zoom, z: 1.5, cx: 0.5, cy: 0.3333}
+        post:
+          - {op: paste_drone, cx: 0.70, cy: 0.30, diam: 0.19}
+        qwen: >-
+          Image 1 is the character sheet, image 2 is the background, the inside of a black vertical shaft seen from below with glowing cyan ring lights that converge to a black vanishing point at the top.
+          Keep the background of image 2 exactly as it is, the same rings, the same colours and the same vanishing point at the top, and add the girl from image 1 in front of it:
+          low-angle shot from below, knees-up framing, she stands in the exact centre of the frame facing the camera, the bottom edge of the frame cuts her at the knees,
+          and the top of her head is at about 15 percent of the image height, so she is large and fills most of the image height.
+          Her feet are shoulder width apart and her knees are slightly bent, her arms hang at her sides with both hands in loose fists,
+          and her chin is raised and her head tilted back so that she looks up toward the vanishing point at the top of the shaft, with a determined, firm expression, her mouth closed and her eyes open.
+          Her face and white clothes are lit brightly from below by white light, with normal exposure so that the clothes show folds.
+          Her long ponytail hangs straight down behind her head and her back under its own weight, hanging vertically with only the tips fluttering slightly; it does not fly up and does not blow sideways.
+          There is no drone, no floating sphere and no platform visible. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<LEG_FRONT>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+
+  s005:
+    frames:
+      first:
+        desc: 透過（後製疊的）光環中央看 @pod 裡的 LUNA：MCU 胸口以上，臉在畫面正中，睜眼直視鏡頭、嘴閉；光環與臉上青光由後製疊，所以不畫
+        variants:
+          - seeds: [1, 2, 3, 4]      # 以 P4 已選定的 s003 關鍵幀當艙與背景的參考，保持同一個艙、同一面灰色螢幕牆
+            refs: [shots/s003/keyframe.png]
+            qwen: >-
+              Image 1 is the character sheet, image 2 shows the same glass capsule and the same blurred greyscale monitor wall that this scene needs, with the same girl inside.
+              Make a new medium close-up of this same scene, with the camera straight in front of the capsule at eye level but much closer:
+              the girl is framed from the chest up, her face exactly in the centre of the frame, her shoulders and upper chest along the bottom of the frame,
+              her head upright and facing the camera. Curved transparent glass of the capsule surrounds her with faint light reflections.
+              Her eyes are wide open and look straight into the camera with a firm, determined gaze, and her mouth is closed with a serious, calm expression.
+              Soft white light from the capsule base below the frame lights her face and her white top softly from below.
+              Behind the glass the wall of greyscale monitor screens is completely out of focus, dark room.
+              Do not draw any ring, any glowing circle or any cyan light on her face. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+          - seeds: [5, 6, 7, 8]      # 以 refs/entities 的艙與灰色螢幕牆重新合成（P4 s003 的做法）
+            refs: [refs/entities/pod/closed.png, refs/entities/monitor_wall/frozen.png]
+            qwen: >-
+              Image 1 is the character sheet, image 2 shows the glass capsule pod, image 3 shows a wall of grey screens.
+              Medium close-up, eye level, straight-on front view: the girl from image 1 stands inside the transparent glass tube of the capsule from image 2,
+              framed from the chest up, her face exactly in the centre of the frame, her shoulders and upper chest along the bottom edge of the frame,
+              her head upright and facing the camera. Her eyes are wide open and look straight into the camera with a firm, determined gaze, her mouth is closed, serious calm expression.
+              The curved glass of the capsule fills the space around her with faint reflections, and soft white light from the capsule base below the frame lights her face from underneath.
+              Behind the capsule is a wall of greyscale monitor screens, completely out of focus and blurred, dark room.
+              Do not draw any ring, any glowing circle or any cyan light on her face. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        tags: >-
+          portrait, looking at viewer, closed mouth, calm, confident, standing inside glass capsule, glass reflection, lit from below, white light, dark room,
+          blurry background, monitor wall, depth of field
+        post:
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}, {ellipse: [0.2, 0.0, 0.8, 1.0], grey: false, feather: 30}]}   # 背景螢幕牆灰階（同 s003 的做法），LUNA 保持彩色
+      last:
+        desc: 同一構圖；青光已無；@pod 底座白光增強到白衣接近純白但仍有皺褶，臉仍看得清楚（光環弧熄滅成深灰由後製疊）
+        seeds: [1, 2, 3, 4, 5, 6, 7, 8]
+        refs: ["{first}"]
+        qwen: >-
+          Image 1 is the character sheet, image 2 is the first frame. Keep image 2 exactly as it is, with the same girl, the same framing, the same capsule glass, the same pose,
+          her eyes open looking straight into the camera and her mouth closed, and change only the lighting:
+          the white light from the capsule base below is now very strong, a bright white glow rises from the bottom of the frame,
+          her white top is lit almost to pure white, but the fold lines and soft pale shading of the fabric stay visible, and her face stays clearly readable and not overexposed.
+          The background behind the glass is darker. There is no ring and no cyan light. <<KEEP_SHEET>> <<STYLE>>
+        post:
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}, {ellipse: [0.2, 0.0, 0.8, 1.0], grey: false, feather: 30}]}
+
+  s007:
+    frames:
+      first:
+        desc: 正上方俯瞰豎井，同心青色燈環往中心縮小，最深處是黑的；正中很深處一個發白光的小圓盤（直徑約畫面高 6%）、白衣紫髮小人影、盤緣右側 ECHO 小白點
+        lora: false
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: [refs/entities/launch_tunnel/shaft.png]
+        post:
+          - {op: platform_dot, cx: 0.5, cy: 0.5, diam: 0.06}
+        qwen: >-
+          Image 1 is an unrelated character sheet: ignore it completely and do not draw any character.
+          Image 2 shows glowing cyan ring lights in a black shaft. Straight top-down view looking vertically down a very deep circular shaft, perfectly symmetrical, centred in the image.
+          The glowing cyan ring lights (colour #29d3f5) form concentric circles around the exact centre of the image: the outermost ring has a diameter equal to the full image height,
+          and each ring toward the centre is a smaller circle, getting closer and closer together, shrinking toward the centre, which is pure black and far away.
+          The shaft wall between the rings is very dark blue-black matte metal with faint thin vertical seams, and the left and right sides of the image outside the outermost ring are the same dark wall.
+          There is no character, no platform, no disc, no drone and no white light anywhere in the image. <<STYLE>>
+      last:
+        desc: 同心圓構圖；平台圓盤直徑約畫面高 20%、圓心在正中；LUNA 站在平台上，仰起的臉直視鏡頭，看得出臉與紫色編髮；ECHO 在平台右緣（後製貼）；平台周圍牆面被白光照亮
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: [refs/entities/launch_tunnel/shaft.png]
+        tags: >-
+          from above, high angle, looking up, looking at viewer, upper body, standing, arms at sides, white circular platform, glowing platform, hair blown downward,
+          lit from below, vertical shaft, dark tunnel, concentric circles, cyan ring lights, centered
+        qwen: >-
+          Image 1 is the character sheet, image 2 shows glowing cyan ring lights in a black shaft.
+          Straight top-down view looking vertically down a deep circular shaft, perfectly symmetrical and centred: the glowing cyan ring lights from image 2 form concentric circles
+          around the exact centre of the image, the outermost ring having a diameter equal to the full image height, and each ring below it is a smaller circle shrinking toward the centre.
+          In the exact centre of the image is a flat, bright glowing white circular platform whose diameter is exactly 20 percent of the image height.
+          The girl from image 1 stands on the platform, seen from directly above from a very high angle, with her head tilted back so that her face looks straight up at the camera,
+          her face upright in the image and clearly visible with a firm determined expression, her shoulders and her arms hanging at her sides, her whole body lies inside the white disc,
+          her ponytail pressed down behind her. The white light of the platform brightly lights the wall of the shaft around it.
+          There is no drone and no floating sphere. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:    # Qwen 把平台畫成畫面高的 60%（劇本 20%）：把圓盤連人縮成 20%，貼回同 seed 首幀 A 的燈環正中，首尾幀燈環一致
+          - {op: shrink_paste, bg: "first_A_s{seed}.png", target: 0.20, cx: 0.5, cy: 0.5}
+        region: [472, 264, 872, 504]
+        post:
+          - {op: glow, cx: 0.5, cy: 0.5, r: 0.17, a: 0.45}
+          - {op: paste_drone, cx: 0.557, cy: 0.465, diam: 0.05}
+
+  s008:
+    frames:
+      first:
+        desc: 樓頂整片灰階 frozen（灰色高樓、灰色懸停 hovercar、看板仍亮但無色，只有地平線一條細的彩色光帶）；鏡頭在艙口後方 8 m、離地 1.2 m 平視；艙口（兩片半圓鋼板、接縫朝遠方、淺灰白發光環）在畫面水平正中、下方；停在半空的灰色雨滴小點分布整個畫面；地平線正中純黑塔剪影；沒有 LUNA 與 ECHO。城市＝同 seed 末幀的 Qwen 城市（首尾幀同一座），裁矮牆以上拉成平視背景，再疊程式繪製的矮牆、地面、艙口、塔
+        gen: proc
+        lora: false
+        seeds: [1, 2, 3, 4, 5, 6]
+        post:
+          - {op: skyline_from, src: "last_A_s{seed}.png", wall_top: 0.605}
+          - {op: roof, wall_top: 0.605, wall_bottom: 0.667, puddles: 0, drops: 520}
+          - {op: tower, cx: 0.5, base: 0.40, h: 0.26}
+          - {op: hatch, state: closed, cx: 0.5, cy: 0.83, w: 0.11, ratio: 0.20}
+          - {op: band_grey, band_px: 16, lo: 0.12, hi: 0.5}   # 只留最亮最飽和的一條細帶（地平線的彩色街區），其餘（城市、看板、hovercar）全灰
+      mid:
+        desc: "[8,2] 拆段點：靜止鏡頭（同首幀機位與場景），艙口已開、白光往上照（程式繪製）；LUNA 背對鏡頭，落在艙口前方約 2.5 m 處單膝落地（char_left 膝與 char_right 手掌著地、char_right 腳在前），開始站起，高約畫面高 15%、腳約在畫面高 77%；ECHO 在她 char_left 肩旁（畫面左，後製貼）。人物＝立繪（Illustrious＋LoRA＋OpenPose 骨架，路線 B）摳圖縮貼"
+        gen: sprite
+        scene: first
+        flip: []
+        seeds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        sprite:
+          tags: >-
+            from behind, back view, facing away, full body, kneeling, one knee on ground, superhero landing, hand on ground, leaning forward, head down, white background, simple background
+          pose:   # 背面、單膝落地（832×1216 畫布比例）：r_＝角色的右（背面時在畫面右）
+            neck: [0.50, 0.30]
+            r_sho: [0.63, 0.34]
+            l_sho: [0.37, 0.33]
+            r_elb: [0.69, 0.50]
+            r_wri: [0.60, 0.72]
+            l_elb: [0.28, 0.48]
+            l_wri: [0.26, 0.64]
+            r_hip: [0.58, 0.58]
+            l_hip: [0.42, 0.60]
+            r_kne: [0.66, 0.66]
+            r_ank: [0.66, 0.84]
+            l_kne: [0.38, 0.82]
+            l_ank: [0.40, 0.95]
+            r_ear: [0.56, 0.22]    # 只給雙耳不給眼鼻：骨架才不會被讀成正面
+            l_ear: [0.44, 0.22]
+          pose_strength: 0.9
+          pose_end: 0.8
+        post:
+          - {op: hatch, state: open, cx: 0.5, cy: 0.83, w: 0.11, ratio: 0.20, beam: 0.07}   # 艙口已開：鋼板滑進地面下，白光往上照（和首幀同位置同大小；場景已是首幀的灰階＋彩色光帶，不再灰化）
+          - {op: paste_sprite, target_h: 0.15, fx: 0.5, fy: 0.775}
+          - {op: paste_drone, cx: 0.463, cy: 0.667, diam: 0.03}
+      last:
+        desc: 鏡頭在 LUNA 後上方約 6 m、身後約 5 m 俯看越過她看向 @city；她背對鏡頭站立（腳在畫面高 92%、身高 22%），ECHO 在她左肩旁（畫面左，後製貼）；身後艙口開著發白光（畫面下緣）；灰彩分界在畫面高 36%、地平線 32%、正中黑色塔剪影（程式繪製）。人物＝立繪（路線 B）摳圖縮貼
+        gen: sprite
+        flip: [1, 3, 4, 5]     # 立繪腿環畫在畫面左腿（背面時是角色左腿，錯）→ 翻轉立繪；2、6 本來就在畫面右
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: []
+        sprite:
+          tags: >-
+            from behind, back view, facing away, full body, standing, arms at sides, white background, simple background
+          pose:
+            neck: [0.50, 0.20]
+            r_sho: [0.585, 0.225]
+            l_sho: [0.415, 0.225]
+            r_elb: [0.605, 0.37]
+            r_wri: [0.595, 0.50]
+            l_elb: [0.395, 0.37]
+            l_wri: [0.405, 0.50]
+            r_hip: [0.55, 0.52]
+            l_hip: [0.45, 0.52]
+            r_kne: [0.56, 0.72]
+            r_ank: [0.56, 0.92]
+            l_kne: [0.44, 0.72]
+            l_ank: [0.44, 0.92]
+            r_ear: [0.555, 0.115]
+            l_ear: [0.445, 0.115]
+          pose_strength: 0.9
+          pose_end: 0.8
+        post:
+          - {op: tower, cx: 0.5, base: 0.32, h: 0.17}      # 地平線 32%、天線尖端 15%（程式繪製的黑色剪影）
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}, {rect: [0, 0, 1, 0.36], grey: false, feather: 1}]}   # 畫面高 36% 以上（遠方彩色街區）保持彩色，以下灰階
+          - {op: hatch, state: open, cx: 0.5, cy: 0.99, w: 0.22, ratio: 0.2, beam: 0.08}                                # 身後艙口：只有畫面下緣的白光
+          - {op: paste_sprite, target_h: 0.22, fx: 0.5, fy: 0.92}
+          - {op: paste_drone, cx: 0.472, cy: 0.742, diam: 0.036}
+        qwen: >-
+          Image 1 is an unrelated character sheet: ignore it completely and do not draw any character.
+          High-angle wide shot at night, the camera about 6 metres above a flat concrete rooftop, looking forward and down over the roof toward a huge city. The roof floor, plain wet concrete with a few puddles and nobody on it,
+          fills the lower 60 percent of the image, and a low concrete parapet wall runs across the whole width of the image at about 62 percent of the image height.
+          Beyond the wall the vast city spreads out to a far horizon that lies at about 32 percent of the image height:
+          the nearby and middle-distance skyscrapers, holographic billboards and dozens of small wheel-less hover cars parked motionless in the air are all plain greyscale with no colour,
+          and tiny raindrops hang motionless in the air as small dots. At a sharp, hard-edged line at about 36 percent of the image height the colour begins: everything beyond that line up to the horizon
+          is colourful, with magenta, cyan and amber neon lights and glowing holographic billboards, and the tops of the tallest far buildings above the horizon are coloured too.
+          There is no tall tower, no character, no drone and no hatch. <<STYLE>>
