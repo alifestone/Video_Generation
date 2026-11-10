@@ -66,3 +66,16 @@ claude_decisions:
     decision: >-
       草圖只當節奏與構圖參考。兩次換 seed 後仍然弱的環境鏡（s008、s030、s042、s044、s048、s054、s060、s064、s067、s068）保留，
       s011 LUNA 被畫成黃雨衣也保留；這些鏡頭在 P6 用 Qwen 合成＋ControlNet 出正式關鍵幀。
+
+# G1（Sonnet 節奏審查 plan/review/g1_r1.yaml：通過，must 0、should 2、note 9）的處理
+g1_decisions:
+  - id: G1-T01
+    decision: s044／s045 維持兩鏡；s045 生成約 1 s 起跳再 speed_ramp 壓進 7 幀（劇本 notes 原設計）。
+  - id: G1-T02
+    decision: s074 直視鏡頭改在 [58,3]（結尾 stinger，frame 3183）；shots.yaml 已同步。
+  - id: G1-T03
+    decision: Hook 閃白 2 幀放 284–285，疊在 s006 開頭。
+  - id: G1-T04
+    decision: 下一鏡 dissolve 進場時，本鏡尾端 handle ≥ 溶接長度＋1（s072 尾端 14 幀）；p5_shotlist.py 已實作。
+  - id: G1-T09
+    decision: 交使用者（Final Chorus／Post-chorus 能量最高但剪得較疏）。

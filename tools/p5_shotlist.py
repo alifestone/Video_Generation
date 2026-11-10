@@ -276,7 +276,19 @@ def _segment(s, model, f0, f1, first, last, tail_handle, prompt_use, _unused=Non
 
 def video_jobs(out, tail_handle, clock):
     jobs, unassigned = [], []
+    # 下一鏡以 dissolve 進場時，本鏡尾端要多生溶接長度的素材（G1 T04）：i2v 尾端 handle 取 max(handle, 溶接幀數)
+    dissolve_tail = {}
+    for prev, nxt in zip(out, out[1:]):
+        ti = nxt.get("transition_in") or {}
+        if ti.get("type") == "dissolve":
+            fr = ti.get("frames")
+            if not fr:                                   # beats → 以下一鏡起點往後數 beats 拍的絕對幀
+                bar, k = nxt["span"]["from"]
+                fr = clock.frame([bar, k + float(ti.get("beats", 1))]) - nxt["start_frame"]
+            dissolve_tail[prev["id"]] = int(fr) + 1
+    base_tail = tail_handle
     for s in out:
+        tail_handle = max(base_tail, dissolve_tail.get(s["id"], 0))
         need_model = "model" in s["camera"]["realize"] or "model" in s["subject"]["realize"]
         if s["model"] not in VIDEO_MODELS:
             if need_model and s["model"] is None:

@@ -6,7 +6,7 @@
   "n_shots": 74,
   "prompts_file": "plan/p5_prompts.yaml",
   "prompts_sha256": "4239921bed3fba3f4e59834cbb619a852c04a11764e001ae0fd4d94ac430142e",
-  "shots_sha256": "3ec30a26cb54e704319b1868f9cbc525131e98e357549050144c2253defd2744",
+  "shots_sha256": "9539496011d70f958c4f4bdd0e79917a8d3576f0287036f8a2166d84be681ccc",
   "timeline_sha256": "a82d9982731b61b879647bea3f3cc999a71909257c625f8a2902500c7cbd8221",
   "defaults": {
    "quality": "masterpiece, best quality, anime screencap, clean lineart, cel shading",
@@ -5983,7 +5983,7 @@
    },
    "subject": {
     "realize": "model",
-    "text": "[58,1.5] 她轉頭回來，[58,2.5] 直視鏡頭，眼神堅定、嘴角微微上揚；@drone 跟著轉到她左肩旁（畫面右）、轉向鏡頭。之後她定住看著鏡頭，直到片尾。"
+    "text": "[58,1.5] 她轉頭回來，[58,3] 直視鏡頭（結尾 stinger），眼神堅定、嘴角微微上揚；@drone 跟著轉到她左肩旁（畫面右）、轉向鏡頭。之後她定住看著鏡頭，直到片尾。"
    },
    "route": "A",
    "variation": "medium",
@@ -6005,11 +6005,11 @@
     {
      "at": [
       58,
-      2.5
+      3
      ],
-     "frame": 3176,
-     "rel_frame": 20,
-     "sync": null,
+     "frame": 3183,
+     "rel_frame": 27,
+     "sync": "全曲 rms 最高點（結尾 stinger，frame 3183）",
      "event": "她直視鏡頭（最後一格的姿勢）"
     }
    ],

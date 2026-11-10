@@ -3586,12 +3586,13 @@ shots:
     motion:
       camera: {move: static, speed: slow, realize: none}
       subject:
-        text: "[58,1.5] 她轉頭回來，[58,2.5] 直視鏡頭，眼神堅定、嘴角微微上揚；@drone 跟著轉到她左肩旁（畫面右）、轉向鏡頭。之後她定住看著鏡頭，直到片尾。"
+        text: "[58,1.5] 她轉頭回來，[58,3] 直視鏡頭（結尾 stinger），眼神堅定、嘴角微微上揚；@drone 跟著轉到她左肩旁（畫面右）、轉向鏡頭。之後她定住看著鏡頭，直到片尾。"
         realize: model
     last_frame: >
       @luna 胸口以上直視鏡頭，眼神堅定、嘴角微微上揚；@drone 在她左肩旁（畫面右）；背景是失焦的彩色螢幕光。這是淡出開始前的最後一個完整畫面（decisions.final_frame）。
     beat_events:
-      - at: [58, 2.5]
+      - at: [58, 3]
+        sync: 全曲 rms 最高點（結尾 stinger，frame 3183）
         event: 她直視鏡頭（最後一格的姿勢）
     transition_in: {type: cut}
     post:

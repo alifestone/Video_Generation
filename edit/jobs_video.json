@@ -3649,18 +3649,18 @@
    "segments": null,
    "exceeds_single_run": false,
    "gen_fps": 16,
-   "gen_frames": 45,
-   "gen_frames_needed": 45,
-   "gen_seconds": 2.812,
+   "gen_frames": 49,
+   "gen_frames_needed": 49,
+   "gen_seconds": 3.062,
    "retime": {
     "speed": 1.0,
     "within_0p9_1p1": true
    },
    "handle_head_frames_24": 0,
-   "handle_tail_frames_24": 10,
+   "handle_tail_frames_24": 14,
    "gen_range_24": [
     3048,
-    3112
+    3116
    ],
    "first_frame": {
     "gen_index": 0,
@@ -3804,10 +3804,10 @@
     {
      "at": [
       58,
-      2.5
+      3
      ],
-     "frame": 3176,
-     "gen_index": 13,
+     "frame": 3183,
+     "gen_index": 18,
      "event": "她直視鏡頭（最後一格的姿勢）"
     }
    ]

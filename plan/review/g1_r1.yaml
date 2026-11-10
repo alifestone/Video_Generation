@@ -1,0 +1,207 @@
+# G1 動畫分鏡（animatic）第 1 輪：節奏與剪輯密度審查（Claude Sonnet 5.5，2026-11-10）
+# 只審節奏與切點，草圖畫得好不好不在範圍；美學類只列觀察、不打分。
+# severity：must＝擋關、should＝建議在 P5／P9 前處理、note＝觀察。code：T 節奏或切點（退回 P5／P9）、S 敘事（退回 P2）。
+round: g1_r1
+gate: G1
+summary:
+  verdict: 通過（節奏與剪輯密度，G1 Claude 審部分）；無 must，2 筆 should、9 筆 note
+  date: '2026-11-10'
+  reviewer: Claude Sonnet 5.5（G1 節奏審）
+  scope: edit/animatic.mp4、shotlist.json、plan/shots.yaml、analysis/timeline.json、docs/mv_plan.md、plan/project.yaml；美學只列觀察，不打分
+  main_findings: [切點：73 個內部切點全部精確落在拍點幀（最大誤差 0 幀）；2 個半拍切點（s041 1989 貼人聲「Build」、s045 2043 只對半拍）；10 個段界都有切點。, animatic：用幀差法從 mp4 量出 73 個切點（＋起點共 74 鏡），與 shotlist 的 start_frame 完全一致，0 鏡不符；幀數 3223、音視訊長度差 0.004 s。, 密度：10 段的鏡數都與 mv_plan／decisions 一致；沒有鏡頭超過 max_shot_bars=2（s008、s030 剛好 2.0）。, beat_events：141 筆全部與拍點幀或人聲秒數一致（hero 抽查 8 組全部通過）。, should 2 筆：s044／s045 各 7 幀且 s045 要演跳上主控台（T01）；結尾 stinger（3183）沒有視覺事件（T02）。, 能量與密度：切點密度與 rms 幾乎無相關（r 0.04–0.14）；Hook、Final Chorus、Post-chorus 能量高但剪得疏，Build 能量低卻最密，皆為劇本設計，列 note 由使用者看。]
+  counts: {must: 0, should: 2, note: 9, total: 11}
+  return_to: {P2: T01、T02（shots.yaml 的切點／事件）, P5_P9: T03、T04、T11（shotlist 補欄位）、其餘 note 不需退回}
+checks:
+  c1_cut_on_beat:
+    result: 通過
+    numbers:
+      shots: 74
+      cut_points_total: 74
+      note: 74 鏡＝frame 0 起點＋73 個內部切點；以下 73 個內部切點逐一比對 timeline.beats
+      on_integer_beat: 71
+      max_abs_error_frames: 0
+      mean_abs_error_frames: 0.0
+      by_beat_position: {beat1（小節下拍）: 54, beat3（半小節）: 12, beat4: 3, beat2: 2, fractional（半拍）: 2}
+      section_boundaries_on_cut: 10/10 段界都有切點（284、502、936、1154、1860、2023、2227、2725、3102 皆等於段落 frame_start，intro 起點 0）
+      timeline_coverage: shotlist 相鄰鏡 end_frame=下一鏡 start_frame 全部相接，末鏡 end_frame=3223＝timeline.n_frames
+      beat_grid_vs_audio: 拍點幀上的 onset_norm（±1 幀取最大）平均 0.214，對照全曲平均 0.101、半拍處 0.182；切點處 0.214，和拍點相同
+    integer_beat_note: 使用者清單的 [19,3]（s020，幀 1072）是整數第 3 拍（半小節），不是小數拍；對到 beats[19,3]=1072，誤差 0。其餘整拍非下拍切點：[32,3]、[33,3]、[34,3]、[34,4]、[36,1]…等都精確等於拍點幀。
+    fractional_cuts:
+    - shot: s041
+      at: [36, 2.5]
+      start_frame: 1989
+      expected: bar 36 第 2 拍 1982 與第 3 拍 1996 的中點＝1989
+      error_frames: 0
+      aligned_to: 半拍，同時是人聲「Build」onset 82.89 s＝幀 1989.4（誤差 0.4 幀）；onset_norm[1989]=0.41
+    - shot: s045
+      at: [37, 2.5]
+      start_frame: 2043
+      expected: bar 37 第 2 拍 2036 與第 3 拍 2050 的中點＝2043
+      error_frames: 0
+      aligned_to: 只對到半拍，不在人聲上（下一個人聲「3」85.40 s＝2050）；該幀有弱 onset（0.24）；見 T01
+    lyric_aligned_cuts: 整拍切點同時貼歌詞起點（±2 幀）：s018＝歌詞 9（990，0）、s019＝歌詞 10（1045，0）、s021＝歌詞 11（1099，0）、s035＝歌詞 18（1806 對 1805，+1）、s037＝歌詞 19（1860，0）、s040＝歌詞 20（1968 對 1967，+1）、s046＝歌詞 21 的「3」（2050，約 85.40 s）、s059＝歌詞 25（2524 對 2525，−1）、s065＝歌詞 28（2779，0）。32 句歌詞中 9 句的起點在切點 ±2 幀內、12 句在 ±4 幀內；Verse（歌詞 4–8）的起點離切點 7–26 幀，因 lyric_mapping=section，不要求。
+  c2_animatic_cuts:
+    result: 通過
+    numbers:
+      method: ffmpeg 解成 160×90 灰階 rawvideo，逐幀平均絕對差；以 edit/animatic.mp4 本身量測，不使用 tools/p5_animatic.py 的驗證結果
+      frames_decoded: 3223
+      cuts_detected: 73
+      expected_internal_cuts: 73
+      mismatched_shots: 0
+      missing: []
+      extra: []
+      diff_at_cuts_min: 30.39
+      diff_within_shot_max: 0.3
+      separation: 最小的切點差 30.39 與最大的鏡內差 0.30 相差約 100 倍，閾值任取 2–30 都得同一組 73 個切點
+      media: h264 1280×720 24/1 fps，nb_frames=3223（＝timeline.n_frames）；影片 134.292 s、音訊 134.296 s（差 0.004 s＝0.09 幀）；音視訊 start_time 都是 0
+  c3_density:
+    result: 通過（密度與劇本一致，無超長鏡）
+    per_section:
+    - {section: intro, bars: 0–4, shots: s001–s005, n: 5, duration_s: 11.83, mean_shot_s: 2.37, mean_shot_beats: 4.19, cuts_per_s: 0.423, intent: 5 鏡（s001 前導＋bar 1–4 各 1 小節）, match: 是}
+    - {section: hook, bars: 5–8, shots: s006–s008, n: 3, duration_s: 9.08, mean_shot_s: 3.03, mean_shot_beats: 5.33, cuts_per_s: 0.33, intent: hook_structure 3_shots（bar5、bar6 各 1 鏡，bar7–8 1 鏡）, match: 是}
+    - {section: verse, bars: 9–16, shots: s009–s016, n: 8, duration_s: 18.08, mean_shot_s: 2.26, mean_shot_beats: 4.0, cuts_per_s: 0.442, intent: verse_structure 8_shots_1_bar, match: 是（8 鏡、全部 54–55 幀）}
+    - {section: prechorus, bars: 17–20, shots: s017–s022, n: 6, duration_s: 9.08, mean_shot_s: 1.51, mean_shot_beats: 2.67, cuts_per_s: 0.661, intent: 6_shots_half_bar_cuts（bar 17、18 各 1 鏡，bar 19–20 半小節 4 鏡）, match: 是（s019–s022 各 27–28 幀）}
+    - {section: chorus1, bars: 21–33, shots: s023–s036, n: 14, duration_s: 29.42, mean_shot_s: 2.1, mean_shot_beats: 3.71, cuts_per_s: 0.476, intent: 14_shots_half_bar_end（bar 21–31 每鏡 1 小節、bar 28–29 一鏡 2 小節，bar 32–33 半小節 4 鏡）, match: 是（10＋4＝14）}
+    - {section: bridge, bars: 34–36, shots: s037–s042, n: 6, duration_s: 6.79, mean_shot_s: 1.13, mean_shot_beats: 2.0, cuts_per_s: 0.883, intent: 6_shots_per_verb，切點跟人聲, match: 是（5/6 切點在人聲 ±1 幀，s038 見 T10）}
+    - {section: build, bars: 37–40, shots: s043–s052, n: 10, duration_s: 8.5, mean_shot_s: 0.85, mean_shot_beats: 1.5, cuts_per_s: 1.176, intent: 10 鏡（bar 37 四鏡、bar 38 定格一鏡、bar 39 閃回四鏡、bar 40 一鏡）, match: 是（4＋1＋4＋1）}
+    - {section: final_chorus, bars: 41–49, shots: s053–s063, n: 11, duration_s: 20.75, mean_shot_s: 1.89, mean_shot_beats: 3.36, cuts_per_s: 0.53, intent: late_structure 22 鏡中 Final Chorus 11 鏡, match: 是}
+    - {section: post_chorus, bars: 50–56, shots: s064–s072, n: 9, duration_s: 15.71, mean_shot_s: 1.75, mean_shot_beats: 3.11, cuts_per_s: 0.573, intent: Post-chorus 9 鏡, match: 是}
+    - {section: outro, bars: 57–58, shots: s073–s074, n: 2, duration_s: 5.04, mean_shot_s: 2.52, mean_shot_beats: 4.49, cuts_per_s: 0.397, intent: Outro 2 鏡, match: 是}
+    overall: {total_shots: 74, mean_shot_s: 1.815, min_shot: s044／s045（7 f＝0.29 s）, max_shot: s008／s030（109 f＝4.54 s）}
+    max_shot_bars:
+      limit: 2
+      longest: s008（bar 7–8）與 s030（bar 28–29）各 8 拍＝2.0 小節，剛好在上限；s063 7 拍（1.75 小節）、s039 5 拍、s001 4.94 拍、s074 4.97 拍
+      exceeding: []
+      note: s008、s030 以幀數算是 109 f＝2.025 個標準小節（53.83 f），以 span（小節拍）算正好 2 小節；若 lint T2 用幀數且嚴格不等式，這兩鏡會被判超過。lint 未列為違規，視為通過
+    short_shots: ≤14 幀的鏡頭 9 個：s038、s042、s043、s044、s045、s048、s049、s050、s051；其中 s044、s045 只有 7 幀（T01）；其餘 12–14 幀＝1 拍，可行
+  c4_energy:
+    result: 有落差（皆為劇本設計，無違規）
+    per_section:
+    - {section: intro, mean_rms_norm: 0.222, cuts_per_s: 0.423}
+    - {section: hook, mean_rms_norm: 0.449, cuts_per_s: 0.33}
+    - {section: verse, mean_rms_norm: 0.357, cuts_per_s: 0.442}
+    - {section: prechorus, mean_rms_norm: 0.377, cuts_per_s: 0.661}
+    - {section: chorus1, mean_rms_norm: 0.433, cuts_per_s: 0.476}
+    - {section: bridge, mean_rms_norm: 0.466, cuts_per_s: 0.883}
+    - {section: build, mean_rms_norm: 0.377, cuts_per_s: 1.176}
+    - {section: final_chorus, mean_rms_norm: 0.505, cuts_per_s: 0.53}
+    - {section: post_chorus, mean_rms_norm: 0.529, cuts_per_s: 0.573}
+    - {section: outro, mean_rms_norm: 0.355, cuts_per_s: 0.397}
+    correlation: {section_level_r: 0.12, per_bar_r: 0.035, per_shot_r_of_inverse_length_vs_energy: 0.136, reading: 切點密度與音量幾乎無關；這首歌的節奏由劇本的敘事張力（Prechorus、Bridge、Build 快切）驅動，不是跟著 rms}
+    high_energy_slow: [Hook（0.449，0.33 次/秒，最慢）→ T05, Final Chorus／Post-chorus（0.505／0.529，0.53／0.57 次/秒）→ T09, s008（4.54 s）、s063（3.87 s）]
+    low_energy_fast: [Build（0.377，1.18 次/秒）→ T07, Prechorus s019–s021（0.34–0.38，半小節）→ T07]
+    drop_bar22: {frame: 1208, cut_at_drop: true, flash_at_drop: s024 post flash_frames 2 f 在 1208, density_before_after: s023 54 f、s024 54 f，無變化 → T06, rms: bar 21 平均 0.419、bar 22 平均 0.422；drop 是幀 1208–1210 的瞬間峰值（rms 0.54–0.62，前 5 幀 0.24–0.34），不是整小節的能量跳升}
+    bar53_peak: {frame: 2886, cut_at_bar: true, mean_rms_bar53: 0.565, note: 全曲最高整小節；s067 是 1 小節鏡，視覺脈衝在 2903（人聲 LIVE AI）而非 2886 → T09}
+    other_peaks: hook 進場（幀 284–285，rms 0.58→0.81，能量 0.18→0.46）有切點與閃白；結尾 stinger（3183）沒有視覺事件 → T02。上升最大的段界：Final Chorus 進場（前 24 幀 0.341→後 24 幀 0.515）有切點且 s053 [41,1]=2227 有事件
+  c5_beat_events:
+    result: 通過
+    numbers: {events_total: 141, integer_beat_events: 57, integer_beat_exact_to_beat_frame: '56/56（另 1 筆是 [0,4]＝幀 53，鼓進入）', fractional_events_checked_against_interpolated_beat: 84/84 與（拍點幀＋小數×拍長）相差 ≤1 幀, rel_frame_consistency: 141/141 的 rel_frame＝frame−start_frame, events_inside_own_shot: 141/141, vocal_sync_text_checked: 69, vocal_sync_off_more_than_1_5_frames: 3, note: '3 筆差距來自 s005 的「約」秒數（T11）；另 s035 [33,1.5] 的「75.34–76.34 s 之間」是區間，1812 在區間內，不算'}
+    hero_spot_check:
+    - {shot: s024（hero）, event: '[22,1] drop', frame: 1208, expected: 1208, ok: true}
+    - {shot: s053（hero）, event: '[41,1] Final Chorus 進入', frame: 2227, expected: 2227, ok: true}
+    - {shot: s063（hero）, event: '[48,3.8] 人聲「這不是」110.12 s／[49,5.4] 人聲「LIVE AI」113.24 s', frame: 2643／2718, expected: 2643.0／2717.8, ok: true}
+    - {shot: s074（hero）, event: '[58,2.5] 直視鏡頭', frame: 3176, expected: 3176, ok: true, note: frame 對得上自己的 at，但沒貼 stinger（3183）→ T02}
+    - {shot: s006, event: '[5,1]／[5,4.63] 人聲「LIVE」13.90 s', frame: 284／334, expected: 284／333.6, ok: true}
+    - {shot: s054, event: '[42,3.06] 人聲「LIVE」96.20 s＋flash_frames', frame: 2309, expected: 2308.8, ok: true}
+    - {shot: s067, event: '[53,2.2] 人聲「LIVE AI」120.92 s＋flash_frames', frame: 2903, expected: 2902.1, ok: true}
+    - {shot: s040–s042, event: 人聲 Dream／Build／Let, frame: 1968／1989／2009, expected: 1967.0／1989.4／2009.5, ok: true}
+  c6_transition_in:
+    result: 位置合理（animatic 為硬切，只確認位置）
+    list:
+    - {frame: 0, shot: s001, type: fade_from_black, frames: 16, reason: 淡入結束在幀 16＝歌詞 1 起點（0.68 s），合理}
+    - {frame: 67, shot: s002, type: match_cut, frames: null, reason: intro 第一個下拍；s001 波形中心與 s002 主螢幕波形都在畫面高 45%（劇本寫明大小差約 7 倍），合理}
+    - {frame: 284, shot: s006, type: flash_white, frames: 2, reason: Hook 進場，rms 0.18→0.46；位置合理，但閃白落在撞擊前 2 幀 → T03}
+    - {frame: 936, shot: s017, type: cut_on_action, frames: null, reason: Prechorus 起點，下拍；接 s016 結尾的第一步}
+    - {frame: 990, shot: s018, type: cut_on_action, frames: null, reason: 下拍，同時是歌詞 9 起點（0 幀）}
+    - {frame: 1154, shot: s023, type: cut_on_action, frames: null, reason: Chorus 1 起點，下拍；接 s022 的撲出動作}
+    - {frame: 1751, shot: s033, type: cut_on_action, frames: null, reason: bar 32 下拍，半小節快切的第一刀；接 s032 衝出動作}
+    - {frame: 1833, shot: s036, type: cut_on_action, frames: null, reason: '[33,3] 半小節切點，接 s035「往開口衝」，合理'}
+    - {frame: 3102, shot: s073, type: dissolve, frames: 'beats:1（約 13 f，未寫 frames）', reason: '段界 post_chorus→outro，bar 57 下拍；溶接結束於 3115＝s073 事件 [57,2] → T04'}
+    not_used: whiteout、fade_to_black（s074 用 post 的 fade_to_black，最後約 1 秒：幀 3199–3223）
+    flash_frames_post:
+    - {shot: s024, frame: 1208, note: drop}
+    - {shot: s054, frame: 2309, note: 人聲 LIVE 96.20 s}
+    - {shot: s067, frame: 2903, note: 人聲 LIVE AI 120.92 s}
+findings:
+- id: T01
+  code: T
+  shots: [s044, s045]
+  severity: should
+  observation: s044（post parallax）與 s045（wan_flf、route B）各只有 7 幀（0.29 s），連在一起共 14 幀。s045 要在 [37,2.55]→[37,2.9]（幀 2044→2048，4 幀＝0.17 s）內完成「起跳、雙腳落在主控台桌面、雙手伸向光柱」，同時灰色淹進來、ECHO 在管內往下掉；單鏡 7 幀讀不出動作，Wan 的首尾幀生成也不可能在 0.29 s 內畫完一次跳躍。s045 的起點是半拍 [37,2.5]（幀 2043），不在人聲上，對應音訊只有一個弱 onset（onset_norm 0.24，1 幀峰值）；s044 的事件在 [37,2.45]（約幀 2042）就演完。全片 ≤8 幀的鏡頭只有這兩個。
+  evidence: s044 2036–2043（7 f）、s045 2043–2050（7 f）；s045 beat_events 2044（起跳）、2048（落桌）；onset_norm[2043]=0.24；其他最短鏡 12–14 f（s038、s042、s043、s048–s051）都是 1 拍。
+  suggestion: 二選一：(a) 合併 s044＋s045 成 [37,2]→[37,3] 一鏡 14 f（1 拍），灰色暴衝當鏡首 4–5 f 的切入、跳上桌放後段，維持切點全在整拍；(b) s045 改為 [37,2]→[37,3]（14 f），s044 的灰色暴衝改成疊在 s043 結尾 7 f 的後製（保留 [37,2] 的切點）。合併後 Build 的鏡數變 9，需同步 mv_plan 的 10 鏡敘述與 decisions.build_structure。
+- id: T02
+  code: T
+  shots: [s074]
+  severity: should
+  observation: 全曲 rms_norm 最大值（1.0）是結尾 stinger，在幀 3183（bar 58 第 3 拍，132.61 s）；s074 沒有任何切點或事件落在這一幀。s074 唯一的 beat_event 是 [58,2.5]（幀 3176）「她直視鏡頭」，比 stinger 早 7 幀（0.29 s），那 7 幀是音訊低谷（rms 0.12–0.34，onset 0.10）；也就是最後一格的眼神落在靜音裡，stinger 響時畫面沒有變化。
+  evidence: rms_norm[3183]=1.0、onset_norm[3183]=0.37；rms[3178–3180]=0.12–0.14；s074 3156–3223；beat_events 3176；拍點 [58,3]=3183。
+  suggestion: 把「直視鏡頭」改在 [58,3]（幀 3183）與 stinger 同幀；或維持 [58,2.5] 起轉頭、[58,3] 眼神定住。字標淡入（[58,1] 起 6 幀）不動。屬 P2 的 shots.yaml 小改（beat_events.at）。
+- id: T03
+  code: T
+  shots: [s005, s006]
+  severity: note
+  observation: Hook 進場的 flash_white（2 幀）在 shots.yaml 寫成「s005 最後 2 幀變純白」，也就是幀 282–283；s006 的 start_frame=284 是閃白後的第一個乾淨幀。但音訊的撞擊在 284–285（rms 0.58→0.81，全曲 rms 前三高之一），閃白落在撞擊前、rms 只有 0.14–0.21 的靜幀。animatic 是硬切，沒有閃白，所以這裡只能確認位置。位置是代決，沒有錯；但閃白與撞擊差 2 幀（0.08 s），P9 若照字面做，白光會先於聲音。
+  evidence: rms_norm[282,283,284,285,286]=0.14,0.21,0.58,0.81,0.62；shotlist s006.transition_in={flash_white,frames:2}（沒寫哪一側）。
+  suggestion: 'P9 前確認閃白放哪兩幀：建議 284–285（與 rms 撞擊同幀，s006 前 2 幀白→淡出），s006 的 [5,1] shake 從 286 起。若維持 282–283，需在 shotlist 寫明（transition_in 加 side: out_of_prev）。'
+- id: T04
+  code: T
+  shots: [s072, s073]
+  severity: note
+  observation: s073 的 dissolve 在 shotlist 只有 beats:1、沒有 frames（其他轉場都有幀數）。依 shots.yaml 溶接疊在 s073 第一拍（[57,1]–[57,2]＝幀 3102–3115，約 13 幀），要和 s072 結尾疊在一起，s072 需要尾端多 13 幀的素材（handle），否則溶接會吃掉 s073 的前 13 幀。位置本身合理：落在 post_chorus→outro 段界、bar 57 下拍，溶接結束的幀 3115 剛好是 s073 [57,2] 事件「灰色開始吞掉剩下的彩色」。
+  evidence: s073 transition_in={dissolve,beats:1,frames:null}；beats[57,1]=3102、[57,2]=3115；s072 model=wan_flf 3048–3102。
+  suggestion: shotlist 補 frames:13；P4 生成 s072 時多生 13 幀尾端（或 P9 在 Kdenlive 把 s072 的 out 延長 13 幀、s073 的 in 不動）。
+- id: T05
+  code: T
+  shots: [s006, s007, s008]
+  severity: note
+  observation: 能量高、剪得慢：Hook（bar 5–8）平均能量 0.449，bar 5 是全曲 rms 前三高（幀 285、312、339 都在 s006–s007 開頭），但只有 3 鏡、平均 3.03 s，切點密度 0.33 次/秒，是全片最低；s008 一鏡 4.54 s 蓋住 bar 7–8（正好 max_shot_bars=2 的上限）。這是使用者 2026-10-23 決定的 hook_structure=3_shots（揭示 2 小節），與劇本一致，列為觀察。
+  evidence: hook 3 鏡／9.08 s、cps 0.330（10 段最低）；s008 393–502（109 f）；mean rms_norm hook=0.449、intro=0.222、verse=0.357。
+  suggestion: 不需動。若使用者想讓 Hook 更有衝勁，可在 s008 的 [8,1]（幀 447）加一刀，變成 4 鏡（每鏡 1 小節），需同步改 hook_structure。
+- id: T06
+  code: T
+  shots: [s023, s024, s030]
+  severity: note
+  observation: Drop 的切點正確：s024 起點 1208＝hit.drop 的幀，並有 2 幀 flash_frames（post）。但 drop 前後密度沒有變化：s023（bar 21，stripped）與 s024（bar 22）都是 54 幀，之後 bar 22–31 一路每鏡 1 小節，和 Verse（能量 0.357）的剪法一樣，只是 Chorus 1 的能量高 0.07；中間 s030 還用 2 小節（4.53 s）蓋 bar 28–29，是這段最長的鏡。密度從 Prechorus 的 0.66 次/秒降到 Chorus 1 前 11 小節的約 0.44 次/秒。這是「釋放」的節奏，符合 chorus1_structure（使用者交給 Claude 決定），列為觀察。
+  evidence: hits[0]={drop, frame 1208}；s023 1154–1208、s024 1208–1262；rms_norm[1203..1210]=0.24,0.29,0.46,0.41,0.46,0.54,0.62,0.54；s030 1534–1643（109 f）；chorus1 bar 21–31 平均能量 0.43。
+  suggestion: 不需動。若要讓 drop 後更推進，可把 bar 24–25 或 bar 26–27 中的一兩鏡拆成半小節（例如 s026、s027），讓 Chorus 1 的密度在 bar 28 前有一次小爬升。
+- id: T07
+  code: T
+  shots: [s043, s044, s045, s046, s048, s049, s050, s051]
+  severity: note
+  observation: 能量低、剪得快：Build 是全片切點最密的段（10 鏡／8.5 s，平均 0.85 s，1.18 次/秒），但它的平均能量只有 0.377，比前一段 Bridge（0.466）低。bar 37（能量 0.368）有 4 刀、bar 39（0.388）有 4 刀；bar 38（3 拍 stop-time）用單鏡 s047（41 幀）定格，與音樂「鼓與低音減半、stop-time」對得上。Prechorus 的半小節快切（s019–s021，能量 0.34–0.38）也屬同型。這是「音樂抽掉、畫面更急」的反向對位，屬設計，但與 rubric 6「畫面能量跟段落能量起伏」是相反方向，交給使用者看。
+  evidence: build cps 1.176、energy 0.377；bridge cps 0.883、energy 0.466；bar 37 能量 0.368／4 刀、bar 39 0.388／4 刀；s047=41 f＝bar 38 的 3 拍；s019–s021 energy 0.342／0.364／0.378。
+  suggestion: 不需動。使用者看 animatic 時，留意 bar 37 與 bar 39 的 1 拍快切會不會太碎（見 T01）；Bar 39 的 4 個 1 拍鏡（s048–s051）全是 parallax 後製，12–14 幀，可行。
+- id: T08
+  code: T
+  shots: [s046]
+  severity: note
+  observation: s046 只有 28 幀（1.17 s），卻有 6 個 beat_event：「3」「2」「1」三段光柱亮起與 @luna_hold 縮小、ECHO 撞插座彈出（2062）、ECHO 落地被凍（2069）、她完全定住（2076）。ECHO 彈出到落地只有 7 幀。觀眾要在 1.2 s 內同時讀三個倒數、一個掉落、一個凍結，節奏上是全片事件最密的一鏡。
+  evidence: s046 2050–2078，beat_events 幀 2051、2061、2062、2069、2072、2076；人聲「3/2/1」約 85.40／85.88／86.32 s。
+  suggestion: 可不動（倒數與人聲同步）。若 G1 試看覺得太擠，把 ECHO 掉落（2062–2069）挪到 s045 末或拿掉彈跳，只留落地凍結。屬 plan-critic 13.2（動作量與時長）範圍，這裡只記錄。
+- id: T09
+  code: T
+  shots: [s053, s054, s055, s056, s057, s063, s066, s067]
+  severity: note
+  observation: 能量最高的兩段剪得比 Bridge、Build 疏：Final Chorus 平均能量 0.505、Post-chorus 0.529，切點密度只有 0.53、0.57 次/秒，低於 Bridge 0.88、Build 1.18；切點密度的高峰在 bar 37–39，不在能量高峰。bar 41–45 連續 5 個 1 小節鏡（能量 0.49–0.52）；bar 49（Final Chorus 能量最高、5 拍小節）用 s063 一鏡 3.87 s（7 拍）撐住「站上矮牆舉拳」；bar 53（全曲能量最高的整小節 0.565，energy_peak 7.4）的 s067 也是 1 小節，與前 3 小節（s064–s066）同密度，視覺重點（glow_pulse＋閃白）放在 [53,2.2]（2903，對人聲 LIVE AI），不在下拍 2886。這符合 mv_plan 的「勝利、開闊」意圖，列為觀察。
+  evidence: final_chorus cps 0.530／energy 0.505；post_chorus cps 0.573／energy 0.529；bar 53 mean rms 0.565；s063 2632–2725；s067 2886–2940；beat_events 2903、2927；全片逐小節切點數與能量相關 r=0.035。
+  suggestion: 不需動。若使用者想在 bar 53 更有「最高點」感，可考慮 s067 在 [53,3]（2913）拆半小節，或把閃白移到下拍 2886；兩者都會動到 post_chorus_peak 的決定，要先問。
+- id: T10
+  code: T
+  shots: [s037, s038]
+  severity: note
+  observation: Bridge 的切點在 bridge_structure 寫「跟人聲」：s037（Create 77.48 s→幀 1859.5，切 1860）、s039（Show 79.24 s→1901.8，切 1901）、s040（Dream 81.96 s→1967，切 1968）、s041（Build 82.89 s→1989.4，切 1989）、s042（Let 83.73 s→2009.5，切 2009）都在 1 幀內；只有 s038 切在整拍 [34,3]（1887），而「Make」onset 78.82 s＝1891.7，晚 5 幀（0.21 s）。s038 前 5 幀是推桿前的鋪墊，事件 [34,3.35]（1892）有對上人聲，所以只是切點略早。
+  evidence: s038 start 1887、beat_events 1892（rel 5）；onset_norm[1887]=0.29。
+  suggestion: 可不動。若想切點也貼人聲，s038 起點改 [34,3.35]（1892）會讓 s038 只剩 9 幀，不建議；維持整拍較好。
+- id: T11
+  code: T
+  shots: [s005]
+  severity: note
+  observation: s005 的三個 beat_event（[4,1]、[4,2]、[4,3]＝幀 230、243、257）的 sync 文字寫人聲「3」「2」「1」約 9.50、10.04、10.54 s（幀 228、241、253），與 frame 差 2、2、4 幀。實際音訊的 onset 峰在 243（0.84）與 257（1.0），正好是 event 的 frame，所以 frame 是對的、只是 sync 文字的「約」秒數不準（「1」差 0.17 s）。
+  evidence: onset_norm[243]=0.84、[257]=1.0（全曲 onset 前 3 高）；event frames 230／243／257；sync 文字秒數換算 228／241／253。
+  suggestion: 把 sync 文字改成與拍點一致（9.58／10.14／10.71 s），避免 P9 或 P4 看到「約 10.54 s」去對 253 幀；不影響畫面。
+aesthetic_notes:
+- {criterion: 'AutoMV #4 Visual Style Harmony', observation: 依分工，色調與渲染看的是草圖與樣張；本輪草圖只是構圖參考，不評。節奏面可記一件事：Build（bar 37–40）把 @signal_tower 控制室、街道、屋頂在 s043–s052 之內來回切（s048 @launch_roof、s049–s051 @street、s052 回 @signal_tower），是全片場景切換最頻繁的一段，色調跳動要留到 G3／G4 看。}
+- {criterion: 'AutoMV #5 Shot Continuity（節奏面）', observation: 74 鏡的 transition_in：cut 65、cut_on_action 5、fade_from_black／match_cut／flash_white／dissolve 各 1（見 c6）。cut_on_action 5 次全落在拍點上。連續同景別：LS 連 3 次出現 3 組（s007–s009、s016–s018、s026–s028）、MS 連 3 次（s033–s035）、INSERT 連 3 次兩組（s059–s061、s068–s070）；後兩組是 Post-chorus／Final Chorus 的半小節快切。密度節奏上，全片 10 個段界都有切點，段內的加速（Prechorus bar 19–20、Chorus 1 bar 32–33、Build、Final Chorus bar 46–48、Post-chorus bar 54–55）每次都是 2 拍一刀或 1 拍一刀，然後回到 1 小節一刀。}
+- {criterion: 'AutoMV #6 Audio–Visual Correlation（節奏面）', observation: 音畫對位的客觀面見 c1、c4、c5。觀察：切點密度與 rms 幾乎無相關（r≈0.04–0.14），畫面節奏跟著敘事張力而不是音量；最高能量的 Final Chorus 與 Post-chorus 反而是 1 小節為主，Bridge／Build 才是全片最密。若使用者想要「越大聲越快」，要動的是 T05、T06、T09；若認為「高潮放慢、讓畫面展開」是對的，現況不需動。}
+- {criterion: 'AutoMV #10 Visual Composition（景別與運鏡變化）', observation: 景別分布：LS 23、MS 14、ELS 11、INSERT 10、MCU 6、FS 5、MLS 4、ECU 1。Hook 三鏡是 MLS、LS、LS，沒有近景；MCU 與 ECU 全片只有 7 個：s004（ECU）、s005、s015、s043、s052、s072、s074（皆 MCU），中段 bar 21–36（Chorus 1、Bridge）一個都沒有。Final Chorus 的 11 鏡中 3 鏡是 INSERT。運鏡：static 35、push_in 20、track 8，其餘 11（tilt／crane／orbit）；角度 eye 38、low 23、high 10、top 3。畫面場景：@signal_tower 29 鏡、@street 26 鏡、@hq_control 7、@city 7、@launch_roof 3、@launch_tunnel 2。光線與畫質留到 G3／G4。}
