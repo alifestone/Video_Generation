@@ -216,8 +216,11 @@ def check_shots(shots, vocab, ents, story_ids, clock, tl, params, rep):
                     rep.fail("S3", sw, f"placement.{axis}={pl.get(axis)} 不在 vocab.{voc}")
             if rid in ents and ents[rid].get("kind") == "character":
                 need(sub, ["facing", "state"], sw, rep, "S3")
-                if sub.get("facing") and sub["facing"] not in vocab.get("facing", []):
-                    rep.fail("S3", sw, f"facing={sub['facing']} 不在 vocab.facing")
+                fv = sub.get("facing")
+                vals = list(fv.values()) if isinstance(fv, dict) else [fv]   # 依階段的 dict（例如 {entering, settled}）逐值檢查
+                for v in vals:
+                    if v and v not in vocab.get("facing", []):
+                        rep.fail("S3", sw, f"facing={v} 不在 vocab.facing")
         # 畫面裡寫到的實體，都要列在 subjects 或 place（才有位置與大小）
         listed = {(REF_RE.findall(x.get("ref", "")) or [None])[0] for x in sh.get("subjects") or []}
         listed |= set(REF_RE.findall(sh.get("place") or ""))

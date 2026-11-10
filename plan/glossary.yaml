@@ -81,6 +81,7 @@ entities:
 
   drone:
     kind: character
+    no_face: true      # 球形無人機，沒有臉；lint F3（靜止角色要寫表情、嘴、眼）不適用
     name: ECHO
     status: proposed
     definition: CSFCCA 派給 @luna 的球形無人機夥伴，名叫 ECHO（只是設定名稱，外殼上不出現文字），負責投影、帶路、開門等劇情功能。

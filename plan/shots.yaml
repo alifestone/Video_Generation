@@ -126,7 +126,7 @@ shots:
       - ref: "@drone"
         placement: {x: center_right, y: upper, depth: fg}
         size: 直徑約畫面高的 1/4；停穩後中心約在畫面寬 78%、畫面高 22%，不和 @countdown_ring 重疊
-        facing: to_camera
+        facing: {entering: profile_left, settled: to_camera}   # 滑入時面罩朝行進方向（畫面左），停穩時正面朝鏡頭（2026-10-27 使用者）
         state: "[2,2] 從畫面右緣外滑入（面罩朝左、朝行進方向），減速時原地轉向，[2,3] 停穩時正面朝鏡頭"
       - ref: "@countdown_ring"
         placement: {x: center, y: upper, depth: fg}
@@ -135,7 +135,7 @@ shots:
         placement: {x: center, y: middle, depth: bg}
         size: 佔滿 @pod 後方的整個背景，失焦
     first_frame: >
-      @pod 的正面，@luna 在透明玻璃罩裡閉眼站立，臉部被底座白光由下往上柔和照亮，背後是滿牆灰階的 @monitor_wall（失焦）。
+      @pod 的正面，@luna 在透明玻璃罩裡閉眼站立、表情平靜、嘴巴閉著，臉部被底座白光由下往上柔和照亮，背後是滿牆灰階的 @monitor_wall（失焦）。
       畫面裡還沒有 @drone 與 @countdown_ring。
     motion:
       camera: {move: static, speed: slow, realize: none}
