@@ -122,3 +122,7 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   p4_fun_control: deferred              # 手動姿勢＋Fun Control 未測（需另下載），留到第一個 B 路線段落前
   # 2026-11-09
   s002_screens_light_up: gray_directly   # 使用者：監控螢幕逐拍亮起時直接是灰階，不先全彩再轉灰
+  # 2026-11-10 P5（p5 session）
+  s003_timing: keep_post_retime          # 使用者：ECHO 13 幀滑入轉身保留現狀，正常速度生成、後製加速對拍（P4 已知問題 #5 結案）
+  animatic_frames: sdxl_drafts           # 使用者：animatic 每鏡快速出一張 SDXL 草圖
+  g1_user_review: merged_into_g2         # 使用者：草圖難以審查，G1 的使用者審查跳過，到 G2（關鍵幀換進 animatic）一起審；Sonnet 節奏審查已通過（g1_r1）
