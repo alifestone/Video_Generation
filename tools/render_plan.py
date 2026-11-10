@@ -81,7 +81,7 @@ class Renderer:
         self.w(f"# {p.get('title', 'MV')} 概念與劇本")
         self.w()
         self.w("> 由 `plan/` 的 YAML 以 `tools/render_plan.py` 產生，不要手改；修改請改 `plan/` 再重新產生。")
-        self.w("> 「待確認」是 Claude 的提案，還沒經過使用者確認。")
+        self.w("> 「待確認」是 Claude 的提案；劇情不經使用者逐段確認，在 G3 粗剪時和影片一起檢驗。")
         self.w()
         self.w("## 參數與已確認決定")
         self.w()

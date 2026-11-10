@@ -62,10 +62,10 @@ P6 到 P8 依段落重複，建議從 Chorus 1 開始：一段做完、審過再
 6. **歧義審稿**：另一個 Claude 依 `tools/prompts/plan_critic.md` 審，結果存 `plan/review/<段落>_rN.yaml`。分流：
    - 劇情、設定、角色、結局、轉場類型 → 問我。
    - 尺寸、幀數、位置、時間、後製與模型分工 → Claude 直接決定，理由寫在 review 檔的 `resolution`。
-7. **產生文件**：`python3 tools/render_plan.py` 產生 `docs/mv_plan.md`，同步到線上 doc；我確認該段後寫下一段（回到第 4 步）。
+7. **產生文件**：`python3 tools/render_plan.py` 產生 `docs/mv_plan.md`，同步到線上 doc，接著寫下一段（回到第 4 步）。劇情不經我逐段確認，留到 G3 粗剪時和影片一起對照檢驗。
 8. **style bible**：全片鏡頭寫完後，依概念重寫 `docs/style_bible.md` 的場景、色票與每段色調。
 
-驗收：lint 沒有 FAIL、審稿問題全部處理、每段都經我確認。歌詞對應的程度依 `lyric_mapping`（例如 section＝段落層對應即可）。
+驗收：lint 沒有 FAIL、審稿問題全部處理。歌詞對應的程度依 `lyric_mapping`（例如 section＝段落層對應即可）。
 
 ### P3 角色資產與 LoRA
 
@@ -114,7 +114,7 @@ H3 產生的任何畫面都不能放進 LoRA 資料集，因為授權禁止用�
 1. 依「影片路線」生成，只生 `realize` 為 model 的部分（標 post 的效果留給 P9）；每鏡頭尾各多生約 0.3–0.5 秒，剪輯時再裁掉。
 2. 每鏡最多試 4 個 seed；都失敗就改路線或改設計（特寫、縮短、改成視差）。
 3. 候選放在 `candidates/`，由我選 seed，Claude Sonnet 5.5 把選定的結果複製成 `video.mp4`。
-4. **G3**：把選定影片換進 animatic，當成粗剪來看。
+4. **G3**：把選定影片換進 animatic，當成粗剪來看；同時對照 `docs/mv_plan.md` 檢驗劇情（劇本在 P2 不經我確認，這裡是第一次審劇情）。劇情問題記代碼 S，退回 P2 改劇本再重做受影響的鏡頭。
 
 ### P8 局部修補
 

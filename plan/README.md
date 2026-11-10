@@ -37,7 +37,7 @@
 
 ## 狀態
 
-每個實體與鏡頭都有 `status`：`proposed`（Claude 提案，待確認）或 `confirmed`（使用者確認）。
+每個實體與鏡頭都有 `status`：`proposed`（Claude 提案，待確認）或 `confirmed`（使用者確認）。本片 2026-11-10 起劇情不經使用者逐段確認，`proposed` 只表示劇情尚未在 G3 粗剪中和影片一起檢驗過。
 `questions` 欄記錄還沒回答的問題；`tools/lint_plan.py` 會把 `proposed` 與 `questions` 全部列出。
 
 ## 流程

@@ -1,7 +1,7 @@
 # LUNA MV 概念與劇本
 
 > 由 `plan/` 的 YAML 以 `tools/render_plan.py` 產生，不要手改；修改請改 `plan/` 再重新產生。
-> 「待確認」是 Claude 的提案，還沒經過使用者確認。
+> 「待確認」是 Claude 的提案；劇情不經使用者逐段確認，在 G3 粗剪時和影片一起檢驗。
 
 ## 參數與已確認決定
 
@@ -98,7 +98,7 @@
 | echo_visor | front_third |
 | pod_open_ref | redo_from_closed |
 | refs_04_05 | regenerated_s3 |
-| late_plot_review | later |
+| late_plot_review | at_g3 |
 | s003_echo_entry_facing | left_then_turn_to_camera |
 | p4_main_i2v | per_shot_wan_flf_or_h3 |
 | p4_accel_lora | production |
@@ -110,6 +110,7 @@
 | s003_timing | keep_post_retime |
 | animatic_frames | sdxl_drafts |
 | g1_user_review | merged_into_g2 |
+| plot_review | at_g3_only |
 
 ## 故事
 

@@ -111,7 +111,7 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   echo_visor: front_third                # ECHO 光帶嵌在黑色面罩裡，面罩只在正面約 1/3 圈（glossary drone.look.visor）
   pod_open_ref: redo_from_closed         # 啟動艙開啟參考圖照 glossary 重做：玻璃罩兩半往兩側滑開
   refs_04_05: regenerated_s3             # refs/04、05 重出成胸口以上、睜眼（refs/experiment/G0_expr/）
-  late_plot_review: later                # Final Chorus～Outro 的 Claude 代決與 s043–s074 待確認，留到做那些段落的關鍵幀前再審
+  late_plot_review: at_g3                # 2026-11-10 使用者：取消關鍵幀前的後段劇情審查；Final Chorus～Outro 的 Claude 代決在 G3 粗剪時和影片一起檢驗
   # 2026-10-27 P4（p4 session）
   s003_echo_entry_facing: left_then_turn_to_camera   # 使用者：ECHO 滑入時正面朝左（行進方向），不是朝前；last.png（停穩後朝鏡頭）OK。轉向時機＝減速最後約半拍、[2,3] 停穩時轉完（Claude 代決）
   p4_main_i2v: per_shot_wan_flf_or_h3   # 使用者選：角色鏡頭（特寫、表情、身體動作）＝Wan2.2 I2V A14B Q8＋lightx2v 4 步＋首尾幀；物體入鏡／精準轉向或銜接＝MiniMax H3 FL2VA turbo 8 步
@@ -126,3 +126,4 @@ decisions:                       # 使用者已確認的方向（2026-10-23）
   s003_timing: keep_post_retime          # 使用者：ECHO 13 幀滑入轉身保留現狀，正常速度生成、後製加速對拍（P4 已知問題 #5 結案）
   animatic_frames: sdxl_drafts           # 使用者：animatic 每鏡快速出一張 SDXL 草圖
   g1_user_review: merged_into_g2         # 使用者：草圖難以審查，G1 的使用者審查跳過，到 G2（關鍵幀換進 animatic）一起審；Sonnet 節奏審查已通過（g1_r1）
+  plot_review: at_g3_only                # 使用者：P2 每段 render 後的使用者確認取消；劇情一律在 G3 粗剪時和影片對照檢驗（S 類退回 P2）
