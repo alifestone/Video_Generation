@@ -176,7 +176,7 @@ class Renderer:
             self.w(f"| 轉場（進入本鏡） | `{tr.get('type')}` {params} {self.r(tr.get('note'))} |")
             for sub in sh.get("subjects") or []:
                 pl = sub.get("placement") or {}
-                extra = "；".join(x for x in (sub.get("facing") and f"面向 {sub['facing']}", self.r(sub.get("state"))) if x)
+                extra = "；".join(x for x in (sub.get("facing") and "面向 " + (" → ".join(f"{k} {v}" for k, v in sub["facing"].items()) if isinstance(sub["facing"], dict) else str(sub["facing"])), self.r(sub.get("state"))) if x)
                 self.w(f"| 主體 {self.r(sub.get('ref'))} | 位置 {pl.get('x')}／{pl.get('y')}／{pl.get('depth')}；大小：{self.r(sub.get('size'))}"
                        + (f"；{extra}" if extra else "") + " |")
             self.w(f"| 首幀 | {self.r(sh.get('first_frame'))} |")
