@@ -1,0 +1,218 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "LUNA 腰以上在畫面左半前景、四分之三側面朝畫面右、看著右後方（頭頂在畫面高約 15%、笑容淡）；背景略失焦的黃雨衣小孩奔跑中（身高約畫面高 30%、在畫面中右）、紅 balloon 在更高處（直徑約畫面高 5%、約畫面寬 75%、高 8%）；其他全灰；ECHO 被她身體擋住不入鏡",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "refs/entities/street/frozen.png",
+      "refs/entities/balloon_child/back.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 shows the frozen grey shopping street. Make a new picture, a medium shot at eye level: the girl from image 1 is in the left half of the image in the foreground, shown from the waist up, in three-quarter view with her body turned toward the right of the image, the top of her head at about 15 percent of the image height, and she looks toward the right and back along the street into the distance, not at the camera, her face in three-quarter profile turned toward the right of the image, with a faint gentle smile, her mouth closed. Behind her the straight street with its shop fronts stretches away into the distance, slightly out of focus, completely greyscale with no colour, with tiny raindrops hanging motionless in the air as small dots; the middle and right part of the image is the empty street. There is no child, no balloon, no other person, no robot, no drone and no floating sphere in the picture. Only the girl has colour. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "fit_person",
+       "crop_bottom": true,
+       "top": 0.15,
+       "cx": 0.27,
+       "person_seed": [
+        0.25,
+        0.6
+       ]
+      },
+      {
+       "op": "remove_rain",
+       "person_seed": [
+        0.25,
+        0.6
+       ]
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, three-quarter view, looking to the side, light smile, shopping street, storefront, shop windows, buildings, night, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey_keep",
+      "dilate": 2,
+      "person_seed": [
+       0.25,
+       0.55
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 150,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person_seed": [
+       0.25,
+       0.55
+      ]
+     },
+     {
+      "op": "paste_asset",
+      "file": "refs/p6/s012_child_{a}.png",
+      "assets": 4,
+      "h": 0.3,
+      "fx": 0.62,
+      "fy": 0.66,
+      "blur": 2.0
+     },
+     {
+      "op": "paste_balloon",
+      "cx": 0.75,
+      "cy": 0.08,
+      "diam": 0.05,
+      "string": 0.5,
+      "string_to": "hand",
+      "person_seed": [
+       0.25,
+       0.55
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 153.8,
+     "2": 109.4,
+     "3": 112.3,
+     "4": 126.9,
+     "5": 108.8,
+     "6": 117.4
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖：背景的小孩與 balloon 都是灰色、定格；LUNA 低頭看著舉在胸前的 char_right 掌心（靠鏡頭那隻手），表情困惑、凝重；只有 LUNA 有色",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "shots/s013/candidates/first_Bin_s1.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 is the first frame. Keep image 2 exactly as it is, the same framing, the same camera, the same street, and the same girl in the same position. Change only this: the girl's faint smile is gone; she has raised her right hand (the hand nearer to the camera) in front of her chest with the palm open facing up, and she is looking down at her own palm with her head bowed, a confused, serious, frowning expression, her eyes looking down at her hand. Her fingers are slightly open, each hand has exactly five fingers. The whole picture is completely greyscale with no colour except the girl. There is no robot, no drone and no floating sphere. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "remove_rain",
+       "person_seed": [
+        0.25,
+        0.6
+       ]
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, three-quarter view, looking at own hand, palm up, hand raised to chest, confused, serious, frown, shopping street, storefront, shop windows, buildings, night, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey_keep",
+      "dilate": 2,
+      "person_seed": [
+       0.25,
+       0.55
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 150,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person_seed": [
+       0.25,
+       0.55
+      ]
+     },
+     {
+      "op": "paste_asset",
+      "file": "refs/p6/s012_child_{a}.png",
+      "assets": 4,
+      "h": 0.3,
+      "fx": 0.62,
+      "fy": 0.66,
+      "blur": 2.0,
+      "grey": true
+     },
+     {
+      "op": "paste_balloon",
+      "cx": 0.75,
+      "cy": 0.08,
+      "diam": 0.05,
+      "string": 0.5,
+      "string_to": "hand",
+      "grey": true,
+      "person_seed": [
+       0.25,
+       0.55
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 91.3,
+     "2": 99.3,
+     "3": 92.3,
+     "4": 88.3,
+     "5": 91.3,
+     "6": 96.3
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "4": "腰部下緣出現不屬於衣服的紅色色塊（B 重繪的瑕疵）"
+  },
+  "contact": "contact_last.png"
+ }
+}

@@ -1,0 +1,269 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "街道一側、與街道垂直平視；背景是對面灰色商店門面。畫面中間灰色定格的 balloon_child（身高約畫面高 35%、腳在 85%，側身朝右、腳離地、手伸向右上）；紅氣球（直徑約畫面高 11%、中心約畫面寬 58%、高 19%）在小孩右上方，細繩接到小孩的手；LUNA（全身約畫面高 50%、腳在 86%）在小孩左後方側身朝右、手放下；ECHO（中心約畫面寬 33%、高 34%）從她頭部後上方露出（後製貼）；LUNA、ECHO 與紅氣球有色，其餘灰。Qwen 把 LUNA 與小孩同框時不聽尺寸與位置（會複製小孩參考圖、LUNA 畫太大），所以場景＝Qwen 空街立面，LUNA＝立繪（路線 B：LoRA＋OpenPose 側面骨架）摳圖縮貼，小孩＝refs/p6/s012_child_*.png（tools/p6_make_asset.py 以 Qwen 由小孩背面參考圖出側面）摳圖貼",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "refs/entities/street/frozen.png"
+     ],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Image 2 shows a frozen grey shopping street. Draw a flat frontal view at eye level, straight on, of the grey shop fronts on the far side of a street, in the same style as image 2: the building facades run parallel to the picture plane across the whole width of the image, four storeys of grey buildings with glass shop windows and shutters on the ground floor, large blank glowing billboards on the upper floors and a few street lamps. In the lower fifth of the image is the near sidewalk and the wet road, empty, with the horizon of the street at about the middle of the image. Nobody and no object is in the picture; tiny raindrops hang motionless in the air as small dots. The whole picture is completely greyscale with no colour at all, and slightly out of focus. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s012/candidates/first_pose_s1.png",
+      "pose_strength": 0.9,
+      "pose_end": 0.8,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from side, profile, facing right, full body, standing, arms at sides, looking ahead, calm, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "paste_asset",
+      "file": "refs/p6/s012_child_{a}.png",
+      "assets": 4,
+      "h": 0.35,
+      "fx": 0.5,
+      "fy": 0.85,
+      "grey": true
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.5,
+      "fx": 0.3,
+      "fy": 0.86
+     },
+     {
+      "op": "harmonize",
+      "denoise": 0.3,
+      "canny": 1.0,
+      "canny_end": 1.0,
+      "tags": "full body, from side, profile, facing right, standing, child, yellow raincoat, hood up, rain boots, shopping street, storefront, night",
+      "neg_add": "rain, rain streaks, raindrops, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+     },
+     {
+      "op": "grey_keep",
+      "dilate": 2,
+      "person_seed": [
+       0.3,
+       0.65
+      ]
+     },
+     {
+      "op": "paste_balloon",
+      "cx": 0.58,
+      "cy": 0.19,
+      "diam": 0.11,
+      "string": 0.45,
+      "string_to": "hand",
+      "person_seed": [
+       0.3,
+       0.65
+      ]
+     },
+     {
+      "op": "drone",
+      "cx": 0.343,
+      "cy": 0.325,
+      "diam": 0.08,
+      "yaw": 70,
+      "behind": true,
+      "person_seed": [
+       0.3,
+       0.65
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 95.8,
+     "2": 97.6,
+     "3": 96.9,
+     "4": 94.6,
+     "5": 94.8,
+     "6": 98.0
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "2": "harmonize 後腿環消失",
+   "4": "harmonize 後腿環消失"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖與場景：黃色雨衣的 balloon_child 在畫面寬約 70% 處奔跑中、手伸向畫面上緣（氣球已飛出畫面）；LUNA 停在原地側身看著小孩（沿用首幀同 seed 的立繪）；ECHO 在她頭後上方；LUNA、小孩（黃雨衣）與 ECHO 有色，其餘灰",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s012/candidates/first_A_s1.png"
+     ],
+     "prompt": "(沿用 first_A_s1.png 的場景，不經 Qwen)"
+    },
+    "post": [
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       }
+      ]
+     },
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "paste_asset",
+      "file": "refs/p6/s012_child_{a}.png",
+      "assets": 4,
+      "h": 0.35,
+      "fx": 0.7,
+      "fy": 0.85
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.5,
+      "fx": 0.3,
+      "fy": 0.86
+     },
+     {
+      "op": "harmonize",
+      "denoise": 0.3,
+      "canny": 1.0,
+      "canny_end": 1.0,
+      "tags": "full body, from side, profile, facing right, standing, child, yellow raincoat, hood up, rain boots, shopping street, storefront, night",
+      "neg_add": "rain, rain streaks, raindrops, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+     },
+     {
+      "op": "grey_keep",
+      "dilate": 2,
+      "person_seed": [
+       0.3,
+       0.65
+      ],
+      "hue": [
+       {
+        "h": [
+         38,
+         62
+        ],
+        "s": 0.4,
+        "v": 0.3,
+        "rect": [
+         0.5,
+         0.2,
+         0.95,
+         0.95
+        ]
+       },
+       {
+        "h": [
+         210,
+         245
+        ],
+        "s": 0.35,
+        "v": 0.12,
+        "rect": [
+         0.5,
+         0.5,
+         0.95,
+         0.95
+        ]
+       }
+      ]
+     },
+     {
+      "op": "drone",
+      "cx": 0.343,
+      "cy": 0.325,
+      "diam": 0.08,
+      "yaw": 70,
+      "behind": true,
+      "person_seed": [
+       0.3,
+       0.65
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 0,
+     "2": 0,
+     "3": 0,
+     "4": 0,
+     "5": 0,
+     "6": 0
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "2": "harmonize 後腿環消失",
+   "4": "harmonize 後腿環消失"
+  },
+  "contact": "contact_last.png"
+ }
+}

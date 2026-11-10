@@ -1,0 +1,242 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "微仰角、LUNA 腰以上側身在畫面左半、仰頭看右上方（頭頂在畫面高約 30%）；灰色 balloon 定格（程式貼：中心約畫面寬 65%、高 15%、直徑約畫面高 18%，細繩垂到約 55% 高、在她右側）；畫面下緣寬約 55% 處是失焦的灰色小孩帽子與伸出的手（程式貼，由 refs 摳出）；ECHO 在她頭部右後方（約畫面寬 48%、高 45%）被她擋住一部分（後製貼）；背景灰色商店；除 LUNA 與 ECHO 外全灰。氣球與小孩帽手 Qwen 畫不準大小位置，改由 refs/entities/balloon_child/back.png 摳圖後精確貼上",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "refs/entities/street/frozen.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 shows the frozen grey shopping street. Make a new picture, a medium shot with the camera slightly below her chest level looking slightly upward: the girl from image 1 is shown from the waist up in the left half of the image, in three-quarter view with her body and her face turned toward the right side of the image, the top of her head at about 30 percent of the image height. Her head is tilted back and she looks up toward the upper right of the image into the empty sky, mouth closed, calm and attentive. Her arms hang at her sides. The right half of the image is empty background: a clearly visible grey street with several storeys of shop fronts, glass shop windows, street lamps and building edges on both sides, only slightly out of focus, with tiny raindrops hanging motionless in the air as small dots. There is no balloon, no child, no robot, no drone and no floating sphere anywhere in the picture. Everything except the girl is completely greyscale with no colour. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "fit_person",
+       "crop_bottom": true,
+       "top": 0.3,
+       "cx": 0.33,
+       "person_seed": [
+        0.3,
+        0.6
+       ]
+      },
+      {
+       "op": "remove_rain",
+       "person_seed": [
+        0.3,
+        0.6
+       ]
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, looking up, head tilt, arms at sides, shopping street, storefront, shop windows, buildings, street lamps, night, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey_keep",
+      "dilate": 2,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 150,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     },
+     {
+      "op": "paste_childhand",
+      "cx": 0.55,
+      "top": 0.88,
+      "width": 0.17,
+      "blur": 4
+     },
+     {
+      "op": "paste_balloon",
+      "cx": 0.65,
+      "cy": 0.15,
+      "diam": 0.18,
+      "string": 0.55,
+      "grey": true,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     },
+     {
+      "op": "drone",
+      "cx": 0.445,
+      "cy": 0.52,
+      "diam": 0.28,
+      "yaw": 40,
+      "behind": true,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 87.6,
+     "2": 99.7,
+     "3": 86.3,
+     "4": 104.8,
+     "5": 90.4,
+     "6": 98.3
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "rejected": {
+   "1": "左側招牌有類文字的亂碼（B 畫出）"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖：LUNA 的 char_right 手（靠鏡頭那隻）舉在半空、食指剛離開氣球底部；氣球已是紅色（程式貼：依舉起的指尖定位，底部在指尖上方），小孩仍灰色；ECHO 同首幀；LUNA 與氣球與 ECHO 有色，其餘灰",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "shots/s011/candidates/first_Bin_s1.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 is the first frame. Keep image 2 exactly as it is, the same camera angle, the same framing, the same girl in the same place with the same face, hair and clothes, and the same grey street, and change only this: the girl's right arm (the arm nearer to the camera) is raised, with the elbow bent, so that her open hand is held up just above the top of her head, only the index finger pointing up and the other fingers curled, the fingertip about 12 percent of the image height above the top of her head; her upper arm is not stretched out fully, her hand stays in the upper-middle of the picture and is well inside the frame. Her head is still tilted back looking up at the sky, focused expression. There is no balloon, no child, no robot, no drone and no floating sphere anywhere in the picture. Everything except the girl stays completely greyscale with no colour. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "shift_person",
+       "tip_y": 0.15,
+       "person_seed": [
+        0.3,
+        0.6
+       ]
+      },
+      {
+       "op": "remove_rain",
+       "person_seed": [
+        0.3,
+        0.6
+       ]
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, upper body, from below, three-quarter view, reaching up, arm up, index finger, focused, looking up, shopping street, night, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey_keep",
+      "dilate": 2,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 150,
+      "rmin": 2.0,
+      "rmax": 5.0,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     },
+     {
+      "op": "paste_childhand",
+      "cx": 0.55,
+      "top": 0.88,
+      "width": 0.17,
+      "blur": 4
+     },
+     {
+      "op": "paste_balloon",
+      "anchor": "fingertip",
+      "gap": 0.012,
+      "diam": 0.18,
+      "string": 0.55,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     },
+     {
+      "op": "drone",
+      "cx": 0.445,
+      "cy": 0.52,
+      "diam": 0.28,
+      "yaw": 40,
+      "behind": true,
+      "person_seed": [
+       0.3,
+       0.55
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 134.7,
+     "2": 81.3,
+     "3": 92.3,
+     "4": 79.3,
+     "5": 90.8,
+     "6": 92.4
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png"
+    }
+   }
+  ],
+  "contact": "contact_last.png"
+ }
+}

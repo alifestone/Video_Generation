@@ -1,0 +1,195 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "鏡頭貼近濕石板路面（離地約 30 cm）在 LUNA 前方往大樓方向仰拍她迎面走來；全身約畫面高 60%、腳在 78%；她前方約 0.7 m 的路面有直徑約 1.5 m 的灰色水窪（畫面下半中間的扁橢圓）；char_left 腳在前剛落地；ECHO 在她左肩旁（畫面右上，後製貼）；背景灰色街道與商店失焦、雨滴停在半空；除 LUNA 與 ECHO 外全灰",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "refs/entities/street/frozen.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 shows the frozen grey shopping street. Make a new wide shot of the street seen from a very low camera position just above the wet stone pavement (the camera 30 centimetres above the ground), looking slightly upward. The girl from image 1 walks toward the camera along the middle of the street, full body, but she is FAR from the camera, about 6 metres away, so she is small in the picture: the top of her head is at 18 percent of the image height and her feet are at 78 percent of the image height, so her whole body is only 60 percent of the image height, with clear empty space above her head (grey sky and blurred buildings) and a wide area of empty wet pavement in front of her. Her left foot (on the right side of the image) is forward and has just touched the ground, her arms hang relaxed at her sides, and she looks ahead toward the camera calmly with her mouth closed. On the wet pavement between her and the camera, in the lower middle of the image, is one flat round still puddle about 1.5 metres wide seen as a flat ellipse, at about 88 percent of the image height; its surface is calm and reflects the grey street. The street behind her, with grey shop fronts on both sides and a large grey building at the far end, is completely out of focus and blurred. Tiny raindrops hang motionless in the air as small dots. Everything in the picture except the girl is completely greyscale with no colour. There is no robot, no drone and no floating sphere. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. She wears a white cargo mini skirt with two big pockets, a black belt with a long black strap hanging down, silver bracelets on both wrists, white ankle socks and white chunky sneakers. She has exactly one black thigh strap with a silver buckle, only on her right leg, which is on the LEFT side of the image because she faces the viewer; her other leg is bare. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "fit_person",
+       "height": 0.6,
+       "feet": 0.78
+      },
+      {
+       "op": "remove_rain"
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, low angle, walking towards viewer, looking at viewer, calm, puddle in foreground, wet stone pavement, reflection, shopping street, night, blurry background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey_keep",
+      "dilate": 2
+     },
+     {
+      "op": "frozen_rain",
+      "n": 300,
+      "rmin": 1.2,
+      "rmax": 3.2
+     },
+     {
+      "op": "drone",
+      "rel": {
+       "dx": 1.7,
+       "dy": 0.7,
+       "k": 1.2
+      },
+      "yaw": 0
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 72.7,
+     "2": 76.4,
+     "3": 77.4,
+     "4": 93.5,
+     "5": 94.9,
+     "6": 79.4,
+     "7": 96.0,
+     "8": 77.4
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png",
+     "7": "first_s7.png",
+     "8": "first_s8.png"
+    }
+   }
+  ],
+  "rejected": {
+   "1": "地面水窪變成黑色污塊（B 瑕疵）",
+   "4": "裙子與腿部畫壞（淡綠色塊）、腳邊白色污塊"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一鏡位：LUNA 站在水窪裡（char_right 腳在水中），身高約畫面高 78%、腳在 90%，低頭看水窪、表情驚訝（嘴微張）；水窪上方停著一圈灰色定格水花，水面漣漪也停住（灰）；ECHO 停在她左肩旁（畫面右上）；除 LUNA 與 ECHO 外全灰",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [
+      "shots/s010/candidates/first_A_s1.png"
+     ],
+     "prompt": "Image 1 is the character sheet, image 2 is the first frame. Keep the same camera position and the same very low angle just above the wet pavement, the same blurred grey street and the same grey colours as image 2. Now the girl has stepped forward and stands inside the puddle: she is closer to the camera, her whole body is about 78 percent of the image height tall with her feet at about 90 percent of the image height, and her feet are in the water. Her head is bowed and she looks down at the puddle with a surprised expression, her eyes wide and her mouth slightly open. Her arms hang at her sides. A ring of splashing water droplets and a crown-shaped splash hangs frozen in the air around her feet above the puddle, and still concentric ripples are visible on the water surface; the splash and the water are plain grey. Everything in the picture except the girl is completely greyscale with no colour. There is no robot, no drone and no floating sphere. Her face is slim with a pointed chin, almond-shaped dark purple-grey eyes, thin eyebrows and a small silver earring on the earlobe. Her hair is a dark purple high ponytail made of a straight bundle of hair, with braids only on the crown of her head and a thin silver chain braided into the hair and hanging down along the ponytail, with a few loose bangs on her forehead. She wears a white sleeveless high-collar zip-up crop top with a silver zipper running from the collar straight down to the hem, and a bare midriff. She wears a white cargo mini skirt with two big pockets, a black belt with a long black strap hanging down, silver bracelets on both wrists, white ankle socks and white chunky sneakers. She has exactly one black thigh strap with a silver buckle, only on her right leg, which is on the LEFT side of the image because she faces the viewer; her other leg is bare. Each visible hand has exactly five fingers. Keep the exact same character and outfit as the reference sheet in image 1. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 0.6,
+     "pre": [
+      {
+       "op": "remove_rain",
+       "ymax": 0.62
+      }
+     ],
+     "controlnet": {
+      "canny": true,
+      "canny_strength": 0.6,
+      "canny_end": 0.6
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, zipper, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, full body, from below, low angle, standing in puddle, looking down, surprised, open mouth, water splash frozen in air, ripples, wet stone pavement, shopping street, night, blurry background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "grey_keep",
+      "dilate": 2
+     },
+     {
+      "op": "desat_hue",
+      "h": [
+       150,
+       300
+      ],
+      "s": 0.1,
+      "rect": [
+       0.25,
+       0.55,
+       0.75,
+       1.0
+      ]
+     },
+     {
+      "op": "frozen_rain",
+      "n": 300,
+      "rmin": 1.2,
+      "rmax": 3.2
+     },
+     {
+      "op": "drone",
+      "rel": {
+       "dx": 1.7,
+       "dy": 0.7,
+       "k": 1.2
+      },
+      "yaw": 0
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 95.7,
+     "2": 77.4,
+     "3": 91.9,
+     "4": 93.6,
+     "5": 99.6,
+     "6": 96.4,
+     "7": 92.6,
+     "8": 93.4
+    },
+    "files": {
+     "1": "last_s1.png",
+     "2": "last_s2.png",
+     "3": "last_s3.png",
+     "4": "last_s4.png",
+     "5": "last_s5.png",
+     "6": "last_s6.png",
+     "7": "last_s7.png",
+     "8": "last_s8.png"
+    }
+   }
+  ],
+  "rejected": {
+   "1": "腳與水花貼到畫面下緣被切到、人物比劇本大（身高偏大）",
+   "6": "腳邊水花被 B 畫成深紫色尖刺狀、灰化後仍有色塊",
+   "8": "地面出現十字星芒狀雜點（B 瑕疵）"
+  },
+  "contact": "contact_last.png"
+ }
+}

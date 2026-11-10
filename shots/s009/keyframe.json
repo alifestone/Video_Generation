@@ -1,0 +1,212 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "街心 1.4 m 平視、背對樓頂大樓朝街尾；整條街灰階 frozen，只有 LUNA 與 ECHO 有顏色；LUNA 在正中背對鏡頭走（身高約畫面高 40%、腳在 85%）；ECHO 在她畫面左肩旁（後製貼）；街尾遠處一小片彩色霓虹、正上方黑色塔剪影（天線尖端約畫面高 25%）；上方車道灰色 hovercar 一排排。場景＝Qwen 空街（依 refs/entities/street/frozen.png），人物＝立繪（路線 B 的 OpenPose 骨架）摳圖縮貼，以求身高與腳位精確",
+  "variants": [
+   {
+    "seeds": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Draw a straight pedestrian shopping street at night, seen exactly from the eye height of a standing person, the camera 1.4 metres above the pavement and pointing perfectly horizontally straight down the middle of the street. It is a flat, level, symmetrical one-point perspective: all the lines of the street converge to a single vanishing point at the exact horizontal centre of the image. The wet stone pavement fills the entire lower half of the image, wide and empty, with a few puddles. The grey shop buildings on both sides (4 to 6 floors, glass shop windows on the ground floor, large blank glowing holographic billboards on the upper floors, street lamps) converge toward the centre, and the sky is a narrow dark strip above the far end of the street. The whole picture is completely greyscale with no colour at all, and tiny raindrops hang motionless in the air as small dots. A very few small grey statue-like pedestrians stand far away near the sides of the street, none near the camera and none in the middle of the street. A lane of small grey wheel-less hover cars hangs motionless in the air high above the middle of the street, in a row, the nearest ones about 8 percent of the image width wide and each one farther down the street smaller than the one before. At the very end of the street, at the vanishing point, there is a tiny patch of colourful neon lights in magenta, cyan and amber. There is no tower, no robot, no drone and no character. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "B": {
+     "denoise": 1.0,
+     "pre": null,
+     "controlnet": {
+      "pose": "shots/s009/candidates/first_pose_s11.png",
+      "pose_strength": 0.9,
+      "pose_end": 0.8,
+      "canny": false
+     },
+     "region": null,
+     "prompt": "lunacsf, 1girl, solo, grey eyes, dark purple hair, purple hair, high ponytail, braided hair, hair chain, white crop top, sleeveless, high collar, midriff, bracelets, white skirt, cargo skirt, black belt, single thigh strap, white socks, white sneakers, from behind, back view, facing away, full body, walking, arms at sides, white background, simple background, masterpiece, best quality, anime screencap, clean lineart, cel shading"
+    },
+    "post": [
+     {
+      "op": "horizon",
+      "to": 0.45,
+      "fallback": 0.59
+     },
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.45,
+      "h": 0.195,
+      "behind_sky": true,
+      "sky_y": 0.3,
+      "halo_a": 110
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       },
+       {
+        "rect": [
+         0.44,
+         0.22,
+         0.56,
+         0.5
+        ],
+        "grey": false,
+        "feather": 4
+       }
+      ]
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.4,
+      "fx": 0.5,
+      "fy": 0.85
+     },
+     {
+      "op": "drone",
+      "cx": 0.457,
+      "cy": 0.54,
+      "diam": 0.066,
+      "yaw": 180
+     }
+    ],
+    "seconds_per_candidate": {
+     "11": 53.8,
+     "12": 66.4,
+     "13": 81.5,
+     "14": 80.4,
+     "15": 69.4,
+     "16": 76.4
+    },
+    "files": {
+     "11": "first_s11.png",
+     "12": "first_s12.png",
+     "13": "first_s13.png",
+     "14": "first_s14.png",
+     "15": "first_s15.png",
+     "16": "first_s16.png"
+    }
+   }
+  ],
+  "rejected": {
+   "16": "立繪摳圖殘留灰紫色背景（兩腿之間一條淡紫灰帶）"
+  },
+  "contact": "contact_first.png"
+ },
+ "last": {
+  "說明": "同一構圖與場景（沿用首幀同 seed 的場景與立繪）：LUNA 走到距鏡頭約 7 m，仍在正中背對鏡頭，身高約畫面高 23%（腳約在 68%）；ECHO 在她左肩旁（後製貼）；街道與遠方剪影不變",
+  "variants": [
+   {
+    "seeds": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "gen": "sprite",
+    "A": {
+     "refs": [
+      "shots/s009/candidates/first_A_s11.png"
+     ],
+     "prompt": "(沿用 first_A_s11.png 的場景，不經 Qwen)"
+    },
+    "post": [
+     {
+      "op": "horizon",
+      "to": 0.45,
+      "fallback": 0.59
+     },
+     {
+      "op": "billboards",
+      "min_area": 300
+     },
+     {
+      "op": "tower",
+      "cx": 0.5,
+      "base": 0.45,
+      "h": 0.195,
+      "behind_sky": true,
+      "sky_y": 0.3,
+      "halo_a": 110
+     },
+     {
+      "op": "grey",
+      "where": [
+       {
+        "rect": [
+         0,
+         0,
+         1,
+         1
+        ],
+        "grey": true
+       },
+       {
+        "rect": [
+         0.44,
+         0.22,
+         0.56,
+         0.5
+        ],
+        "grey": false,
+        "feather": 4
+       }
+      ]
+     },
+     {
+      "op": "paste_sprite",
+      "target_h": 0.23,
+      "fx": 0.5,
+      "fy": 0.68
+     },
+     {
+      "op": "drone",
+      "cx": 0.4815,
+      "cy": 0.5,
+      "diam": 0.038,
+      "yaw": 180
+     }
+    ],
+    "seconds_per_candidate": {
+     "11": 0,
+     "12": 0,
+     "13": 0,
+     "14": 0,
+     "15": 0,
+     "16": 0
+    },
+    "files": {
+     "11": "last_s11.png",
+     "12": "last_s12.png",
+     "13": "last_s13.png",
+     "14": "last_s14.png",
+     "15": "last_s15.png",
+     "16": "last_s16.png"
+    }
+   }
+  ],
+  "rejected": {
+   "16": "立繪摳圖殘留灰紫色背景（兩腿之間一條淡紫灰帶）"
+  },
+  "contact": "contact_last.png"
+ }
+}

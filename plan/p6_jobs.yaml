@@ -7,7 +7,10 @@
 #   denoise     B 的 denoise（預設 0.6）
 #   controlnet  {pose: 內嵌關鍵點 dict 或骨架圖路徑, pose_strength, pose_end, canny, canny_strength, canny_end}（路線 B：OpenPose＋A 的邊緣當參考線稿）
 #   region      [x0,y0,x1,y1]（1344×768 像素）：B 只重繪這個區域（小人物用，放大後重繪再羽化貼回）
-#   post        後製步驟 list：grey／paste_drone／platform_dot／black_line／zoom／shift（見 tools/p6_keyframes.py）
+#   pre／post   pre＝B 之前對 A 的構圖修正（zoom／shrink_paste／fit_person＝依 BiRefNet 遮罩把人物縮到劇本尺寸／move_balloon）；
+#               post＝後製步驟 list：grey／grey_keep（灰化但保留 LUNA 前景遮罩、色相、split 斜界線、stash 另存全彩／全灰版）／drone（ECHO 球面轉向 yaw、behind 被人物擋住、rel 依人物定位）／
+#               horizon（把街景地平線移到 45%）／tower（behind_sky 藏在樓群後）／paste_balloon／paste_childhand／paste_asset／paste_head／paste_drone／platform_dot／black_line／zoom／shift（見 tools/p6_keyframes.py）
+#   gen: sprite  場景＋立繪（OpenPose 骨架）摳圖縮貼；flip＝腿環畫在畫面左腿的 seed 翻轉立繪；scene_a／cut_from／scene_map＝首尾幀沿用同一個場景與立繪
 #   seeds       候選的 seed；variants 可讓不同 seed 用不同 refs／說明
 #   gen: proc   程式繪製（不經 Qwen），由 post 的 op 畫
 # 灰色（frozen）的東西一律後製去飽和，tag 不寫 greyscale（p5_decisions D03）。字標與歌詞不畫（P9 疊）。
@@ -30,6 +33,8 @@ macros:
     She has exactly one black thigh strap with a silver buckle, only on her right leg, which is on the LEFT side of the image because she faces the viewer; her other leg is bare.
   LEG_BACK: >-
     She has exactly one black thigh strap with a silver buckle, only on her right leg, which is on the RIGHT side of the image because she is seen from behind; her other leg is bare.
+  LEG_SIDE: >-
+    She has exactly one black thigh strap with a silver buckle, only on her right leg, which is the leg nearest to the camera because she is seen from her right side facing the right of the image; her other leg is bare.
   FINGERS: Each visible hand has exactly five fingers.
   KEEP_SHEET: >-
     Keep the exact same character and outfit as the reference sheet in image 1.
@@ -255,3 +260,394 @@ shots:
           and tiny raindrops hang motionless in the air as small dots. At a sharp, hard-edged line at about 36 percent of the image height the colour begins: everything beyond that line up to the horizon
           is colourful, with magenta, cyan and amber neon lights and glowing holographic billboards, and the tops of the tallest far buildings above the horizon are coloured too.
           There is no tall tower, no character, no drone and no hatch. <<STYLE>>
+
+  # ================= Verse（s009–s016，@street）=================
+  s009:
+    frames:
+      first:
+        desc: 街心 1.4 m 平視、背對樓頂大樓朝街尾；整條街灰階 frozen，只有 LUNA 與 ECHO 有顏色；LUNA 在正中背對鏡頭走（身高約畫面高 40%、腳在 85%）；ECHO 在她畫面左肩旁（後製貼）；街尾遠處一小片彩色霓虹、正上方黑色塔剪影（天線尖端約畫面高 25%）；上方車道灰色 hovercar 一排排。場景＝Qwen 空街（依 refs/entities/street/frozen.png），人物＝立繪（路線 B 的 OpenPose 骨架）摳圖縮貼，以求身高與腳位精確
+        gen: sprite
+        flip: [11, 13]     # 立繪腿環畫在畫面左腿（背面時是角色左腿，錯）→ 翻轉；其他 seed 本來就在畫面右
+        seeds: [11, 12, 13, 14, 15, 16]
+        qwen: >-
+          Image 1 is an unrelated character sheet: ignore it completely and do not draw any character.
+          Draw a straight pedestrian shopping street at night, seen exactly from the eye height of a standing person, the camera 1.4 metres above the pavement and pointing perfectly horizontally straight down the middle of the street.
+          It is a flat, level, symmetrical one-point perspective: all the lines of the street converge to a single vanishing point at the exact horizontal centre of the image. The wet stone pavement fills the entire lower half of the image, wide and empty, with a few puddles.
+          The grey shop buildings on both sides (4 to 6 floors, glass shop windows on the ground floor, large blank glowing holographic billboards on the upper floors, street lamps) converge toward the centre, and the sky is a narrow dark strip above the far end of the street.
+          The whole picture is completely greyscale with no colour at all, and tiny raindrops hang motionless in the air as small dots. A very few small grey statue-like pedestrians stand far away near the sides of the street, none near the camera and none in the middle of the street.
+          A lane of small grey wheel-less hover cars hangs motionless in the air high above the middle of the street, in a row, the nearest ones about 8 percent of the image width wide and each one farther down the street smaller than the one before.
+          At the very end of the street, at the vanishing point, there is a tiny patch of colourful neon lights in magenta, cyan and amber. There is no tower, no robot, no drone and no character. <<STYLE>>
+        sprite:
+          tags: >-
+            from behind, back view, facing away, full body, walking, arms at sides, white background, simple background
+          pose:
+            neck: [0.50, 0.20]
+            r_sho: [0.585, 0.225]
+            l_sho: [0.415, 0.225]
+            r_elb: [0.605, 0.37]
+            r_wri: [0.60, 0.50]
+            l_elb: [0.395, 0.37]
+            l_wri: [0.40, 0.50]
+            r_hip: [0.55, 0.52]
+            l_hip: [0.45, 0.52]
+            r_kne: [0.565, 0.72]
+            r_ank: [0.57, 0.92]
+            l_kne: [0.44, 0.71]
+            l_ank: [0.43, 0.89]
+            r_ear: [0.555, 0.115]
+            l_ear: [0.445, 0.115]
+          pose_strength: 0.9
+          pose_end: 0.8
+        post:
+          - {op: horizon, to: 0.45, fallback: 0.59}
+          - {op: billboards, min_area: 300}
+          - {op: tower, cx: 0.5, base: 0.45, h: 0.195, behind_sky: true, sky_y: 0.30, halo_a: 110}
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}, {rect: [0.44, 0.22, 0.56, 0.50], grey: false, feather: 4}]}
+          - {op: paste_sprite, target_h: 0.40, fx: 0.5, fy: 0.85}
+          - {op: drone, cx: 0.457, cy: 0.54, diam: 0.066, yaw: 180}
+      last:
+        desc: 同一構圖與場景（沿用首幀同 seed 的場景與立繪）：LUNA 走到距鏡頭約 7 m，仍在正中背對鏡頭，身高約畫面高 23%（腳約在 68%）；ECHO 在她左肩旁（後製貼）；街道與遠方剪影不變
+        gen: sprite
+        seeds: [11, 12, 13, 14, 15, 16]
+        scene_a: "first_A_s{seed}.png"
+        cut_from: "first_cut_s{seed}.png"
+        post:
+          - {op: horizon, to: 0.45, fallback: 0.59}
+          - {op: billboards, min_area: 300}
+          - {op: tower, cx: 0.5, base: 0.45, h: 0.195, behind_sky: true, sky_y: 0.30, halo_a: 110}
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}, {rect: [0.44, 0.22, 0.56, 0.50], grey: false, feather: 4}]}
+          - {op: paste_sprite, target_h: 0.23, fx: 0.5, fy: 0.68}
+          - {op: drone, cx: 0.4815, cy: 0.5, diam: 0.038, yaw: 180}
+
+
+  s010:
+    frames:
+      first:
+        desc: 鏡頭貼近濕石板路面（離地約 30 cm）在 LUNA 前方往大樓方向仰拍她迎面走來；全身約畫面高 60%、腳在 78%；她前方約 0.7 m 的路面有直徑約 1.5 m 的灰色水窪（畫面下半中間的扁橢圓）；char_left 腳在前剛落地；ECHO 在她左肩旁（畫面右上，後製貼）；背景灰色街道與商店失焦、雨滴停在半空；除 LUNA 與 ECHO 外全灰
+        seeds: [1, 2, 3, 4, 5, 6, 7, 8]
+        refs: [refs/entities/street/frozen.png]
+        tags: >-
+          full body, from below, low angle, walking towards viewer, looking at viewer, calm, puddle in foreground, wet stone pavement, reflection, shopping street, night, blurry background
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 shows the frozen grey shopping street. Make a new wide shot of the street seen from a very low camera position just above the wet stone pavement (the camera 30 centimetres above the ground), looking slightly upward.
+          The girl from image 1 walks toward the camera along the middle of the street, full body, but she is FAR from the camera, about 6 metres away, so she is small in the picture: the top of her head is at 18 percent of the image height and her feet are at 78 percent of the image height,
+          so her whole body is only 60 percent of the image height, with clear empty space above her head (grey sky and blurred buildings) and a wide area of empty wet pavement in front of her.
+          Her left foot (on the right side of the image) is forward and has just touched the ground, her arms hang relaxed at her sides, and she looks ahead toward the camera calmly with her mouth closed.
+          On the wet pavement between her and the camera, in the lower middle of the image, is one flat round still puddle about 1.5 metres wide seen as a flat ellipse, at about 88 percent of the image height; its surface is calm and reflects the grey street.
+          The street behind her, with grey shop fronts on both sides and a large grey building at the far end, is completely out of focus and blurred. Tiny raindrops hang motionless in the air as small dots.
+          Everything in the picture except the girl is completely greyscale with no colour. There is no robot, no drone and no floating sphere. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<CHAR_LOWER>> <<LEG_FRONT>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: fit_person, height: 0.60, feet: 0.78}
+          - {op: remove_rain}
+        post:
+          - {op: grey_keep, dilate: 2}
+          - {op: frozen_rain, n: 300, rmin: 1.2, rmax: 3.2}
+          - {op: drone, rel: {dx: 1.7, dy: 0.7, k: 1.2}, yaw: 0}
+      last:
+        desc: 同一鏡位：LUNA 站在水窪裡（char_right 腳在水中），身高約畫面高 78%、腳在 90%，低頭看水窪、表情驚訝（嘴微張）；水窪上方停著一圈灰色定格水花，水面漣漪也停住（灰）；ECHO 停在她左肩旁（畫面右上）；除 LUNA 與 ECHO 外全灰
+        seeds: [1, 2, 3, 4, 5, 6, 7, 8]
+        refs: ["{first:A}"]
+        tags: >-
+          full body, from below, low angle, standing in puddle, looking down, surprised, open mouth, water splash frozen in air, ripples, wet stone pavement, shopping street, night, blurry background
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 is the first frame. Keep the same camera position and the same very low angle just above the wet pavement, the same blurred grey street and the same grey colours as image 2.
+          Now the girl has stepped forward and stands inside the puddle: she is closer to the camera, her whole body is about 78 percent of the image height tall with her feet at about 90 percent of the image height, and her feet are in the water.
+          Her head is bowed and she looks down at the puddle with a surprised expression, her eyes wide and her mouth slightly open. Her arms hang at her sides.
+          A ring of splashing water droplets and a crown-shaped splash hangs frozen in the air around her feet above the puddle, and still concentric ripples are visible on the water surface; the splash and the water are plain grey.
+          Everything in the picture except the girl is completely greyscale with no colour. There is no robot, no drone and no floating sphere. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<CHAR_LOWER>> <<LEG_FRONT>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: fit_person, height: 0.78, feet: 0.90}
+        pre:
+          - {op: remove_rain, ymax: 0.62}
+        post:
+          - {op: grey_keep, dilate: 2}
+          - {op: desat_hue, h: [150, 300], s: 0.10, rect: [0.25, 0.55, 0.75, 1.0]}
+          - {op: frozen_rain, n: 300, rmin: 1.2, rmax: 3.2}
+          - {op: drone, rel: {dx: 1.7, dy: 0.7, k: 1.2}, yaw: 0}
+
+
+  s011:
+    frames:
+      first:
+        desc: 微仰角、LUNA 腰以上側身在畫面左半、仰頭看右上方（頭頂在畫面高約 30%）；灰色 balloon 定格（程式貼：中心約畫面寬 65%、高 15%、直徑約畫面高 18%，細繩垂到約 55% 高、在她右側）；畫面下緣寬約 55% 處是失焦的灰色小孩帽子與伸出的手（程式貼，由 refs 摳出）；ECHO 在她頭部右後方（約畫面寬 48%、高 45%）被她擋住一部分（後製貼）；背景灰色商店；除 LUNA 與 ECHO 外全灰。氣球與小孩帽手 Qwen 畫不準大小位置，改由 refs/entities/balloon_child/back.png 摳圖後精確貼上
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: [refs/entities/street/frozen.png]
+        tags: >-
+          upper body, from below, three-quarter view, looking up, head tilt, arms at sides, shopping street, storefront, shop windows, buildings, street lamps, night
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 shows the frozen grey shopping street.
+          Make a new picture, a medium shot with the camera slightly below her chest level looking slightly upward: the girl from image 1 is shown from the waist up in the left half of the image, in three-quarter view with her body and her face turned toward the right side of the image,
+          the top of her head at about 30 percent of the image height. Her head is tilted back and she looks up toward the upper right of the image into the empty sky, mouth closed, calm and attentive. Her arms hang at her sides.
+          The right half of the image is empty background: a clearly visible grey street with several storeys of shop fronts, glass shop windows, street lamps and building edges on both sides, only slightly out of focus, with tiny raindrops hanging motionless in the air as small dots.
+          There is no balloon, no child, no robot, no drone and no floating sphere anywhere in the picture.
+          Everything except the girl is completely greyscale with no colour. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: fit_person, crop_bottom: true, top: 0.30, cx: 0.33, person_seed: [0.30, 0.6]}
+          - {op: remove_rain, person_seed: [0.30, 0.6]}
+        post:
+          - {op: grey_keep, dilate: 2, person_seed: [0.30, 0.55]}
+          - {op: frozen_rain, n: 150, rmin: 2.0, rmax: 5.0, person_seed: [0.30, 0.55]}
+          - {op: paste_childhand, cx: 0.55, top: 0.88, width: 0.17, blur: 4}
+          - {op: paste_balloon, cx: 0.65, cy: 0.15, diam: 0.18, string: 0.55, grey: true, person_seed: [0.30, 0.55]}
+          - {op: drone, cx: 0.445, cy: 0.52, diam: 0.28, yaw: 40, behind: true, person_seed: [0.30, 0.55]}
+      last:
+        desc: 同一構圖：LUNA 的 char_right 手（靠鏡頭那隻）舉在半空、食指剛離開氣球底部；氣球已是紅色（程式貼：依舉起的指尖定位，底部在指尖上方），小孩仍灰色；ECHO 同首幀；LUNA 與氣球與 ECHO 有色，其餘灰
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: ["{first:Bin}"]
+        tags: >-
+          upper body, from below, three-quarter view, reaching up, arm up, index finger, focused, looking up, shopping street, night
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 is the first frame. Keep image 2 exactly as it is, the same camera angle, the same framing, the same girl in the same place with the same face, hair and clothes, and the same grey street,
+          and change only this: the girl's right arm (the arm nearer to the camera) is raised, with the elbow bent, so that her open hand is held up just above the top of her head, only the index finger pointing up and the other fingers curled, the fingertip about 12 percent of the image height above the top of her head; her upper arm is not stretched out fully, her hand stays in the upper-middle of the picture and is well inside the frame. Her head is still tilted back looking up at the sky, focused expression.
+          There is no balloon, no child, no robot, no drone and no floating sphere anywhere in the picture. Everything except the girl stays completely greyscale with no colour. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: shift_person, tip_y: 0.15, person_seed: [0.30, 0.6]}
+          - {op: remove_rain, person_seed: [0.30, 0.6]}
+        post:
+          - {op: grey_keep, dilate: 2, person_seed: [0.30, 0.55]}
+          - {op: frozen_rain, n: 150, rmin: 2.0, rmax: 5.0, person_seed: [0.30, 0.55]}
+          - {op: paste_childhand, cx: 0.55, top: 0.88, width: 0.17, blur: 4}
+          - {op: paste_balloon, anchor: fingertip, gap: 0.012, diam: 0.18, string: 0.55, person_seed: [0.30, 0.55]}
+          - {op: drone, cx: 0.445, cy: 0.52, diam: 0.28, yaw: 40, behind: true, person_seed: [0.30, 0.55]}
+
+
+  s012:
+    frames:
+      first:
+        desc: 街道一側、與街道垂直平視；背景是對面灰色商店門面。畫面中間灰色定格的 balloon_child（身高約畫面高 35%、腳在 85%，側身朝右、腳離地、手伸向右上）；紅氣球（直徑約畫面高 11%、中心約畫面寬 58%、高 19%）在小孩右上方，細繩接到小孩的手；LUNA（全身約畫面高 50%、腳在 86%）在小孩左後方側身朝右、手放下；ECHO（中心約畫面寬 33%、高 34%）從她頭部後上方露出（後製貼）；LUNA、ECHO 與紅氣球有色，其餘灰。Qwen 把 LUNA 與小孩同框時不聽尺寸與位置（會複製小孩參考圖、LUNA 畫太大），所以場景＝Qwen 空街立面，LUNA＝立繪（路線 B：LoRA＋OpenPose 側面骨架）摳圖縮貼，小孩＝refs/p6/s012_child_*.png（tools/p6_make_asset.py 以 Qwen 由小孩背面參考圖出側面）摳圖貼
+        gen: sprite
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: [refs/entities/street/frozen.png]
+        qwen: >-
+          Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Image 2 shows a frozen grey shopping street.
+          Draw a flat frontal view at eye level, straight on, of the grey shop fronts on the far side of a street, in the same style as image 2: the building facades run parallel to the picture plane across the whole width of the image,
+          four storeys of grey buildings with glass shop windows and shutters on the ground floor, large blank glowing billboards on the upper floors and a few street lamps. In the lower fifth of the image is the near sidewalk and the wet road, empty, with the horizon of the street at about the middle of the image.
+          Nobody and no object is in the picture; tiny raindrops hang motionless in the air as small dots. The whole picture is completely greyscale with no colour at all, and slightly out of focus. <<STYLE>>
+        sprite:
+          tags: >-
+            from side, profile, facing right, full body, standing, arms at sides, looking ahead, calm, white background, simple background
+          pose:
+            nose: [0.575, 0.125]
+            neck: [0.50, 0.20]
+            r_eye: [0.55, 0.105]
+            r_ear: [0.49, 0.115]
+            r_sho: [0.50, 0.225]
+            l_sho: [0.51, 0.225]
+            r_elb: [0.49, 0.37]
+            r_wri: [0.50, 0.50]
+            l_elb: [0.52, 0.37]
+            l_wri: [0.52, 0.50]
+            r_hip: [0.49, 0.52]
+            l_hip: [0.51, 0.52]
+            r_kne: [0.51, 0.72]
+            r_ank: [0.52, 0.92]
+            l_kne: [0.49, 0.72]
+            l_ank: [0.48, 0.92]
+          pose_strength: 0.9
+          pose_end: 0.8
+        post:
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}]}
+          - {op: billboards, min_area: 300}
+          - {op: paste_asset, file: "refs/p6/s012_child_{a}.png", assets: 4, h: 0.35, fx: 0.50, fy: 0.85, grey: true}
+          - {op: paste_sprite, target_h: 0.50, fx: 0.30, fy: 0.86}
+          - {op: harmonize, denoise: 0.30, canny: 1.0, canny_end: 1.0, tags: "full body, from side, profile, facing right, standing, child, yellow raincoat, hood up, rain boots, shopping street, storefront, night", neg_add: "rain, rain streaks, raindrops, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"}
+          - {op: grey_keep, dilate: 2, person_seed: [0.30, 0.65]}
+          - {op: paste_balloon, cx: 0.58, cy: 0.19, diam: 0.11, string: 0.45, string_to: hand, person_seed: [0.30, 0.65]}
+          - {op: drone, cx: 0.343, cy: 0.325, diam: 0.08, yaw: 70, behind: true, person_seed: [0.30, 0.65]}
+      last:
+        desc: 同一構圖與場景：黃色雨衣的 balloon_child 在畫面寬約 70% 處奔跑中、手伸向畫面上緣（氣球已飛出畫面）；LUNA 停在原地側身看著小孩（沿用首幀同 seed 的立繪）；ECHO 在她頭後上方；LUNA、小孩（黃雨衣）與 ECHO 有色，其餘灰
+        gen: sprite
+        seeds: [1, 2, 3, 4, 5, 6]
+        scene_a: "first_A_s{seed}.png"
+        cut_from: "first_cut_s{seed}.png"
+        post:
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}]}
+          - {op: billboards, min_area: 300}
+          - {op: paste_asset, file: "refs/p6/s012_child_{a}.png", assets: 4, h: 0.35, fx: 0.70, fy: 0.85}
+          - {op: paste_sprite, target_h: 0.50, fx: 0.30, fy: 0.86}
+          - {op: harmonize, denoise: 0.30, canny: 1.0, canny_end: 1.0, tags: "full body, from side, profile, facing right, standing, child, yellow raincoat, hood up, rain boots, shopping street, storefront, night", neg_add: "rain, rain streaks, raindrops, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"}
+          - {op: grey_keep, dilate: 2, person_seed: [0.30, 0.65], hue: [{h: [38, 62], s: 0.40, v: 0.30, rect: [0.5, 0.2, 0.95, 0.95]}, {h: [210, 245], s: 0.35, v: 0.12, rect: [0.5, 0.5, 0.95, 0.95]}]}
+          - {op: drone, cx: 0.343, cy: 0.325, diam: 0.08, yaw: 70, behind: true, person_seed: [0.30, 0.65]}
+
+
+  s013:
+    frames:
+      first:
+        desc: LUNA 腰以上在畫面左半前景、四分之三側面朝畫面右、看著右後方（頭頂在畫面高約 15%、笑容淡）；背景略失焦的黃雨衣小孩奔跑中（身高約畫面高 30%、在畫面中右）、紅 balloon 在更高處（直徑約畫面高 5%、約畫面寬 75%、高 8%）；其他全灰；ECHO 被她身體擋住不入鏡
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: [refs/entities/street/frozen.png, refs/entities/balloon_child/back.png]
+        tags: >-
+          upper body, three-quarter view, looking to the side, light smile, shopping street, storefront, shop windows, buildings, night
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 shows the frozen grey shopping street.
+          Make a new picture, a medium shot at eye level: the girl from image 1 is in the left half of the image in the foreground, shown from the waist up, in three-quarter view with her body turned toward the right of the image, the top of her head at about 15 percent of the image height,
+          and she looks toward the right and back along the street into the distance, not at the camera, her face in three-quarter profile turned toward the right of the image, with a faint gentle smile, her mouth closed.
+          Behind her the straight street with its shop fronts stretches away into the distance, slightly out of focus, completely greyscale with no colour, with tiny raindrops hanging motionless in the air as small dots; the middle and right part of the image is the empty street.
+          There is no child, no balloon, no other person, no robot, no drone and no floating sphere in the picture. Only the girl has colour. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: fit_person, crop_bottom: true, top: 0.15, cx: 0.27, person_seed: [0.25, 0.6]}
+          - {op: remove_rain, person_seed: [0.25, 0.6]}
+        post:
+          - {op: grey_keep, dilate: 2, person_seed: [0.25, 0.55]}
+          - {op: frozen_rain, n: 150, rmin: 2.0, rmax: 5.0, person_seed: [0.25, 0.55]}
+          - {op: paste_asset, file: "refs/p6/s012_child_{a}.png", assets: 4, h: 0.30, fx: 0.62, fy: 0.66, blur: 2.0}
+          - {op: paste_balloon, cx: 0.75, cy: 0.08, diam: 0.05, string: 0.5, string_to: hand, person_seed: [0.25, 0.55]}
+      last:
+        desc: 同一構圖：背景的小孩與 balloon 都是灰色、定格；LUNA 低頭看著舉在胸前的 char_right 掌心（靠鏡頭那隻手），表情困惑、凝重；只有 LUNA 有色
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: ["{first:Bin}"]
+        tags: >-
+          upper body, three-quarter view, looking at own hand, palm up, hand raised to chest, confused, serious, frown, shopping street, storefront, shop windows, buildings, night
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 is the first frame. Keep image 2 exactly as it is, the same framing, the same camera, the same street, and the same girl in the same position.
+          Change only this: the girl's faint smile is gone; she has raised her right hand (the hand nearer to the camera) in front of her chest with the palm open facing up, and she is looking down at her own palm with her head bowed,
+          a confused, serious, frowning expression, her eyes looking down at her hand. Her fingers are slightly open, each hand has exactly five fingers.
+          The whole picture is completely greyscale with no colour except the girl. There is no robot, no drone and no floating sphere. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: remove_rain, person_seed: [0.25, 0.6]}
+        post:
+          - {op: grey_keep, dilate: 2, person_seed: [0.25, 0.55]}
+          - {op: frozen_rain, n: 150, rmin: 2.0, rmax: 5.0, person_seed: [0.25, 0.55]}
+          - {op: paste_asset, file: "refs/p6/s012_child_{a}.png", assets: 4, h: 0.30, fx: 0.62, fy: 0.66, blur: 2.0, grey: true}
+          - {op: paste_balloon, cx: 0.75, cy: 0.08, diam: 0.05, string: 0.5, string_to: hand, grey: true, person_seed: [0.25, 0.55]}
+
+
+  s014:
+    frames:
+      first:
+        desc: 長焦越過 LUNA 的肩膀看街尾：畫面左緣是她失焦的後腦與肩膀（約畫面寬 15%）；被長焦壓縮的遠方樓群擠滿畫面中段，畫面寬約 35% 以左的大樓灰色定格、以右彩色（洋紅／青／琥珀霓虹與全息看板、雨仍落下），灰彩交界是一條斜穿樓群的銳利界線；@signal_tower 的觀景台與天線從彩色樓群後方露出（畫面右上，觀景台寬約畫面寬 4%）；前景灰色建築與街面框住畫面上下。路線 C：另存 first_color_s*.png（遠景全彩）與 first_frozen_s*.png（遠景全灰）供後製沿界線推進。場景＝Qwen 長焦城市全景（上下緣是灰色失焦前景），塔＝程式繪製剪影（藏在樓群後），LUNA 後腦肩膀＝s009 背面立繪上半身摳圖＋模糊
+        seeds: [1, 2, 3, 4, 5, 6]
+        lora: false
+        qwen: >-
+          Image 1 is an unrelated character sheet: ignore it completely and do not draw any character.
+          Draw a wide, flat, eye-level panorama of a huge futuristic city at night, seen from far away across a flat horizon, a very long telephoto view in which the distant skyscrapers look flat and are stacked and overlapping tightly in many layers behind one another,
+          filling the whole middle band of the image from the left edge to the right edge, from about 15 percent to about 70 percent of the image height.
+          The skyscrapers are full of glowing neon lights in magenta, cyan and amber, with big glowing holographic billboards showing abstract blobs of colour, and rain falls through the scene.
+          Along the top edge of the picture is the blurred dark grey overhanging edge of a near building, and along the bottom edge the blurred dark grey rooftops and street of the near foreground, both plain greyscale with no colour.
+          There is no tower in the picture, no character, no robot and no text. <<STYLE>>
+        post:
+          - {op: tower, cx: 0.72, base: 0.535, h: 0.42, behind_sky: true, sky_mode: cols, sky_y: 0.20, sky_top: 0.16, sky_tol: 34, halo_a: 120}
+          - {op: paste_head, files: [s009/candidates/first_cut_s11.png, s009/candidates/first_cut_s12.png, s009/candidates/first_cut_s13.png, s009/candidates/first_cut_s14.png, s009/candidates/first_cut_s15.png, s009/candidates/first_cut_s12.png], frac: 0.36, w: 0.26, head_x: 0.065, blur: 7}
+          - {op: grey_keep, person: false, keep_head: true, split: {x: 0.35, tilt: 0.10}, stash: [color, frozen]}
+
+
+  s015:
+    frames:
+      first:
+        desc: LUNA 胸口以上在畫面左半、四分之三側面朝畫面右（雙眼約畫面高 35%、臉約畫面寬 35%），看著面前；ECHO 在前景右側（直徑約畫面高 18%、中心約畫面寬 72%、高 50%），光帶朝向她（後製貼，轉向 yaw=-45）；兩者之間尚無全息塔；背景失焦灰色街道；LUNA 與 ECHO 有色，其餘灰
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: [refs/entities/street/frozen.png]
+        tags: >-
+          portrait, three-quarter view, looking forward, serious, shopping street, storefront, shop windows, buildings, night
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 shows the frozen grey shopping street.
+          Make a new picture, a medium close-up at eye level: the girl from image 1 is shown from the chest up in the left half of the image, in three-quarter view with her face turned toward the right of the image,
+          her eyes at about 35 percent of the image height and her face centred at about 35 percent of the image width. She looks forward and slightly toward the right with a serious, tense expression and her mouth closed. The right half of the image is empty background.
+          Behind her is the grey shopping street of image 2, completely out of focus and blurred, with a few blurred raindrops hanging in the air.
+          Everything except the girl is completely greyscale with no colour. There is no robot, no drone, no floating sphere and no hologram. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: fit_person, crop_bottom: true, top: 0.22, cx: 0.35, person_seed: [0.30, 0.6]}
+          - {op: remove_rain, person_seed: [0.30, 0.6]}
+        post:
+          - {op: grey_keep, dilate: 2, person_seed: [0.30, 0.6]}
+          - {op: frozen_rain, n: 150, rmin: 2.0, rmax: 5.0, person_seed: [0.30, 0.6]}
+          - {op: drone, cx: 0.72, cy: 0.50, diam: 0.18, yaw: -45}
+      last:
+        desc: 同一構圖：LUNA 的臉轉向畫面右遠處（看向街尾），眼神堅定、臉上沒有青光；ECHO 光帶朝畫面右（yaw=+80）；LUNA 與 ECHO 有色，其餘灰
+        seeds: [1, 2, 3, 4, 5, 6]
+        refs: ["{first:Bin}"]
+        tags: >-
+          portrait, looking to the side, looking afar, determined, shopping street, storefront, shop windows, buildings, night
+        neg_add: "rain, rain streaks, raindrops, water drops, falling water, brown eyes, red eyes, orange eyes, amber eyes, pink eyes, heterochromia"
+        qwen: >-
+          Image 1 is the character sheet, image 2 is the first frame. Keep image 2 exactly as it is, the same framing, the same camera, the same blurred grey street and the same girl in the same position and size.
+          Change only this: the girl has turned her head and her face to look toward the right side of the image into the far distance, her eyes looking far to the right, with a firm determined expression and her mouth closed.
+          Everything except the girl stays completely greyscale with no colour. There is no robot, no drone, no floating sphere and no hologram. <<CHAR_FACE>> <<CHAR_HAIR>> <<CHAR_TOP>> <<FINGERS>> <<KEEP_SHEET>> <<STYLE>>
+        pre:
+          - {op: remove_rain, person_seed: [0.30, 0.6]}
+        post:
+          - {op: grey_keep, dilate: 2, person_seed: [0.30, 0.6]}
+          - {op: frozen_rain, n: 150, rmin: 2.0, rmax: 5.0, person_seed: [0.30, 0.6]}
+          - {op: drone, cx: 0.72, cy: 0.50, diam: 0.18, yaw: 80}
+
+
+  s016:
+    frames:
+      first:
+        desc: 與 s009 同樣朝街尾的街心視角、同焦距但較近：LUNA 背對鏡頭站在正中（距鏡頭約 3.5 m，身高約畫面高 45%、腳在 88%），雙手握拳；ECHO 在她左肩旁（畫面左）；整條街灰階，街尾彩色霓虹與塔剪影（天線尖端約畫面高 22%）在她頭頂上方；場景沿用 s009 首幀同 seed 的 Qwen 街道（略放大 1.06），人物＝立繪（路線 A，OpenPose 骨架）摳圖縮貼
+        gen: sprite
+        flip: [13]     # 立繪腿環畫在畫面左腿（背面時是角色左腿，錯）→ 翻轉；其他 seed 本來就在畫面右
+        seeds: [11, 12, 13, 14, 15, 16]
+        scene_a: "s009/candidates/first_A_s{seed}.png"
+        sprite:
+          tags: >-
+            from behind, back view, facing away, full body, standing, clenched hands, arms at sides, white background, simple background
+          pose:
+            neck: [0.50, 0.20]
+            r_sho: [0.585, 0.225]
+            l_sho: [0.415, 0.225]
+            r_elb: [0.605, 0.37]
+            r_wri: [0.595, 0.50]
+            l_elb: [0.395, 0.37]
+            l_wri: [0.405, 0.50]
+            r_hip: [0.55, 0.52]
+            l_hip: [0.45, 0.52]
+            r_kne: [0.56, 0.72]
+            r_ank: [0.56, 0.92]
+            l_kne: [0.44, 0.72]
+            l_ank: [0.44, 0.92]
+            r_ear: [0.555, 0.115]
+            l_ear: [0.445, 0.115]
+          pose_strength: 0.9
+          pose_end: 0.8
+        post:
+          - {op: horizon, to: 0.45, fallback: 0.59}
+          - {op: billboards, min_area: 300}
+          - {op: zoom, z: 1.06, cx: 0.5, cy: 0.4972}
+          - {op: tower, cx: 0.5, base: 0.45, h: 0.23, behind_sky: true, sky_y: 0.28, halo_a: 110}
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}, {rect: [0.44, 0.20, 0.56, 0.50], grey: false, feather: 4}]}
+          - {op: paste_sprite, target_h: 0.45, fx: 0.5, fy: 0.88}
+          - {op: drone, cx: 0.467, cy: 0.5155, diam: 0.074, yaw: 180}
+      last:
+        desc: 鏡頭略推近（約 8%）：LUNA 背對鏡頭跨出第一步（char_right 腳在前、身體前傾，身高約畫面高 49%、腳約在 91%），ECHO 在她左肩旁往前衝；街尾 signal_tower 剪影在她頭頂上方；場景同首幀（再放大 1.08）
+        gen: sprite
+        flip: [17, 19]     # 立繪腿環畫在畫面左腿（背面時是角色左腿，錯）→ 翻轉；11、15、16、18、21 本來就在畫面右
+        seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+        scene_map: {17: 11, 18: 12, 19: 13, 20: 14, 21: 15, 22: 11}     # 17–22 是補出的新候選，場景借用同鏡首幀 11–15 的
+        scene_a: "s009/candidates/first_A_s{seed}.png"
+        sprite:
+          tags: >-
+            from behind, back view, facing away, full body, running, leaning forward, mid-stride, one leg forward, arms swinging, dynamic pose, white background, simple background
+          pose:
+            neck: [0.50, 0.23]
+            r_sho: [0.59, 0.255]
+            l_sho: [0.41, 0.245]
+            r_elb: [0.63, 0.38]
+            r_wri: [0.61, 0.50]
+            l_elb: [0.36, 0.37]
+            l_wri: [0.39, 0.49]
+            r_hip: [0.55, 0.50]
+            l_hip: [0.45, 0.50]
+            r_kne: [0.60, 0.65]
+            r_ank: [0.63, 0.80]
+            l_kne: [0.42, 0.72]
+            l_ank: [0.37, 0.94]
+            r_ear: [0.555, 0.145]
+            l_ear: [0.445, 0.145]
+          pose_strength: 1.0
+          pose_end: 0.9
+        post:
+          - {op: horizon, to: 0.45, fallback: 0.59}
+          - {op: billboards, min_area: 300}
+          - {op: zoom, z: 1.08, cx: 0.5, cy: 0.4963}
+          - {op: tower, cx: 0.5, base: 0.45, h: 0.24, behind_sky: true, sky_y: 0.28, halo_a: 110}
+          - {op: grey, where: [{rect: [0, 0, 1, 1], grey: true}, {rect: [0.44, 0.20, 0.56, 0.50], grey: false, feather: 4}]}
+          - {op: paste_sprite, target_h: 0.49, fx: 0.5, fy: 0.91}
+          - {op: drone, cx: 0.462, cy: 0.545, diam: 0.080, yaw: 180}

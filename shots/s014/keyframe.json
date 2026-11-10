@@ -1,0 +1,83 @@
+{
+ "pick": "",
+ "note": "pick 欄由使用者挑後填：keyframe.png／last.png／mid.png = candidates/<frame>_s<N>.png（最終候選皆為 1280×720）",
+ "first": {
+  "說明": "長焦越過 LUNA 的肩膀看街尾：畫面左緣是她失焦的後腦與肩膀（約畫面寬 15%）；被長焦壓縮的遠方樓群擠滿畫面中段，畫面寬約 35% 以左的大樓灰色定格、以右彩色（洋紅／青／琥珀霓虹與全息看板、雨仍落下），灰彩交界是一條斜穿樓群的銳利界線；@signal_tower 的觀景台與天線從彩色樓群後方露出（畫面右上，觀景台寬約畫面寬 4%）；前景灰色建築與街面框住畫面上下。路線 C：另存 first_color_s*.png（遠景全彩）與 first_frozen_s*.png（遠景全灰）供後製沿界線推進。場景＝Qwen 長焦城市全景（上下緣是灰色失焦前景），塔＝程式繪製剪影（藏在樓群後），LUNA 後腦肩膀＝s009 背面立繪上半身摳圖＋模糊",
+  "variants": [
+   {
+    "seeds": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "gen": "qwen",
+    "A": {
+     "refs": [],
+     "prompt": "Image 1 is an unrelated character sheet: ignore it completely and do not draw any character. Draw a wide, flat, eye-level panorama of a huge futuristic city at night, seen from far away across a flat horizon, a very long telephoto view in which the distant skyscrapers look flat and are stacked and overlapping tightly in many layers behind one another, filling the whole middle band of the image from the left edge to the right edge, from about 15 percent to about 70 percent of the image height. The skyscrapers are full of glowing neon lights in magenta, cyan and amber, with big glowing holographic billboards showing abstract blobs of colour, and rain falls through the scene. Along the top edge of the picture is the blurred dark grey overhanging edge of a near building, and along the bottom edge the blurred dark grey rooftops and street of the near foreground, both plain greyscale with no colour. There is no tower in the picture, no character, no robot and no text. Clean Japanese anime cel shading with thin black line art, flat colors, anime background art. No text, no letters, no numbers, no logos anywhere. "
+    },
+    "post": [
+     {
+      "op": "tower",
+      "cx": 0.72,
+      "base": 0.535,
+      "h": 0.42,
+      "behind_sky": true,
+      "sky_mode": "cols",
+      "sky_y": 0.2,
+      "sky_top": 0.16,
+      "sky_tol": 34,
+      "halo_a": 120
+     },
+     {
+      "op": "paste_head",
+      "files": [
+       "s009/candidates/first_cut_s11.png",
+       "s009/candidates/first_cut_s12.png",
+       "s009/candidates/first_cut_s13.png",
+       "s009/candidates/first_cut_s14.png",
+       "s009/candidates/first_cut_s15.png",
+       "s009/candidates/first_cut_s12.png"
+      ],
+      "frac": 0.36,
+      "w": 0.26,
+      "head_x": 0.065,
+      "blur": 7
+     },
+     {
+      "op": "grey_keep",
+      "person": false,
+      "keep_head": true,
+      "split": {
+       "x": 0.35,
+       "tilt": 0.1
+      },
+      "stash": [
+       "color",
+       "frozen"
+      ]
+     }
+    ],
+    "seconds_per_candidate": {
+     "1": 25.2,
+     "2": 25.2,
+     "3": 25.3,
+     "4": 26.0,
+     "5": 25.3,
+     "6": 25.3
+    },
+    "files": {
+     "1": "first_s1.png",
+     "2": "first_s2.png",
+     "3": "first_s3.png",
+     "4": "first_s4.png",
+     "5": "first_s5.png",
+     "6": "first_s6.png"
+    }
+   }
+  ],
+  "contact": "contact_first.png"
+ }
+}

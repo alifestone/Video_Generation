@@ -37,3 +37,31 @@ claude_decisions:
   - id: D09
     topic: s001
     decision: Qwen 的青線都貼滿全寬，另出程式繪製版（#5–8：45% 高、約 80% 寬），兩種都放進候選
+  # Verse s009–s016
+  - id: D10
+    topic: 眼睛顏色
+    decision: B 的 negative 一律加 brown/red/orange/amber/pink eyes（否則 LoRA 常畫成棕眼）；通用 fix_eyes 後製在小臉上會誤傷，未啟用
+  - id: D11
+    topic: 凍結雨的畫法
+    decision: frozen 區的雨一律是停在半空的灰色小圓點：B 輸入先 remove_rain、negative 加 rain/rain streaks，B 後用 frozen_rain 畫點（避開人物、近大遠小）；彩色區照劇本落下
+  - id: D12
+    topic: 街景看板
+    decision: frozen 看板用 monitor_wall/city 素材去飽和、亮度壓到約 120–214、略模糊（billboards op），不留純白方塊、不出現可讀文字
+  - id: D13
+    topic: 程式合成鏡頭的整合
+    decision: 立繪＋素材貼上的鏡頭（s012）最後做一次 denoise 0.30、canny 1.0 的 B（harmonize），統一光影線條且不移動人物；腿環因此消失的候選剔除
+  - id: D14
+    topic: 人物尺寸與位置
+    decision: Qwen 畫錯人物大小或位置時，改用立繪貼上或 BiRefNet 遮罩縮放，不硬靠 Qwen；背面立繪腿環錯邊用水平翻轉
+  - id: D15
+    topic: s009／s016 的塔尺寸
+    decision: 劇本「天線尖端 25%」與「觀景台寬 1%」矛盾，依 240 m、1.5 km 的比例取尖端 25%、觀景台約寬 2%
+  - id: D16
+    topic: s012 小孩
+    decision: 照劇本雨帽遮臉，側跑素材另用 Qwen 出（tools/p6_make_asset.py），s013 同步換用
+  - id: D17
+    topic: s011 末幀氣球
+    decision: 手整體下移讓氣球中心在畫面高 5%（劇本），代價是頭頂從 30% 降到 37%
+  - id: D18
+    topic: s014 前景
+    decision: 「前景灰色商店樓框住畫面上下」解讀為上下緣的灰色失焦前景；遠景另存全彩與全灰兩版給 P9 做邊界推進

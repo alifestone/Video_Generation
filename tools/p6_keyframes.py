@@ -134,11 +134,13 @@ def step_A(shot, frame, seed, v, macros, tmp_refs):
     refs = []
     for r in v.get("refs", []):
         m = r.replace("{self}", f"shots/{shot}/candidates/{frame}_B_s{seed}.png") if "{self}" in r else r
-        for fr in FRAMES:   # {first}／{last}／{mid}＝同鏡該幀的 LoRA／A 中間稿（有 B 用 B，沒有就用 A）；{first:final}＝最終稿
-            for suffix, kind in (("{%s:final}" % fr, "final"), ("{%s}" % fr, "mid")):
+        for fr in FRAMES:   # {first}／{last}／{mid}＝同鏡該幀的 LoRA／A 中間稿（有 B 用 B，沒有就用 A）；{first:final}＝最終稿；{first:A}＝Qwen 稿
+            for suffix, kind in (("{%s:final}" % fr, "final"), ("{%s:A}" % fr, "A"), ("{%s:Bin}" % fr, "Bin"), ("{%s}" % fr, "mid")):
                 if suffix in m:
                     sd = v.get("srcseed", seed)
-                    cand = fF(shot, fr, sd) if kind == "final" else (fB(shot, fr, sd) if fB(shot, fr, sd).exists() else fA(shot, fr, sd))
+                    binf = cdir(shot) / f"{fr}_Bin_s{sd}.png"   # B 的輸入稿（A 經 pre 構圖修正後）
+                    cand = (fF(shot, fr, sd) if kind == "final" else fA(shot, fr, sd) if kind == "A" else (binf if binf.exists() else fA(shot, fr, sd)) if kind == "Bin"
+                            else (fB(shot, fr, sd) if fB(shot, fr, sd).exists() else fA(shot, fr, sd)))
                     m = m.replace(suffix, str(cand.relative_to(ROOT)))
         refs.append(m)
     prompt = expand(v["qwen"], macros)
@@ -163,6 +165,14 @@ def apply_ops(im, ops, ctx):
             im = op_roof(im, st, ctx[2])
         elif op == "paste_sprite":
             im = op_paste_sprite(im, st, ctx)
+        elif op == "grey_keep":
+            im = op_grey_keep(im, st, ctx)
+        elif op == "paste_asset":
+            im = op_paste_asset(im, st, ctx)
+        elif op == "paste_head":
+            im = op_paste_head(im, st, ctx)
+        elif op in ("frozen_rain", "billboards", "harmonize"):
+            im = OPS[op](im, st, ctx)
         else:
             im = OPS[op](im, st)
         done.append(dict(op=op, **st))
@@ -202,6 +212,8 @@ def step_B(shot, frame, seed, v, src):
     wf["7"]["inputs"]["latent_image"] = ["31", 0]
     wf["7"]["inputs"]["denoise"] = denoise
     del wf["6"]
+    if v.get("neg_add"):   # 例：凍結的雨不要雨絲、眼睛不要棕紅
+        wf["5"]["inputs"]["text"] = L.NEG + ", " + v["neg_add"]
     cnrec = {}
     if cn.get("pose"):
         pose = cn["pose"]
@@ -480,14 +492,51 @@ def op_band_grey(im, p):
     return op_grey(im, {"where": where})
 
 
+def sky_mask_cols(im, y0=0.2, tol=14, top=None):
+    """天空遮罩（逐欄掃描）：每一欄從 y0 往下掃，第一次和天空底色（最小值濾波去掉雨絲後）差超過 tol 就是天際線；以上都是天空。
+    用在暗藍天空和更暗樓群亮度很接近、連通區法會把樓群也算進去的場景（s014）。"""
+    from scipy import ndimage as ndi
+    L = np.asarray(im.convert("L").filter(ImageFilter.MinFilter(5))).astype(float)
+    r0 = round(y0 * H)
+    m = np.zeros((H, W), bool)
+    ref = np.median(L[r0:r0 + 12], axis=0)
+    dev = np.abs(L - ref[None, :]) > tol
+    dev[:r0] = False
+    dev2 = dev[:-1] & dev[1:]
+    first = np.where(dev2.any(axis=0), dev2.argmax(axis=0), H)
+    first = ndi.median_filter(first, size=9)
+    rt = round((top if top is not None else y0) * H)
+    for x in range(W):
+        m[rt:max(rt, first[x]), x] = True
+    return Image.fromarray((m * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.8))
+
+
+def sky_mask(im, cx, cy, thr=80):
+    """天空遮罩：含 (cx,cy) 的暗色連通區（閉運算後，細的雨滴不切斷它）。"""
+    from scipy import ndimage as ndi
+    a = np.asarray(im.convert("L")).astype(float)
+    dark = ndi.binary_closing(a < thr, structure=np.ones((3, 3)), iterations=5)
+    lab, _ = ndi.label(dark)
+    k = lab[round(cy * im.height), round(cx * im.width)]
+    m = (lab == k) if k else np.zeros_like(dark)
+    return Image.fromarray((m * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.8))
+
+
 def op_tower(im, p):
     """@signal_tower 的純黑剪影（程式繪製）：細塔身＋觀景台圓盤＋細頸＋天線與頂端白燈。cx＝中心（畫面比例）；
-    base＝塔底的 y（畫面比例；'band' 表示彩色光帶的下緣）；h＝全高（對畫面高）。比例依 glossary：塔寬 10 m、觀景台 40 m、全高 240 m。"""
+    base＝塔底的 y（畫面比例；'band' 表示彩色光帶的下緣）；h＝全高（對畫面高）。比例依 glossary：塔寬 10 m、觀景台 40 m、全高 240 m。
+    behind_sky＝只畫在天空（含 (cx,sky_y) 的暗色連通區）上，被樓群擋住；fat＝橫向加粗倍數。"""
+    if p.get("behind_sky"):
+        q = dict(p); q["behind_sky"] = False
+        full = op_tower(im, q)
+        sm = sky_mask_cols(im, p.get("sky_y", 0.2), p.get("sky_tol", 14), p.get("sky_top")) if p.get("sky_mode") == "cols" else sky_mask(im, p.get("cx", 0.5), p.get("sky_y", 0.28), p.get("sky_thr", 80))
+        return Image.composite(full, im, sm)
     S = 4
     cx = p.get("cx", 0.5) * W
     base = (detect_band(im, p.get("lo", 0.25), p.get("hi", 0.66))[1] if p.get("base") == "band" else p["base"] * H)
     h = p["h"] * H
     u = h / 240.0   # 每公尺的像素
+    ux = u * p.get("fat", 1.0)   # 橫向加粗倍數（塔很小時剪影讀不出來，略加粗並在回報說明）
     big = im.resize((W * S, H * S), Image.LANCZOS).convert("RGBA")
     d = ImageDraw.Draw(big)
     ink = (11, 13, 18, 255)
@@ -495,18 +544,18 @@ def op_tower(im, p):
     def Y(m): return b - m * u * S
     if p.get("halo", True):   # 塔後的霓虹低雲光暈：讓黑色剪影讀得出來（末幀描述：邊緣被映著霓虹的低雲勾出細亮邊）
         hl = Image.new("RGBA", big.size, (0, 0, 0, 0))
-        ImageDraw.Draw(hl).ellipse((x - 26 * u * S, Y(215), x + 26 * u * S, Y(40)), fill=(150, 130, 220, 150))
+        ImageDraw.Draw(hl).ellipse((x - 26 * ux * S, Y(215), x + 26 * ux * S, Y(40)), fill=(150, 130, 220, p.get("halo_a", 150)))
         big = Image.alpha_composite(big, hl.filter(ImageFilter.GaussianBlur(9 * u * S)))
         d = ImageDraw.Draw(big)
-    d.rectangle((x - 5 * u * S, Y(154), x + 5 * u * S, b), fill=ink)                                   # 塔身
-    d.ellipse((x - 20 * u * S, Y(166), x + 20 * u * S, Y(154)), fill=ink)                                # 觀景台
-    d.rectangle((x - 20 * u * S, Y(160), x + 20 * u * S, Y(158)), fill=ink)
-    d.polygon([(x - 3 * u * S, Y(166)), (x + 3 * u * S, Y(166)), (x + 1 * u * S, Y(180)), (x - 1 * u * S, Y(180))], fill=ink)   # 細頸
-    d.rectangle((x - 0.8 * u * S, Y(240), x + 0.8 * u * S, Y(178)), fill=ink)                            # 天線
+    d.rectangle((x - 5 * ux * S, Y(154), x + 5 * ux * S, b), fill=ink)                                   # 塔身
+    d.ellipse((x - 20 * ux * S, Y(166), x + 20 * ux * S, Y(154)), fill=ink)                                # 觀景台
+    d.rectangle((x - 20 * ux * S, Y(160), x + 20 * ux * S, Y(158)), fill=ink)
+    d.polygon([(x - 3 * ux * S, Y(166)), (x + 3 * ux * S, Y(166)), (x + 1 * ux * S, Y(180)), (x - 1 * ux * S, Y(180))], fill=ink)   # 細頸
+    d.rectangle((x - 0.8 * ux * S, Y(240), x + 0.8 * ux * S, Y(178)), fill=ink)                            # 天線
     if p.get("rim", True):   # 背後低雲映霓虹：左右緣一道極細的亮邊（glossary／末幀描述）
         rim = (88, 104, 150, 255)
-        d.line([(x - 5 * u * S, Y(154)), (x - 5 * u * S, b)], fill=rim, width=max(1, S // 2))
-        d.line([(x + 5 * u * S, Y(154)), (x + 5 * u * S, b)], fill=rim, width=max(1, S // 2))
+        d.line([(x - 5 * ux * S, Y(154)), (x - 5 * ux * S, b)], fill=rim, width=max(1, S // 2))
+        d.line([(x + 5 * ux * S, Y(154)), (x + 5 * ux * S, b)], fill=rim, width=max(1, S // 2))
     r = max(S, 2.2 * u * S)
     d.ellipse((x - r, Y(240) - r, x + r, Y(240) + r), fill=(244, 248, 255, 255))                          # 頂端白燈
     return big.convert("RGB").resize((W, H), Image.LANCZOS)
@@ -657,7 +706,662 @@ def op_skyline_from(im, p, ctx):
     return out
 
 
-OPS = dict(skyline_from=op_skyline_from, roof=op_roof, floor_stretch=op_floor_stretch, band_grey=op_band_grey, tower=op_tower, grey=op_grey, glow=op_glow, hatch=op_hatch, paste_drone=op_paste_drone, platform_dot=op_platform_dot, shift=op_shift, zoom=op_zoom)
+def person_mask(im):
+    """前景（LUNA 等）遮罩：ComfyUI 的 BiRefNet（RemoveBackground）。回傳與 im 同尺寸的 L 圖（255＝前景）。"""
+    import os
+    tmp = ROOT / "shots" / f".p6_tmp_mask_{os.getpid()}.png"
+    im.save(tmp)
+    name = K.put(tmp, f"p6_mask_in_{os.getpid()}.png")
+    tmp.unlink()
+    wf = {"1": {"class_type": "LoadImage", "inputs": {"image": name}},
+          "2": {"class_type": "LoadBackgroundRemovalModel", "inputs": {"bg_removal_name": "birefnet.safetensors"}},
+          "3": {"class_type": "RemoveBackground", "inputs": {"bg_removal_model": ["2", 0], "image": ["1", 0]}},
+          "4": {"class_type": "MaskToImage", "inputs": {"mask": ["3", 0]}},
+          "9": {"class_type": "SaveImage", "inputs": {"images": ["4", 0], "filename_prefix": "p6mask/x"}}}
+    data = K.run(wf, "9")
+    out = ROOT / "shots" / f".p6_tmp_mask_out_{os.getpid()}.png"
+    out.write_bytes(data)
+    m = Image.open(out).convert("L").resize(im.size, Image.LANCZOS)
+    out.unlink()
+    return m
+
+
+def _one_component(m, seed=None):
+    """遮罩只留一個連通區：含 seed（畫面比例 [x,y]）的那個，沒給就取最大的（BiRefNet 會把氣球、小孩也圈進來）。"""
+    from scipy import ndimage as ndi
+    a = np.asarray(m) > 0
+    lab, n = ndi.label(a)
+    if n <= 1:
+        return m
+    if seed:
+        k = lab[round(seed[1] * m.height), round(seed[0] * m.width)]
+    else:
+        k = 0
+    if not k:
+        k = 1 + int(np.argmax(ndi.sum(a, lab, range(1, n + 1))))
+    return Image.fromarray(((lab == k) * 255).astype("uint8"))
+
+
+def hue_mask(im, ranges):
+    """依色相保留的遮罩（紅氣球、黃雨衣等）：ranges＝[{h:[h0,h1] 度, s: 最低飽和度, v: 最低亮度, rect: [x0,y0,x1,y1] 比例（可省略）}]。"""
+    import cv2
+    hsv = cv2.cvtColor(np.asarray(im.convert("RGB")), cv2.COLOR_RGB2HSV).astype(float)   # H 0–179
+    hh, ss, vv = hsv[..., 0] * 2, hsv[..., 1] / 255, hsv[..., 2] / 255
+    out = np.zeros(im.size[::-1], bool)
+    for r in ranges:
+        h0, h1 = r["h"]
+        inh = ((hh >= h0) & (hh <= h1)) if h0 <= h1 else ((hh >= h0) | (hh <= h1))
+        sel = inh & (ss >= r.get("s", 0.35)) & (vv >= r.get("v", 0.25))
+        if r.get("rect"):
+            box = np.zeros_like(sel)
+            x0, y0, x1, y1 = r["rect"]
+            box[round(y0 * im.height):round(y1 * im.height), round(x0 * im.width):round(x1 * im.width)] = True
+            sel &= box
+        out |= sel
+    m = Image.fromarray((out * 255).astype("uint8"))
+    from scipy import ndimage as ndi
+    m = Image.fromarray((ndi.binary_closing(np.asarray(m) > 0, iterations=3) * 255).astype("uint8"))
+    return m.filter(ImageFilter.MaxFilter(5))
+
+
+def stash_aux(shot, frame, seed, name, im):
+    """把中間狀態存成 candidates/<frame>_<name>_s<seed>.png（1280×720，與候選同樣的縮放裁切；給路線 C 後製用）。"""
+    s = max(OUT_W / im.width, OUT_H / im.height)
+    r = im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
+    l, t = (r.width - OUT_W) // 2, (r.height - OUT_H) // 2
+    r.crop((l, t, l + OUT_W, t + OUT_H)).save(cdir(shot) / f"{frame}_{name}_s{seed}.png")
+
+
+def op_grey_keep(im, p, ctx=None):
+    """frozen 灰化，但保留彩色的部分：person＝BiRefNet 的前景遮罩（LUNA，可 dilate 擴張 px、feather 羽化）；
+    keep＝額外保留的矩形／橢圓（同 grey 的 where 格式，grey 填 false）；hue＝依色相保留（紅氣球、黃雨衣）。三者聯集保持彩色，其餘去飽和。
+    mask_img＝存下遮罩到 candidates 方便檢查（給檔名）。"""
+    keep = Image.new("L", im.size, 0)
+    if p.get("person", True):
+        pm = person_mask(im)
+        pm = pm.point(lambda x: 255 if x > p.get("thr", 100) else 0)
+        pm = _one_component(pm, p.get("person_seed"))
+        if p.get("dilate", 6):
+            pm = pm.filter(ImageFilter.MaxFilter(p.get("dilate", 6) * 2 + 1))
+        keep = Image.fromarray(np.maximum(np.asarray(keep), np.asarray(pm)))
+    if p.get("hue"):
+        keep = Image.fromarray(np.maximum(np.asarray(keep), np.asarray(hue_mask(im, p["hue"]))))
+    if p.get("keep_head") and _HEAD.get("mask") is not None:   # 剛貼上的 LUNA 後腦肩膀（模糊後的 alpha）
+        keep = Image.fromarray(np.maximum(np.asarray(keep), np.asarray(_HEAD["mask"].point(lambda x: 255 if x > 20 else 0))))
+    for w in p.get("keep", []):
+        shape = w.get("rect") or w.get("ellipse")
+        box = [shape[0] * im.width, shape[1] * im.height, shape[2] * im.width, shape[3] * im.height]
+        tmp = Image.new("L", im.size, 0)
+        (ImageDraw.Draw(tmp).rectangle if w.get("rect") else ImageDraw.Draw(tmp).ellipse)(box, fill=255)
+        if w.get("feather", 0):
+            tmp = tmp.filter(ImageFilter.GaussianBlur(w["feather"]))
+        keep = Image.fromarray(np.maximum(np.asarray(keep), np.asarray(tmp)))
+    keep = keep.filter(ImageFilter.GaussianBlur(p.get("feather", 1.2)))
+    grey = ImageOps.grayscale(im).convert("RGB")
+    frozen = Image.composite(im, grey, keep)
+    if p.get("split"):   # 只灰化斜界線左邊（路線 C：灰彩交界）：界線在畫面高 50% 處的 x＝split.x，tilt＝每單位畫面高的 x 位移
+        sp = p["split"]
+        yy, xx = np.mgrid[0:im.height, 0:im.width]
+        xb = (sp["x"] + sp.get("tilt", 0.0) * (yy / im.height - 0.5)) * im.width
+        left = Image.fromarray(((xx < xb) * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(sp.get("soft", 0.8)))
+        out = Image.composite(frozen, im, left)
+    else:
+        out = frozen
+    if p.get("stash") and ctx:
+        shot, frame, seed = ctx
+        for nm in p["stash"]:
+            stash_aux(shot, frame, seed, nm, {"color": im, "frozen": frozen}[nm])
+    return out
+
+
+_DRONE_TEX = {}
+
+
+def drone_sprite(diam_px, yaw=0.0, S=4):
+    """ECHO 的球體貼圖旋轉（front.png＋back.png 當前後半球的貼圖，正交投影）：yaw 度數，正值＝黑色面罩與光帶往畫面右轉；
+    0＝正面、180＝背面。不能整顆重畫（G0：球體轉不過去），所以用球面映射轉。回傳 RGBA（直徑 diam_px）。"""
+    import cv2
+    if not _DRONE_TEX:
+        for k in ("front", "back"):
+            c = np.asarray(P4.cutout_drone(f"refs/entities/drone/{k}.png"))
+            _DRONE_TEX[k] = c
+    n = max(8, round(diam_px * S))
+    yy, xx = np.mgrid[0:n, 0:n].astype(np.float32)
+    R = n / 2
+    u, v = (xx - R + 0.5) / R, (yy - R + 0.5) / R
+    r2 = u * u + v * v
+    inside = r2 <= 1.0
+    z = np.sqrt(np.clip(1 - r2, 0, 1))
+    th = math.radians(yaw)
+    n0x = u * math.cos(th) - z * math.sin(th)
+    n0z = u * math.sin(th) + z * math.cos(th)
+    out = np.zeros((n, n, 4), np.float32)
+    wf = np.clip((n0z + 0.14) / 0.28, 0, 1)[..., None]   # 前後半球貼圖在邊界附近混合，避開貼圖外緣的黑輪廓
+    for k, sgn, wt in (("front", 1, wf), ("back", -1, 1 - wf)):
+        tex = _DRONE_TEX[k]
+        th_, tw_ = tex.shape[:2]
+        rr = min(th_, tw_) / 2 * 0.95
+        mx = np.clip(sgn * n0x, -1, 1) * rr + tw_ / 2
+        my = np.clip(v, -1, 1) * rr + th_ / 2
+        samp = cv2.remap(tex, mx.astype(np.float32), my.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE).astype(np.float32)
+        out += samp * wt
+    out[..., 3] = np.where(inside, 255, 0)
+    im = Image.fromarray(out.clip(0, 255).astype("uint8"), "RGBA")
+    ol = Image.new("RGBA", im.size, (0, 0, 0, 0))   # 外緣的細黑輪廓
+    ImageDraw.Draw(ol).ellipse((0, 0, n - 1, n - 1), outline=(18, 22, 30, 255), width=max(2, round(n * 0.014)))
+    im = Image.alpha_composite(im, ol)
+    return im.resize((max(2, round(diam_px)), max(2, round(diam_px))), Image.LANCZOS)
+
+
+def op_drone(im, p):
+    """貼 ECHO（可轉向）：cx、cy＝球心（畫面比例）、diam＝直徑（對畫面高）、yaw＝轉向度數（見 drone_sprite）；
+    behind＝true 時用 BiRefNet 的前景遮罩把 LUNA 蓋回 ECHO 上面（ECHO 在她肩後被擋住一部分）。"""
+    p = dict(p)
+    if p.get("rel"):   # 依 LUNA 的前景遮罩定位：頭高＝遮罩高/7.5（全身）或指定（對畫面高）；dx、dy＝球心相對頭頂中心（單位：頭高；dx 正＝畫面右、dy 正＝往下）
+        r = p["rel"]
+        pm = np.asarray(_one_component(person_mask(im).point(lambda x: 255 if x > 100 else 0), r.get("person_seed"))) > 0
+        ys, xs = np.where(pm)
+        top = ys.min()
+        hh = r["head_h"] * H if r.get("head_h") else (ys.max() - top) / 7.5
+        rows = pm[top:top + max(2, int(hh))]
+        hx = np.where(rows)[1].mean()
+        p["cx"] = (hx + r.get("dx", 0) * hh) / W
+        p["cy"] = (top + r.get("dy", 0.5) * hh) / H
+        p["diam"] = r.get("k", 1.2) * hh / H
+    d = drone_sprite(p["diam"] * H, p.get("yaw", 0.0))
+    out = im.convert("RGBA")
+    layer = Image.new("RGBA", out.size, (0, 0, 0, 0))
+    layer.alpha_composite(d, (round(p["cx"] * W - d.width / 2), round(p["cy"] * H - d.height / 2)))
+    if p.get("behind"):
+        pm = _one_component(person_mask(im).point(lambda x: 255 if x > p.get("thr", 100) else 0), p.get("person_seed")).filter(ImageFilter.GaussianBlur(0.8))
+        a = np.asarray(layer.getchannel("A")).astype(float) * (1 - np.asarray(pm).astype(float) / 255)
+        layer.putalpha(Image.fromarray(a.astype("uint8")))
+    out = Image.alpha_composite(out, layer)
+    return out.convert("RGB")
+
+
+def op_neon_far(im, p):
+    """街尾很遠處的一小片彩色霓虹（洋紅、青、琥珀的小亮塊＋柔光暈）。cx、cy＝中心，w、h＝範圍（對畫面高）。"""
+    rnd = np.random.RandomState(p.get("seed", 3))
+    cols = [(208, 64, 200), (41, 211, 245), (255, 176, 64)]
+    lay = np.zeros((H, W, 3), float)
+    cx, cy, w, h = p["cx"] * W, p["cy"] * H, p["w"] * H, p["h"] * H
+    for _ in range(p.get("n", 26)):
+        x = cx + rnd.uniform(-0.5, 0.5) * w
+        y = cy + rnd.uniform(-0.5, 0.5) * h
+        bw, bh = rnd.uniform(0.04, 0.10) * w, rnd.uniform(0.05, 0.16) * h
+        c = np.array(cols[rnd.randint(3)], float)
+        lay[max(0, int(y - bh / 2)):int(y + bh / 2) + 1, max(0, int(x - bw / 2)):int(x + bw / 2) + 1] = c
+    core = Image.fromarray(lay.clip(0, 255).astype("uint8"))
+    glow = np.asarray(core.filter(ImageFilter.GaussianBlur(h * 0.10))).astype(float) * 1.6
+    out = np.asarray(im).astype(float) + glow * 0.9 + np.asarray(core).astype(float) * 0.9
+    res = Image.fromarray(out.clip(0, 255).astype("uint8"))
+    if p.get("behind_sky"):   # 只在天空（暗色連通區）上，前面的車與樓擋住它
+        return Image.composite(res, im, sky_mask(im, p.get("cx", 0.5), p.get("sky_y", 0.27), p.get("sky_thr", 80)))
+    return res
+
+
+def find_vp_y(im, x0=0.35, x1=0.65, y0=0.35, y1=0.85):
+    """街尾彩色霓虹小塊（飽和度高）的中心高度＝這張場景圖的地平線／消失點（比例）。找不到回傳 None。"""
+    a = np.asarray(im).astype(float)
+    sat = (a.max(axis=2) - a.min(axis=2)) / np.maximum(a.max(axis=2), 1)
+    m = (sat > 0.5) & (a.max(axis=2) > 140)
+    box = np.zeros_like(m)
+    box[round(y0 * H):round(y1 * H), round(x0 * W):round(x1 * W)] = True
+    ys, xs = np.where(m & box)
+    return float(np.median(ys) / H) if len(ys) > 20 else None
+
+
+def op_horizon(im, p):
+    """把場景的地平線（消失點）移到指定高度：垂直分段線性變形，地平線以上壓縮、以下拉伸（Qwen 的街景消失點常在畫面高 57–62%，劇本要 45%）。
+    from＝原地平線高度（比例；'auto' 依街尾霓虹的位置偵測，偵測不到用 fallback）；to＝目標高度。"""
+    import cv2
+    src = p.get("from", "auto")
+    if src == "auto":
+        src = find_vp_y(im) or p.get("fallback", 0.59)
+    to = p["to"]
+    yp = np.arange(H, dtype=np.float32) / H
+    ys = np.where(yp <= to, yp * (src / to), src + (yp - to) * (1 - src) / (1 - to)) * H
+    mapy = np.repeat(ys[:, None], W, axis=1).astype(np.float32)
+    mapx = np.repeat(np.arange(W, dtype=np.float32)[None, :], H, axis=0)
+    out = cv2.remap(np.asarray(im), mapx, mapy, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    return Image.fromarray(out)
+
+
+def op_fit_person(im, p):
+    """把 Qwen 畫得太大的人物縮到劇本尺寸：用 BiRefNet 前景遮罩（最大連通區）量出人物頭頂與腳底，等比縮放並平移，讓身高＝height、腳底＝feet（皆為畫面比例）、水平中心＝cx（省略則保持中心不動）。
+    crop_bottom＝腰以上的鏡頭（見程式）：只指定頭頂 top。縮小後露出的邊用邊緣像素延伸補（背景是失焦的街道，之後的 B 會重繪；鏡射會把人物頭頂鏡射進來，不用）。feet_from＝'mask'（遮罩最低點）或 'ratio'：以 feet_ratio 指定腳底在遮罩高度的比例位置（遮罩含水中倒影時用）。"""
+    import cv2
+    pm = _one_component(person_mask(im).point(lambda x: 255 if x > 100 else 0), p.get("person_seed"))
+    ys, xs = np.where(np.asarray(pm) > 0)
+    top, bot = ys.min(), ys.max()
+    if p.get("crop_bottom"):   # 腰以上的鏡頭：人物下緣被畫面切掉，只量頭頂；縮放讓頭頂＝top、下緣仍貼畫面底
+        s = (1 - p["top"]) * H / (H - top)
+        dy = p["top"] * H - top * s
+        hx = np.median(xs[ys < top + 0.2 * (bot - top)])
+        dx = (p["cx"] * W - hx * s) if p.get("cx") is not None else (W - W * s) / 2
+        out = cv2.warpAffine(np.asarray(im), np.float32([[s, 0, dx], [0, s, dy]]), (W, H), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE)
+        return Image.fromarray(out)
+    if p.get("feet_ratio"):
+        bot = top + (bot - top) * p["feet_ratio"]
+    elif p.get("jump", True):   # 遮罩若連腳邊的水花、水窪、倒影一起圈進來：腿的寬度很窄，往下第一次突然變寬（>2.6 倍腿寬）的那一列再往下一點＝腳底
+        mk = np.asarray(pm) > 0
+        w = mk.sum(axis=1).astype(float)
+        lo, hi = int(top + 0.50 * (bot - top)), int(top + 0.70 * (bot - top))
+        legw = np.median(w[lo:hi][w[lo:hi] > 0]) if (w[lo:hi] > 0).any() else 0
+        if legw:
+            idx = np.where(w[lo:bot] > 2.6 * legw)[0]
+            if len(idx):
+                bot = lo + idx[0] + p.get("jump_off", 22)
+    s = p["height"] * H / (bot - top)
+    dy = (p["feet"] - p["height"]) * H - top * s
+    cxm = np.median(xs[ys < top + (bot - top) * 0.25])   # 頭部的水平中心
+    dx = (p["cx"] * W - cxm * s) if p.get("cx") is not None else (W - W * s) / 2
+    M = np.float32([[s, 0, dx], [0, s, dy]])
+    out = cv2.warpAffine(np.asarray(im), M, (W, H), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE)
+    return Image.fromarray(out)
+
+
+def op_move_balloon(im, p):
+    """氣球（Qwen 常畫得太大、位置不對）：用紅色色相遮罩抠出氣球本體，原處用 cv2.inpaint 補（背景是失焦的），縮放貼到劇本指定的位置與直徑，
+    再用程式畫一條細白繩（Qwen 的細繩色相不是紅、抠不到，所以一律重畫）。cx、cy＝氣球中心、diam＝直徑（對畫面高）、string＝繩子下端的高度（畫面比例，省略＝不畫繩）。
+    氣球顏色維持 Qwen 的紅色（首幀由後製灰化、末幀保持紅色）。"""
+    import cv2
+    from scipy import ndimage as ndi
+    rng = p.get("hue", {"h": [335, 25], "s": 0.28, "v": 0.2})
+    m = np.asarray(hue_mask(im, [dict(rng, **({"rect": p["rect"]} if p.get("rect") else {}))])) > 0
+    body = ndi.binary_opening(m, iterations=5)
+    lab, n = ndi.label(body)
+    if n == 0:
+        return im
+    k = 1 + int(np.argmax(ndi.sum(body, lab, range(1, n + 1))))
+    body = ndi.binary_fill_holes(ndi.binary_closing(lab == k, iterations=6))
+    ys, xs = np.where(body)
+    x0, x1, y0, y1 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1
+    a = np.asarray(im)
+    af = a.astype(float)
+    sat = (af.max(axis=2) - af.min(axis=2)) / np.maximum(af.max(axis=2), 1)
+    near = ndi.binary_dilation(body, iterations=34)
+    rem = ndi.binary_dilation(body, iterations=14) | (near & (sat > 0.16))     # 去除範圍：氣球本體往外 14 px，加上附近還帶紅色的像素（暗紅邊、光暈）
+    if p.get("clear_string", True):   # Qwen 自己畫的細繩（白色）：從結往下一條窄帶一起補掉
+        kx = int((x0 + x1) / 2)
+        sd = min(H, y1 + int(p.get("clear_len", 0.45) * H))
+        rem[y1 - 4:sd, max(0, kx - 14):kx + 14] = True
+    hole = (ndi.binary_dilation(rem, iterations=3) * 255).astype("uint8")
+    filled = cv2.inpaint(a, hole, 11, cv2.INPAINT_TELEA)
+    filled = np.asarray(Image.fromarray(filled).filter(ImageFilter.GaussianBlur(2.0)))
+    base = Image.fromarray(np.where(hole[..., None] > 0, filled, a).astype("uint8"))
+    pad = 6
+    box = (max(0, x0 - pad), max(0, y0 - pad), min(W, x1 + pad), min(H, y1 + pad))
+    alpha = Image.fromarray((ndi.binary_dilation(body, iterations=2) * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(1.0)).crop(box)
+    cut = Image.fromarray(a).convert("RGBA").crop(box)
+    cut.putalpha(alpha)
+    D = max(x1 - x0, y1 - y0)
+    f = p["diam"] * H / D
+    cut = cut.resize((max(2, round(cut.width * f)), max(2, round(cut.height * f))), Image.LANCZOS)
+    cxs, cys = (x0 + x1) / 2 - box[0], (y0 + y1) / 2 - box[1]
+    out = base.convert("RGBA")
+    px, py = round(p["cx"] * W - cxs * f), round(p["cy"] * H - cys * f)
+    out.alpha_composite(cut, (px, py))
+    if p.get("string"):   # 細白繩：從氣球下方的結往下垂，輕微彎曲
+        S = 3
+        lay = Image.new("RGBA", (W * S, H * S), (0, 0, 0, 0))
+        d = ImageDraw.Draw(lay)
+        r = p["diam"] * H / 2
+        sx, sy = p["cx"] * W, p["cy"] * H + r * 1.08
+        ey = p["string"] * H
+        pts = [(sx + math.sin((yy - sy) / max(1, ey - sy) * math.pi * 1.3) * p.get("sway", 5), yy) for yy in np.linspace(sy, ey, 40)]
+        d.line([(x * S, y * S) for x, y in pts], fill=(236, 238, 242, 235), width=max(S, round(p.get("lw", 2) * S)))
+        out = Image.alpha_composite(out, lay.resize((W, H), Image.LANCZOS))
+    return out.convert("RGB")
+
+
+_REF_CUT = {}
+
+
+def ref_cut(ref, rect, drop_white=False):
+    """從 refs 圖摳出一個物件（BiRefNet 前景遮罩 ∩ 矩形，矩形是來源圖的像素座標）：回傳裁好的 RGBA。快取。"""
+    key = (ref, tuple(rect), drop_white)
+    if key not in _REF_CUT:
+        im = Image.open(ROOT / ref).convert("RGB")
+        m = person_mask(im)
+        box = tuple(rect)
+        a = im.convert("RGBA").crop(box)
+        al = np.asarray(m.crop(box).point(lambda x: 255 if x > 110 else 0)).astype(float)
+        rgb = np.asarray(a.convert("RGB")).astype(int)
+        if drop_white:   # 白色細繩等：近白色且低飽和的像素去掉
+            al[(rgb.min(axis=2) > 205)] = 0
+        a.putalpha(Image.fromarray(al.astype("uint8")).filter(ImageFilter.GaussianBlur(0.8)))
+        _REF_CUT[key] = a
+    return _REF_CUT[key].copy()
+
+
+BALLOON_REF = ("refs/entities/balloon_child/back.png", (505, 30, 730, 292))     # 紅氣球本體（含結）
+CHILDHAND_REF = ("refs/entities/balloon_child/back.png", (255, 395, 615, 640))   # 小孩的帽子頂與伸出的手
+
+
+def op_paste_balloon(im, p):
+    """氣球（程式貼上）：從 refs/entities/balloon_child/back.png 摳出的紅氣球，貼到指定位置與直徑（對畫面高），再畫一條細白繩（可被人物擋住）。
+    cx、cy＝氣球中心；或 anchor='fingertip'：依 LUNA 前景遮罩最高點（舉起的指尖）定位，氣球底部在指尖上方 gap（畫面高比例）；
+    grey＝true 時去飽和（frozen 的灰色氣球，亮度不變）；string＝繩子下端的高度（畫面比例）。"""
+    cut = ref_cut(*BALLOON_REF)
+    pm = None
+    if p.get("anchor") == "fingertip" or p.get("string"):
+        pm = _one_component(person_mask(im).point(lambda x: 255 if x > 100 else 0), p.get("person_seed"))
+    diam = p["diam"] * H
+    if p.get("anchor") == "fingertip":
+        ys, xs = np.where(np.asarray(pm) > 0)
+        top = ys.min()
+        cx = float(np.median(xs[ys < top + 6])) + p.get("dx", 0.0) * W
+        cy = top - p.get("gap", 0.012) * H - diam / 2
+    else:
+        cx, cy = p["cx"] * W, p["cy"] * H
+    f = diam / max(cut.width, cut.height * (cut.width / cut.height))
+    body_h = cut.height  # 含結的高度；直徑以寬度為準
+    f = diam / cut.width
+    c2 = cut.resize((max(2, round(cut.width * f)), max(2, round(cut.height * f))), Image.LANCZOS)
+    if p.get("grey"):
+        g = ImageOps.grayscale(c2.convert("RGB")).convert("RGBA")
+        g.putalpha(c2.getchannel("A"))
+        c2 = g
+    out = im.convert("RGBA")
+    px, py = round(cx - c2.width / 2), round(cy - diam / 2)
+    if p.get("string"):
+        S = 3
+        lay = Image.new("RGBA", (W * S, H * S), (0, 0, 0, 0))
+        d = ImageDraw.Draw(lay)
+        sx, sy = cx, py + c2.height - 1
+        ey = p["string"] * H
+        hx = None
+        if p.get("string_to") == "hand" and _HAND.get("pt"):   # 繩子下端接到小孩舉起的手
+            hx, ey = _HAND["pt"][0] - 3, _HAND["pt"][1] + 4
+        if hx is not None:
+            pts = [(sx + (hx - sx) * (yy - sy) / max(1, ey - sy) + math.sin((yy - sy) / max(1, ey - sy) * math.pi) * p.get("sway", 4), yy) for yy in np.linspace(sy, ey, 40)]
+        else:
+            pts = [(sx + math.sin((yy - sy) / max(1, ey - sy) * math.pi * 1.2) * p.get("sway", 4), yy) for yy in np.linspace(sy, ey, 40)]
+        col = (168, 168, 168, 230) if p.get("grey") else (240, 240, 244, 235)
+        d.line([(x * S, y * S) for x, y in pts], fill=col, width=max(S, round(p.get("lw", 2) * S)))
+        lay = lay.resize((W, H), Image.LANCZOS)
+        if pm is not None:
+            a = np.asarray(lay.getchannel("A")).astype(float) * (1 - np.asarray(pm.filter(ImageFilter.GaussianBlur(0.8))).astype(float) / 255)
+            lay.putalpha(Image.fromarray(a.astype("uint8")))
+        out = Image.alpha_composite(out, lay)
+    out.alpha_composite(c2, (px, py))
+    return out.convert("RGB")
+
+
+def op_paste_childhand(im, p):
+    """s011 首幀：畫面下緣失焦的小孩帽子頂與伸出的手（從 refs/entities/balloon_child/back.png 摳出，去飽和＋模糊）。
+    cx＝水平中心（畫面比例）、top＝帽子頂的高度（畫面比例）、width＝這塊的寬度（畫面寬比例），超出畫面下緣的部分被裁掉。"""
+    cut = ref_cut(*CHILDHAND_REF, drop_white=True)
+    w = p["width"] * W
+    f = w / cut.width
+    c2 = cut.resize((max(2, round(cut.width * f)), max(2, round(cut.height * f))), Image.LANCZOS)
+    if p.get("grey", True):
+        g = ImageOps.grayscale(c2.convert("RGB")).convert("RGBA")
+        g.putalpha(c2.getchannel("A"))
+        c2 = g
+    c2 = c2.filter(ImageFilter.GaussianBlur(p.get("blur", 4)))
+    out = im.convert("RGBA")
+    out.alpha_composite(c2, (round(p["cx"] * W - c2.width * 0.4), round(p["top"] * H)))
+    return out.convert("RGB")
+
+
+_HAND = {}
+_HEAD = {}
+
+
+def op_paste_asset(im, p, ctx=None):
+    """貼素材人物（tools/p6_make_asset.py 出的白底圖，摳圖後縮放）：file＝來源（{a}＝依 seed 輪流的素材編號，assets＝素材張數）、h＝身高（畫面高比例）、fx、fy＝腳底中心；
+    grey＝true 去飽和（frozen）；flip＝水平翻轉。記下上半身最靠右的點（伸出的手）供 paste_balloon 的 string_to: hand 用。"""
+    seed = ctx[2] if ctx else 1
+    a = ((seed - 1) % p.get("assets", 1)) + 1
+    cut = cutout_sprite(ROOT / p["file"].format(a=a, seed=seed))
+    if p.get("flip"):
+        cut = cut.transpose(Image.FLIP_LEFT_RIGHT)
+    f = p["h"] * H / cut.height
+    cut = cut.resize((max(2, round(cut.width * f)), max(2, round(cut.height * f))), Image.LANCZOS)
+    if p.get("grey"):
+        g = ImageOps.grayscale(cut.convert("RGB")).convert("RGBA")
+        g.putalpha(cut.getchannel("A"))
+        cut = g
+    if p.get("blur"):   # 景深（略失焦）
+        cut = cut.filter(ImageFilter.GaussianBlur(p["blur"]))
+    fx, fy = p["fx"] * W, p["fy"] * H
+    out = im.convert("RGBA")
+    sh = Image.new("RGBA", out.size, (0, 0, 0, 0))
+    ImageDraw.Draw(sh).ellipse((fx - cut.width * 0.45, fy - cut.height * 0.03, fx + cut.width * 0.45, fy + cut.height * 0.03), fill=(0, 0, 0, 90))
+    out = Image.alpha_composite(out, sh.filter(ImageFilter.GaussianBlur(cut.height * 0.02)))
+    ox, oy = round(fx - cut.width / 2), round(fy - cut.height)
+    out.alpha_composite(cut, (ox, oy))
+    al = np.asarray(cut.getchannel("A")) > 128
+    ys, xs = np.where(al)
+    up = ys < ys.min() + 0.45 * (ys.max() - ys.min())   # 上半身裡最靠右（朝前伸出）的點＝伸出的手
+    k = np.argmax(np.where(up, xs, -1))
+    _HAND["pt"] = (ox + xs[k], oy + ys[k])
+    return out.convert("RGB")
+
+
+def op_paste_head(im, p, ctx=None):
+    """s014：畫面左緣失焦的 LUNA 後腦與肩膀。取 s009 首幀的背面立繪摳圖（shots/<files>，依 seed 輪流）的上半身（frac＝取上面多少比例），
+    縮到寬度 w（畫面寬比例）、頭的中心在 head_x（畫面寬比例）、下緣貼畫面底，再高斯模糊 blur px（景深）。"""
+    seed = ctx[2] if ctx else 1
+    f = p["files"][(seed - 1) % len(p["files"])]
+    cut = Image.open(ROOT / "shots" / f).convert("RGBA")
+    cut = cut.crop((0, 0, cut.width, int(cut.height * p.get("frac", 0.36))))
+    s = p["w"] * W / cut.width
+    cut = cut.resize((round(cut.width * s), round(cut.height * s)), Image.LANCZOS)
+    if p.get("blur"):
+        cut = cut.filter(ImageFilter.GaussianBlur(p["blur"]))
+    out = im.convert("RGBA")
+    pos = (round(p["head_x"] * W - cut.width / 2), H - cut.height)
+    out.alpha_composite(cut, pos)
+    hm = Image.new("L", (W, H), 0)
+    hm.paste(cut.getchannel("A"), pos)
+    _HEAD["mask"] = hm
+    return out.convert("RGB")
+
+
+# ---------------------------------------------------------------- 審查後新增的通用後製（雨點、眼睛、看板、整合）
+def _person_bin(im, seed=None, thr=100):
+    return _one_component(person_mask(im).point(lambda x: 255 if x > thr else 0), seed)
+
+
+def op_remove_rain(im, p):
+    """去掉雨絲與水滴（B 之前清 A、或清場景圖）：白頂帽（亮的細小結構＝比 size 小的亮色筆畫）超過 thr 的像素用 cv2.inpaint 補掉。
+    person＝true 時用 BiRefNet 遮罩保護人物（seed＝person_seed）；ymax＝只清畫面高這個比例以上的部分（s010 末幀腳邊的水花要留）。"""
+    import cv2
+    a = np.asarray(im)
+    g = cv2.cvtColor(a, cv2.COLOR_RGB2GRAY)
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (p.get("size", 15), p.get("size", 15)))
+    th = g.astype(int) - cv2.morphologyEx(g, cv2.MORPH_OPEN, k).astype(int)
+    m = (th > p.get("thr", 22)).astype("uint8")
+    if p.get("ymax"):
+        m[round(p["ymax"] * H):] = 0
+    if p.get("person", True):
+        pm = np.asarray(_person_bin(im, p.get("person_seed"))) > 0
+        pm = cv2.dilate(pm.astype("uint8"), np.ones((13, 13), np.uint8)) > 0
+        m[pm] = 0
+    m = cv2.dilate(m, np.ones((5, 5), np.uint8)) * 255
+    if p.get("person", True):
+        m[pm] = 0
+    return Image.fromarray(cv2.inpaint(a, m, 4, cv2.INPAINT_TELEA))
+
+
+def op_frozen_rain(im, p, ctx=None):
+    """停在半空的灰色小圓點雨滴（劇本：frozen 區的雨）：整個畫面散布，偏向近處（下方）、近大遠小；人物遮罩內不畫。
+    n＝數量、rmin／rmax＝半徑 px、seed 依 ctx 的 seed 變化。"""
+    seed = (ctx[2] if ctx else 0) + p.get("seed", 5)
+    rnd = np.random.RandomState(seed)
+    S = 2
+    lay = Image.new("RGBA", (W * S, H * S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    for _ in range(p.get("n", 320)):
+        x, y = rnd.uniform(0, W), (rnd.uniform(0, 1) ** 0.75) * H
+        r = (p.get("rmin", 1.2) + (p.get("rmax", 3.2) - p.get("rmin", 1.2)) * (0.3 + 0.7 * y / H) * rnd.uniform(0.6, 1.1)) * S
+        al = int(rnd.uniform(120, 200))
+        d.ellipse((x * S - r, y * S - r, x * S + r, y * S + r), fill=(196, 202, 210, al))
+        d.ellipse((x * S - r * 0.45, y * S - r * 0.6, x * S - r * 0.05, y * S - r * 0.2), fill=(240, 244, 248, min(255, al + 40)))
+    lay = lay.resize((W, H), Image.LANCZOS)
+    if p.get("person", True):
+        pm = _person_bin(im, p.get("person_seed")).filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.GaussianBlur(2))
+        a = np.asarray(lay.getchannel("A")).astype(float) * (1 - np.asarray(pm).astype(float) / 255)
+        lay.putalpha(Image.fromarray(a.astype("uint8")))
+    return Image.alpha_composite(im.convert("RGBA"), lay).convert("RGB")
+
+
+def op_fix_eyes(im, p):
+    """虹膜顏色修正（style bible：深紫灰）：B 偶爾把大張的眼睛畫成棕或紅棕。在人物頭部範圍內找「橘棕／紅棕、飽和、偏暗」的像素
+    （膚色亮、頭髮紫、嘴唇在更下面，所以用亮度＋位置分開），色相改成紫灰、保留亮度起伏。
+    roi_h＝頭部高度（人物遮罩高度的比例，全身約 0.17、腰以上約 0.5），band＝眼睛所在的範圍（頭部高度比例，從頭頂算）。"""
+    import cv2
+    pm = np.asarray(_person_bin(im, p.get("person_seed"))) > 0
+    ys, xs = np.where(pm)
+    top, bot = ys.min(), ys.max()
+    hh = (bot - top) * p.get("roi_h", 0.17)
+    r0, r1 = int(top + p.get("band", [0.3, 0.75])[0] * hh), int(top + p.get("band", [0.3, 0.75])[1] * hh)
+    hsv = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2HSV).astype(float)
+    h, s, v = hsv[..., 0] * 2, hsv[..., 1] / 255, hsv[..., 2] / 255
+    sel = (((h <= 55) | (h >= 330)) & (s > 0.26) & (v < p.get("vmax", 0.72)) & (v > 0.10))
+    box = np.zeros_like(sel)
+    box[r0:r1] = True
+    sel &= box & pm
+    from scipy import ndimage as ndi
+    lab, n = ndi.label(ndi.binary_opening(sel, iterations=1) if p.get("open", False) else sel)
+    if n == 0:
+        return im
+    keep = np.zeros_like(sel)
+    for i in range(1, n + 1):
+        c = lab == i
+        if c.sum() >= p.get("min_px", 3):
+            keep |= c
+    keep = ndi.binary_dilation(keep, iterations=1)
+    sel2 = keep & (((h <= 62) | (h >= 310)) & (s > 0.18) & (v < 0.78))
+    m = Image.fromarray((sel2 * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.7))
+    tgt = np.array(p.get("color", [88, 76, 104]), float)   # 深紫灰
+    base = np.asarray(im).astype(float)
+    lum = (0.3 * base[..., 0] + 0.59 * base[..., 1] + 0.11 * base[..., 2]) / 255
+    new = tgt[None, None, :] * (0.55 + 0.9 * lum)[..., None] / 1.0
+    new = np.clip(new, 0, 255)
+    al = (np.asarray(m).astype(float) / 255)[..., None]
+    return Image.fromarray((base * (1 - al) + new * al).astype("uint8"))
+
+
+_BB_CACHE = {}
+
+
+def op_billboards(im, p, ctx=None):
+    """看板（劇本：看板仍亮但沒有顏色）：Qwen 把「空白看板」畫成純白方塊。找出近白的大矩形，換成灰階的畫面內容
+    （refs/entities/monitor_wall/city_*.png 的城市畫面去飽和、壓到亮度 lo–hi、略模糊；沒有文字），亮度高於周圍但不是純白。
+    thr＝近白門檻、min_area＝最小面積 px、lo／hi＝內容亮度範圍、blur。依 seed 與面板序號輪流選內容。"""
+    import cv2
+    from scipy import ndimage as ndi
+    seed = ctx[2] if ctx else 0
+    files = sorted((ROOT / "refs/entities/monitor_wall").glob("city_*.png"))
+    a = np.asarray(im)
+    g = cv2.cvtColor(a, cv2.COLOR_RGB2GRAY)
+    m = (g > p.get("thr", 236)).astype("uint8")
+    m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+    lab, n = ndi.label(m)
+    out = a.astype(float)
+    done = 0
+    for i in range(1, n + 1):
+        comp = (lab == i).astype("uint8")
+        if comp.sum() < p.get("min_area", 1500):
+            continue
+        cnts, _ = cv2.findContours(comp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        c = max(cnts, key=cv2.contourArea)
+        hull = cv2.convexHull(c)
+        per = cv2.arcLength(hull, True)
+        ap = cv2.approxPolyDP(hull, 0.03 * per, True)
+        quad = ap.reshape(-1, 2).astype(np.float32) if len(ap) == 4 else cv2.boxPoints(cv2.minAreaRect(hull)).astype(np.float32)
+        s_ = quad.sum(axis=1)
+        d_ = np.diff(quad, axis=1).ravel()
+        order = [np.argmin(s_), np.argmin(d_), np.argmax(s_), np.argmax(d_)]   # 左上、右上、右下、左下
+        quad = quad[order]
+        f = files[(seed + done) % len(files)]
+        if f not in _BB_CACHE:
+            c0 = np.asarray(ImageOps.grayscale(Image.open(f).convert("RGB"))).astype(float)
+            lo_, hi_ = np.percentile(c0, 2), np.percentile(c0, 98)
+            c0 = np.clip((c0 - lo_) / max(1, hi_ - lo_), 0, 1)
+            _BB_CACHE[f] = (c0 * (p.get("hi", 214) - p.get("lo", 120)) + p.get("lo", 120))
+        c0 = _BB_CACHE[f]
+        sh, sw = c0.shape
+        M = cv2.getPerspectiveTransform(np.float32([[0, 0], [sw, 0], [sw, sh], [0, sh]]), quad)
+        if not np.isfinite(M).all():
+            continue
+        warped = np.nan_to_num(cv2.warpPerspective(c0.astype(np.float32), M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), nan=150.0, posinf=214.0, neginf=120.0)
+        warped = cv2.GaussianBlur(warped, (0, 0), p.get("blur", 1.6))
+        mm = cv2.erode(comp, np.ones((3, 3), np.uint8)).astype(float)
+        mm = cv2.GaussianBlur(mm, (0, 0), 0.8)[..., None]
+        out = out * (1 - mm) + warped[..., None].repeat(3, axis=2) * mm
+        done += 1
+    return Image.fromarray(out.clip(0, 255).astype("uint8"))
+
+
+def op_shift_person(im, p):
+    """把人物整體往下移到指定位置（s011 末幀：舉高的指尖在畫面最上緣，氣球放不進畫面）：用 BiRefNet 遮罩最高點（指尖）定位，
+    往下移到 tip_y（畫面比例）；上面露出的邊用邊緣像素延伸（之後的 B 會重繪）。"""
+    import cv2
+    pm = _person_bin(im, p.get("person_seed"))
+    ys, xs = np.where(np.asarray(pm) > 0)
+    top = ys.min()
+    dy = p["tip_y"] * H - top
+    if dy <= 0:
+        return im
+    M = np.float32([[1, 0, 0], [0, 1, dy]])
+    return Image.fromarray(cv2.warpAffine(np.asarray(im), M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE))
+
+
+def lora_pass(im, tags, seed, denoise, canny=0.6, canny_end=0.6, neg_add="", key="h"):
+    """對整幅（1344×768）做一次 Illustrious＋LoRA img2img（canny 固定構圖）：低 denoise 時只整合光影與線條，不改位置。"""
+    import os
+    pos = L.BASE + L.prompt_outfit(tags) + tags + L.QUALITY
+    tmp = ROOT / "shots" / f".p6_tmp_h_{os.getpid()}.png"
+    im.convert("RGB").save(tmp)
+    inp = K.put(tmp, f"p6_h_{os.getpid()}_{key}.png")
+    tmp.unlink()
+    wf = L.workflow(K.LORA, 0.9, pos, W, H, seed, 28, 6.0)
+    if neg_add:
+        wf["5"]["inputs"]["text"] = L.NEG + ", " + neg_add
+    wf["30"] = {"class_type": "LoadImage", "inputs": {"image": inp}}
+    wf["31"] = {"class_type": "VAEEncode", "inputs": {"pixels": ["30", 0], "vae": ["1", 2]}}
+    wf["7"]["inputs"]["latent_image"] = ["31", 0]
+    wf["7"]["inputs"]["denoise"] = denoise
+    del wf["6"]
+    wf["20"] = {"class_type": "ControlNetLoader", "inputs": {"control_net_name": L.CONTROLNET}}
+    wf["21"] = {"class_type": "SetUnionControlNetType", "inputs": {"control_net": ["20", 0], "type": "canny/lineart/anime_lineart/mlsd"}}
+    wf["22"] = {"class_type": "Canny", "inputs": {"image": ["30", 0], "low_threshold": 0.3, "high_threshold": 0.6}}
+    wf["23"] = {"class_type": "ControlNetApplyAdvanced", "inputs": {"positive": ["4", 0], "negative": ["5", 0], "control_net": ["21", 0], "image": ["22", 0],
+                                                                     "strength": canny, "start_percent": 0.0, "end_percent": canny_end, "vae": ["1", 2]}}
+    wf["7"]["inputs"]["positive"], wf["7"]["inputs"]["negative"] = ["23", 0], ["23", 1]
+    data = K.run(wf, "9")
+    import io
+    return Image.open(io.BytesIO(data)).convert("RGB")
+
+
+def op_harmonize(im, p, ctx=None):
+    """貼上的人物（立繪、素材）看起來像剪貼：整幅再做一次低 denoise（約 0.3–0.4）的 B，整合光影與線條；canny 固定，位置不動。"""
+    seed = ctx[2] if ctx else 1
+    return lora_pass(im, p["tags"], p.get("seed", seed), p.get("denoise", 0.35), p.get("canny", 0.7), p.get("canny_end", 0.8), p.get("neg_add", ""), "h")
+
+
+def op_desat_hue(im, p):
+    """某個色相範圍去飽和（frozen 的水花被 B 染到青色、但在人物遮罩內不會被灰化時用）：h＝[h0,h1] 度，s＝最低飽和度，rect＝限制範圍（畫面比例）。"""
+    import cv2
+    a = np.asarray(im)
+    hsv = cv2.cvtColor(a, cv2.COLOR_RGB2HSV).astype(float)
+    h, s = hsv[..., 0] * 2, hsv[..., 1] / 255
+    m = (h >= p["h"][0]) & (h <= p["h"][1]) & (s > p.get("s", 0.12))
+    if p.get("rect"):
+        x0, y0, x1, y1 = p["rect"]
+        b = np.zeros_like(m); b[round(y0 * H):round(y1 * H), round(x0 * W):round(x1 * W)] = True
+        m &= b
+    mm = Image.fromarray((m * 255).astype("uint8")).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(1.0))
+    return Image.composite(ImageOps.grayscale(im).convert("RGB"), im, mm)
+
+
+OPS = dict(desat_hue=op_desat_hue, remove_rain=op_remove_rain, frozen_rain=op_frozen_rain, fix_eyes=op_fix_eyes, billboards=op_billboards, shift_person=op_shift_person, harmonize=op_harmonize, paste_head=op_paste_head, paste_asset=op_paste_asset, paste_balloon=op_paste_balloon, paste_childhand=op_paste_childhand, move_balloon=op_move_balloon, fit_person=op_fit_person, horizon=op_horizon, drone=op_drone, neon_far=op_neon_far, grey_keep=op_grey_keep, skyline_from=op_skyline_from, roof=op_roof, floor_stretch=op_floor_stretch, band_grey=op_band_grey, tower=op_tower, grey=op_grey, glow=op_glow, hatch=op_hatch, paste_drone=op_paste_drone, platform_dot=op_platform_dot, shift=op_shift, zoom=op_zoom)
 
 
 def step_C(shot, frame, seed, v, src):
@@ -698,7 +1402,7 @@ def run_one(shot, frame, seed, v, macros, stage, force):
         Image.new("RGB", (W, H), (4, 5, 7)).save(fa)   # 程式繪製的候選：A 只是占位，內容由 post 的 op 畫
     if gen == "sprite":
         # 場景：scene=first → 同 seed 首幀的裁切前成品；否則 Qwen 出（不含人物）。人物＝立繪（B 加骨架）摳圖後在 post 貼
-        if (stage in ("all", "A") and (force or not fa.exists())) or (v.get("scene") == "first" and (not fa.exists() or stage in ("post", "cut", "BC"))):
+        if (stage in ("all", "A") and (force or not fa.exists()) and not v.get("scene_a")) or (v.get("scene") == "first" and (not fa.exists() or stage in ("post", "cut", "BC"))):
             if v.get("scene") == "first":
                 ss = v.get("srcseed", (seed - 1) % 6 + 1)   # mid 的 seed 7–12 沿用首幀 seed 1–6 的場景
                 shutil.copy(cdir(shot) / f"first_Cpre_s{ss}.png", fa)
@@ -706,9 +1410,19 @@ def run_one(shot, frame, seed, v, macros, stage, force):
                                prompt="(沿用同 seed 首幀的場景，不經 Qwen)", seconds=0))
             else:
                 step_A(shot, frame, seed, v, macros, None)
-        if stage in ("all", "B", "BC") and (force or not (cdir(shot) / f"{frame}_cut_s{seed}.png").exists()):
+        if v.get("scene_a") and (force or not fa.exists() or stage in ("post", "cut", "BC")):   # 場景沿用另一幀（同鏡或他鏡）的 A 稿，首尾幀同一個場景
+            ssd = (v.get("scene_map") or {}).get(seed, seed)   # scene_map：這個 seed 的場景借用哪個 seed 的 A 稿（補出新候選時用）
+            src = ROOT / "shots" / v["scene_a"].format(seed=ssd) if "/" in v["scene_a"] else cdir(shot) / v["scene_a"].format(seed=ssd)
+            shutil.copy(src, fa)
+            log(shot, dict(step="A", frame=frame, file=fa.name, seed=seed, refs=[str(src.relative_to(ROOT))], prompt="(沿用 %s 的場景，不經 Qwen)" % src.name, seconds=0))
+        if v.get("cut_from"):   # 立繪沿用另一幀的摳圖（同一個人物，已含翻轉），首尾幀的外觀才一致
+            cp = cdir(shot) / f"{frame}_cut_s{seed}.png"
+            if force or not cp.exists() or stage in ("cut", "BC"):
+                src = ROOT / "shots" / v["cut_from"].format(seed=seed) if "/" in v["cut_from"] else cdir(shot) / v["cut_from"].format(seed=seed)
+                shutil.copy(src, cp)
+        elif stage in ("all", "B", "BC") and (force or not (cdir(shot) / f"{frame}_cut_s{seed}.png").exists()):
             step_sprite(shot, frame, seed, v)
-        if stage == "cut":   # 只從已存的立繪重新摳圖（改摳圖演算法或 flip 清單後用），再做後製
+        if stage == "cut" and not v.get("cut_from"):   # 只從已存的立繪重新摳圖（改摳圖演算法或 flip 清單後用），再做後製
             cut = cutout_sprite(cdir(shot) / f"{frame}_sprite_s{seed}.png")
             if seed in (v.get("flip") or []):
                 cut = cut.transpose(Image.FLIP_LEFT_RIGHT)
